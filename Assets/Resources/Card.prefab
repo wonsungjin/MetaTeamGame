@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4800489557201217492}
   - component: {fileID: 6170551483457068553}
   - component: {fileID: -52141495005960720}
+  - component: {fileID: -6537365548487799274}
   m_Layer: 0
   m_Name: Card
   m_TagString: Untagged
@@ -97,4 +98,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2435f21eb5008146b871a8c0fa54c9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardScriptable: {fileID: 11400000, guid: 73a481c5906d4b048ad52424d62fda5d, type: 2}
+  cardInfo: {fileID: 0}
+--- !u!61 &-6537365548487799274
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2657301908553744636}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
