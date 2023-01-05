@@ -101,6 +101,7 @@ public class DataBase : MonoBehaviour
                 else if (i == 9) number = "ten";
                 value.ToBsonDocument().TryGetValue(number, out value);
                 if (value.ToString() == "BsonNull") continue;// 해당 칸에 덱이 없다면 다음으로 이동
+                Debug.Log(number);
                     CustomDeck customDeck = new CustomDeck();
                 for (int num = 1; num < 7; num++)
                 {
@@ -119,7 +120,9 @@ public class DataBase : MonoBehaviour
                     }
                 }
                 inventoryData.AddCustomDeck(customDeck);
+                Debug.Log("?");
             }
+            GameMGR.Instance.uIMGR.SetParentPackAddButton();
         }
 
     }
@@ -145,18 +148,58 @@ public class InventoryData
     public CustomDeck ten;
     public void AddCustomDeck(CustomDeck customDeck)
     {
-        if(one==null) one = customDeck;
-        else if(two==null) two = customDeck;
-        else if (three==null)three = customDeck;
-        else if (four==null) four = customDeck;
-        else if (five==null) five = customDeck;
-        else if (six==null) six = customDeck;
-        else if (seven==null)seven = customDeck;
-        else if (eight==null)eight = customDeck;
-        else if (nine==null) nine = customDeck;
-        else if (ten==null) ten = customDeck;
+        if (one == null)
+        {
+            one = customDeck;
+            GameMGR.Instance.uIMGR.CreateMyPackButton(one);
+        }
+        else if (two == null)
+        {
+            two = customDeck;
+            GameMGR.Instance.uIMGR.CreateMyPackButton(two);
+        }
+        else if (three == null)
+        {
+            three = customDeck;
+            GameMGR.Instance.uIMGR.CreateMyPackButton(three);
+        }
+        else if (four == null)
+        {
+            four = customDeck;
+            GameMGR.Instance.uIMGR.CreateMyPackButton(four);
+        }
+        else if (five == null)
+        {
+            five = customDeck;
+            GameMGR.Instance.uIMGR.CreateMyPackButton(five);
+        }
+        else if (six == null)
+        {
+            six = customDeck;
+            GameMGR.Instance.uIMGR.CreateMyPackButton(six);
+        }
+        else if (seven == null)
+        {
+            seven = customDeck;
+            GameMGR.Instance.uIMGR.CreateMyPackButton(seven);
+        }
+        else if (eight == null)
+        {
+            eight = customDeck;
+            GameMGR.Instance.uIMGR.CreateMyPackButton(eight);
+        }
+        else if (nine == null)
+        {
+            nine = customDeck;
+            GameMGR.Instance.uIMGR.CreateMyPackButton(nine);
+        }
+        else if (ten == null)
+        {
+            ten = customDeck;
+            GameMGR.Instance.uIMGR.CreateMyPackButton(ten);
+        }
+        }
     }
-}
 public class CustomDeck
 {
     public List<string> tier_1 = new List<string>();

@@ -4,14 +4,13 @@ using UnityEngine;
 
 public class ShopCards : MonoBehaviour
 {
-    [SerializeField] private Card card;
-    [SerializeField] private Transform[] tier;
+    [SerializeField] private CardUI card;
+    [SerializeField] private GameObject[] direction;
+    [SerializeField] private GameObject[] tier;
     private Dictionary<int, List<CardInfo>> customDeckList = new Dictionary<int, List<CardInfo>>();
     void Start()
     {
-        Card obj = null;
-        int x = 0;
-        int y = 0;
+        CardUI obj = null;
         CardInfo[] cards = Resources.LoadAll<CardInfo>($"ScriptableDBs/");
         for(int i = 0; i<cards.Length;i++)
         {
@@ -23,13 +22,9 @@ public class ShopCards : MonoBehaviour
             if (list==null) continue;
             for (int i = 0; i < list.Count; i++)
             {
-                if (x < 12) x = i * 3;
-                else
-                {
-                    x = 0;
-                    y -= 2;
-                }
-                obj = GameObject.Instantiate<Card>(card, tier[list[i].tier - 1].position + new Vector3(x, y), Quaternion.identity);
+                obj = GameObject.Instantiate<CardUI>(card);
+                obj.transform.SetParent(tier[tierNum-1].transform);
+                obj.transform.localScale = Vector3.one;
                 obj.SetMyInfo(list[i].objName);
             }
         }
@@ -39,7 +34,9 @@ public class ShopCards : MonoBehaviour
     {
         if (yPos > -50)
         {
+            if (yPos == 0) if(!direction[0].activeSelf) direction[0].SetActive(true);
             yPos -= 10;
+            if (yPos <= -50)  direction[1].SetActive(false);
             StartCoroutine(COR_OnClick_Move_Camera(0));
         }
     }
@@ -47,7 +44,9 @@ public class ShopCards : MonoBehaviour
     {
         if (yPos < 0)
         {
+            if (yPos <= -50) if (!direction[1].activeSelf) direction[1].SetActive(true);
             yPos += 10;
+            if (yPos >= 0)  direction[0].SetActive(false);
             StartCoroutine(COR_OnClick_Move_Camera(1));
         }
     }

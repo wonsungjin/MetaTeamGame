@@ -10,12 +10,12 @@ public class CustomDeckShop : MonoBehaviour
     public bool isJoinShop { get; private set; }
     public void OnClick_Create_CustomDeck()
     {
-        if (customDeck.tier_1.Count > 8
-         && customDeck.tier_2.Count > 8
-         && customDeck.tier_3.Count > 8
-         && customDeck.tier_4.Count > 8
-         && customDeck.tier_5.Count > 8
-         && customDeck.tier_6.Count > 8) return;
+        //if (customDeck.tier_1.Count > 8
+        // && customDeck.tier_2.Count > 8
+        // && customDeck.tier_3.Count > 8
+        // && customDeck.tier_4.Count > 8
+        // && customDeck.tier_5.Count > 8
+        // && customDeck.tier_6.Count > 8) return;
         Debug.Log("¾Æ¿À");
         List<string> list = null;
         if (customDeckList.TryGetValue(1, out list)) customDeck.tier_1 = list.ToList();
