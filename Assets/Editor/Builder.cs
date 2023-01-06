@@ -4,8 +4,9 @@ using UnityEngine;
 using UnityEditor;
 using UnityEditor.Build.Reporting;
 
-public class Builder : MonoBehaviour
+public static class Builder
 {
+    [MenuItem("Tools/Build")]
     public static void JenkinsBuilder()
     {
         BuildPlayerOptions buildPlayerOptions = new BuildPlayerOptions();
