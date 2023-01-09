@@ -177,6 +177,8 @@ public class TurnSystem : MonoBehaviourPunCallbacks
         }
 
         // 모든 세팅이 끝났다.
+        Debug.Log(setRandom);
+        Debug.Log(matchMan);
         photonView.RPC("Matching", RpcTarget.All, setRandom, matchMan);
         Debug.Log("RPC Matchig 호출");
         if(setRandom == null)
@@ -218,7 +220,7 @@ public class TurnSystem : MonoBehaviourPunCallbacks
             {
                 // 내가 후공
                 Debug.Log("나는 " + userID + " 닉네임 : " + matchMan[1].NickName + " 상대 : " + matchMan[0].NickName);
-                // 내 상대는 배열0
+                // 내 상대는 배열
             }
         }
 
