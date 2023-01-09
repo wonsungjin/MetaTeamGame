@@ -3,7 +3,8 @@ using UnityEngine;
 public class Node : MonoBehaviour
 {
     Spawner spawner;
-    bool isTouch = false;
+
+    // 이 타일에 몬스터가 있는지?
     public bool isNotSpawn = false;
 
     private void Start()
@@ -16,15 +17,12 @@ public class Node : MonoBehaviour
         if (collision.gameObject.CompareTag("FreezeCard"))
         {
             this.isNotSpawn = true;
-            isTouch = true;
         }
 
         if (collision.gameObject.CompareTag("MeltCard"))
         {
             this.isNotSpawn = false;
             collision.gameObject.tag = "Monster";
-            spawner.isMelt = true;
-            this.isTouch = false;
         }
     }
 }

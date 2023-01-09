@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Mouse2D : MonoBehaviour
 {
-    
-    // Start is called before the first frame update
-    void Start()
+    SpriteRenderer spriteRenderer;
+    public RaycastHit2D hit;
+    private void Start()
     {
-        
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     private void Update()
@@ -18,13 +18,14 @@ public class Mouse2D : MonoBehaviour
     void MouseRay()
     {
         Vector2 worldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        RaycastHit2D hit = Physics2D.Raycast(worldPoint, Vector2.zero, 0f);
+        hit = Physics2D.Raycast(worldPoint, Vector2.zero, 0f);
+
 
         if(hit.collider != null)
         {
             if(hit.collider.CompareTag("Monster"))
             {
-                Debug.Log("마우스로 찍음");
+                hit.collider.gameObject.GetComponent<SpriteRenderer>().color = Color.black;
             }
         }
     }

@@ -7,6 +7,10 @@ public class UIManager : MonoBehaviour
     private static UIManager instance = null;
     [SerializeField] Text goldTXT = null;
     [SerializeField] Text notGoldTXT = null;
+
+    [SerializeField] public GameObject sell = null;
+    [SerializeField] Text sellTxt = null;
+
     public int goldCount = 10;
 
     // Public 프로퍼티로 선언해서 외부에서 private 멤버변수에 접근만 가능하게 구현
@@ -24,6 +28,9 @@ public class UIManager : MonoBehaviour
 
     private void Awake()
     {
+        sell.gameObject.SetActive(false);
+        sellTxt.gameObject.SetActive(false);
+
         if (null == instance)
         {
             // 씬 시작될때 인스턴스 초기화, 씬을 넘어갈때도 유지되기위한 처리
@@ -41,6 +48,14 @@ public class UIManager : MonoBehaviour
     private void Update()
     {
         goldTXT.text = "Gold : " + goldCount.ToString();
+        if(sell.activeSelf == false)
+        {
+            sellTxt.gameObject.SetActive(false);
+        }
+        else
+        {
+            sellTxt.gameObject.SetActive(true);
+        }
     }
 
     public IEnumerator COR_NotGold()

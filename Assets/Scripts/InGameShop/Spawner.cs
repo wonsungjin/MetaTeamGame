@@ -10,7 +10,6 @@ public class Spawner : MonoBehaviour
     public int createdPlace = 3;
     public int stage = 1;
     public bool isFreeze = false;
-    public bool isMelt = false;
     public int randomTrans = 0;
 
     int randomNum;

@@ -164,11 +164,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 20203646}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1f61dc65db082345b308d54e9320e88, type: 3}
+  m_Script: {fileID: 11500000, guid: 65fe8111d5fe90f429cfa313264e83f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   goldTXT: {fileID: 2010378645}
   notGoldTXT: {fileID: 101263836}
+  sell: {fileID: 119581526}
+  sellTxt: {fileID: 477762123}
   goldCount: 10
 --- !u!1 &41134532
 GameObject:
@@ -598,7 +600,6 @@ MonoBehaviour:
   createdPlace: 3
   stage: 1
   isFreeze: 0
-  isMelt: 0
   randomTrans: 0
 --- !u!1 &119581526
 GameObject:
@@ -689,7 +690,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -1
+  m_SortingOrder: 2
   m_Sprite: {fileID: 2747690628134850419, guid: b670ab75dde984907b8570040daa08c5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -709,8 +710,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 119581526}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.28, y: -1.79, z: 0}
-  m_LocalScale: {x: 2.51, y: 2.51, z: 2.51}
+  m_LocalPosition: {x: 2.59, y: 2.34, z: 0}
+  m_LocalScale: {x: 12.700551, y: 3.5014498, z: 2.51}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -1057,8 +1058,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 320, y: -77}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: 284.4098, y: 246.83223}
+  m_SizeDelta: {x: 844.3396, y: 420.2084}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &477762123
 MonoBehaviour:
@@ -1074,7 +1075,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1082,11 +1083,11 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 14
+    m_FontSize: 100
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
-    m_MaxSize: 40
+    m_MinSize: 1
+    m_MaxSize: 300
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -2364,7 +2365,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 104937936}
         m_TargetAssemblyTypeName: Spawner, Assembly-CSharp
         m_MethodName: OnClick_Reset_Monster
         m_Mode: 1
