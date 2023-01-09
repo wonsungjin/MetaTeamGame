@@ -5,6 +5,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.UI;
 using ExitGames.Client.Photon;
+using Hashtable = ExitGames.Client.Photon.Hashtable; // 이게 구버전 한정인지 필수인지는 나도 모른다는 것이 학계의 점심
 
 public enum OrderType
 {
@@ -34,6 +35,8 @@ public class TurnSystem : MonoBehaviourPunCallbacks
     [SerializeField] public InputField inputField; // 닉네임 입력칸
 
     public int[] setRandom = new int[500]; // 공격할 대상을 랜덤으로 지정한다. 
+
+    public Player[] savePlayers = null;
 
     public int userID = 0;
     /*    private TurnSystem instance = null;
@@ -65,8 +68,6 @@ public class TurnSystem : MonoBehaviourPunCallbacks
     public override void OnJoinedLobby()
     {
         Debug.Log("로비에 입장 성공");
-
-
         PhotonNetwork.JoinRoom("test");
     }
 
@@ -82,9 +83,26 @@ public class TurnSystem : MonoBehaviourPunCallbacks
         PhotonNetwork.CreateRoom("test", roomOptions);
         //PhotonNetwork.JoinRoom("test");
         Debug.Log("test룸 생성");
+
+        photonView.RPC("FailedJoinRoom", RpcTarget.All, PhotonNetwork.NickName);
     }
 
+    [PunRPC]
+    public void FailedJoinRoom(string name)
+    {
+        Debug.Log(name + "가 방 들어오는데 실패했다"); 
+    }
 
+    [PunRPC]
+    public void FailedConnectMaster(string name)
+    {
+        Debug.Log(name + "가 마스터서버 연결에 실패했다");
+    }
+
+    private void OnFailedToConnectToMasterServer()
+    {
+        photonView.RPC("FailedConnectMaster", RpcTarget.All, PhotonNetwork.NickName);
+    }
 
     public override void OnJoinedRoom() // 자기 자신만
     {
@@ -98,6 +116,7 @@ public class TurnSystem : MonoBehaviourPunCallbacks
         {
             PhotonNetwork.NickName = PhotonNetwork.PlayerList[i].ActorNumber.ToString();
             if (PhotonNetwork.PlayerList[i].NickName == PhotonNetwork.NickName) userID = i;  // 고유닉네임이 일치하면 고유번호를 지정한다.
+            PhotonNetwork.LocalPlayer.SetCustomProperties(new Hashtable { { "ID", i} });
         }
         /*for(int i = 0; i < players.Length; i++)
         {
@@ -109,7 +128,6 @@ public class TurnSystem : MonoBehaviourPunCallbacks
                 playerNum++;
             }
         }*/
-
     }
     #endregion
 
@@ -117,6 +135,16 @@ public class TurnSystem : MonoBehaviourPunCallbacks
     {
         Debug.Log(newPlayer.NickName + " 입장");
         Debug.Log("방 접속자 수 : " + PhotonNetwork.PlayerList.Length);
+    }
+
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        Debug.Log(otherPlayer + "가 나갔다");
+    }
+
+    public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
+    {
+        Debug.Log(targetPlayer + " 플레이어의 " + changedProps + "가 변경되었다");
     }
 
     private void Awake()
@@ -133,7 +161,6 @@ public class TurnSystem : MonoBehaviourPunCallbacks
 
     private void GameLoop()
     {
-
         BattleOrder(); // 순서대로 전투
 
         if (!isGameOver)
@@ -142,6 +169,7 @@ public class TurnSystem : MonoBehaviourPunCallbacks
 
     //List<Player> matchMan = null;
     Player[] matchMan = new Player[8]; // 최대 8인이고 그 이상을 넘을 수는 없으니 일단 이 값으로 지정.
+    Hashtable playerCP = PhotonNetwork.LocalPlayer.CustomProperties;
 
     [PunRPC]
     public void MatchingSetting()
@@ -176,10 +204,8 @@ public class TurnSystem : MonoBehaviourPunCallbacks
             Debug.Log("큐에서 1개 꺼냄");
         }
 
-        // 모든 세팅이 끝났다.
-        Debug.Log(setRandom);
-        Debug.Log(matchMan);
-        photonView.RPC("Matching", RpcTarget.All, setRandom, matchMan);
+        // 호출하기 전에 동기화를 마쳐야한다?
+        photonView.RPC("Matching", RpcTarget.AllBufferedViaServer, setRandom, matchMan); // Null이 뜨는 이유?
         Debug.Log("RPC Matchig 호출");
         if(setRandom == null)
         {
@@ -194,10 +220,7 @@ public class TurnSystem : MonoBehaviourPunCallbacks
     [PunRPC]
     public void Matching(int[] random, Player[] matchManAll)
     {
-        if(random == null)
-        Debug.Log("random 배열 넘겨받기 실패");
-        if(matchManAll == null)
-        Debug.Log("matchMan 배열 넘겨받기 실패");
+
         matchMan = matchManAll;
         //마스터 클라이언트가 대진 설정을 마치고 각 플레이어들을 1:1로 묶는 함수
         Debug.Log("Matching 함수 실행");
@@ -304,6 +327,8 @@ public class TurnSystem : MonoBehaviourPunCallbacks
         {
             photonView.RPC("MatchingSetting", RpcTarget.MasterClient);
         }
+
+
     }
 
 
