@@ -13,7 +13,7 @@ public class UIMGR : MonoBehaviour
     [SerializeField] private MyDeck packButton;
     [SerializeField] private GameObject packAddButton;
     [SerializeField] private GameObject ShopCards;
-    [SerializeField] private GameObject[] tier;
+    [SerializeField] public GameObject[] tier;
     public void OnCilck_Join_PackChoice()
     {
         lobbyPannel.SetActive(false);
@@ -25,6 +25,7 @@ public class UIMGR : MonoBehaviour
         obj.SetMyDeck(customDeck);
         obj.transform.SetParent(myPackList.transform);
         obj.transform.localScale = Vector3.one;
+        GameMGR.Instance.uIMGR.SetParentPackAddButton();
 
     }
     public void SetParentPackAddButton()
@@ -42,6 +43,7 @@ public class UIMGR : MonoBehaviour
     }
     public void OnClick_Join_MyDeckInfo()
     {
+        myDecks = FindObjectsOfType<MyDeck>();
         packChoicePannel.SetActive(false);
         myDeckPannel.SetActive(true);
     }
@@ -51,26 +53,16 @@ public class UIMGR : MonoBehaviour
         packChoicePannel.SetActive(false);
         lobbyPannel.SetActive(true);
     }
+    public MyDeck[] myDecks;
     public void OnClick_Move_Back()
     {
         GameMGR.Instance.customDeckShop.OnClick_Exit_CustomDeckShop();
-        packChoicePannel.SetActive(true);
         if (myDeckPannel.activeSelf)
         {
+            for (int i = 0; i < myDecks.Length; i++) myDecks[i].DelateMyDeckList();
             myDeckPannel.SetActive(false);
         }
+        packChoicePannel.SetActive(true);
         customPannel.SetActive(false);
-    }
-    List<GameObject> list = new List<GameObject>();
-    public void MyDeckTier(int tierNum,CustomDeck customDeck, CardUI cardUI,int num)
-    {
-        cardUI.transform.SetParent(tier[tierNum].transform);
-        cardUI.transform.localScale = Vector3.one;
-        if(tierNum==0) cardUI.SetMyInfo(customDeck.tier_1[num]);
-        else if(tierNum==1) cardUI.SetMyInfo(customDeck.tier_2[num]);
-        else if (tierNum==2) cardUI.SetMyInfo(customDeck.tier_3[num]);
-        else if (tierNum==3) cardUI.SetMyInfo(customDeck.tier_4[num]);
-        else if (tierNum==4) cardUI.SetMyInfo(customDeck.tier_5[num]);
-        else if (tierNum==5) cardUI.SetMyInfo(customDeck.tier_6[num]);
     }
 }

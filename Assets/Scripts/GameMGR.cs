@@ -10,6 +10,7 @@ public partial class GameMGR : Singleton<GameMGR>
     public CardCreate cardCreate;
     public CardList cardList;
     public CustomDeckShop customDeckShop;
+    public ObjectPool objectPool;
     private void Start()
     {
         GetComponentAgain();
@@ -34,6 +35,7 @@ public partial class GameMGR : Singleton<GameMGR>
         cardCreate = GetComponent<CardCreate>();
         customDeckShop = GetComponent<CustomDeckShop>();
         dataBase = GetComponent<DataBase>();
+        objectPool = GetComponent<ObjectPool>();
         cardList = Resources.Load<CardList>("CardList");
     }
 }

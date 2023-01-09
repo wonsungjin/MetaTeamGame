@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class CardUI : MonoBehaviour, IPointerClickHandler
+public class CardUI : MonoBehaviour, IPointerClickHandler,IPointerEnterHandler,IPointerExitHandler
 {
     [SerializeField] CardInfo cardInfo;
     private Image image;
@@ -14,7 +14,7 @@ public class CardUI : MonoBehaviour, IPointerClickHandler
     스프라이트 랜더러도 같은 원리로 설정*/
     private void Start()
     {
-        SetMyInfo(name);
+
     }
     public void SetMyInfo(string myname)
     {
@@ -27,7 +27,7 @@ public class CardUI : MonoBehaviour, IPointerClickHandler
     /*커스텀덱 설정할 때 클릭하면 실행되는 함수*/ 
     public void OnPointerClick(PointerEventData eventData)
     {
-        //if (GameMGR.Instance.customDeckShop.isJoinShop)
+        if (GameMGR.Instance.customDeckShop.isJoinShop)
         {
             if (GameMGR.Instance.customDeckShop.AddTierList(cardInfo.tier, cardInfo.objName))
             {
@@ -44,5 +44,15 @@ public class CardUI : MonoBehaviour, IPointerClickHandler
             }
             else Debug.Log("8마리 넘음");
         }
+    }                      
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        
     }
 }
