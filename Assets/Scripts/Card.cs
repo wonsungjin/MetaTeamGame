@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Card : MonoBehaviour
 {
@@ -8,22 +9,21 @@ public class Card : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private bool isTouch;
 
+
     /*자신의 오브젝트 이름과 같은 스크립터블 데이터를 읽어와서 설정한다
     스프라이트 랜더러도 같은 원리로 설정*/
-    public void SetMyInfo()
+    public void SetMyInfo(string myname)
     {
+        name = myname;
         cardInfo = Resources.Load<CardInfo>($"ScriptableDBs/{name}");
         spriteRenderer = GetComponent<SpriteRenderer>();
         Debug.Log(Resources.Load<Sprite>($"Sprites/{cardInfo.objName}"));
         Debug.Log(cardInfo.objName);
         spriteRenderer.sprite = Resources.Load<Sprite>($"Sprites/{cardInfo.objName}");
     }
-    private void Start()
-    {
-        SetMyInfo();
-    }
+
     /*커스텀덱 설정할 때 클릭하면 실행되는 함수*/ 
-    private void OnMouseDown()
+    public void OnMouseDown()
     {
         if (GameMGR.Instance.customDeckShop.isJoinShop)
         {
