@@ -5,15 +5,21 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     private static UIManager instance = null;
+
+    [Header("버튼")]
+    public Button ReFreshButton = null;
+    public Button LevelUpButton = null;
+    [Header("텍스트")]
+    [SerializeField] Text NowShopLevelTXT = null;
     [SerializeField] Text goldTXT = null;
-    [SerializeField] Text notGoldTXT = null;
-    [SerializeField] Text shopLevelTXT = null;
+    public Text shopLevelTXT = null;
     [SerializeField] Text sellTxt = null;
 
     [SerializeField] public GameObject sell = null;
 
     public int shopMoney = 0;
     public int goldCount = 10;
+    public int shopLevel = 1;
 
     // Public 프로퍼티로 선언해서 외부에서 private 멤버변수에 접근만 가능하게 구현
     public static UIManager Instance
@@ -44,13 +50,13 @@ public class UIManager : MonoBehaviour
             // instance가, GameManager가 존재한다면 GameObject 제거 
             Destroy(this.gameObject);
         }
-        notGoldTXT.gameObject.SetActive(false);
     }
 
     private void Update()
     {
         goldTXT.text = "Gold : " + goldCount.ToString();
         shopLevelTXT.text = "Shop Level :" + shopMoney.ToString();
+        NowShopLevelTXT.text = "Shop Level :" + shopLevel.ToString();
 
         if(sell.activeSelf == false)
         {
@@ -62,12 +68,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public IEnumerator COR_NotGold()
-    {
-        notGoldTXT.gameObject.SetActive(true);
-        yield return new WaitForSeconds(0.6f);
-        notGoldTXT.gameObject.SetActive(false);
-    }
+
 
     private void FirstReset()
     {

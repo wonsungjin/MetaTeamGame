@@ -13,6 +13,8 @@ TagManager:
   - FreezeCard
   - MeltCard
   - BattleMonster
+  - Rect
+  - FullZone
   layers:
   - Default
   - TransparentFX

@@ -1,5 +1,6 @@
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Spawner : MonoBehaviour
 {
@@ -9,7 +10,6 @@ public class Spawner : MonoBehaviour
 
     [Header("상점 위치")]
     public int createdPlace = 3;
-    public int shopLevel = 1;
     public bool isFreeze = false;
     public int randomTrans = 0;
 
@@ -21,6 +21,8 @@ public class Spawner : MonoBehaviour
         // 처음에 카드 생성
         if (isFirstStart == false)
         {
+            UIManager.Instance.shopLevel = 1;
+
             for (int i = 0; i < createdPlace; i++)
             {
                 randomNum = Random.Range(0, 3);
@@ -44,19 +46,23 @@ public class Spawner : MonoBehaviour
             for (int i = 0; i < monster.Length; i++)
             {
                 UIManager.Instance.goldCount = 10;
+                // 자식객체 놔두고 삭제시키는 함수
                 transform.DetachChildren();
                 Destroy(monster[i]);
-                ChooseRandomCard();
-                UIManager.Instance.shopMoney--;
             }
+
+            ChooseRandomCard();
+            if (UIManager.Instance.shopLevel < 6 && UIManager.Instance.shopMoney > 0)
+                UIManager.Instance.shopMoney--;
         }
+        Reset_NotMoney();
     }
-    
+
     public void OnClick_ShopLevelUp()
     {
-        if(UIManager.Instance.shopMoney <= UIManager.Instance.goldCount)
+        if (UIManager.Instance.shopMoney <= UIManager.Instance.goldCount)
         {
-            shopLevel++;
+            UIManager.Instance.shopLevel++;
             UIManager.Instance.goldCount -= UIManager.Instance.shopMoney;
 
             // 함수 호출 레벨 업 후 돈?
@@ -66,7 +72,7 @@ public class Spawner : MonoBehaviour
 
     void ShopLevelUp()
     {
-        switch (shopLevel)
+        switch (UIManager.Instance.shopLevel)
         {
             case 2:
                 UIManager.Instance.shopMoney = 8;
@@ -86,7 +92,7 @@ public class Spawner : MonoBehaviour
     // 리롤
     public void OnClick_Reset_Monster()
     {
-        if(UIManager.Instance.goldCount > 0)
+        if (UIManager.Instance.goldCount > 0)
         {
             GameObject[] monster = GameObject.FindGameObjectsWithTag("Monster");
             UIManager.Instance.goldCount--;
@@ -97,9 +103,31 @@ public class Spawner : MonoBehaviour
             }
             ChooseRandomCard();
         }
+    }
+
+    // 돈이 없을때 버튼들 끄는 함수
+    void Reset_NotMoney()
+    {
+        if (UIManager.Instance.goldCount <= 0)
+        {
+            UIManager.Instance.ReFreshButton.interactable = false;
+        }
+        else
+            UIManager.Instance.ReFreshButton.interactable = true;
+
+        if(UIManager.Instance.shopLevel > 5)
+        {
+            UIManager.Instance.LevelUpButton.interactable = false;
+            UIManager.Instance.shopLevelTXT.enabled = false;
+        }
         else
         {
-            StartCoroutine(UIManager.Instance.COR_NotGold());
+            if (UIManager.Instance.goldCount < UIManager.Instance.shopMoney)
+            {
+                UIManager.Instance.LevelUpButton.interactable = false;
+            }
+            else
+                UIManager.Instance.LevelUpButton.interactable = true;
         }
     }
 
@@ -107,7 +135,7 @@ public class Spawner : MonoBehaviour
     // 스테이지 마다 퍼센트율을 정해 카드들 소환
     void ChooseRandomCard()
     {
-        if (shopLevel > 5)
+        if (UIManager.Instance.shopLevel > 5)
         {
             for (int i = 0; i < 6; i++)
             {
@@ -137,7 +165,7 @@ public class Spawner : MonoBehaviour
                     }
                     else if (randomCard > 75 && randomCard < 90)
                     {
-                        SummonMonster(32 , 40);
+                        SummonMonster(32, 40);
                     }
                     else
                     {
@@ -151,9 +179,8 @@ public class Spawner : MonoBehaviour
             }
             randomTrans = 0;
         }
-      
 
-        if (shopLevel == 1)
+        if (UIManager.Instance.shopLevel == 1)
         {
             for (int i = 0; i < 3; i++)
             {
@@ -171,7 +198,7 @@ public class Spawner : MonoBehaviour
             createdPlace++;
         }
 
-        if (shopLevel == 2)
+        if (UIManager.Instance.shopLevel == 2)
         {
             for (int i = 0; i < 3; i++)
             {
@@ -197,9 +224,9 @@ public class Spawner : MonoBehaviour
             randomTrans = 0;
             createdPlace++;
         }
-        if (shopLevel == 3)
+        if (UIManager.Instance.shopLevel == 3)
         {
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 4; i++)
             {
                 // 랜덤 퍼센트율
                 int randomCard;
@@ -230,9 +257,9 @@ public class Spawner : MonoBehaviour
             randomTrans = 0;
             createdPlace++;
         }
-        if (shopLevel == 4)
+        if (UIManager.Instance.shopLevel == 4)
         {
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 5; i++)
             {
                 // 랜덤 퍼센트율
                 int randomCard;
@@ -267,9 +294,10 @@ public class Spawner : MonoBehaviour
             randomTrans = 0;
             createdPlace++;
         }
-        if (shopLevel == 5)
+        if (UIManager.Instance.shopLevel == 5)
         {
-            for (int i = 0; i < 5; i++)
+
+            for (int i = 0; i < 6; i++)
             {
                 // 랜덤 퍼센트율
                 int randomCard;
@@ -307,7 +335,6 @@ public class Spawner : MonoBehaviour
             }
             randomTrans = 0;
         }
-        
     }
 
     void SummonMonster(int a, int b)

@@ -13,9 +13,6 @@ public class Drag2D : MonoBehaviour
     Vector2 battleZonePos;
     Vector2 meltPos;
 
-    GameObject rect;
-    SpriteRenderer rectSpriteRenderer;
-
     float distance = 10;
     private bool isClickBool = false;
     public bool isFreezen = false;
@@ -26,10 +23,6 @@ public class Drag2D : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         pol = GetComponent<PolygonCollider2D>();
         pos = this.gameObject.transform.position;
-
-        rect = GameObject.FindGameObjectWithTag("Rect");
-        rectSpriteRenderer = rect.GetComponent<SpriteRenderer>();
-        rectSpriteRenderer.enabled = false;
     }
 
     private void OnMouseDrag()
@@ -49,9 +42,6 @@ public class Drag2D : MonoBehaviour
         {
             UIManager.Instance.sell.gameObject.SetActive(true);
         }
-        rectSpriteRenderer.enabled = true;
-        rect.transform.SetParent(gameObject.transform);
-        rect.transform.position = pos;
     }
 
     private void OnMouseUp()
@@ -67,7 +57,6 @@ public class Drag2D : MonoBehaviour
         {
             StartCoroutine(COR_SellButton());
         }
-        rectSpriteRenderer.enabled = false;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -141,7 +130,7 @@ public class Drag2D : MonoBehaviour
                 // 몬스터가 배틀 존에 닿으면 골드가 차감 되고 배틀몬스터 태그로 바뀐다
                 if (collision.gameObject.CompareTag("BattleZone"))
                 {
-                    if (UIManager.Instance.goldCount > 0)
+                    if (UIManager.Instance.goldCount >= 3)
                     {
                         spriteRenderer.sortingOrder = 3;
                         gameObject.tag = "BattleMonster";
@@ -176,7 +165,7 @@ public class Drag2D : MonoBehaviour
     {
         gameObject.tag = "MeltCard";
         pos = battleZonePos;
-        yield return new WaitForSeconds(0.11f);
+        yield return wait;
         gameObject.tag = "BattleMonster";
         pos = meltPos;
         this.gameObject.transform.position = pos;
