@@ -27,9 +27,9 @@ public class Card : MonoBehaviour
     {
         if (GameMGR.Instance.customDeckShop.isJoinShop)
         {
-            if (GameMGR.Instance.customDeckShop.AddTierList(cardInfo.tier, cardInfo.objName))
-            {
-                if (isTouch)
+            GameMGR.Instance.customDeckShop.AddTierList(cardInfo.tier, cardInfo.objName);
+
+            if (!isTouch && GameMGR.Instance.customDeckShop.AddTierList(cardInfo.tier, cardInfo.objName) < 8)
                 {
                     isTouch = false;
                     spriteRenderer.color = new Color(1, 1, 1, 1);
@@ -39,8 +39,6 @@ public class Card : MonoBehaviour
                     isTouch = true;
                     spriteRenderer.color = new Color(0.3f, 0.3f, 0.3f, 1);
                 }
-            }
-            else Debug.Log("8마리 넘음");
         }
     }
 

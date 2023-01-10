@@ -14,7 +14,9 @@ public class MyDeck : MonoBehaviour
     }
     public void OnClick_Delete_MyDeck()
     {
-
+        Debug.Log("ªË¡¶");
+        GameMGR.Instance.dataBase.inventoryData.DeleteCustomDeck(myDeck.Num);
+        Destroy(gameObject);
     }
     public void OnClick_Move_MyDeckInfo()
     {
@@ -34,7 +36,7 @@ public class MyDeck : MonoBehaviour
                 {
                     obj = GameObject.Instantiate<CardUI>(card);
                     myDeckList.Add(obj.gameObject);
-                    obj.SetMyInfo(myDeck.tier_1[i]);
+                    obj.SetMyInfo(myDeck.tier_1[i].Replace(" ",""));
                     obj.transform.SetParent(GameMGR.Instance.uIMGR.tier[0].transform);
                     obj.transform.localScale = Vector3.one;
                 }
@@ -44,7 +46,7 @@ public class MyDeck : MonoBehaviour
                 {
                     obj = GameObject.Instantiate<CardUI>(card);
                     myDeckList.Add(obj.gameObject);
-                    obj.SetMyInfo(myDeck.tier_2[i]);
+                    obj.SetMyInfo(myDeck.tier_2[i].Replace(" ", ""));
                     obj.transform.SetParent(GameMGR.Instance.uIMGR.tier[1].transform);
                     obj.transform.localScale = Vector3.one;
                 }
@@ -53,7 +55,7 @@ public class MyDeck : MonoBehaviour
                 {
                     obj = GameObject.Instantiate<CardUI>(card);
                     myDeckList.Add(obj.gameObject);
-                    obj.SetMyInfo(myDeck.tier_3[i]);
+                    obj.SetMyInfo(myDeck.tier_3[i].Replace(" ", ""));
                     obj.transform.SetParent(GameMGR.Instance.uIMGR.tier[2].transform);
                     obj.transform.localScale = Vector3.one;
                 }
@@ -62,7 +64,7 @@ public class MyDeck : MonoBehaviour
                 {
                     obj = GameObject.Instantiate<CardUI>(card);
                     myDeckList.Add(obj.gameObject);
-                    obj.SetMyInfo(myDeck.tier_4[i]);
+                    obj.SetMyInfo(myDeck.tier_4[i].Replace(" ", ""));
                     obj.transform.SetParent(GameMGR.Instance.uIMGR.tier[3].transform);
                     obj.transform.localScale = Vector3.one;
                 }
@@ -71,7 +73,7 @@ public class MyDeck : MonoBehaviour
                 {
                     obj = GameObject.Instantiate<CardUI>(card);
                     myDeckList.Add(obj.gameObject);
-                    obj.SetMyInfo(myDeck.tier_5[i]);
+                    obj.SetMyInfo(myDeck.tier_5[i].Replace(" ", ""));
                     obj.transform.SetParent(GameMGR.Instance.uIMGR.tier[4].transform);
                     obj.transform.localScale = Vector3.one;
                 }
@@ -80,7 +82,7 @@ public class MyDeck : MonoBehaviour
                 {
                     obj = GameObject.Instantiate<CardUI>(card);
                     myDeckList.Add(obj.gameObject);
-                    obj.SetMyInfo(myDeck.tier_6[i]);
+                    obj.SetMyInfo(myDeck.tier_6[i].Replace(" ", ""));
                     obj.transform.SetParent(GameMGR.Instance.uIMGR.tier[5].transform);
                     obj.transform.localScale = Vector3.one;
                 }

@@ -12,10 +12,6 @@ public class CardUI : MonoBehaviour, IPointerClickHandler,IPointerEnterHandler,I
 
     /*자신의 오브젝트 이름과 같은 스크립터블 데이터를 읽어와서 설정한다
     스프라이트 랜더러도 같은 원리로 설정*/
-    private void Start()
-    {
-
-    }
     public void SetMyInfo(string myname)
     {
         name = myname;
@@ -29,22 +25,26 @@ public class CardUI : MonoBehaviour, IPointerClickHandler,IPointerEnterHandler,I
     {
         if (GameMGR.Instance.customDeckShop.isJoinShop)
         {
-            if (GameMGR.Instance.customDeckShop.AddTierList(cardInfo.tier, cardInfo.objName))
-            {
-                if (isTouch)
+                if (!isTouch && GameMGR.Instance.customDeckShop.AddTierList(cardInfo.tier, cardInfo.objName) < 8)
+                {
+
+                Debug.Log(GameMGR.Instance.customDeckShop.AddTierList(cardInfo.tier, cardInfo.objName));
+                    isTouch = true;
+                    image.color = new Color(0.3f, 0.3f, 0.3f, 1);
+                }
+                else if (isTouch)
                 {
                     isTouch = false;
                     image.color = new Color(1, 1, 1, 1);
                 }
-                else
-                {
-                    isTouch = true;
-                    image.color = new Color(0.3f, 0.3f, 0.3f, 1);
-                }
-            }
-            else Debug.Log("8마리 넘음");
+            
         }
     }                      
+    public void ClearClick()
+    {
+        isTouch = false;
+        image.color = new Color(1, 1, 1, 1);
+    }
 
     public void OnPointerExit(PointerEventData eventData)
     {
