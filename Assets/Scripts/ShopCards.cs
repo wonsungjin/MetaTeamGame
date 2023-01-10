@@ -5,9 +5,9 @@ using UnityEngine;
 public class ShopCards : MonoBehaviour
 {
     [SerializeField] private CardUI card;
-    [SerializeField] private GameObject[] direction;
     [SerializeField] private GameObject[] tier;
     private Dictionary<int, List<CardInfo>> customDeckList = new Dictionary<int, List<CardInfo>>();
+    public List<CardUI> clearList = new List<CardUI>();
     void Start()
     {
         CardUI obj = null;
@@ -25,55 +25,10 @@ public class ShopCards : MonoBehaviour
                 obj = GameObject.Instantiate<CardUI>(card);
                 obj.transform.SetParent(tier[tierNum-1].transform);
                 obj.transform.localScale = Vector3.one;
-                obj.SetMyInfo(list[i].objName);
+                obj.SetMyInfo(list[i].name);
+                clearList.Add(obj);
             }
         }
-    }
-    private int yPos;
-    public void OnClick_Move_DownCamera()
-    {
-        if (yPos > -50)
-        {
-            if (yPos == 0) if(!direction[0].activeSelf) direction[0].SetActive(true);
-            yPos -= 10;
-            if (yPos <= -50)  direction[1].SetActive(false);
-            StartCoroutine(COR_OnClick_Move_Camera(0));
-        }
-    }
-    public void OnClick_Move_UpCamera()
-    {
-        if (yPos < 0)
-        {
-            if (yPos <= -50) if (!direction[1].activeSelf) direction[1].SetActive(true);
-            yPos += 10;
-            if (yPos >= 0)  direction[0].SetActive(false);
-            StartCoroutine(COR_OnClick_Move_Camera(1));
-        }
-    }
-    private WaitForSeconds delay = new WaitForSeconds(0.01f);
-    IEnumerator COR_OnClick_Move_Camera(int direction)
-    {
-        if (direction == 0)//down
-        {
-            while (Camera.main.transform.position.y > yPos)
-            {
-                Camera.main.transform.Translate(Vector2.down/2);
-                yield return delay;
-            }
-            Camera.main.transform.position = new Vector3(Camera.main.transform.position.x, yPos,-10);
-        }
-        else//up
-        {
-            while (Camera.main.transform.position.y < yPos)
-            {
-                Camera.main.transform.Translate(Vector2.up/2);
-                yield return delay;
-            }
-            Camera.main.transform.position = new Vector3(Camera.main.transform.position.x, yPos,-10);
-
-        }
-        
-
     }
     public void AddTierList(int tier, CardInfo name)
     {
@@ -94,7 +49,14 @@ public class ShopCards : MonoBehaviour
         Debug.Log(name);
         List<CardInfo> list = null;
         bool listCheck = customDeckList.TryGetValue(tier, out list);
-        return list;
-        
+        return list;        
+    }
+    public  void ClearCardUIClick()
+    {
+
+        for(int i =0; i< clearList.Count;i++)
+        {
+            clearList[i].ClearClick();
+        }
     }
 }

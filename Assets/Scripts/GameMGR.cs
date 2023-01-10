@@ -11,6 +11,7 @@ public partial class GameMGR : Singleton<GameMGR>
     public CardList cardList;
     public CustomDeckShop customDeckShop;
     public ObjectPool objectPool;
+    public ShopCards shopCards;
     private void Start()
     {
         GetComponentAgain();
@@ -33,6 +34,7 @@ public partial class GameMGR : Singleton<GameMGR>
         uIMGR = FindObjectOfType<UIMGR>();
         metaTrendAPI = GetComponent<MetaTrendAPI>();
         cardCreate = GetComponent<CardCreate>();
+        shopCards = GetComponent<ShopCards>();
         customDeckShop = GetComponent<CustomDeckShop>();
         dataBase = GetComponent<DataBase>();
         objectPool = GetComponent<ObjectPool>();

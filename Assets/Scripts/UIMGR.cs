@@ -12,7 +12,6 @@ public class UIMGR : MonoBehaviour
     [SerializeField] private GameObject myPackList;
     [SerializeField] private MyDeck packButton;
     [SerializeField] private GameObject packAddButton;
-    [SerializeField] private GameObject ShopCards;
     [SerializeField] public GameObject[] tier;
     public void OnCilck_Join_PackChoice()
     {
@@ -39,7 +38,6 @@ public class UIMGR : MonoBehaviour
         GameMGR.Instance.customDeckShop.OnClick_Join_CustomDeckShop();
         packChoicePannel.SetActive(false);
         customPannel.SetActive(true);
-        ShopCards.SetActive(true);
     }
     public void OnClick_Join_MyDeckInfo()
     {
@@ -63,6 +61,10 @@ public class UIMGR : MonoBehaviour
             myDeckPannel.SetActive(false);
         }
         packChoicePannel.SetActive(true);
-        customPannel.SetActive(false);
+        if (customPannel.activeSelf)
+        {
+            GameMGR.Instance.customDeckShop.ClearCustomDeckList();
+            customPannel.SetActive(false);
+        }
     }
 }
