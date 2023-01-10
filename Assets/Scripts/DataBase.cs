@@ -32,12 +32,12 @@ public class DataBase : MonoBehaviour
         {
            Debug.Log(nullFillter.GetValue("Name"));
         }*/
-            //foreach (BsonDocument doc in documents)
-            //{
-            //    Debug.Log($"Name: {doc.GetValue("Name")}\n" +
-            //              $"Email: {doc.GetValue("Email")}\n" +
-            //              $"Password: {doc.GetValue("Password")}");
-            //}
+        //foreach (BsonDocument doc in documents)
+        //{
+        //    Debug.Log($"Name: {doc.GetValue("Name")}\n" +
+        //              $"Email: {doc.GetValue("Email")}\n" +
+        //              $"Password: {doc.GetValue("Password")}");
+        //}
         //var address = nested["address"].AsBsonDocument;
         //Console.WriteLine(address["city"].AsString);
         //// or, jump straight to the value ...
@@ -65,11 +65,11 @@ public class DataBase : MonoBehaviour
         var document = new BsonDocument { { userName, score } };
         await collection.InsertOneAsync(document);
     }*/
-
+    BsonDocument nullFillter;
     public void Login()
     {
         var fillter = Builders<BsonDocument>.Filter.Eq("address", GameMGR.Instance.metaTrendAPI.res_UserProfile.userProfile.public_address);//찾을 도큐먼트의 Name이 아디인것
-        var nullFillter = collection.Find(fillter).FirstOrDefault();//if null 이면 찾지 못함
+        nullFillter = collection.Find(fillter).FirstOrDefault();//if null 이면 찾지 못함
         if (nullFillter == null)
         {
             Debug.Log("회원가입");
@@ -78,57 +78,82 @@ public class DataBase : MonoBehaviour
                 ["address"] = GameMGR.Instance.metaTrendAPI.res_UserProfile.userProfile.public_address,
                 ["username"] = GameMGR.Instance.metaTrendAPI.res_UserProfile.userProfile.username,
             }));
-            var update = Builders<BsonDocument>.Update.Set("inventory", inventoryData) ;//찾은거 바꾸기
-            collection.UpdateOne(fillter,update);
+            var update = Builders<BsonDocument>.Update.Set("inventory", inventoryData);//찾은거 바꾸기
+            collection.UpdateOne(fillter, update);
         }
         else
         {
-            BsonValue value = null;
-            BsonValue value2 = null;
-            string number=null;
-            for (int i = 0; i < 10; i++)
-            {
-                nullFillter.TryGetValue("inventory", out value);
-                if (i == 0) number = "one";
-                else if (i == 1) number = "two";
-                else if (i == 2) number = "three";
-                else if (i == 3) number = "four";
-                else if (i == 4) number = "five";
-                else if (i == 5) number = "six";
-                else if (i == 6) number = "seven";
-                else if (i == 7) number = "eight";
-                else if (i == 8) number = "nine";
-                else if (i == 9) number = "ten";
-                value.ToBsonDocument().TryGetValue(number, out value);
-                if (value.ToString() == "BsonNull") continue;// 해당 칸에 덱이 없다면 다음으로 이동
-                    CustomDeck customDeck = new CustomDeck();
-                for (int num = 1; num < 7; num++)
-                {
-                    Debug.Log(value);
-                    value.ToBsonDocument().TryGetValue($"tier_{num}", out value2);
-                    string[] valueSplit = value2.ToString().Replace("[", "").Replace("]", "").Replace(" ", "").Split(',');
-                    for (int j = 0; j < valueSplit.Length; j++)
-                    {
-                        if (num == 1) customDeck.tier_1.Add(valueSplit[j]);
-                        else if (num == 2) customDeck.tier_2.Add(valueSplit[j]);
-                        else if (num == 3) customDeck.tier_3.Add(valueSplit[j]);
-                        else if (num == 4) customDeck.tier_4.Add(valueSplit[j]);
-                        else if (num == 5) customDeck.tier_5.Add(valueSplit[j]);
-                        else if (num == 6) customDeck.tier_6.Add(valueSplit[j]);
-                        Debug.Log(valueSplit[j]);
-                    }
-                }
-                inventoryData.AddCustomDeck(customDeck);
-            }
+            FindInventoryData();
+            GameMGR.Instance.dataBase.InsertInventoryData();
+            GameMGR.Instance.uIMGR.SetParentPackAddButton();
         }
 
     }
     public InventoryData inventoryData = new InventoryData();
-    public void InsertInventoryData()
+    public void FindInventoryData()
+    {
+        var fillter = Builders<BsonDocument>.Filter.Eq("address", GameMGR.Instance.metaTrendAPI.res_UserProfile.userProfile.public_address);//찾을 도큐먼트의 Name이 아디인것
+        nullFillter = collection.Find(fillter).FirstOrDefault();//if null 이면 찾지 못함
+        BsonValue value = null;
+        BsonValue value2 = null;
+        string number = null;
+        for (int i = 0; i < 10; i++)
+        {
+            nullFillter.TryGetValue("inventory", out value);
+
+            if (value.ToString() == "BsonNull") return;//인벤토리가 비어있으면 리턴
+            if (i == 0) number = "one";
+            else if (i == 1) number = "two";
+            else if (i == 2) number = "three";
+            else if (i == 3) number = "four";
+            else if (i == 4) number = "five";
+            else if (i == 5) number = "six";
+            else if (i == 6) number = "seven";
+            else if (i == 7) number = "eight";
+            else if (i == 8) number = "nine";
+            else if (i == 9) number = "ten";
+            value.ToBsonDocument().TryGetValue(number, out value);
+            if (value.ToString() == "BsonNull") continue;// 해당 칸에 덱이 없다면 다음으로 이동
+            Debug.Log(number);
+            CustomDeck customDeck = new CustomDeck();
+            for (int num = 1; num < 7; num++)
+            {
+                Debug.Log(value);
+                value.ToBsonDocument().TryGetValue($"tier_{num}", out value2);
+                string[] valueSplit = value2.ToString().Replace("[", "").Replace("]", "").Replace(" ", "").Split(',');
+                for (int j = 0; j < valueSplit.Length; j++)
+                {
+                    if (num == 1) customDeck.tier_1.Add(valueSplit[j]);
+                    else if (num == 2) customDeck.tier_2.Add(valueSplit[j]);
+                    else if (num == 3) customDeck.tier_3.Add(valueSplit[j]);
+                    else if (num == 4) customDeck.tier_4.Add(valueSplit[j]);
+                    else if (num == 5) customDeck.tier_5.Add(valueSplit[j]);
+                    else if (num == 6) customDeck.tier_6.Add(valueSplit[j]);
+                    Debug.Log(valueSplit[j]);
+                }
+            }
+            inventoryData.AddCustomDeck(customDeck);
+            Debug.Log("?");
+        }
+    }
+    public async void InsertInventoryData()
     {
         var fillter = Builders<BsonDocument>.Filter.Eq("address", GameMGR.Instance.metaTrendAPI.res_UserProfile.userProfile.public_address);//찾을 도큐먼트의 Name이 아디인것
         var update = Builders<BsonDocument>.Update.Set("inventory", inventoryData);//찾은거 바꾸기
-        collection.UpdateOne(fillter, update);
+        await collection.UpdateOneAsync(fillter, update);
+        
+    }
+    public void Sort()
+    {
+        inventoryData = new InventoryData();
+        MyDeck[] myDecks = FindObjectsOfType<MyDeck>();
+        for (int i = 0; i < myDecks.Length; i++)
+        {
+            Destroy(myDecks[i].gameObject);
+        }
+        FindInventoryData();
+        GameMGR.Instance.dataBase.InsertInventoryData();
+        GameMGR.Instance.uIMGR.SetParentPackAddButton();
     }
 }
 public class InventoryData
@@ -143,22 +168,92 @@ public class InventoryData
     public CustomDeck eight;
     public CustomDeck nine;
     public CustomDeck ten;
+    public void DeleteCustomDeck(int Num)
+    {
+
+        Debug.Log(Num);
+        if (Num == 1) one = null;
+        else if (Num == 2) two = null;
+        else if (Num == 3) three = null;
+        else if (Num == 4) four = null;
+        else if (Num == 5) five = null;
+        else if (Num == 6) six = null;
+        else if (Num == 7) seven = null;
+        else if (Num == 8) eight = null;
+        else if (Num == 9) nine = null;
+        else if (Num == 10) ten = null;
+        GameMGR.Instance.dataBase.InsertInventoryData();
+        GameMGR.Instance.dataBase.Sort();
+    }
     public void AddCustomDeck(CustomDeck customDeck)
     {
-        if(one==null) one = customDeck;
-        else if(two==null) two = customDeck;
-        else if (three==null)three = customDeck;
-        else if (four==null) four = customDeck;
-        else if (five==null) five = customDeck;
-        else if (six==null) six = customDeck;
-        else if (seven==null)seven = customDeck;
-        else if (eight==null)eight = customDeck;
-        else if (nine==null) nine = customDeck;
-        else if (ten==null) ten = customDeck;
+        Debug.Log(customDeck.Num);
+        if (one == null && customDeck != null)
+        {
+            customDeck.Num = 1;
+            one = customDeck;
+            GameMGR.Instance.uIMGR.CreateMyPackButton(one);
+        }
+        else if (two == null && customDeck != null)
+        {
+            customDeck.Num = 2;
+            two = customDeck;
+            GameMGR.Instance.uIMGR.CreateMyPackButton(two);
+        }
+        else if (three == null && customDeck != null)
+        {
+            customDeck.Num = 3;
+            three = customDeck;
+            GameMGR.Instance.uIMGR.CreateMyPackButton(three);
+        }
+        else if (four == null && customDeck != null)
+        {
+            customDeck.Num = 4;
+            four = customDeck;
+            GameMGR.Instance.uIMGR.CreateMyPackButton(four);
+        }
+        else if (five == null && customDeck != null)
+        {
+            customDeck.Num = 5;
+            five = customDeck;
+            GameMGR.Instance.uIMGR.CreateMyPackButton(five);
+        }
+        else if (six == null && customDeck != null)
+        {
+            customDeck.Num = 6;
+            six = customDeck;
+            GameMGR.Instance.uIMGR.CreateMyPackButton(six);
+        }
+        else if (seven == null && customDeck != null)
+        {
+            customDeck.Num = 7;
+            seven = customDeck;
+            GameMGR.Instance.uIMGR.CreateMyPackButton(seven);
+        }
+        else if (eight == null && customDeck != null)
+        {
+            customDeck.Num = 8;
+            eight = customDeck;
+            GameMGR.Instance.uIMGR.CreateMyPackButton(eight);
+        }
+        else if (nine == null && customDeck != null)
+        {
+            customDeck.Num = 9;
+            nine = customDeck;
+            GameMGR.Instance.uIMGR.CreateMyPackButton(nine);
+        }
+        else if (ten == null && customDeck != null)
+        {
+            customDeck.Num = 10;
+            ten = customDeck;
+            GameMGR.Instance.uIMGR.CreateMyPackButton(ten);
+        }
+        GameMGR.Instance.dataBase.InsertInventoryData(); 
     }
 }
 public class CustomDeck
 {
+    public int Num = 0;
     public List<string> tier_1 = new List<string>();
     public List<string> tier_2 = new List<string>();
     public List<string> tier_3 = new List<string>();
