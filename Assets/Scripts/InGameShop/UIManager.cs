@@ -7,10 +7,12 @@ public class UIManager : MonoBehaviour
     private static UIManager instance = null;
     [SerializeField] Text goldTXT = null;
     [SerializeField] Text notGoldTXT = null;
-
-    [SerializeField] public GameObject sell = null;
+    [SerializeField] Text shopLevelTXT = null;
     [SerializeField] Text sellTxt = null;
 
+    [SerializeField] public GameObject sell = null;
+
+    public int shopMoney = 0;
     public int goldCount = 10;
 
     // Public 프로퍼티로 선언해서 외부에서 private 멤버변수에 접근만 가능하게 구현
@@ -28,8 +30,8 @@ public class UIManager : MonoBehaviour
 
     private void Awake()
     {
-        sell.gameObject.SetActive(false);
-        sellTxt.gameObject.SetActive(false);
+        // 처음 시작시 초기화
+        FirstReset();
 
         if (null == instance)
         {
@@ -48,6 +50,8 @@ public class UIManager : MonoBehaviour
     private void Update()
     {
         goldTXT.text = "Gold : " + goldCount.ToString();
+        shopLevelTXT.text = "Shop Level :" + shopMoney.ToString();
+
         if(sell.activeSelf == false)
         {
             sellTxt.gameObject.SetActive(false);
@@ -63,5 +67,11 @@ public class UIManager : MonoBehaviour
         notGoldTXT.gameObject.SetActive(true);
         yield return new WaitForSeconds(0.6f);
         notGoldTXT.gameObject.SetActive(false);
+    }
+
+    private void FirstReset()
+    {
+        sell.gameObject.SetActive(false);
+        sellTxt.gameObject.SetActive(false);
     }
 }

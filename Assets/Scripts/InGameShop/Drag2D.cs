@@ -1,22 +1,35 @@
+using MongoDB.Driver;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Drag2D : MonoBehaviour
 {
+    WaitForSeconds wait = new WaitForSeconds(0.11f);
+
     PolygonCollider2D pol;
     SpriteRenderer spriteRenderer;
     Vector2 pos;
     Vector2 battleZonePos;
+    Vector2 meltPos;
+
+    GameObject rect;
+    SpriteRenderer rectSpriteRenderer;
 
     float distance = 10;
     private bool isClickBool = false;
     public bool isFreezen = false;
-
+  
+    
     private void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         pol = GetComponent<PolygonCollider2D>();
         pos = this.gameObject.transform.position;
+
+        rect = GameObject.FindGameObjectWithTag("Rect");
+        rectSpriteRenderer = rect.GetComponent<SpriteRenderer>();
+        rectSpriteRenderer.enabled = false;
     }
 
     private void OnMouseDrag()
@@ -29,7 +42,6 @@ public class Drag2D : MonoBehaviour
     private void OnMouseDown()
     {
         isClickBool = false;
-        // spriteRenderer.color = Color.red;
         pol.enabled = false;
         battleZonePos = pos;
 
@@ -37,6 +49,9 @@ public class Drag2D : MonoBehaviour
         {
             UIManager.Instance.sell.gameObject.SetActive(true);
         }
+        rectSpriteRenderer.enabled = true;
+        rect.transform.SetParent(gameObject.transform);
+        rect.transform.position = pos;
     }
 
     private void OnMouseUp()
@@ -52,16 +67,20 @@ public class Drag2D : MonoBehaviour
         {
             StartCoroutine(COR_SellButton());
         }
+        rectSpriteRenderer.enabled = false;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (isClickBool == true)
         {
-            // 잡고 있는 오브젝트가 배틀몬스터에 닿으면 위치값 서로 바뀜
-            if (collision.gameObject.CompareTag("BattleMonster"))
+            if (gameObject.CompareTag("BattleMonster"))
             {
-                collision.gameObject.transform.position = pos;
+                // 잡고 있는 오브젝트가 배틀몬스터에 닿으면 위치값 서로 바뀜
+                if (collision.gameObject.CompareTag("BattleMonster"))
+                {
+                    collision.gameObject.transform.position = pos;
+                }
             }
 
             // 프리즈 카드를 잡았을 때
@@ -74,9 +93,20 @@ public class Drag2D : MonoBehaviour
                     StartCoroutine(COR_BackAgain());
                     gameObject.tag = "MeltCard";
                 }
+
+                // 얼려있을 때 배틀존에 가면 구매 가능하게 하는 예외처리
+                if (UIManager.Instance.goldCount > 0)
+                {
+                    if (collision.gameObject.CompareTag("BattleZone"))
+                    {
+                        meltPos = collision.gameObject.transform.position;
+                        StartCoroutine(COR_BackMelt());
+                    }
+                }
             }
         }
     }
+
 
     private void OnTriggerStay2D(Collider2D collision)
     {
@@ -126,26 +156,38 @@ public class Drag2D : MonoBehaviour
     // 판매버튼 ON OFF
     IEnumerator COR_SellButton()
     {
-        yield return new WaitForSeconds(0.1f);
+        yield return wait;
         UIManager.Instance.sell.gameObject.SetActive(false);
     }
     // 원래 위치로 돌리는 함수
     private IEnumerator COR_BackAgain()
     {
-        yield return new WaitForSeconds(0.11f);
+        yield return wait;
         transform.position = pos;
     }
     // 프리즈카드로 바꾸는 함수
     IEnumerator COR_BackCard()
     {
-        yield return new WaitForSeconds(0.11f);
+        yield return wait;
         gameObject.tag = "FreezeCard";
+    }
+    // 얼린카드를 구매시 들어갈 함수 원래 자리로 돌아가 자리의 bool값을 바꾼후 구매된다.
+    IEnumerator COR_BackMelt()
+    {
+        gameObject.tag = "MeltCard";
+        pos = battleZonePos;
+        yield return new WaitForSeconds(0.11f);
+        gameObject.tag = "BattleMonster";
+        pos = meltPos;
+        this.gameObject.transform.position = pos;
+        spriteRenderer.sortingOrder = 3;
+        UIManager.Instance.goldCount -= 3;
     }
 
     void SellButton()
     {
-        Debug.Log("????????????");
         UIManager.Instance.sell.gameObject.SetActive(false);
+        transform.DetachChildren();
         Destroy(gameObject);
     }
 }

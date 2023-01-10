@@ -9,12 +9,15 @@ public class BattleZone : MonoBehaviour
         if (collision.gameObject.CompareTag("BattleMonster"))
         {
             this.isHere = true;
+            this.gameObject.tag = "FullZone";
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         this.isHere = false;
-        Debug.Log("³ª°¨");
+
+        if(collision.gameObject.CompareTag("BattleMonster"))
+        this.gameObject.tag = "BattleZone";
     }
 }
