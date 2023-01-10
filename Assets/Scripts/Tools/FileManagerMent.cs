@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 namespace CreateScriptable
 {
-    internal class FileManageMent
+    public class FileManageMent
     {
         private ReadExcel rf = null;
         private WriteExcel wf = null;
