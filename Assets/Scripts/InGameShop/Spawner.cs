@@ -48,6 +48,7 @@ public class Spawner : MonoBehaviour
     }
     private void Start()
     {
+        monsterNames.Add("orcmage");
         // 처음에 카드 생성
         if (isFirstStart == false)
         {
@@ -57,7 +58,11 @@ public class Spawner : MonoBehaviour
             {
                 randomNum = Random.Range(0, 3);
                 //GameObject mon = Instantiate(monsters[randomNum], monsterTrans[randomTrans].transform.position, Quaternion.identity);
-                GameObject mon = Instantiate(Resources.Load<GameObject>($"Prefabs/{name}"), monsterTrans[randomTrans].transform.position, Quaternion.identity);
+                GameObject mon = Instantiate(Resources.Load<GameObject>($"Prefabs/{monsterNames[0]}"), monsterTrans[randomTrans].transform.position, Quaternion.identity);
+                //mon.AddComponent<Drag2D>();
+                //mon.AddComponent<PolygonCollider2D>();
+                //mon.AddComponent<Rigidbody2D>();
+                //mon.tag = "Monster";
 
                 randomTrans++;
 
@@ -372,7 +377,8 @@ public class Spawner : MonoBehaviour
     {
         randomNum = Random.Range(a, b);
 
-        GameObject mon = Instantiate(monsters[randomNum], monsterTrans[randomTrans].transform.position, Quaternion.identity);
+        //GameObject mon = Instantiate(monsters[randomNum], monsterTrans[randomTrans].transform.position, Quaternion.identity);
+        GameObject mon = Instantiate(Resources.Load<GameObject>($"Prefabs/{monsterNames[0]}"), monsterTrans[randomTrans].transform.position, Quaternion.identity);
 
         randomTrans++;
     }

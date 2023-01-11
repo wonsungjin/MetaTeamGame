@@ -8,7 +8,7 @@ public class Drag2D : MonoBehaviour
     WaitForSeconds wait = new WaitForSeconds(0.11f);
 
     PolygonCollider2D pol;
-    SpriteRenderer spriteRenderer;
+    MeshRenderer spriteRenderer;
     Vector2 pos;
     Vector2 battleZonePos;
     Vector2 meltPos;
@@ -20,7 +20,7 @@ public class Drag2D : MonoBehaviour
     
     private void Start()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer = GetComponent<MeshRenderer>();
         pol = GetComponent<PolygonCollider2D>();
         pos = this.gameObject.transform.position;
     }
@@ -35,10 +35,7 @@ public class Drag2D : MonoBehaviour
     private void OnMouseDown()
     {
         isClickBool = false;
-        if (!gameObject.CompareTag("BattleMonster"))
-        {
             pol.enabled = false;
-        }
         battleZonePos = pos;
 
         if (gameObject.CompareTag("BattleMonster"))
@@ -50,11 +47,8 @@ public class Drag2D : MonoBehaviour
     private void OnMouseUp()
     {
         isClickBool = true;
-
-        if (!gameObject.CompareTag("BattleMonster"))
-        {
             pol.enabled = true;
-        }
+       
 
         if (this.gameObject.CompareTag("Monster") || this.gameObject.CompareTag("BattleMonster") || this.gameObject.CompareTag("FreezeCard"))
         {
@@ -79,8 +73,6 @@ public class Drag2D : MonoBehaviour
 
         if (isClickBool == true)
         {
-           
-
             // 프리즈 카드를 잡았을 때
             if (gameObject.CompareTag("FreezeCard"))
             {
