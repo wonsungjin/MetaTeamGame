@@ -16,9 +16,10 @@ MonoBehaviour:
   objName: slave 
   level: 1
   tier: 1
-  tribe: human
+  tribe: undead
   hp: 1
   attackValue: 1
   skilltype: passive
   skill: token
   appear: FALSE
+  : 

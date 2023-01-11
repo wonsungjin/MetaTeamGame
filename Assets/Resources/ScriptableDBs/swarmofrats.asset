@@ -22,3 +22,4 @@ MonoBehaviour:
   skilltype: death
   skill: Summons a rat (1/1) equal to the attack power value. Summons a rat (2/2) equal to the attack power value. Summons a rat (3/3) equal to the attack power value.
   appear: TRUE
+  : 

@@ -16,9 +16,10 @@ MonoBehaviour:
   objName: pigeonter
   level: 1
   tier: 3
-  tribe: human
+  tribe: undead
   hp: 3
   attackValue: 3
   skilltype: alive
   skill: Gives three random friendly units +1 Health +1 Attack. Gives three random friendly units +2 Health +2 Attack. Gives three random friendly units +3 Health +3 Attack.
   appear: TRUE
+  : 

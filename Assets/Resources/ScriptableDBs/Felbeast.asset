@@ -22,3 +22,4 @@ MonoBehaviour:
   skilltype: turn_end
   skill: Give two random friendly units +1 health. Give two random friendly units +2 health. Give two random friendly units +3 health.
   appear: TRUE
+  : 

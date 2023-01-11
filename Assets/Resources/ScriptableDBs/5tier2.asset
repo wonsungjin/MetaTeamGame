@@ -16,9 +16,10 @@ MonoBehaviour:
   objName: 5tier2
   level: 1
   tier: 5
-  tribe: human
+  tribe: undead
   hp: 9
   attackValue: 5
   skilltype: passive
   skill: dummy
   appear: TRUE
+  : 
