@@ -1,5 +1,6 @@
 using MongoDB.Driver;
 using System.Collections;
+using Unity.Burst.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -13,11 +14,12 @@ public class Drag2D : MonoBehaviour
     Vector2 battleZonePos;
     Vector2 meltPos;
 
+    float timer = 0f;
     float distance = 10;
     private bool isClickBool = false;
     public bool isFreezen = false;
-  
-    
+
+
     private void Start()
     {
         spriteRenderer = GetComponent<MeshRenderer>();
@@ -30,12 +32,36 @@ public class Drag2D : MonoBehaviour
         Vector3 mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance);
         Vector3 objPosition = Camera.main.ScreenToWorldPoint(mousePosition);
         transform.position = objPosition;
+
+        RaycastHit2D hit = Physics2D.Raycast(objPosition, Vector2.zero);
+
+        if (hit.collider != null)
+        {
+            if (hit.collider.CompareTag("BattleMonster"))
+            {
+                if (hit.collider.name != this.gameObject.name)
+                    hit.collider.gameObject.transform.position = pos;
+
+                else if (hit.collider.name == this.gameObject.name)
+                {
+                    timer += Time.deltaTime;
+
+                    if (timer > 1f)
+                        hit.collider.gameObject.transform.position = pos;
+                }
+            }
+
+            else
+                timer = 0f;
+        }
     }
+
+  
 
     private void OnMouseDown()
     {
         isClickBool = false;
-            pol.enabled = false;
+        pol.enabled = false;
         battleZonePos = pos;
 
         if (gameObject.CompareTag("BattleMonster"))
@@ -47,8 +73,8 @@ public class Drag2D : MonoBehaviour
     private void OnMouseUp()
     {
         isClickBool = true;
-            pol.enabled = true;
-       
+        pol.enabled = true;
+
 
         if (this.gameObject.CompareTag("Monster") || this.gameObject.CompareTag("BattleMonster") || this.gameObject.CompareTag("FreezeCard"))
         {
