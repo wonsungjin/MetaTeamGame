@@ -22,3 +22,4 @@ MonoBehaviour:
   skilltype: passive
   skill: dummy
   appear: TRUE
+  : 

@@ -12,12 +12,12 @@ public class CustomDeckShop : MonoBehaviour
     {
         Debug.Log("아오");
         List<string> list = null;
-        if (customDeckList.TryGetValue(1, out list)) customDeck.tier_1 = list.ToList();
-        if (customDeckList.TryGetValue(2, out list)) customDeck.tier_2 = list.ToList();
-        if (customDeckList.TryGetValue(3, out list)) customDeck.tier_3 = list.ToList();
-        if (customDeckList.TryGetValue(4, out list)) customDeck.tier_4 = list.ToList();
-        if (customDeckList.TryGetValue(5, out list)) customDeck.tier_5 = list.ToList();
-        if (customDeckList.TryGetValue(6, out list)) customDeck.tier_6 = list.ToList();
+        if (customDeckList.TryGetValue(1, out list)) customDeck.tier_1 = list;
+        if (customDeckList.TryGetValue(2, out list)) customDeck.tier_2 = list;
+        if (customDeckList.TryGetValue(3, out list)) customDeck.tier_3 = list;
+        if (customDeckList.TryGetValue(4, out list)) customDeck.tier_4 = list;
+        if (customDeckList.TryGetValue(5, out list)) customDeck.tier_5 = list;
+        if (customDeckList.TryGetValue(6, out list)) customDeck.tier_6 = list;
         //if (customDeck.tier_1.Count < 8
         // && customDeck.tier_2.Count < 8
         // && customDeck.tier_3.Count < 8
@@ -49,21 +49,18 @@ public class CustomDeckShop : MonoBehaviour
         if (list.Count < 8)
         {
             if (list.Contains(name) == false) list.Add(name);
+            else { list.Remove(name); Debug.Log("삭제"); }
         }
         else
         {
-            if (list.Contains(name) == true) list.Remove(name);
+            list.Remove(name); Debug.Log("삭제");
+            return list.Count+1;
         }
-        return list.Count;
+        return 0;
     }
     public void ClearCustomDeckList()
     {
-        customDeck.tier_1.Clear();
-        customDeck.tier_2.Clear();
-        customDeck.tier_3.Clear();
-        customDeck.tier_4.Clear();
-        customDeck.tier_5.Clear();
-        customDeck.tier_6.Clear();
+        customDeckList.Clear();
         GameMGR.Instance.shopCards.ClearCardUIClick();
     }
 }

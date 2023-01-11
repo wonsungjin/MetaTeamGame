@@ -22,3 +22,4 @@ MonoBehaviour:
   skilltype: passive
   skill: If there is an enemy backline unit attack the enemy backline unit first.
   appear: TRUE
+  : 

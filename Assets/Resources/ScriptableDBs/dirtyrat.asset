@@ -22,3 +22,4 @@ MonoBehaviour:
   skilltype: buy
   skill: A 3-cost clean rat appears in the Unit Hires. A 2-cost clean rat appears in the Unit Hires. A 1-cost clean rat appears in the Unit Hires.
   appear: TRUE
+  : 

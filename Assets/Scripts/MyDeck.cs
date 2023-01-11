@@ -31,7 +31,7 @@ public class MyDeck : MonoBehaviour
         {
             isJoin = true;
             CardUI obj = null;
-            if (myDeck.tier_1[0] != "")
+            if (myDeck.tier_1.Count > 0&&myDeck.tier_1[0]!="")
                 for (int i = 0; i < myDeck.tier_1.Count; i++)
                 {
                     obj = GameObject.Instantiate<CardUI>(card);
@@ -41,7 +41,7 @@ public class MyDeck : MonoBehaviour
                     obj.transform.localScale = Vector3.one;
                 }
             //Debug.Log(myDeck.tier_2[0]);
-            if (myDeck.tier_2[0] != "")
+            if (myDeck.tier_2.Count > 0 &&myDeck.tier_2[0] != "" )
                 for (int i = 0; i < myDeck.tier_2.Count; i++)
                 {
                     obj = GameObject.Instantiate<CardUI>(card);
@@ -50,7 +50,7 @@ public class MyDeck : MonoBehaviour
                     obj.transform.SetParent(GameMGR.Instance.uIMGR.tier[1].transform);
                     obj.transform.localScale = Vector3.one;
                 }
-            if (myDeck.tier_3[0] != "")
+            if (myDeck.tier_3.Count > 0&&myDeck.tier_3[0] != "")
                 for (int i = 0; i < myDeck.tier_3.Count; i++)
                 {
                     obj = GameObject.Instantiate<CardUI>(card);
@@ -59,7 +59,7 @@ public class MyDeck : MonoBehaviour
                     obj.transform.SetParent(GameMGR.Instance.uIMGR.tier[2].transform);
                     obj.transform.localScale = Vector3.one;
                 }
-            if (myDeck.tier_4[0] != "")
+            if (myDeck.tier_4.Count > 0&&myDeck.tier_4[0] != "")
                 for (int i = 0; i < myDeck.tier_4.Count; i++)
                 {
                     obj = GameObject.Instantiate<CardUI>(card);
@@ -68,7 +68,7 @@ public class MyDeck : MonoBehaviour
                     obj.transform.SetParent(GameMGR.Instance.uIMGR.tier[3].transform);
                     obj.transform.localScale = Vector3.one;
                 }
-            if (myDeck.tier_5[0] != "")
+            if (myDeck.tier_5.Count > 0&& myDeck.tier_5[0] != "")
                 for (int i = 0; i < myDeck.tier_5.Count; i++)
                 {
                     obj = GameObject.Instantiate<CardUI>(card);
@@ -77,7 +77,7 @@ public class MyDeck : MonoBehaviour
                     obj.transform.SetParent(GameMGR.Instance.uIMGR.tier[4].transform);
                     obj.transform.localScale = Vector3.one;
                 }
-            if (myDeck.tier_6[0] != "")
+            if (myDeck.tier_6.Count > 0&& myDeck.tier_6[0] != "")
                 for (int i = 0; i < myDeck.tier_6.Count; i++)
                 {
                     obj = GameObject.Instantiate<CardUI>(card);

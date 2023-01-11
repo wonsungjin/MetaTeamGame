@@ -136,11 +136,11 @@ public class DataBase : MonoBehaviour
             Debug.Log("?");
         }
     }
-    public async void InsertInventoryData()
+    public  void InsertInventoryData()
     {
         var fillter = Builders<BsonDocument>.Filter.Eq("address", GameMGR.Instance.metaTrendAPI.res_UserProfile.userProfile.public_address);//찾을 도큐먼트의 Name이 아디인것
         var update = Builders<BsonDocument>.Update.Set("inventory", inventoryData);//찾은거 바꾸기
-        await collection.UpdateOneAsync(fillter, update);
+       collection.UpdateOne(fillter, update);
         
     }
     public void Sort()
