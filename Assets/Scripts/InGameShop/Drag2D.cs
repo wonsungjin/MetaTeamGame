@@ -35,7 +35,10 @@ public class Drag2D : MonoBehaviour
     private void OnMouseDown()
     {
         isClickBool = false;
-        pol.enabled = false;
+        if (!gameObject.CompareTag("BattleMonster"))
+        {
+            pol.enabled = false;
+        }
         battleZonePos = pos;
 
         if (gameObject.CompareTag("BattleMonster"))
@@ -47,7 +50,11 @@ public class Drag2D : MonoBehaviour
     private void OnMouseUp()
     {
         isClickBool = true;
-        pol.enabled = true;
+
+        if (!gameObject.CompareTag("BattleMonster"))
+        {
+            pol.enabled = true;
+        }
 
         if (this.gameObject.CompareTag("Monster") || this.gameObject.CompareTag("BattleMonster") || this.gameObject.CompareTag("FreezeCard"))
         {
@@ -61,16 +68,18 @@ public class Drag2D : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (gameObject.CompareTag("BattleMonster"))
+        {
+            // 잡고 있는 오브젝트가 배틀몬스터에 닿으면 위치값 서로 바뀜
+            if (collision.gameObject.CompareTag("BattleMonster"))
+            {
+                collision.gameObject.transform.position = pos;
+            }
+        }
+
         if (isClickBool == true)
         {
-            if (gameObject.CompareTag("BattleMonster"))
-            {
-                // 잡고 있는 오브젝트가 배틀몬스터에 닿으면 위치값 서로 바뀜
-                if (collision.gameObject.CompareTag("BattleMonster"))
-                {
-                    collision.gameObject.transform.position = pos;
-                }
-            }
+           
 
             // 프리즈 카드를 잡았을 때
             if (gameObject.CompareTag("FreezeCard"))
@@ -115,6 +124,15 @@ public class Drag2D : MonoBehaviour
                 if (collision.gameObject.CompareTag("BattleZone"))
                 {
                     pos = collision.gameObject.transform.position;
+                }
+
+                if (gameObject.CompareTag("BattleMonster"))
+                {
+                    // 잡고 있는 오브젝트가 배틀몬스터에 닿으면 위치값 서로 바뀜
+                    if (collision.gameObject.CompareTag("BattleMonster"))
+                    {
+                        collision.gameObject.transform.position = pos;
+                    }
                 }
             }
 

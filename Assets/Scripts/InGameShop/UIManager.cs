@@ -55,7 +55,7 @@ public class UIManager : MonoBehaviour
     private void Update()
     {
         goldTXT.text = "Gold : " + goldCount.ToString();
-        shopLevelTXT.text = "Shop Level :" + shopMoney.ToString();
+        shopLevelTXT.text = "Shop Gold :" + shopMoney.ToString();
         NowShopLevelTXT.text = "Shop Level :" + shopLevel.ToString();
 
         if(sell.activeSelf == false)

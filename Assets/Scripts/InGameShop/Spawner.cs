@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,15 +8,44 @@ public class Spawner : MonoBehaviour
     [SerializeField] Node[] monsterTrans;
     [Header("몬스터 프리팹")]
     [SerializeField] GameObject[] monsters = null;
+    List<string> monsterNames = new List<string>();
 
+    
     [Header("상점 위치")]
     public int createdPlace = 3;
     public bool isFreeze = false;
     public int randomTrans = 0;
-
+    CustomDeck customDeck = new CustomDeck();
     int randomNum;
     bool isFirstStart = false;
 
+    public void SetMyDeckSetting()
+    {
+        for (int i = 0; i < customDeck.tier_1.Count; i++)
+        {
+            monsterNames.Add(customDeck.tier_1[i]);
+        }
+        for (int i = 0; i < customDeck.tier_2.Count; i++)
+        {
+            monsterNames.Add(customDeck.tier_2[i]);
+        }
+        for (int i = 0; i < customDeck.tier_3.Count; i++)
+        {
+            monsterNames.Add(customDeck.tier_3[i]);
+        }
+        for (int i = 0; i < customDeck.tier_4.Count; i++)
+        {
+            monsterNames.Add(customDeck.tier_4[i]);
+        }
+        for (int i = 0; i < customDeck.tier_5.Count; i++)
+        {
+            monsterNames.Add(customDeck.tier_5[i]);
+        }
+        for (int i = 0; i < customDeck.tier_6.Count; i++)
+        {
+            monsterNames.Add(customDeck.tier_6[i]);
+        }
+    }
     private void Start()
     {
         // 처음에 카드 생성
@@ -26,7 +56,8 @@ public class Spawner : MonoBehaviour
             for (int i = 0; i < createdPlace; i++)
             {
                 randomNum = Random.Range(0, 3);
-                GameObject mon = Instantiate(monsters[randomNum], monsterTrans[randomTrans].transform.position, Quaternion.identity);
+                //GameObject mon = Instantiate(monsters[randomNum], monsterTrans[randomTrans].transform.position, Quaternion.identity);
+                GameObject mon = Instantiate(Resources.Load<GameObject>($"Prefabs/{name}"), monsterTrans[randomTrans].transform.position, Quaternion.identity);
 
                 randomTrans++;
 
