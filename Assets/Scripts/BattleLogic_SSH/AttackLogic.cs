@@ -15,17 +15,14 @@ public class AttackLogic : MonoBehaviour
         attackOrder = order;
     }
 
-    public void UnitAttack(int playerUnitNum, GameObject targetUnit)
+    public void UnitAttack(GameObject targetUnit)
     {
-        // BattleLogic Script에서 호출한 player unit과 일치하는 경우 공격
-        if (attackOrder == playerUnitNum)
-        {
-            playerPosition = gameObject.transform.position;
-            enemyPosition = targetUnit.transform.position;
+        playerPosition = gameObject.transform.position;
+        enemyPosition = targetUnit.transform.position;
 
-            // enemy 피격 후 돌아옴
-            gameObject.transform.position = Vector2.Lerp(playerPosition, enemyPosition, 0.5f);
-            gameObject.transform.position = Vector2.Lerp(enemyPosition, playerPosition, 0.5f);
-        }
+        Debug.Log(gameObject.name + " 공격");
+        Debug.Log(targetUnit.name + " 피격");
+
+        // enemy 피격 후 돌아옴
     }
 }
