@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public partial class GameMGR : Singleton<GameMGR>
 {
@@ -18,8 +19,16 @@ public partial class GameMGR : Singleton<GameMGR>
         metaTrendAPI.GetUserProfile();
         metaTrendAPI.GetSessionID();
         StartCoroutine(COR_GetCoin());
-
+        DontDestroyOnLoad(gameObject);
     }
+    CustomDeck myCustomDeck;
+    public void Save_MyCustomDeck(CustomDeck customDeck)
+    {
+        myCustomDeck = customDeck;
+        Debug.Log("µ¶º±≈√");
+    }
+
+
     IEnumerator COR_GetCoin()
     {
         yield return new WaitForSeconds(0.5f);

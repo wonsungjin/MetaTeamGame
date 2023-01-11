@@ -1262,7 +1262,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 727266089}
         m_TargetAssemblyTypeName: CustomDeckShop, Assembly-CSharp
-        m_MethodName: OnClick_Create_CustomDeck
+        m_MethodName: OnClick_Select_CustomDeck
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -27,6 +27,10 @@ public class CustomDeckShop : MonoBehaviour
         GameMGR.Instance.dataBase.inventoryData.AddCustomDeck(customDeck);
         customDeck = new CustomDeck();
     }
+    public void OnClick_Select_CustomDeck()
+    {
+        GameMGR.Instance.Save_MyCustomDeck(customDeck);
+    }
     public void OnClick_Join_CustomDeckShop()
     {
         isJoinShop = true;
