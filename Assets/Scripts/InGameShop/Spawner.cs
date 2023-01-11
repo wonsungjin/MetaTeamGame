@@ -7,8 +7,7 @@ public class Spawner : MonoBehaviour
 {
     [SerializeField] Node[] monsterTrans;
     [Header("몬스터 프리팹")]
-    [SerializeField] GameObject[] monsters = null;
-    List<string> monsterNames = new List<string>();
+    public List<string> monsterNames = new List<string>();
 
     
     [Header("상점 위치")]
@@ -21,6 +20,7 @@ public class Spawner : MonoBehaviour
 
     public void SetMyDeckSetting()
     {
+        customDeck= GameMGR.Instance.Get_CustomDeck();
         for (int i = 0; i < customDeck.tier_1.Count; i++)
         {
             monsterNames.Add(customDeck.tier_1[i]);
@@ -37,18 +37,10 @@ public class Spawner : MonoBehaviour
         {
             monsterNames.Add(customDeck.tier_4[i]);
         }
-        for (int i = 0; i < customDeck.tier_5.Count; i++)
-        {
-            monsterNames.Add(customDeck.tier_5[i]);
-        }
-        for (int i = 0; i < customDeck.tier_6.Count; i++)
-        {
-            monsterNames.Add(customDeck.tier_6[i]);
-        }
     }
     private void Start()
     {
-        monsterNames.Add("orcmage");
+        SetMyDeckSetting();
         // 처음에 카드 생성
         if (isFirstStart == false)
         {
@@ -58,11 +50,11 @@ public class Spawner : MonoBehaviour
             {
                 randomNum = Random.Range(0, 3);
                 //GameObject mon = Instantiate(monsters[randomNum], monsterTrans[randomTrans].transform.position, Quaternion.identity);
-                GameObject mon = Instantiate(Resources.Load<GameObject>($"Prefabs/{monsterNames[0]}"), monsterTrans[randomTrans].transform.position, Quaternion.identity);
-                //mon.AddComponent<Drag2D>();
-                //mon.AddComponent<PolygonCollider2D>();
-                //mon.AddComponent<Rigidbody2D>();
-                //mon.tag = "Monster";
+                Debug.Log(monsterNames[randomNum]);
+                GameObject mon = Instantiate(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum]}"), monsterTrans[randomTrans].transform.position, Quaternion.identity);
+                mon.AddComponent<Drag2D>();
+                mon.AddComponent<PolygonCollider2D>();
+                mon.tag = "Monster";
 
                 randomTrans++;
 
@@ -378,7 +370,10 @@ public class Spawner : MonoBehaviour
         randomNum = Random.Range(a, b);
 
         //GameObject mon = Instantiate(monsters[randomNum], monsterTrans[randomTrans].transform.position, Quaternion.identity);
-        GameObject mon = Instantiate(Resources.Load<GameObject>($"Prefabs/{monsterNames[0]}"), monsterTrans[randomTrans].transform.position, Quaternion.identity);
+        GameObject mon = Instantiate(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum]}"), monsterTrans[randomTrans].transform.position, Quaternion.identity);
+        mon.AddComponent<Drag2D>();
+        mon.AddComponent<PolygonCollider2D>();
+        mon.tag = "Monster";
 
         randomTrans++;
     }
