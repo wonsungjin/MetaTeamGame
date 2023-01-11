@@ -27,6 +27,15 @@ public partial class GameMGR : Singleton<GameMGR>
         myCustomDeck = customDeck;
         Debug.Log("µ¶º±≈√");
     }
+    public CustomDeck Get_CustomDeck()
+    {
+        return myCustomDeck;
+    }
+    public void OnClick_Move_Matching()
+    {
+        
+        
+    }
 
 
     IEnumerator COR_GetCoin()
