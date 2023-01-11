@@ -20,12 +20,20 @@ public partial class GameMGR : Singleton<GameMGR>
         metaTrendAPI.GetSessionID();
         StartCoroutine(COR_GetCoin());
         DontDestroyOnLoad(gameObject);
+
     }
-    CustomDeck myCustomDeck;
+    CustomDeck lookCustomDeck;//들어간 덱 저장
+    CustomDeck myCustomDeck;//들어간 덱에서 셀렉할시 확정;
     public void Save_MyCustomDeck(CustomDeck customDeck)
     {
-        myCustomDeck = customDeck;
-        Debug.Log("덱선택");
+        lookCustomDeck = customDeck;
+    }
+    public void OnClick_Save_MyCustomDeck( )
+    {
+        myCustomDeck = lookCustomDeck;
+        uIMGR.OnClick_Move_Home();
+
+        Debug.Log(myCustomDeck.tier_1[0]);
     }
     public CustomDeck Get_CustomDeck()
     {
@@ -33,8 +41,9 @@ public partial class GameMGR : Singleton<GameMGR>
     }
     public void OnClick_Move_Matching()
     {
-        
-        
+        if (myCustomDeck != null)
+            SceneManager.LoadScene("StoreScene");
+        else Debug.Log("없다");
     }
 
 

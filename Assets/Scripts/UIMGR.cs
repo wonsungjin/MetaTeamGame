@@ -52,8 +52,9 @@ public class UIMGR : MonoBehaviour
         packChoicePannel.SetActive(false);
         customPannel.SetActive(true);
     }
-    public void OnClick_Join_MyDeckInfo()
+    public void OnClick_Join_MyDeckInfo(CustomDeck customDeck)
     {
+        GameMGR.Instance.Save_MyCustomDeck(customDeck);
         myDecks = FindObjectsOfType<MyDeck>();
         packChoicePannel.SetActive(false);
         myDeckPannel.SetActive(true);
@@ -62,6 +63,7 @@ public class UIMGR : MonoBehaviour
     {
         GameMGR.Instance.customDeckShop.OnClick_Exit_CustomDeckShop();
         packChoicePannel.SetActive(false);
+        myDeckPannel.SetActive(false);
         lobbyPannel.SetActive(true);
         cardPannel.SetActive(false);
     }
