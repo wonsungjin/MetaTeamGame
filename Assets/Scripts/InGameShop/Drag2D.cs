@@ -1,4 +1,7 @@
+using MongoDB.Driver;
 using System.Collections;
+using Unity.Burst.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Drag2D : MonoBehaviour
@@ -11,12 +14,10 @@ public class Drag2D : MonoBehaviour
     Vector2 battleZonePos;
     Vector2 meltPos;
 
+    float timer = 0f;
     float distance = 10;
     private bool isClickBool = false;
-    private Vector3 mousePosition;
-    private Vector3 objPosition;
     public bool isFreezen = false;
-
 
 
     private void Start()
@@ -25,28 +26,37 @@ public class Drag2D : MonoBehaviour
         pol = GetComponent<PolygonCollider2D>();
         pos = this.gameObject.transform.position;
     }
-    private void OnMouseEnter()
-    {
-        if (gameObject.CompareTag("BattleMonster"))
-        {
-            UIManager.Instance.OnEnter_Set_SkillExplantion(true,mousePosition);
 
-        }
-    }
-    private void OnMouseExit()
-    {
-        if (gameObject.CompareTag("BattleMonster"))
-        {
-            UIManager.Instance.OnEnter_Set_SkillExplantion(false, mousePosition);
-
-        }
-
-    }
     private void OnMouseDrag()
     {
-        mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance);
-        objPosition = Camera.main.ScreenToWorldPoint(mousePosition);
+        Vector3 mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance);
+        Vector3 objPosition = Camera.main.ScreenToWorldPoint(mousePosition);
+        transform.position = objPosition;
+
+        RaycastHit2D hit = Physics2D.Raycast(objPosition, Vector2.zero);
+
+        if (hit.collider != null)
+        {
+            if (hit.collider.CompareTag("BattleMonster"))
+            {
+                if (hit.collider.name != this.gameObject.name)
+                    hit.collider.gameObject.transform.position = pos;
+
+                else if (hit.collider.name == this.gameObject.name)
+                {
+                    timer += Time.deltaTime;
+
+                    if (timer > 1f)
+                        hit.collider.gameObject.transform.position = pos;
+                }
+            }
+
+            else
+                timer = 0f;
+        }
     }
+
+  
 
     private void OnMouseDown()
     {
