@@ -11,17 +11,15 @@ public class TestScript : MonoBehaviour
     {
         Debug.Log(player.Count);
 
-        player.Remove(player[0]);
+        player[0] = null;
 
         Debug.Log(player.Count);
         Debug.Log(player[0] + "player[0]");
 
-        if (player[1] == null)
+        if (player[0] == null)
         {
             Debug.Log("Null!!");
         }
-
-
     }
 
     // Update is called once per frame
@@ -29,9 +27,4 @@ public class TestScript : MonoBehaviour
     {
         
     }
-
-    
-
-
-
 }

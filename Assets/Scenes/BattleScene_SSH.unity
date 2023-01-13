@@ -152,11 +152,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31476c45569d86b489c9b4862b659ee5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myForwardUnits:
+  playerForwardUnits:
   - {fileID: 1747374416}
   - {fileID: 1396347445}
   - {fileID: 1274225543}
-  myBackwardUnits:
+  playerBackwardUnits:
   - {fileID: 1542279058}
   - {fileID: 458493548}
   - {fileID: 2061255077}
