@@ -41,6 +41,14 @@ MonoBehaviour:
   - RespawnSpaceship
   - Matching
   - MatchingSetting
+  - FailedConnectMaster
+  - FailedJoinRoom
+  - OnConnectMaster
+  - SetMatchingValue
+  - ShowDebug
+  - LifeMamager
+  - StartSetting
+  - LifeManager
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
