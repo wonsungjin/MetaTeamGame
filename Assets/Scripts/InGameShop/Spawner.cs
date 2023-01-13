@@ -20,7 +20,11 @@ public class Spawner : MonoBehaviour
 
     public void SetMyDeckSetting()
     {
-        customDeck= GameMGR.Instance.Get_CustomDeck();
+        // customDeck= GameMGR.Instance.Get_CustomDeck();
+        customDeck = new CustomDeck();
+        customDeck.tier_1.Add("Darkswarm");
+        customDeck.tier_1.Add("slavetrader");
+        customDeck.tier_1.Add("littlegolem");
         for (int i = 0; i < customDeck.tier_1.Count; i++)
         {
             monsterNames.Add(customDeck.tier_1[i]);
@@ -52,9 +56,6 @@ public class Spawner : MonoBehaviour
                 //GameObject mon = Instantiate(monsters[randomNum], monsterTrans[randomTrans].transform.position, Quaternion.identity);
                 Debug.Log(monsterNames[randomNum]);
                 GameObject mon = Instantiate(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum]}"), monsterTrans[randomTrans].transform.position, Quaternion.identity);
-                mon.AddComponent<Drag2D>();
-                mon.AddComponent<PolygonCollider2D>();
-                mon.tag = "Monster";
 
                 randomTrans++;
 
@@ -98,6 +99,7 @@ public class Spawner : MonoBehaviour
         }
     }
 
+    // 용병고용소의 레벨 업 할때마다 머니 
     void ShopLevelUp()
     {
         switch (UIManager.Instance.shopLevel)
@@ -215,7 +217,7 @@ public class Spawner : MonoBehaviour
                 if (monsterTrans[i].isNotSpawn == false)
                 {
 
-                    SummonMonster(0, 8);
+                    SummonMonster(0, 3);
                 }
                 else
                 {
@@ -365,15 +367,13 @@ public class Spawner : MonoBehaviour
         }
     }
 
+    // 용병들 Instantiate 하는 함수
     void SummonMonster(int a, int b)
     {
         randomNum = Random.Range(a, b);
 
         //GameObject mon = Instantiate(monsters[randomNum], monsterTrans[randomTrans].transform.position, Quaternion.identity);
         GameObject mon = Instantiate(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum]}"), monsterTrans[randomTrans].transform.position, Quaternion.identity);
-        mon.AddComponent<Drag2D>();
-        mon.AddComponent<PolygonCollider2D>();
-        mon.tag = "Monster";
 
         randomTrans++;
     }

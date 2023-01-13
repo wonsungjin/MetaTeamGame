@@ -18,8 +18,12 @@ public class Drag2D : MonoBehaviour
     float distance = 10;
     private bool isClickBool = false;
     public bool isFreezen = false;
+    bool isClickBattleMonster = false;
 
-
+    private void Awake()
+    {
+        mainCam = Camera.main;
+    }
     private void Start()
     {
         spriteRenderer = GetComponent<MeshRenderer>();
@@ -27,36 +31,46 @@ public class Drag2D : MonoBehaviour
         pos = this.gameObject.transform.position;
     }
 
+    Camera mainCam = null;
     private void OnMouseDrag()
     {
         Vector3 mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance);
-        Vector3 objPosition = Camera.main.ScreenToWorldPoint(mousePosition);
-        transform.position = objPosition;
+        Vector3 objPosition = mainCam.ScreenToWorldPoint(mousePosition);
+        transform.position = objPosition + Vector3.down;
 
         RaycastHit2D hit = Physics2D.Raycast(objPosition, Vector2.zero);
 
-        if (hit.collider != null)
+
+        // 드래그 할때 마다 레이를 쏴서 밑에 닿은 배틀몬스터를 다른 위치로 보냄
+        if (isClickBattleMonster == true)
         {
-            if (hit.collider.CompareTag("BattleMonster"))
+            if (hit.collider != null)
             {
-                if (hit.collider.name != this.gameObject.name)
-                    hit.collider.gameObject.transform.position = pos;
-
-                else if (hit.collider.name == this.gameObject.name)
+                if (hit.collider.CompareTag("BattleMonster"))
                 {
-                    timer += Time.deltaTime;
-
-                    if (timer > 1f)
-                        hit.collider.gameObject.transform.position = pos;
+                    if (hit.collider.name != this.gameObject.name)
+                    {
+                        GameObject vec = GameObject.FindGameObjectWithTag("BattleZone");
+                        hit.collider.gameObject.transform.position = vec.transform.position;
+                    }
+                   
+                    else if (hit.collider.name == this.gameObject.name)
+                    {
+                        timer += Time.deltaTime;
+                        Debug.Log(timer);
+                        if (timer > 1f)
+                        {
+                            GameObject vec = GameObject.FindGameObjectWithTag("BattleZone");
+                            hit.collider.gameObject.transform.position = vec.transform.position;
+                        }
+                            
+                    }
                 }
+                else
+                    timer = 0f;
             }
-
-            else
-                timer = 0f;
         }
     }
-
-  
 
     private void OnMouseDown()
     {
@@ -67,6 +81,11 @@ public class Drag2D : MonoBehaviour
         if (gameObject.CompareTag("BattleMonster"))
         {
             UIManager.Instance.sell.gameObject.SetActive(true);
+
+            isClickBattleMonster = true;
+            GameObject vec = GameObject.FindGameObjectWithTag("BattleZone");
+
+            pos = vec.transform.position;
         }
     }
 
@@ -74,7 +93,7 @@ public class Drag2D : MonoBehaviour
     {
         isClickBool = true;
         pol.enabled = true;
-
+        isClickBattleMonster = false;
 
         if (this.gameObject.CompareTag("Monster") || this.gameObject.CompareTag("BattleMonster") || this.gameObject.CompareTag("FreezeCard"))
         {
@@ -88,15 +107,6 @@ public class Drag2D : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (gameObject.CompareTag("BattleMonster"))
-        {
-            // 잡고 있는 오브젝트가 배틀몬스터에 닿으면 위치값 서로 바뀜
-            if (collision.gameObject.CompareTag("BattleMonster"))
-            {
-                collision.gameObject.transform.position = pos;
-            }
-        }
-
         if (isClickBool == true)
         {
             // 프리즈 카드를 잡았을 때
@@ -142,15 +152,6 @@ public class Drag2D : MonoBehaviour
                 if (collision.gameObject.CompareTag("BattleZone"))
                 {
                     pos = collision.gameObject.transform.position;
-                }
-
-                if (gameObject.CompareTag("BattleMonster"))
-                {
-                    // 잡고 있는 오브젝트가 배틀몬스터에 닿으면 위치값 서로 바뀜
-                    if (collision.gameObject.CompareTag("BattleMonster"))
-                    {
-                        collision.gameObject.transform.position = pos;
-                    }
                 }
             }
 
@@ -212,7 +213,7 @@ public class Drag2D : MonoBehaviour
     void SellButton()
     {
         UIManager.Instance.sell.gameObject.SetActive(false);
-        transform.DetachChildren();
+
         Destroy(gameObject);
     }
 }
