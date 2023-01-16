@@ -14,7 +14,7 @@ public class ExcelToScriptable : EditorWindow
     string __name = "";
 
 
-    [MenuItem("MyTools/ExcelToScriptable")]   
+    [MenuItem("Tools/ExcelToScriptable")]   
     public static void ShowWindow()
     {
         ExcelToScriptable ets = (ExcelToScriptable)EditorWindow.GetWindow(typeof(ExcelToScriptable));

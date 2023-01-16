@@ -41,7 +41,7 @@ public partial class UIManager : MonoBehaviour
     {
         // 처음 시작시 초기화
         FirstReset();
-
+        timerSlider.maxValue = timer;
         if (null == instance)
         {
             // 씬 시작될때 인스턴스 초기화, 씬을 넘어갈때도 유지되기위한 처리
@@ -57,17 +57,16 @@ public partial class UIManager : MonoBehaviour
 
     private void Update()
     {
+        // 시간이 변경한 만큼 slider Value 변경을 합니다.
         timer -= Time.deltaTime;
-        timerTXT.text = string.Format("Timer : {0:N0}", timer);
         timerSlider.value = timer;
-        
-
+        timerTXT.text = string.Format("Timer : {0:N0}", timer);
 
         goldTXT.text = "Gold : " + goldCount.ToString();
         shopLevelTXT.text = "Shop Gold :" + shopMoney.ToString();
         NowShopLevelTXT.text = "Shop Level :" + shopLevel.ToString();
 
-        if(sell.activeSelf == false)
+        if (sell.activeSelf == false)
         {
             sellTXT.gameObject.SetActive(false);
         }
