@@ -6,7 +6,7 @@ using TMPro;
 
 public class Card : MonoBehaviour
 {
-    [SerializeField] CardInfo cardInfo;
+    [SerializeField] public CardInfo cardInfo;
     public TextMeshPro hpText;
     public TextMeshPro atkText;
     public TextMeshPro levelText;
@@ -21,6 +21,9 @@ public class Card : MonoBehaviour
     {
         name = myname;
         cardInfo = Resources.Load<CardInfo>($"ScriptableDBs/{name}");
+        hpText = transform.GetChild(0).GetChild(1).GetComponent<TextMeshPro>();
+        atkText = transform.GetChild(0).GetChild(3).GetComponent<TextMeshPro>();
+        levelText = transform.GetChild(0).GetChild(5).GetComponent<TextMeshPro>();
         hpText.text = cardInfo.hp.ToString();
         atkText.text = cardInfo.attackValue.ToString();
         level = 1;
