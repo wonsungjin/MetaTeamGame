@@ -22,3 +22,4 @@ MonoBehaviour:
   skilltype: death
   skill: Deal 2 damage to a random enemy unit. Deal 3 damage to a random enemy unit. Deal 4 damage to a random enemy unit.
   appear: TRUE
+  : 

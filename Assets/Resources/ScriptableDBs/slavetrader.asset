@@ -16,9 +16,10 @@ MonoBehaviour:
   objName: slave trader
   level: 1
   tier: 1
-  tribe: human
+  tribe: undead
   hp: 1
   attackValue: 2
   skilltype: sell
   skill: Summons 1 Slave (1/1) in its place. Summons 1 Slave (2/2) in its place. Summons 1 Slave (3/3) in its place.
   appear: TRUE
+  : 
