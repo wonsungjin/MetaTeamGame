@@ -38,7 +38,8 @@ public class TurnSystem : MonoBehaviourPunCallbacks
     [SerializeField] public int startLife = 10;
 
     // 전투 승패 관련
-    public bool isWin = true;
+    public bool isWin = false;
+    public bool isLose = false;
 
     #region 포톤 콜백 함수들
 
@@ -132,7 +133,7 @@ public class TurnSystem : MonoBehaviourPunCallbacks
         if (otherPlayer.IsInactive) Debug.Log(" IsInactive");
         else Debug.Log("NotInactive");
 
-        Debug.Log("커스텀프로퍼티 번호" + (int)PhotonNetwork.LocalPlayer.CustomProperties["Number"]);
+        Debug.Log("나의 커스텀프로퍼티 번호" + (int)PhotonNetwork.LocalPlayer.CustomProperties["Number"]);
         
         for(int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
         {
