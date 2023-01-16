@@ -6,6 +6,8 @@ public partial class UIManager : MonoBehaviour
 {
     private static UIManager instance = null;
 
+    [Header("슬라이더")]
+    [SerializeField] Slider timerSlider = null;
     [Header("버튼")]
     public Button ReFreshButton = null;
     public Button LevelUpButton = null;
@@ -13,13 +15,14 @@ public partial class UIManager : MonoBehaviour
     [SerializeField] Text NowShopLevelTXT = null;
     [SerializeField] Text goldTXT = null;
     public Text shopLevelTXT = null;
-    [SerializeField] Text sellTxt = null;
-
+    [SerializeField] Text sellTXT = null;
+    [SerializeField] Text timerTXT = null;
     [SerializeField] public GameObject sell = null;
 
     public int shopMoney = 0;
     public int goldCount = 10;
     public int shopLevel = 1;
+    float timer = 60f;
 
     // Public 프로퍼티로 선언해서 외부에서 private 멤버변수에 접근만 가능하게 구현
     public static UIManager Instance
@@ -38,7 +41,7 @@ public partial class UIManager : MonoBehaviour
     {
         // 처음 시작시 초기화
         FirstReset();
-
+        timerSlider.maxValue = timer;
         if (null == instance)
         {
             // 씬 시작될때 인스턴스 초기화, 씬을 넘어갈때도 유지되기위한 처리
@@ -54,25 +57,28 @@ public partial class UIManager : MonoBehaviour
 
     private void Update()
     {
+        // 시간이 변경한 만큼 slider Value 변경을 합니다.
+        timer -= Time.deltaTime;
+        timerSlider.value = timer;
+        timerTXT.text = string.Format("Timer : {0:N0}", timer);
+
         goldTXT.text = "Gold : " + goldCount.ToString();
         shopLevelTXT.text = "Shop Gold :" + shopMoney.ToString();
         NowShopLevelTXT.text = "Shop Level :" + shopLevel.ToString();
 
-        if(sell.activeSelf == false)
+        if (sell.activeSelf == false)
         {
-            sellTxt.gameObject.SetActive(false);
+            sellTXT.gameObject.SetActive(false);
         }
         else
         {
-            sellTxt.gameObject.SetActive(true);
+            sellTXT.gameObject.SetActive(true);
         }
     }
-
-
 
     private void FirstReset()
     {
         sell.gameObject.SetActive(false);
-        sellTxt.gameObject.SetActive(false);
+        sellTXT.gameObject.SetActive(false);
     }
 }

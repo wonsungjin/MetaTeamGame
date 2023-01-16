@@ -21,7 +21,7 @@ public class Card : MonoBehaviour
     public void SetMyInfo(string myname)
     {
         name = myname;
-        cardInfo = Resources.Load<CardInfo>($"ScriptableDBs/{name}");
+        cardInfo = Resources.Load<CardInfo>($"ScriptableDBs/{name.Replace("(Clone)","")}");
         hpText = transform.GetChild(0).GetChild(1).GetComponent<TextMeshPro>();
         atkText = transform.GetChild(0).GetChild(3).GetComponent<TextMeshPro>();
         levelText = transform.GetChild(0).GetChild(5).GetComponent<TextMeshPro>();
