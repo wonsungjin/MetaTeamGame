@@ -78,10 +78,10 @@ public class BattleLogic : MonoBehaviourPunCallbacks
         Debug.Log("platyer 선공");
 
         while (playerAttackList.Count != 0 || enemyAttackList.Count != 0)
-        //for (int i = 0; i < 6; i++) 
         {
             Debug.Log("공격 시작");
 
+            // 랜덤 수를 가지고 있는 배열 1바퀴 돌았을 때 0번째로 초기화
             if (randomArrayNum == exArray.Length)
             {
                 randomArrayNum = 0;
@@ -103,7 +103,6 @@ public class BattleLogic : MonoBehaviourPunCallbacks
                     // 피격 받은 유닛을 공격, 전열 리스트에서 삭제
                     enemyAttackList.Remove(enemyForwardUnits[exArray[randomArrayNum]]);
                     enemyForwardUnits[exArray[randomArrayNum]] = null;
-                    enemyTurnCount--;
 
                     // 새로운 random num 부여
                     // ex) 플레이어가 적의 2번째를 공격했을 때 적도 플레이어의 2번째를 공격하기 때문에 다른 random num 부여
@@ -114,9 +113,7 @@ public class BattleLogic : MonoBehaviourPunCallbacks
                     if (enemyForwardUnits.Count == 0) { isEnemyPreemptiveAlive = false; }
 
                     // 1턴 종료에 따른 턴 변수 증가 
-                    playerTurnCount++;
-
-                    
+                    playerTurnCount++;                    
                 }
 
                 else
@@ -124,7 +121,6 @@ public class BattleLogic : MonoBehaviourPunCallbacks
                     // player 공격 순서 초기화
                     playerTurnCount = 0;
                 }
-
             }
 
             // 적의 전열이 전멸한 경우
@@ -185,7 +181,6 @@ public class BattleLogic : MonoBehaviourPunCallbacks
                     // Enemy 공격 순서 초기화
                     enemyTurnCount = 0;
                 }
-
             }
 
             // 플레이어의 전열이 전멸한 경우
