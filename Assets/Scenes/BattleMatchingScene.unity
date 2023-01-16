@@ -1795,8 +1795,10 @@ MonoBehaviour:
   matchingDone: 0
   userID: 0
   life: 
+  myLife: 10
   startLife: 10
   isWin: 0
+  isLose: 0
 --- !u!114 &2015253169
 MonoBehaviour:
   m_ObjectHideFlags: 0
