@@ -4,11 +4,12 @@ using Unity.Burst.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Drag2D : MonoBehaviour
+public partial class Drag2D : MonoBehaviour
 {
     WaitForSeconds wait = new WaitForSeconds(0.11f);
+    WaitForSeconds meltWait = new WaitForSeconds(0.1f);
 
-    PolygonCollider2D pol;
+    BoxCollider2D pol;
     MeshRenderer spriteRenderer;
     Vector2 pos;
     Vector2 battleZonePos;
@@ -27,7 +28,7 @@ public class Drag2D : MonoBehaviour
     private void Start()
     {
         spriteRenderer = GetComponent<MeshRenderer>();
-        pol = GetComponent<PolygonCollider2D>();
+        pol = GetComponent<BoxCollider2D>();
         pos = this.gameObject.transform.position;
     }
 
@@ -40,7 +41,6 @@ public class Drag2D : MonoBehaviour
 
         RaycastHit2D hit = Physics2D.Raycast(objPosition, Vector2.zero);
 
-
         // 드래그 할때 마다 레이를 쏴서 밑에 닿은 배틀몬스터를 다른 위치로 보냄
         if (isClickBattleMonster == true)
         {
@@ -51,9 +51,9 @@ public class Drag2D : MonoBehaviour
                     if (hit.collider.name != this.gameObject.name)
                     {
                         GameObject vec = GameObject.FindGameObjectWithTag("BattleZone");
-                        hit.collider.gameObject.transform.position = vec.transform.position;
+                        hit.collider.gameObject.transform.position = vec.transform.position + Vector3.down;
                     }
-                   
+
                     else if (hit.collider.name == this.gameObject.name)
                     {
                         timer += Time.deltaTime;
@@ -61,9 +61,8 @@ public class Drag2D : MonoBehaviour
                         if (timer > 1f)
                         {
                             GameObject vec = GameObject.FindGameObjectWithTag("BattleZone");
-                            hit.collider.gameObject.transform.position = vec.transform.position;
+                            hit.collider.gameObject.transform.position = vec.transform.position + Vector3.down;
                         }
-                            
                     }
                 }
                 else
@@ -83,9 +82,6 @@ public class Drag2D : MonoBehaviour
             UIManager.Instance.sell.gameObject.SetActive(true);
 
             isClickBattleMonster = true;
-            GameObject vec = GameObject.FindGameObjectWithTag("BattleZone");
-
-            pos = vec.transform.position;
         }
     }
 
@@ -117,11 +113,10 @@ public class Drag2D : MonoBehaviour
                 if (collision.gameObject.CompareTag("Freeze"))
                 {
                     StartCoroutine(COR_BackAgain());
-                    gameObject.tag = "MeltCard";
                 }
 
                 // 얼려있을 때 배틀존에 가면 구매 가능하게 하는 예외처리
-                if (UIManager.Instance.goldCount > 0)
+                if (UIManager.Instance.goldCount >= 3)
                 {
                     if (collision.gameObject.CompareTag("BattleZone"))
                     {
@@ -189,7 +184,18 @@ public class Drag2D : MonoBehaviour
     private IEnumerator COR_BackAgain()
     {
         yield return wait;
-        transform.position = pos;
+
+        if (CompareTag("BattleMonster"))
+            transform.position = pos + Vector2.down;
+
+        else if (CompareTag("Monster"))
+            transform.position = pos;
+
+        if (CompareTag("FreezeCard"))
+        {
+            transform.position = pos;
+            gameObject.tag = "MeltCard";
+        }
     }
     // 프리즈카드로 바꾸는 함수
     IEnumerator COR_BackCard()
@@ -197,15 +203,16 @@ public class Drag2D : MonoBehaviour
         yield return wait;
         gameObject.tag = "FreezeCard";
     }
+
     // 얼린카드를 구매시 들어갈 함수 원래 자리로 돌아가 자리의 bool값을 바꾼후 구매된다.
     IEnumerator COR_BackMelt()
     {
         gameObject.tag = "MeltCard";
-        pos = battleZonePos;
-        yield return wait;
+        this.transform.position = battleZonePos;
+        yield return meltWait;
         gameObject.tag = "BattleMonster";
         pos = meltPos;
-        this.gameObject.transform.position = pos;
+        this.gameObject.transform.position = pos + Vector2.down;
         spriteRenderer.sortingOrder = 3;
         UIManager.Instance.goldCount -= 3;
     }
