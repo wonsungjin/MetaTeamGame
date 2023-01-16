@@ -19,7 +19,43 @@ public class Spawner : MonoBehaviour
 
     public void SetMyDeckSetting()
     {
-        customDeck= GameMGR.Instance.Get_CustomDeck();
+        customDeck = new CustomDeck();
+        customDeck.tier_1.Add("Darkswarm");
+        customDeck.tier_1.Add("slavetrader");
+        customDeck.tier_1.Add("littlegolem");
+        customDeck.tier_1.Add("KaboomG");
+        customDeck.tier_1.Add("richrich");
+        customDeck.tier_1.Add("slavetrader");
+        customDeck.tier_1.Add("Salamander");
+        customDeck.tier_1.Add("orcslave");
+
+        customDeck.tier_2.Add("scarpgolem");
+        customDeck.tier_2.Add("ironingot");
+        customDeck.tier_2.Add("Penetratermaster");
+        customDeck.tier_2.Add("fanatic");
+        customDeck.tier_2.Add("dirtyrat");
+        customDeck.tier_2.Add("Felbeast");
+        customDeck.tier_2.Add("gladiator");
+        customDeck.tier_2.Add("orcmage");
+
+        customDeck.tier_3.Add("reflectgolem");
+        customDeck.tier_3.Add("Shylock");
+        customDeck.tier_3.Add("Stonegolem");
+        customDeck.tier_3.Add("pigeonter");
+        customDeck.tier_3.Add("lizard");
+        customDeck.tier_3.Add("angryrhinoceros");
+        customDeck.tier_3.Add("orcbountyhunter");
+        customDeck.tier_3.Add("orcjudge");
+        
+        customDeck.tier_4.Add("firegolem");
+        customDeck.tier_4.Add("crystalgolem");
+        customDeck.tier_4.Add("usurer");
+        customDeck.tier_4.Add("frostghost");
+        customDeck.tier_4.Add("DreadfulEtty");
+        customDeck.tier_4.Add("swarmofrats");
+        customDeck.tier_4.Add("Kodovist");
+        customDeck.tier_4.Add("BubblingBerserker");
+
         for (int i = 0; i < customDeck.tier_1.Count; i++)
         {
             monsterNames.Add(customDeck.tier_1[i]);
@@ -47,13 +83,8 @@ public class Spawner : MonoBehaviour
 
             for (int i = 0; i < createdPlace; i++)
             {
-                randomNum = Random.Range(0, 3);
-                //GameObject mon = Instantiate(monsters[randomNum], monsterTrans[randomTrans].transform.position, Quaternion.identity);
-                Debug.Log(monsterNames[randomNum]);
+                randomNum = Random.Range(0, 8);
                 GameObject mon = Instantiate(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum]}"), monsterTrans[randomTrans].transform.position, Quaternion.identity);
-                mon.AddComponent<Drag2D>();
-                mon.AddComponent<PolygonCollider2D>();
-                mon.tag = "Monster";
 
                 randomTrans++;
 
@@ -73,11 +104,8 @@ public class Spawner : MonoBehaviour
             for (int i = 0; i < monster.Length; i++)
             {
                 UIManager.Instance.goldCount = 10;
-                // 자식객체 놔두고 삭제시키는 함수
-                transform.DetachChildren();
                 Destroy(monster[i]);
             }
-
             ChooseRandomCard();
             if (UIManager.Instance.shopLevel < 6 && UIManager.Instance.shopMoney > 0)
                 UIManager.Instance.shopMoney--;
@@ -97,6 +125,7 @@ public class Spawner : MonoBehaviour
         }
     }
 
+    // 용병고용소의 레벨 업 할때마다 머니 
     void ShopLevelUp()
     {
         switch (UIManager.Instance.shopLevel)
@@ -364,15 +393,12 @@ public class Spawner : MonoBehaviour
         }
     }
 
+    // 용병들 Instantiate 하는 함수
     void SummonMonster(int a, int b)
     {
         randomNum = Random.Range(a, b);
 
-        //GameObject mon = Instantiate(monsters[randomNum], monsterTrans[randomTrans].transform.position, Quaternion.identity);
         GameObject mon = Instantiate(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum]}"), monsterTrans[randomTrans].transform.position, Quaternion.identity);
-        mon.AddComponent<Drag2D>();
-        mon.AddComponent<PolygonCollider2D>();
-        mon.tag = "Monster";
 
         randomTrans++;
     }

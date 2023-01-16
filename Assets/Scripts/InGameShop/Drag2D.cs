@@ -6,9 +6,8 @@ using UnityEngine;
 
 public partial class Drag2D : MonoBehaviour
 {
-
-
-WaitForSeconds wait = new WaitForSeconds(0.11f);
+    WaitForSeconds wait = new WaitForSeconds(0.11f);
+    WaitForSeconds meltWait = new WaitForSeconds(0.1f);
 
     BoxCollider2D pol;
     MeshRenderer spriteRenderer;
@@ -18,10 +17,14 @@ WaitForSeconds wait = new WaitForSeconds(0.11f);
 
     float timer = 0f;
     float distance = 10;
-    private bool isClickBool = true;
+    private bool isClickBool = false;
     public bool isFreezen = false;
+    bool isClickBattleMonster = false;
 
-
+    private void Awake()
+    {
+        mainCam = Camera.main;
+    }
     private void Start()
     {
         spriteRenderer = GetComponent<MeshRenderer>();
@@ -29,37 +32,47 @@ WaitForSeconds wait = new WaitForSeconds(0.11f);
         pos = this.gameObject.transform.position;
     }
 
+    Camera mainCam = null;
     private void OnMouseDrag()
     {
         Vector3 mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance);
-        Vector3 objPosition = Camera.main.ScreenToWorldPoint(mousePosition);
-        transform.position = objPosition;
+        Vector3 objPosition = mainCam.ScreenToWorldPoint(mousePosition);
+        transform.position = objPosition + Vector3.down;
 
         RaycastHit2D hit = Physics2D.Raycast(objPosition, Vector2.zero);
 
-        if (hit.collider != null)
+        // 드래그 할때 마다 레이를 쏴서 밑에 닿은 배틀몬스터를 다른 위치로 보냄
+        if (isClickBattleMonster == true)
         {
-            if (hit.collider.CompareTag("BattleMonster"))
+            if (hit.collider != null)
             {
-                if (hit.collider.name != this.gameObject.name)
-                    hit.collider.gameObject.transform.position = pos;
-
-                else if (hit.collider.name == this.gameObject.name)
+                if (hit.collider.CompareTag("BattleMonster"))
                 {
-                    timer += Time.deltaTime;
+                    if (hit.collider.name != this.gameObject.name)
+                    {
+                        GameObject vec = GameObject.FindGameObjectWithTag("BattleZone");
+                        hit.collider.gameObject.transform.position = vec.transform.position + Vector3.down;
+                    }
 
-                    if (timer > 1f)
-                        hit.collider.gameObject.transform.position = pos;
+                    else if (hit.collider.name == this.gameObject.name)
+                    {
+                        timer += Time.deltaTime;
+                        Debug.Log(timer);
+                        if (timer > 1f)
+                        {
+                            GameObject vec = GameObject.FindGameObjectWithTag("BattleZone");
+                            hit.collider.gameObject.transform.position = vec.transform.position + Vector3.down;
+                        }
+                    }
                 }
+                else
+                    timer = 0f;
             }
-
-            else
-                timer = 0f;
         }
     }
+
     private void OnMouseDown()
     {
-        UpdateOutline(true);
         isClickBool = false;
         pol.enabled = false;
         battleZonePos = pos;
@@ -67,14 +80,16 @@ WaitForSeconds wait = new WaitForSeconds(0.11f);
         if (gameObject.CompareTag("BattleMonster"))
         {
             UIManager.Instance.sell.gameObject.SetActive(true);
+
+            isClickBattleMonster = true;
         }
     }
 
     private void OnMouseUp()
     {
-        UpdateOutline(false);
         isClickBool = true;
         pol.enabled = true;
+        isClickBattleMonster = false;
 
         if (this.gameObject.CompareTag("Monster") || this.gameObject.CompareTag("BattleMonster") || this.gameObject.CompareTag("FreezeCard"))
         {
@@ -88,15 +103,6 @@ WaitForSeconds wait = new WaitForSeconds(0.11f);
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (gameObject.CompareTag("BattleMonster"))
-        {
-            // 잡고 있는 오브젝트가 배틀몬스터에 닿으면 위치값 서로 바뀜
-            if (collision.gameObject.CompareTag("BattleMonster"))
-            {
-                collision.gameObject.transform.position = pos;
-            }
-        }
-
         if (isClickBool == true)
         {
             // 프리즈 카드를 잡았을 때
@@ -107,11 +113,10 @@ WaitForSeconds wait = new WaitForSeconds(0.11f);
                 if (collision.gameObject.CompareTag("Freeze"))
                 {
                     StartCoroutine(COR_BackAgain());
-                    gameObject.tag = "MeltCard";
                 }
 
                 // 얼려있을 때 배틀존에 가면 구매 가능하게 하는 예외처리
-                if (UIManager.Instance.goldCount > 0)
+                if (UIManager.Instance.goldCount >= 3)
                 {
                     if (collision.gameObject.CompareTag("BattleZone"))
                     {
@@ -142,15 +147,6 @@ WaitForSeconds wait = new WaitForSeconds(0.11f);
                 if (collision.gameObject.CompareTag("BattleZone"))
                 {
                     pos = collision.gameObject.transform.position;
-                }
-
-                if (gameObject.CompareTag("BattleMonster"))
-                {
-                    // 잡고 있는 오브젝트가 배틀몬스터에 닿으면 위치값 서로 바뀜
-                    if (collision.gameObject.CompareTag("BattleMonster"))
-                    {
-                        collision.gameObject.transform.position = pos;
-                    }
                 }
             }
 
@@ -188,7 +184,18 @@ WaitForSeconds wait = new WaitForSeconds(0.11f);
     private IEnumerator COR_BackAgain()
     {
         yield return wait;
-        transform.position = pos;
+
+        if (CompareTag("BattleMonster"))
+            transform.position = pos + Vector2.down;
+
+        else if (CompareTag("Monster"))
+            transform.position = pos;
+
+        if (CompareTag("FreezeCard"))
+        {
+            transform.position = pos;
+            gameObject.tag = "MeltCard";
+        }
     }
     // 프리즈카드로 바꾸는 함수
     IEnumerator COR_BackCard()
@@ -196,15 +203,16 @@ WaitForSeconds wait = new WaitForSeconds(0.11f);
         yield return wait;
         gameObject.tag = "FreezeCard";
     }
+
     // 얼린카드를 구매시 들어갈 함수 원래 자리로 돌아가 자리의 bool값을 바꾼후 구매된다.
     IEnumerator COR_BackMelt()
     {
         gameObject.tag = "MeltCard";
-        pos = battleZonePos;
-        yield return wait;
+        this.transform.position = battleZonePos;
+        yield return meltWait;
         gameObject.tag = "BattleMonster";
         pos = meltPos;
-        this.gameObject.transform.position = pos;
+        this.gameObject.transform.position = pos + Vector2.down;
         spriteRenderer.sortingOrder = 3;
         UIManager.Instance.goldCount -= 3;
     }
@@ -212,7 +220,7 @@ WaitForSeconds wait = new WaitForSeconds(0.11f);
     void SellButton()
     {
         UIManager.Instance.sell.gameObject.SetActive(false);
-        transform.DetachChildren();
+
         Destroy(gameObject);
     }
 }
