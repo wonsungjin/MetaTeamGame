@@ -26,7 +26,7 @@ public partial class Drag2D : MonoBehaviour
     private void OnMouseEnter()
     {
 
-            UIManager.Instance.OnEnter_Set_SkillExplantion(true,Camera.main.WorldToScreenPoint(transform.position),cardInfo);
+            UIManager.Instance.OnEnter_Set_SkillExplantion(true,Camera.main.WorldToScreenPoint(transform.position),card.cardInfo);
         
     }
     private void OnMouseExit()
