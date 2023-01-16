@@ -9,6 +9,7 @@ public partial class Drag2D : MonoBehaviour
     WaitForSeconds wait = new WaitForSeconds(0.11f);
     WaitForSeconds meltWait = new WaitForSeconds(0.1f);
 
+    CardInfo cardInfo;
     BoxCollider2D pol;
     MeshRenderer spriteRenderer;
     Vector2 pos;
@@ -30,6 +31,7 @@ public partial class Drag2D : MonoBehaviour
         spriteRenderer = GetComponent<MeshRenderer>();
         pol = GetComponent<BoxCollider2D>();
         pos = this.gameObject.transform.position;
+        cardInfo = GetComponent<Card>().cardInfo;
     }
 
     Camera mainCam = null;
@@ -73,9 +75,13 @@ public partial class Drag2D : MonoBehaviour
 
     private void OnMouseDown()
     {
+        UpdateOutline(true);
         isClickBool = false;
         pol.enabled = false;
         battleZonePos = pos;
+        UIManager.Instance.OnEnter_Set_SkillExplantion(false, Vector3.zero);
+        UIManager.Instance.SetisExplantionActive(true);
+
 
         if (gameObject.CompareTag("BattleMonster"))
         {
@@ -87,9 +93,11 @@ public partial class Drag2D : MonoBehaviour
 
     private void OnMouseUp()
     {
+        UpdateOutline(false);
         isClickBool = true;
         pol.enabled = true;
         isClickBattleMonster = false;
+        UIManager.Instance.SetisExplantionActive(false);
 
         if (this.gameObject.CompareTag("Monster") || this.gameObject.CompareTag("BattleMonster") || this.gameObject.CompareTag("FreezeCard"))
         {
