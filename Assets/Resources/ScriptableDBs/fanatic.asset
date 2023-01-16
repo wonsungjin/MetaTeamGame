@@ -16,9 +16,10 @@ MonoBehaviour:
   objName: fanatic
   level: 1
   tier: 2
-  tribe: human
+  tribe: undead
   hp: 1
   attackValue: 1
   skilltype: death
   skill: Grants friendly units +1 HP +1 Attack. Grants friendly units +2 HP +2 Attack. Grants friendly units +3 HP +3 Attack.
   appear: TRUE
+  : 

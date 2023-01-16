@@ -22,3 +22,4 @@ MonoBehaviour:
   skilltype: attacked
   skill: When taking damage the attacking enemy takes 4 damage. When taking damage the attacking enemy takes 8 damage. When taking damage the attacking enemy takes 12 damage.
   appear: TRUE
+  : 

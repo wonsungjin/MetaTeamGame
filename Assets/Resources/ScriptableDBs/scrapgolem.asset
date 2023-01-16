@@ -22,3 +22,4 @@ MonoBehaviour:
   skilltype: turn_end
   skill:  +1 attack power. +2 attack power. +3 attack power.
   appear: TRUE
+  : 
