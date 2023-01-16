@@ -108,9 +108,6 @@ public class BattleLogic : MonoBehaviourPunCallbacks
                         playerTurnCount++;
                     }
 
-                    Debug.Log("playerAttackList[playerTurnCount] : " + playerAttackList[playerTurnCount]);
-                    Debug.Log("enemyForwardUnits[exArray[randomArrayNum]] : " + enemyForwardUnits[exArray[randomArrayNum]]);
-
                     // 플레이어 유닛이 적 전열 유닛 랜덤 공격
                     playerAttackList[playerTurnCount].GetComponent<AttackLogic>().UnitAttack(enemyForwardUnits[exArray[randomArrayNum]]);
 
@@ -120,7 +117,6 @@ public class BattleLogic : MonoBehaviourPunCallbacks
                         if (enemyAttackList[i] == enemyForwardUnits[exArray[randomArrayNum]])
                         {
                             enemyAttackList[i] = null;
-                            Debug.Log(enemyForwardUnits[exArray[randomArrayNum]] + " : null");
                             break;
                         }
                         else
@@ -169,17 +165,20 @@ public class BattleLogic : MonoBehaviourPunCallbacks
                         playerTurnCount = 0;
                     }
 
-                    if (playerAttackList.Count != playerTurnCount)
+                    while (playerAttackList[playerTurnCount] == null)
                     {
-                        while (playerAttackList[playerTurnCount] == null)
+                        if (playerTurnCount >= playerAttackList.Count)
+                        {
+                            playerTurnCount = 0;
+                        }
+
+                        else
                         {
                             playerTurnCount++;
                         }
+                        Debug.Log("***playerTurnCount : " + playerTurnCount);
                     }
 
-                    Debug.Log("playerTurnCount : " + playerTurnCount);
-                    Debug.Log("playerAttackList[playerTurnCount] : " + playerAttackList[playerTurnCount]);
-                    Debug.Log("enemyBackwardUnits[exArray[randomArrayNum]] : " + enemyBackwardUnits[exArray[randomArrayNum]]);
 
                     // 플레이어 유닛이 적 후열 유닛 랜덤 공격
                     playerAttackList[playerTurnCount].GetComponent<AttackLogic>().UnitAttack(enemyBackwardUnits[exArray[randomArrayNum]]);
@@ -190,7 +189,6 @@ public class BattleLogic : MonoBehaviourPunCallbacks
                         if (enemyAttackList[i] == enemyBackwardUnits[exArray[randomArrayNum]])
                         {
                             enemyAttackList[i] = null;
-                            Debug.Log(enemyBackwardUnits[exArray[randomArrayNum]] + " : null");
                             break;
                         }
                         else
@@ -211,6 +209,7 @@ public class BattleLogic : MonoBehaviourPunCallbacks
                     {
                         // 플레이어 승리
                         BattleWin();
+                        break;
                     }
 
                     // 1턴 종료에 따른 턴 변수 증가 
@@ -253,8 +252,6 @@ public class BattleLogic : MonoBehaviourPunCallbacks
                     }
 
                     // 적 유닛이 플레이어 유닛 중 랜덤한 플레이어 공격
-                    Debug.Log("enemyAttackList[enemyTurnCount] : " + enemyAttackList[enemyTurnCount]);
-                    Debug.Log("playerForwardUnits[exArray[randomArrayNum]] : " + playerForwardUnits[exArray[randomArrayNum]]);
                     enemyAttackList[enemyTurnCount].GetComponent<AttackLogic>().UnitAttack(playerForwardUnits[exArray[randomArrayNum]]);
 
                     // 피격 받은 유닛을 공격 리스트에서 삭제
@@ -263,7 +260,6 @@ public class BattleLogic : MonoBehaviourPunCallbacks
                         if (playerAttackList[i] == playerForwardUnits[exArray[randomArrayNum]])
                         {
                             playerAttackList[i] = null;
-                            Debug.Log(playerForwardUnits[exArray[randomArrayNum]] + " : null");
                             break;
                         }
 
@@ -312,14 +308,17 @@ public class BattleLogic : MonoBehaviourPunCallbacks
                         enemyTurnCount = 0;
                     }
 
-                    if (enemyAttackList.Count != enemyTurnCount)
+                    while (enemyAttackList[enemyTurnCount] == null)
                     {
-                        while (enemyAttackList[enemyTurnCount] == null)
+                        if (enemyTurnCount >= enemyAttackList.Count)
+                        {
+                            enemyTurnCount = 0;
+                        }
+                        else
                         {
                             enemyTurnCount++;
                         }
                     }
-
 
                     // 적 유닛이 플레이어 후열 유닛 랜덤 공격
                     enemyAttackList[enemyTurnCount].GetComponent<AttackLogic>().UnitAttack(playerBackwardUnits[exArray[randomArrayNum]]);
@@ -333,6 +332,7 @@ public class BattleLogic : MonoBehaviourPunCallbacks
                             Debug.Log(playerBackwardUnits[exArray[randomArrayNum]] + " : null");
                             break;
                         }
+
                         else
                         {
                             Debug.Log("playerAttackList 탐색중");
@@ -350,6 +350,7 @@ public class BattleLogic : MonoBehaviourPunCallbacks
                     {
                         // 플레이어 패배
                         BattleLose();
+                        break;
                     }
 
                     // 1턴 종료에 따른 턴 변수 증가 
