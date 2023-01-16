@@ -4,11 +4,13 @@ using Unity.Burst.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Drag2D : MonoBehaviour
+public partial class Drag2D : MonoBehaviour
 {
-    WaitForSeconds wait = new WaitForSeconds(0.11f);
 
-    PolygonCollider2D pol;
+
+WaitForSeconds wait = new WaitForSeconds(0.11f);
+
+    BoxCollider2D pol;
     MeshRenderer spriteRenderer;
     Vector2 pos;
     Vector2 battleZonePos;
@@ -16,14 +18,14 @@ public class Drag2D : MonoBehaviour
 
     float timer = 0f;
     float distance = 10;
-    private bool isClickBool = false;
+    private bool isClickBool = true;
     public bool isFreezen = false;
 
 
     private void Start()
     {
         spriteRenderer = GetComponent<MeshRenderer>();
-        pol = GetComponent<PolygonCollider2D>();
+        pol = GetComponent<BoxCollider2D>();
         pos = this.gameObject.transform.position;
     }
 
@@ -55,11 +57,9 @@ public class Drag2D : MonoBehaviour
                 timer = 0f;
         }
     }
-
-  
-
     private void OnMouseDown()
     {
+        UpdateOutline(true);
         isClickBool = false;
         pol.enabled = false;
         battleZonePos = pos;
@@ -72,9 +72,9 @@ public class Drag2D : MonoBehaviour
 
     private void OnMouseUp()
     {
+        UpdateOutline(false);
         isClickBool = true;
         pol.enabled = true;
-
 
         if (this.gameObject.CompareTag("Monster") || this.gameObject.CompareTag("BattleMonster") || this.gameObject.CompareTag("FreezeCard"))
         {

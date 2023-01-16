@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEditor.UI;
 using TMPro;
 
 public class Card : MonoBehaviour
@@ -12,6 +11,8 @@ public class Card : MonoBehaviour
     public TextMeshPro atkText;
     public TextMeshPro levelText;
     public int level;
+    public int curAttackValue;
+    public int curHP;
 
 
     /*자신의 오브젝트 이름과 같은 스크립터블 데이터를 읽어와서 설정한다

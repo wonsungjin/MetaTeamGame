@@ -3,14 +3,16 @@ using UnityEngine;
 public partial class UIManager : MonoBehaviour
 {
     [SerializeField] private GameObject skillExplantion;
-    public void OnEnter_Set_SkillExplantion(bool set,Vector3 pos)
+    public void OnEnter_Set_SkillExplantion(Vector3 pos)
     {
-        skillExplantion.SetActive(set);
-        if(set==true)
+        if(skillExplantion.activeSelf)
         {
+            skillExplantion.SetActive(false);
             skillExplantion.transform.position = pos;
+            Camera.main.ScreenToWorldPoint(skillExplantion.transform.position);
 
         }
+        else skillExplantion.SetActive(true);
 
     }
     
