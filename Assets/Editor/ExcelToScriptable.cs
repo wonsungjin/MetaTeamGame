@@ -14,7 +14,7 @@ public class ExcelToScriptable : EditorWindow
     string __name = "";
 
 
-    [MenuItem("MyTools/ExcelToScriptable")]   
+    [MenuItem("Tools/ExcelToScriptable")]   
     public static void ShowWindow()
     {
         ExcelToScriptable ets = (ExcelToScriptable)EditorWindow.GetWindow(typeof(ExcelToScriptable));
@@ -36,8 +36,8 @@ public class ExcelToScriptable : EditorWindow
 
         if (GUILayout.Button("START CONVERT"))
         {
-            //FileManageMent fileManageMent = new FileManageMent("C:/Users/User/Desktop/"+ csv + ".csv", folder, __GUID, __name);
-            //fileManageMent.Run();
+            FileManageMent fileManageMent = new FileManageMent("C:/Users/User/Desktop/"+ csv + ".csv", folder, __GUID, __name);
+            fileManageMent.Run();
             
         }
 

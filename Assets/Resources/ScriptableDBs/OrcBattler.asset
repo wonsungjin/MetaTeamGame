@@ -22,3 +22,4 @@ MonoBehaviour:
   skilltype: start of battle
   skill: Increases the attack power of adjacent friendly units by +1. Increases the attack power of adjacent friendly units by +2. Increases the attack power of adjacent friendly units by +3.
   appear: TRUE
+  : 

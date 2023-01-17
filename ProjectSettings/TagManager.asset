@@ -4,7 +4,17 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Enemy
+  - Bullet
+  - BattleZone
+  - Sell
+  - SelectRing
+  - Freeze
+  - Monster
+  - FreezeCard
+  - MeltCard
+  - BattleMonster
+  - Rect
+  - FullZone
   layers:
   - Default
   - TransparentFX

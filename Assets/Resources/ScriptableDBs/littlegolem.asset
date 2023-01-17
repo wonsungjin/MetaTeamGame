@@ -22,3 +22,4 @@ MonoBehaviour:
   skilltype: start of battle
   skill: Deal 1 damage to a random enemy unit once. Deal 1 damage to random enemy units twice. Deal 1 damage to random enemy units 3 times.
   appear: TRUE
+  : 
