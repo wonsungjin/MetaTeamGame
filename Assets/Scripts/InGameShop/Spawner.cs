@@ -8,7 +8,7 @@ public class Spawner : MonoBehaviour
     [Header("몬스터 프리팹")]
     public List<string> monsterNames = new List<string>();
 
-    
+
     [Header("상점 위치")]
     public int createdPlace = 3;
     public bool isFreeze = false;
@@ -46,7 +46,7 @@ public class Spawner : MonoBehaviour
         customDeck.tier_3.Add("angryrhinoceros");
         customDeck.tier_3.Add("orcbountyhunter");
         customDeck.tier_3.Add("orcjudge");
-        
+
         customDeck.tier_4.Add("firegolem");
         customDeck.tier_4.Add("crystalgolem");
         customDeck.tier_4.Add("usurer");
@@ -98,18 +98,22 @@ public class Spawner : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
+        Reset_NotMoney();
+    }
+
+    // 레디 버튼 누르면 이루어짐 몬스터 삭제 , 시간 초기화 , 머니 초기화
+    public void OnCLick_ReadyButton()
+    {
+        GameObject[] monster = GameObject.FindGameObjectsWithTag("Monster");
+        for (int i = 0; i < monster.Length; i++)
         {
-            GameObject[] monster = GameObject.FindGameObjectsWithTag("Monster");
-            for (int i = 0; i < monster.Length; i++)
-            {
-                UIManager.Instance.goldCount = 10;
-                Destroy(monster[i]);
-            }
-            ChooseRandomCard();
-            if (UIManager.Instance.shopLevel < 6 && UIManager.Instance.shopMoney > 0)
-                UIManager.Instance.shopMoney--;
+            UIManager.Instance.goldCount = 10;
+            Destroy(monster[i]);
         }
+        ChooseRandomCard();
+        if (UIManager.Instance.shopLevel < 6 && UIManager.Instance.shopMoney > 0)
+            UIManager.Instance.shopMoney--;
+        UIManager.Instance.timer = 60f;
         Reset_NotMoney();
     }
 
@@ -166,24 +170,24 @@ public class Spawner : MonoBehaviour
     {
         if (UIManager.Instance.goldCount <= 0)
         {
-            UIManager.Instance.ReFreshButton.interactable = false;
+            UIManager.Instance.reFreshButton.interactable = false;
         }
         else
-            UIManager.Instance.ReFreshButton.interactable = true;
+            UIManager.Instance.reFreshButton.interactable = true;
 
-        if(UIManager.Instance.shopLevel > 5)
+        if (UIManager.Instance.shopLevel > 5)
         {
-            UIManager.Instance.LevelUpButton.interactable = false;
+            UIManager.Instance.levelUpButton.interactable = false;
             UIManager.Instance.shopLevelTXT.enabled = false;
         }
         else
         {
             if (UIManager.Instance.goldCount < UIManager.Instance.shopMoney)
             {
-                UIManager.Instance.LevelUpButton.interactable = false;
+                UIManager.Instance.levelUpButton.interactable = false;
             }
             else
-                UIManager.Instance.LevelUpButton.interactable = true;
+                UIManager.Instance.levelUpButton.interactable = true;
         }
     }
 

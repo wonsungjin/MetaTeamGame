@@ -9,8 +9,10 @@ public partial class UIManager : MonoBehaviour
     [Header("슬라이더")]
     [SerializeField] Slider timerSlider = null;
     [Header("버튼")]
-    public Button ReFreshButton = null;
-    public Button LevelUpButton = null;
+    public Button reFreshButton = null;
+    public Button levelUpButton = null;
+    [SerializeField] Button infoButton = null;
+    [SerializeField] Button optionButton = null;
     [Header("텍스트")]
     [SerializeField] Text NowShopLevelTXT = null;
     [SerializeField] Text goldTXT = null;
@@ -22,7 +24,7 @@ public partial class UIManager : MonoBehaviour
     public int shopMoney = 0;
     public int goldCount = 10;
     public int shopLevel = 1;
-    float timer = 60f;
+    public float timer = 60f;
 
     // Public 프로퍼티로 선언해서 외부에서 private 멤버변수에 접근만 가능하게 구현
     public static UIManager Instance
