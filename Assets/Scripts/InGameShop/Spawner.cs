@@ -1,8 +1,9 @@
+using Photon.Pun;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Spawner : MonoBehaviour
+public class Spawner : MonoBehaviourPun
 {
     [SerializeField] Node[] monsterTrans;
     [Header("몬스터 프리팹")]
@@ -84,7 +85,9 @@ public class Spawner : MonoBehaviour
             for (int i = 0; i < createdPlace; i++)
             {
                 randomNum = Random.Range(0, 8);
-                GameObject mon = Instantiate(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum]}"), monsterTrans[randomTrans].transform.position, Quaternion.identity);
+                Debug.Log(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum]}"));
+                //GameObject mon = Instantiate(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum]}"), monsterTrans[randomTrans].transform.position, Quaternion.identity);
+                GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum]}"), monsterTrans[randomTrans].transform.position, Quaternion.identity);
 
                 randomTrans++;
 
@@ -102,13 +105,21 @@ public class Spawner : MonoBehaviour
     }
 
     // 레디 버튼 누르면 이루어짐 몬스터 삭제 , 시간 초기화 , 머니 초기화
+    List<Card> li = new List<Card>();
     public void OnCLick_ReadyButton()
     {
+        for (int i = 0; i < li.Count; i++)
+        {
+
+            Batch.Instance.SetBatch((int)PhotonNetwork.LocalPlayer.CustomProperties["Number"], li[0].name, li[0].level, li[0].curHP, li[0].curAttackValue);
+        }
         GameObject[] monster = GameObject.FindGameObjectsWithTag("Monster");
         for (int i = 0; i < monster.Length; i++)
         {
             UIManager.Instance.goldCount = 10;
-            Destroy(monster[i]);
+            //Destroy(monster[i]);
+            GameMGR.Instance.objectPool.DestroyPrefab(monster[i]);
+
         }
         ChooseRandomCard();
         if (UIManager.Instance.shopLevel < 6 && UIManager.Instance.shopMoney > 0)
@@ -159,7 +170,8 @@ public class Spawner : MonoBehaviour
 
             for (int i = 0; i < monster.Length; i++)
             {
-                Destroy(monster[i]);
+                //Destroy(monster[i]);
+                GameMGR.Instance.objectPool.DestroyPrefab(monster[i]);
             }
             ChooseRandomCard();
         }
@@ -402,7 +414,8 @@ public class Spawner : MonoBehaviour
     {
         randomNum = Random.Range(a, b);
 
-        GameObject mon = Instantiate(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum]}"), monsterTrans[randomTrans].transform.position, Quaternion.identity);
+        //GameObject mon = Instantiate(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum]}"), monsterTrans[randomTrans].transform.position, Quaternion.identity);
+        GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum]}"), monsterTrans[randomTrans].transform.position, Quaternion.identity);
 
         randomTrans++;
     }

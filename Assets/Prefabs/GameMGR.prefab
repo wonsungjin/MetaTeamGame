@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 6544229276892394815}
   - component: {fileID: 6544229276892394814}
   - component: {fileID: 4093828023173428372}
+  - component: {fileID: 727266096}
   m_Layer: 0
   m_Name: GameMGR
   m_TagString: Untagged
@@ -56,6 +57,7 @@ MonoBehaviour:
   cardList: {fileID: 0}
   customDeckShop: {fileID: 0}
   objectPool: {fileID: 0}
+  shopCards: {fileID: 0}
 --- !u!114 &6544229276892394784
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,3 +136,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbcc7312f63fe034d877ccd1d80ce9ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &727266096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6544229276892394788}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b765acce56d11043949b7f83a892c7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  card: {fileID: 1732749413119675053, guid: e95ac517704a007428be4b89624d6238, type: 3}
+  tier:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  clearList: []

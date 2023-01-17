@@ -82,7 +82,6 @@ public partial class Drag2D : MonoBehaviour
         UIManager.Instance.OnEnter_Set_SkillExplantion(false, Vector3.zero);
         UIManager.Instance.SetisExplantionActive(true);
 
-
         if (gameObject.CompareTag("BattleMonster"))
         {
             UIManager.Instance.sell.gameObject.SetActive(true);
@@ -155,6 +154,11 @@ public partial class Drag2D : MonoBehaviour
                 if (collision.gameObject.CompareTag("BattleZone"))
                 {
                     pos = collision.gameObject.transform.position;
+
+                    //if(gameObject.name == collision.gameObject.name)
+                    //{
+                    // 이름이 같을 땐 합쳐진다 능력치를 따져서 높은쪽으로 결합 하나는 사라지고
+                    //}
                 }
             }
 
