@@ -179,7 +179,6 @@ public class BattleLogic : MonoBehaviourPunCallbacks
                         Debug.Log("***playerTurnCount : " + playerTurnCount);
                     }
 
-
                     // 플레이어 유닛이 적 후열 유닛 랜덤 공격
                     playerAttackList[playerTurnCount].GetComponent<AttackLogic>().UnitAttack(enemyBackwardUnits[exArray[randomArrayNum]]);
 
@@ -191,6 +190,7 @@ public class BattleLogic : MonoBehaviourPunCallbacks
                             enemyAttackList[i] = null;
                             break;
                         }
+
                         else
                         {
                             Debug.Log("enemyAttackList 탐색중");
