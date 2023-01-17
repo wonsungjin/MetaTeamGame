@@ -7,6 +7,10 @@ using UnityEngine.UI;
 using ExitGames.Client.Photon;
 using System;
 using System.Linq;
+using Unity.VisualScripting;
+using UnityEngine.UIElements;
+using Photon.Pun.Demo.Cockpit;
+using UnityEngine.Experimental.AI;
 //using Hashtable = ExitGames.Client.Photon.Hashtable; // 이게 구버전 한정인지 필수인지는 나도 모른다는 것이 학계의 점심
 
 namespace hcu
@@ -130,11 +134,13 @@ namespace hcu
 
         public override void OnPlayerLeftRoom(Player otherPlayer)
         {
+            playerList.Remove((int)otherPlayer.CustomProperties["Number"]);
             Debug.Log(otherPlayer + "가 나갔다");
             if (otherPlayer.IsInactive) Debug.Log(" IsInactive");
             else Debug.Log("NotInactive");
 
             Debug.Log("나의 커스텀프로퍼티 번호" + (int)PhotonNetwork.LocalPlayer.CustomProperties["Number"]);
+            int a = (int)otherPlayer.CustomProperties["Number"]; // 리스트상에서 제거해줄 값.
 
             /*for (int i = 0; i < userName.Length; i++)
             {
@@ -176,6 +182,7 @@ namespace hcu
         //List<Player> matchMan = null;
         Player[] matchMan = new Player[8]; // 최대 8인이고 그 이상을 넘을 수는 없으니 일단 이 값으로 지정.
         int[] matchNum;
+        int[] prevMatchNum = new int[8];
         int[] userName;
         int[] userLife;
 
@@ -202,12 +209,10 @@ namespace hcu
 
 
 
-
+            List<int> playerList = new List<int>();
         [PunRPC]
         public void MatchingSetting()
         {
-            Queue<int> matchNumQueue = new Queue<int>();
-
             //공격 랜덤값 지정 - 매 스테이지마다 랜덤 값을 받아온다
             for (int i = 0; i < setRandom.Length; i++)
             {
@@ -219,17 +224,31 @@ namespace hcu
             for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
             {
                 n = UnityEngine.Random.Range(0, PhotonNetwork.PlayerList.Length);
-                if (matchNumQueue.Contains(n)) { i--; continue; }
-                matchNumQueue.Enqueue(n);
+
+                if(playerList.Contains(n)){ i--; continue; }
+                playerList.Add(n);
+
+/*                if (matchNumQueue.Contains(n)) { i--; continue; }
+                matchNumQueue.Enqueue(n);*/
+
+
                 Debug.Log("큐에 " + n + " 추가");
             }
-            Debug.Log(matchNumQueue.Count);
+/*            Debug.Log(matchNumQueue.Count);*/
+
             // 플레이어들을 큐에 다 집어넣으면 배열에 순서대로 넣는다.
             matchNum = new int[PhotonNetwork.PlayerList.Length];
+            Debug.Log(matchNum.Length);
             for (int i = 0; i < matchNum.Length; i++)
             {
-                matchNum[i] = matchNumQueue.Dequeue();
-                //  Debug.Log("큐에서 1개 꺼냄");
+                //matchNum[i] = matchNumQueue.Dequeue();
+                matchNum[i] = playerList[i];
+            }
+
+            // 매칭된 값들을 이전 매칭값에 기록한다.
+            for (int i = 0; i < matchNum.Length; i++)
+            {
+                prevMatchNum[i] = matchNum[i];
             }
 
             photonView.RPC("Matching", RpcTarget.All, setRandom, matchNum); // Null이 뜨는 이유?
@@ -244,37 +263,40 @@ namespace hcu
         [PunRPC]
         public void Matching(int[] random, int[] num)
         {
-            for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
+            Debug.Log(num.Length + "가 인자로 받은 넘의 길이");
+
+
+            for (int i = 0; i < num.Length; i++)
             {
                 matchMan[i] = PhotonNetwork.PlayerList[num[i]];
+                Debug.Log(i + "번째 순서" + matchMan[i]);
             }
             //마스터 클라이언트가 대진 설정을 마치고 각 플레이어들을 1:1로 묶는 함수
-            if (PhotonNetwork.PlayerList.Length < 2)
+            if (num.Length < 2)
             {
                 Debug.Log("나 혼자 방에 남아버렸다");
             }
 
             // 플레이어가 짝수
-            else if (PhotonNetwork.PlayerList.Length % 2 == 0)
+            else if (num.Length % 2 == 0)
             {
                 Debug.Log("1:1 & 1:1 시작");
-                for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
+                for (int i = 0; i < num.Length; i++)
                 {
                     if (matchMan[i].NickName == PhotonNetwork.NickName)
                     {
                         if (i == 0 || i % 2 == 0)
                         {
-                            // 내 상대는  = matchMan[i+1] 
-                            Debug.Log("나는 " + userID + " 닉네임 : " + matchMan[i].NickName + " 상대 : " + matchMan[i + 1].NickName + " 내가 선공");
-                            string a = "나는 " + userID + " 닉네임 : " + matchMan[i].NickName + " 상대 : " + matchMan[i + 1].NickName + " 내가 선공";
+                            Debug.Log("나는 " + userID + " 닉네임 : " + matchMan[i].CustomProperties["Number"] + " 상대 : " + matchMan[i + 1].CustomProperties["Number"] + " 내가 선공");
+                            string a = "나는 " + userID + " 닉네임 : " + matchMan[i].CustomProperties["Number"] + " 상대 : " + matchMan[i + 1].CustomProperties["Number"] + " 내가 선공";
                             // 내가 선공
                             photonView.RPC("ShowDebug", RpcTarget.MasterClient, a);
                         }
                         else
                         {
                             // 내 상대는 = matchMan[i-1]
-                            Debug.Log("나는 " + userID + " 닉네임 : " + matchMan[i].NickName + " 상대 : " + matchMan[i - 1].NickName + " 내가 후공");
-                            string a = "나는 " + userID + " 닉네임 : " + matchMan[i].NickName + " 상대 : " + matchMan[i - 1].NickName + " 내가 후공";
+                            Debug.Log("나는 " + userID + " 닉네임 : " + matchMan[i].CustomProperties["Number"] + " 상대 : " + matchMan[i - 1].CustomProperties["Number"] + " 내가 후공");
+                            string a = "나는 " + userID + " 닉네임 : " + matchMan[i].CustomProperties["Number"] + " 상대 : " + matchMan[i - 1].CustomProperties["Number"] + " 내가 후공";
                             // 내가 후공
                             photonView.RPC("ShowDebug", RpcTarget.MasterClient, a);
                         }
@@ -283,26 +305,26 @@ namespace hcu
             }
 
             // 플레이어가 홀수, 3명 이상이라면
-            else if (PhotonNetwork.PlayerList.Length % 2 == 1 && PhotonNetwork.PlayerList.Length > 2)
+            else if (num.Length % 2 == 1 && num.Length > 2)
             {
                 Debug.Log("1:1:1 시작");
-                for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
+                for (int i = 0; i < num.Length; i++)
                 {
                     if (matchMan[i].NickName == PhotonNetwork.NickName)
                     {
                         if (i == 0 || i % 2 == 0)
                         {
-                            if (i == PhotonNetwork.PlayerList.Length - 1)
+                            if (i == num.Length - 1)
                             {
-                                Debug.Log("마지막 " + userID + " 닉네임 : " + matchMan[i].NickName + " 상대 : " + matchMan[i - 1].NickName + " 내가 선공");
-                                string a = "마지막 " + userID + " 닉네임 : " + matchMan[i].NickName + " 상대 : " + matchMan[i - 1].NickName + " 내가 선공";
+                                Debug.Log("마지막 " + userID + " 닉네임 : " + matchMan[i].CustomProperties["Number"] + " 상대 : " + matchMan[i - 1].CustomProperties["Number"] + " 내가 선공");
+                                string a = "마지막 " + userID + " 닉네임 : " + matchMan[i].CustomProperties["Number"] + " 상대 : " + matchMan[i - 1].CustomProperties["Number"] + " 내가 선공";
                                 // 내가 선공
                                 photonView.RPC("ShowDebug", RpcTarget.MasterClient, a);
                             }
                             else
                             {
-                                Debug.Log("나는 " + userID + " 닉네임 : " + matchMan[i].NickName + " 상대 : " + matchMan[i + 1].NickName + " 내가 선공");
-                                string a = "나는 " + userID + " 닉네임 : " + matchMan[i].NickName + " 상대 : " + matchMan[i + 1].NickName + " 내가 선공";
+                                Debug.Log("나는 " + userID + " 닉네임 : " + matchMan[i].CustomProperties["Number"] + " 상대 : " + matchMan[i + 1].CustomProperties["Number"] + " 내가 선공");
+                                string a = "나는 " + userID + " 닉네임 : " + matchMan[i].CustomProperties["Number"] + " 상대 : " + matchMan[i + 1].CustomProperties["Number"] + " 내가 선공";
                                 // 내가 후공
                                 photonView.RPC("ShowDebug", RpcTarget.MasterClient, a);
                             }
@@ -310,8 +332,8 @@ namespace hcu
                         else
                         {
                             // 내 상대는 = matchMan[i-1]
-                            Debug.Log("나는 " + userID + " 닉네임 : " + matchMan[i].NickName + " 상대 : " + matchMan[i - 1].NickName + " 내가 후공");
-                            string a = "나는 " + userID + " 닉네임 : " + matchMan[i].NickName + " 상대 : " + matchMan[i - 1].NickName + " 내가 후공";
+                            Debug.Log("나는 " + userID + " 닉네임 : " + matchMan[i].CustomProperties["Number"] + " 상대 : " + matchMan[i - 1].CustomProperties["Number"] + " 내가 후공");
+                            string a = "나는 " + userID + " 닉네임 : " + matchMan[i].CustomProperties["Number"] + " 상대 : " + matchMan[i - 1].CustomProperties["Number"] + " 내가 후공";
                             // 내가 후공
                             photonView.RPC("ShowDebug", RpcTarget.MasterClient, a);
                         }
@@ -320,8 +342,6 @@ namespace hcu
             }
 
         }
-
-
 
         private void GoShop()
         {
@@ -346,7 +366,6 @@ namespace hcu
                 // myDeck.transform.GetChild(i).gameObject.GetComponent<Card>().OnStart();
             }
 
-            // 턴 종료 = 상점으로 이동
             GoShop();
         }
 
