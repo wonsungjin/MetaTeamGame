@@ -348,10 +348,21 @@ namespace hcu
             }
 
             // 선공 후공을 돌아가면서 매칭한다는 전제.
-            
 
-            int[] first = new int[matchMan.Length]; // 선공 배열
-            int[] after = new int[matchMan.Length]; // 후공 배열
+            int arrayLength = 0;
+
+            if (matchMan.Length % 2 == 0)
+            {
+                arrayLength = matchMan.Length / 2;
+            }
+            else
+            {
+                arrayLength = matchMan.Length / 2 + 1;
+            }
+
+            int[] first = new int[arrayLength]; // 선공 배열
+            int[] after = new int[arrayLength]; // 후공 배열
+
 
             for (int i = 0; i < first.Length; i++)
             {
@@ -359,6 +370,7 @@ namespace hcu
                 first[i] = (int)matchMan[i].CustomProperties["Number"];
                 else
                 after[i] = (int)matchMan[i].CustomProperties["Number"];
+
             }
 
             int[] temp = new int[first.Length];
@@ -380,10 +392,13 @@ namespace hcu
                     after[i] = after[0];
                     after[0] = temp[i];
                 }
-
-                temp[i] = after[i];
-                after[i] = after[i + 1];
-                after[i+1] = temp[i];
+                else
+                {
+                    temp[i] = after[i];
+                    after[i] = after[i + 1];
+                    after[i + 1] = temp[i];
+                }
+                
             }
 
             //중간에 나간 놈 있는지 체크
