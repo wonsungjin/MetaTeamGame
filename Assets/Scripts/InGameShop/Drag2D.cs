@@ -9,7 +9,7 @@ public partial class Drag2D : MonoBehaviour
     WaitForSeconds wait = new WaitForSeconds(0.11f);
     WaitForSeconds meltWait = new WaitForSeconds(0.1f);
 
-    CardInfo cardInfo;
+    Card card;
     BoxCollider2D pol;
     MeshRenderer spriteRenderer;
     Vector2 pos;
@@ -31,7 +31,7 @@ public partial class Drag2D : MonoBehaviour
         spriteRenderer = GetComponent<MeshRenderer>();
         pol = GetComponent<BoxCollider2D>();
         pos = this.gameObject.transform.position;
-        cardInfo = GetComponent<Card>().cardInfo;
+        card = GetComponent<Card>();
     }
 
     Camera mainCam = null;
