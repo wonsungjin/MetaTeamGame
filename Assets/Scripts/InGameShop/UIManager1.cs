@@ -82,3 +82,9 @@ public partial class UIManager : MonoBehaviour
         sellTXT.gameObject.SetActive(false);
     }
 }
+
+//41 23 56 70
+//4 23 5 70
+//42 31 47 60
+//40 27 35
+//0

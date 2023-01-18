@@ -8,14 +8,14 @@ using UnityEngine;
 
 public class DataBase : MonoBehaviour
 {
-    MongoClient client = new MongoClient("mongodb+srv://wonsj09:wsj@cluster0.77rho6r.mongodb.net/?retryWrites=true&w=majority");
+    MongoClient client = new MongoClient("mongodb+srv://mongo:mongo1234@cluster0.utsc38e.mongodb.net/?retryWrites=true&w=majority");
     // Start is called before the first frame update
     public IMongoDatabase database = null;
     public IMongoCollection<BsonDocument> collection;
     void Start()
     {
-        database = client.GetDatabase("user");
-        collection = database.GetCollection<BsonDocument>("userlist");
+        database = client.GetDatabase("userlist");
+        collection = database.GetCollection<BsonDocument>("user");
 
         /*collection.InsertOne(new BsonDocument(new Dictionary<string, object>
         {

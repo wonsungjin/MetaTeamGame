@@ -16,8 +16,8 @@ public partial class GameMGR : Singleton<GameMGR>
     private void Start()
     {
         GetComponentAgain();
-       // metaTrendAPI.GetUserProfile();
-        //metaTrendAPI.GetSessionID();
+        metaTrendAPI.GetUserProfile();
+        metaTrendAPI.GetSessionID();
         StartCoroutine(COR_GetCoin());
         DontDestroyOnLoad(gameObject);
 
