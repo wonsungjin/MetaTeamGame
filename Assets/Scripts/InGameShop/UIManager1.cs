@@ -6,19 +6,19 @@ public partial class UIManager : MonoBehaviour
 {
 
     [Header("슬라이더")]
-    [SerializeField] Slider timerSlider = null;
+    [SerializeField] public Slider timerSlider = null;
     [Header("버튼")]
-    public Button reFreshButton = null;
-    public Button levelUpButton = null;
-    [SerializeField] Button infoButton = null;
-    [SerializeField] Button optionButton = null;
+    [SerializeField] public Button reFreshButton = null;
+    [SerializeField]public Button levelUpButton = null;
+    [SerializeField]public Button infoButton = null;
+    [SerializeField]public Button optionButton = null;
     [Header("텍스트")]
-    [SerializeField] Text NowShopLevelTXT = null;
-    [SerializeField] Text goldTXT = null;
-    public Text shopLevelTXT = null;
-    [SerializeField] Text sellTXT = null;
-    [SerializeField] Text timerTXT = null;
-    [SerializeField] public GameObject sell = null;
+    [SerializeField]public Text NowShopLevelTXT = null;
+    [SerializeField]public Text goldTXT = null;
+    [SerializeField]public Text shopLevelTXT = null;
+    [SerializeField]public Text sellTXT = null;
+    [SerializeField]public Text timerTXT = null;
+    [SerializeField]public GameObject sell = null;
 
     public int shopMoney = 0;
     public int goldCount = 10;
@@ -26,11 +26,30 @@ public partial class UIManager : MonoBehaviour
     public float timer = 60f;
     private bool isScene;
 
+    public void Init_Scene2()
+    {
+        timerSlider = GameObject.Find("TimerSlider").GetComponent<Slider>();
+        reFreshButton = GameObject.Find("ReFreshButton").GetComponent<Button>();
+        levelUpButton = GameObject.Find("LevelUPButton").GetComponent<Button>();
+        infoButton = GameObject.Find("InfoButton").GetComponent<Button>();
+        optionButton = GameObject.Find("OptionButton").GetComponent<Button>();
+        NowShopLevelTXT = GameObject.Find("NowShopLevelTXT").GetComponent<Text>();
+        goldTXT = GameObject.Find("GoldTXT").GetComponent<Text>();
+        shopLevelTXT = GameObject.Find("ShopLevelUpTXT").GetComponent<Text>();
+        sellTXT = GameObject.Find("SellTXT").GetComponent<Text>();
+        timerTXT = GameObject.Find("TimerTXT").GetComponent<Text>();
+        sell = GameObject.Find("Sell");
+
+        timerSlider.maxValue = timer;
+        sell.gameObject.SetActive(false);
+        sellTXT.gameObject.SetActive(false);
+    }
+
+
 
     private void Update()
     {
         if (!isScene) return;
-        // 내 씬일때만 
 
         // 시간이 변경한 만큼 slider Value 변경을 합니다.
         timer -= Time.deltaTime;
@@ -49,13 +68,6 @@ public partial class UIManager : MonoBehaviour
         {
             sellTXT.gameObject.SetActive(true);
         }
-    }
-
-    public void Init_Scene2()
-    {
-        timerSlider.maxValue = timer;
-        sell.gameObject.SetActive(false);
-        sellTXT.gameObject.SetActive(false);
     }
 }
 
