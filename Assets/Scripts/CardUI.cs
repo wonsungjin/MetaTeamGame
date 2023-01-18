@@ -55,6 +55,6 @@ public class CardUI : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler,
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        GameMGR.Instance.uIMGR.OnPointerEnter_CardInfo(cardInfo);
+        GameMGR.Instance.uiManager.OnPointerEnter_CardInfo(cardInfo);
     }
 }

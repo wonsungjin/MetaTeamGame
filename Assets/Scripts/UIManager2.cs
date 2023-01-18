@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
-public class UIMGR : MonoBehaviour
+public partial class UIManager : MonoBehaviour
 {
     [Header("Pannel")]
     [SerializeField] private GameObject lobbyPannel;
@@ -37,7 +37,7 @@ public class UIMGR : MonoBehaviour
         obj.SetMyDeck(customDeck);
         obj.transform.SetParent(myPackList.transform);
         obj.transform.localScale = Vector3.one;
-        GameMGR.Instance.uIMGR.SetParentPackAddButton();
+        GameMGR.Instance.uiManager.SetParentPackAddButton();
 
     }
     public void SetParentPackAddButton()
@@ -96,5 +96,8 @@ public class UIMGR : MonoBehaviour
         skillExplantion[1].text = cardInfo.GetSkillExplantion(2);
         skillExplantion[2].text = cardInfo.GetSkillExplantion(3);
 
+    }
+    public void Init_Scene1()
+    {
     }
 }
