@@ -112,8 +112,7 @@ public class Spawner : MonoBehaviourPun
     {
         for (int i = 0; i < cardList.Count; i++)
         {
-
-            GameMGR.Instance.batch.SetBatch((int)PhotonNetwork.LocalPlayer.CustomProperties["Number"], cardList[i].name, cardList[i].level, cardList[i].curHP, cardList[i].curAttackValue);
+            GameMGR.Instance.batch.gameObject.GetPhotonView().RPC("SetBatch", RpcTarget.MasterClient, (int)PhotonNetwork.LocalPlayer.CustomProperties["Number"], cardList[i]);
         }
         GameObject[] monster = GameObject.FindGameObjectsWithTag("Monster");
         for (int i = 0; i < monster.Length; i++)
