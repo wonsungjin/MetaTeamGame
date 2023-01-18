@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Batch : Singleton<Batch>
+public class Batch : MonoBehaviour
 {
     Dictionary<int, List<Card>> playerList = new Dictionary<int, List<Card>>();
     public void SetBatch(int playerNum,string objName,int level,int hp,int attackValue)

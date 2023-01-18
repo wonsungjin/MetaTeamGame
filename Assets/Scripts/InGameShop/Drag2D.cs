@@ -79,12 +79,12 @@ public partial class Drag2D : MonoBehaviour
         isClickBool = false;
         pol.enabled = false;
         battleZonePos = pos;
-        UIManager.Instance.OnEnter_Set_SkillExplantion(false, Vector3.zero);
-        UIManager.Instance.SetisExplantionActive(true);
+        GameMGR.Instance.uiManager.OnEnter_Set_SkillExplantion(false, Vector3.zero);
+        GameMGR.Instance.uiManager.SetisExplantionActive(true);
 
         if (gameObject.CompareTag("BattleMonster"))
         {
-            UIManager.Instance.sell.gameObject.SetActive(true);
+            GameMGR.Instance.uiManager.sell.gameObject.SetActive(true);
 
             isClickBattleMonster = true;
         }
@@ -96,13 +96,13 @@ public partial class Drag2D : MonoBehaviour
         isClickBool = true;
         pol.enabled = true;
         isClickBattleMonster = false;
-        UIManager.Instance.SetisExplantionActive(false);
+        GameMGR.Instance.uiManager.SetisExplantionActive(false);
 
         if (this.gameObject.CompareTag("Monster") || this.gameObject.CompareTag("BattleMonster") || this.gameObject.CompareTag("FreezeCard"))
         {
             StartCoroutine(COR_BackAgain());
         }
-        if (UIManager.Instance.sell.activeSelf == true)
+        if (GameMGR.Instance.uiManager.sell.activeSelf == true)
         {
             StartCoroutine(COR_SellButton());
         }
@@ -123,7 +123,7 @@ public partial class Drag2D : MonoBehaviour
                 }
 
                 // 얼려있을 때 배틀존에 가면 구매 가능하게 하는 예외처리
-                if (UIManager.Instance.goldCount >= 3)
+                if (GameMGR.Instance.uiManager.goldCount >= 3)
                 {
                     if (collision.gameObject.CompareTag("BattleZone"))
                     {
@@ -146,7 +146,7 @@ public partial class Drag2D : MonoBehaviour
                 // 판매
                 if (collision.gameObject.CompareTag("Sell"))
                 {
-                    UIManager.Instance.goldCount += 1;
+                    GameMGR.Instance.uiManager.goldCount += 1;
                     SellButton();
                 }
 
@@ -174,11 +174,11 @@ public partial class Drag2D : MonoBehaviour
                 // 몬스터가 배틀 존에 닿으면 골드가 차감 되고 배틀몬스터 태그로 바뀐다
                 if (collision.gameObject.CompareTag("BattleZone"))
                 {
-                    if (UIManager.Instance.goldCount >= 3)
+                    if (GameMGR.Instance.uiManager.goldCount >= 3)
                     {
                         spriteRenderer.sortingOrder = 3;
                         gameObject.tag = "BattleMonster";
-                        UIManager.Instance.goldCount -= 3;
+                        GameMGR.Instance.uiManager.goldCount -= 3;
                         pos = collision.gameObject.transform.position;
                     }
                 }
@@ -190,7 +190,7 @@ public partial class Drag2D : MonoBehaviour
     IEnumerator COR_SellButton()
     {
         yield return wait;
-        UIManager.Instance.sell.gameObject.SetActive(false);
+        GameMGR.Instance.uiManager.sell.gameObject.SetActive(false);
     }
     // 원래 위치로 돌리는 함수
     private IEnumerator COR_BackAgain()
@@ -226,12 +226,12 @@ public partial class Drag2D : MonoBehaviour
         pos = meltPos;
         this.gameObject.transform.position = pos + Vector2.down;
         spriteRenderer.sortingOrder = 3;
-        UIManager.Instance.goldCount -= 3;
+        GameMGR.Instance.uiManager.goldCount -= 3;
     }
 
     void SellButton()
     {
-        UIManager.Instance.sell.gameObject.SetActive(false);
+        GameMGR.Instance.uiManager.sell.gameObject.SetActive(false);
 
         Destroy(gameObject);
     }

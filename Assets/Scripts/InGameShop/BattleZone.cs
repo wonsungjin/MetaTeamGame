@@ -3,6 +3,7 @@ using UnityEngine;
 public class BattleZone : MonoBehaviour
 {
     public bool isHere = false;
+    [SerializeField] int myNum;
 
     private void OnTriggerStay2D(Collider2D collision)
     {
@@ -10,6 +11,7 @@ public class BattleZone : MonoBehaviour
         {
             this.isHere = true;
             this.gameObject.tag = "FullZone";
+            GameMGR.Instance.spawner.cardBatch[myNum] = collision.gameObject;
         }
     }
 
@@ -18,6 +20,8 @@ public class BattleZone : MonoBehaviour
         this.isHere = false;
 
         if(collision.gameObject.CompareTag("BattleMonster"))
-        this.gameObject.tag = "BattleZone";
+        {
+            this.gameObject.tag = "BattleZone";
+        }
     }
 }

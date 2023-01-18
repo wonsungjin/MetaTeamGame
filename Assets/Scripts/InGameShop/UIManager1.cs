@@ -4,7 +4,6 @@ using UnityEngine.UI;
 
 public partial class UIManager : MonoBehaviour
 {
-    private static UIManager instance = null;
 
     [Header("슬라이더")]
     [SerializeField] Slider timerSlider = null;
@@ -25,40 +24,14 @@ public partial class UIManager : MonoBehaviour
     public int goldCount = 10;
     public int shopLevel = 1;
     public float timer = 60f;
+    private bool isScene;
 
-    // Public 프로퍼티로 선언해서 외부에서 private 멤버변수에 접근만 가능하게 구현
-    public static UIManager Instance
-    {
-        get
-        {
-            if (null == instance)
-            {
-                return null;
-            }
-            return instance;
-        }
-    }
-
-    private void Awake()
-    {
-        // 처음 시작시 초기화
-        FirstReset();
-        timerSlider.maxValue = timer;
-        if (null == instance)
-        {
-            // 씬 시작될때 인스턴스 초기화, 씬을 넘어갈때도 유지되기위한 처리
-            instance = this;
-            DontDestroyOnLoad(this.gameObject);
-        }
-        else
-        {
-            // instance가, GameManager가 존재한다면 GameObject 제거 
-            Destroy(this.gameObject);
-        }
-    }
 
     private void Update()
     {
+        if (!isScene) return;
+        // 내 씬일때만 
+
         // 시간이 변경한 만큼 slider Value 변경을 합니다.
         timer -= Time.deltaTime;
         timerSlider.value = timer;
@@ -78,8 +51,9 @@ public partial class UIManager : MonoBehaviour
         }
     }
 
-    private void FirstReset()
+    public void Init_Scene2()
     {
+        timerSlider.maxValue = timer;
         sell.gameObject.SetActive(false);
         sellTXT.gameObject.SetActive(false);
     }
