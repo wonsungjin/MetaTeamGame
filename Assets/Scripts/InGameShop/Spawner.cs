@@ -78,6 +78,7 @@ public class Spawner : MonoBehaviourPun
     }
     private void Start()
     {
+        GameMGR.Instance.Init(2);
         SetMyDeckSetting();
         // 처음에 카드 생성
         if (isFirstStart == false)

@@ -22,10 +22,10 @@ public partial class GameMGR : Singleton<GameMGR>
 
     private void Start()
     {
-        Init(0);
-       // metaTrendAPI.GetUserProfile();
-        //metaTrendAPI.GetSessionID();
-        //StartCoroutine(COR_GetCoin());
+        Init(1);
+        metaTrendAPI.GetUserProfile();
+        metaTrendAPI.GetSessionID();
+        StartCoroutine(COR_GetCoin());
         DontDestroyOnLoad(gameObject);
 
     }
@@ -63,9 +63,9 @@ public partial class GameMGR : Singleton<GameMGR>
         dataBase.Login();
         Debug.Log(metaTrendAPI.GetZera());
     }
-    private void Init(int num)
+    public void Init(int num)
     {
-        if (num == 0)
+        if (num == 1)
         {
             uiManager = FindObjectOfType<UIManager>();
             metaTrendAPI = GetComponent<MetaTrendAPI>();
@@ -76,13 +76,14 @@ public partial class GameMGR : Singleton<GameMGR>
             objectPool = GetComponent<ObjectPool>();
             uiManager.Init_Scene1();
         }
-        else if (num==1)
+        else if (num==2)
         {
-            spawner = GetComponent<Spawner>();
-            batch = GetComponent<Batch>();
+            spawner = FindObjectOfType<Spawner>();
+            batch = FindObjectOfType<Batch>();
+            uiManager = FindObjectOfType<UIManager>();
             uiManager.Init_Scene2();
         }
-        else if(num==2)
+        else if(num==3)
         {
 
         }
