@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 35249680}
   - component: {fileID: 35249679}
   m_Layer: 0
-  m_Name: Referee
+  m_Name: BattleManager
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -168,6 +168,8 @@ MonoBehaviour:
   - {fileID: 827924435}
   - {fileID: 120115563}
   - {fileID: 821201618}
+  playerAttackList: []
+  enemyAttackList: []
 --- !u!4 &35249680
 Transform:
   m_ObjectHideFlags: 0
