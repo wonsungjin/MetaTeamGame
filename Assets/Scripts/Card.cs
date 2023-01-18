@@ -14,6 +14,7 @@ public class Card : MonoBehaviour
     public int curAttackValue;
     public int curHP;
     public int curEXP;
+    
 
 
     /*자신의 오브젝트 이름과 같은 스크립터블 데이터를 읽어와서 설정한다
@@ -61,7 +62,6 @@ public class Card : MonoBehaviour
         {
             level++;
             levelText.text = level.ToString();
-
         }
 
     }

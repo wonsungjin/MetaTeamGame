@@ -1,8 +1,9 @@
+using Photon.Pun;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Spawner : MonoBehaviour
+public class Spawner : MonoBehaviourPun
 {
     [SerializeField] Node[] monsterTrans;
     [Header("몬스터 프리팹")]
@@ -16,6 +17,8 @@ public class Spawner : MonoBehaviour
     CustomDeck customDeck = new CustomDeck();
     int randomNum;
     bool isFirstStart = false;
+
+    public GameObject[] cardBatch = new GameObject[6];
 
     public void SetMyDeckSetting()
     {
@@ -79,18 +82,20 @@ public class Spawner : MonoBehaviour
         // 처음에 카드 생성
         if (isFirstStart == false)
         {
-            UIManager.Instance.shopLevel = 1;
+            GameMGR.Instance.uiManager.shopLevel = 1;
 
             for (int i = 0; i < createdPlace; i++)
             {
                 randomNum = Random.Range(0, 8);
-                GameObject mon = Instantiate(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum]}"), monsterTrans[randomTrans].transform.position, Quaternion.identity);
+                Debug.Log(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum]}"));
+                //GameObject mon = Instantiate(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum]}"), monsterTrans[randomTrans].transform.position, Quaternion.identity);
+                GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum]}"), monsterTrans[randomTrans].transform.position, Quaternion.identity);
 
                 randomTrans++;
 
                 isFirstStart = true;
 
-                UIManager.Instance.shopMoney = 7;
+                GameMGR.Instance.uiManager.shopMoney = 7;
             }
             randomTrans = 0;
         }
@@ -102,27 +107,35 @@ public class Spawner : MonoBehaviour
     }
 
     // 레디 버튼 누르면 이루어짐 몬스터 삭제 , 시간 초기화 , 머니 초기화
+    List<Card> cardList = new List<Card>();
     public void OnCLick_ReadyButton()
     {
+        for (int i = 0; i < cardList.Count; i++)
+        {
+
+            GameMGR.Instance.batch.SetBatch((int)PhotonNetwork.LocalPlayer.CustomProperties["Number"], cardList[i].name, cardList[i].level, cardList[i].curHP, cardList[i].curAttackValue);
+        }
         GameObject[] monster = GameObject.FindGameObjectsWithTag("Monster");
         for (int i = 0; i < monster.Length; i++)
         {
-            UIManager.Instance.goldCount = 10;
-            Destroy(monster[i]);
+            GameMGR.Instance.uiManager.goldCount = 10;
+            //Destroy(monster[i]);
+            GameMGR.Instance.objectPool.DestroyPrefab(monster[i]);
+
         }
         ChooseRandomCard();
-        if (UIManager.Instance.shopLevel < 6 && UIManager.Instance.shopMoney > 0)
-            UIManager.Instance.shopMoney--;
-        UIManager.Instance.timer = 60f;
+        if (GameMGR.Instance.uiManager.shopLevel < 6 && GameMGR.Instance.uiManager.shopMoney > 0)
+            GameMGR.Instance.uiManager.shopMoney--;
+        GameMGR.Instance.uiManager.timer = 60f;
         Reset_NotMoney();
     }
 
     public void OnClick_ShopLevelUp()
     {
-        if (UIManager.Instance.shopMoney <= UIManager.Instance.goldCount)
+        if (GameMGR.Instance.uiManager.shopMoney <= GameMGR.Instance.uiManager.goldCount)
         {
-            UIManager.Instance.shopLevel++;
-            UIManager.Instance.goldCount -= UIManager.Instance.shopMoney;
+            GameMGR.Instance.uiManager.shopLevel++;
+            GameMGR.Instance.uiManager.goldCount -= GameMGR.Instance.uiManager.shopMoney;
 
             // 함수 호출 레벨 업 후 돈?
             ShopLevelUp();
@@ -132,19 +145,19 @@ public class Spawner : MonoBehaviour
     // 용병고용소의 레벨 업 할때마다 머니 
     void ShopLevelUp()
     {
-        switch (UIManager.Instance.shopLevel)
+        switch (GameMGR.Instance.uiManager.shopLevel)
         {
             case 2:
-                UIManager.Instance.shopMoney = 8;
+                GameMGR.Instance.uiManager.shopMoney = 8;
                 break;
             case 3:
-                UIManager.Instance.shopMoney = 9;
+                GameMGR.Instance.uiManager.shopMoney = 9;
                 break;
             case 4:
-                UIManager.Instance.shopMoney = 10;
+                GameMGR.Instance.uiManager.shopMoney = 10;
                 break;
             case 5:
-                UIManager.Instance.shopMoney = 11;
+                GameMGR.Instance.uiManager.shopMoney = 11;
                 break;
         }
     }
@@ -152,14 +165,15 @@ public class Spawner : MonoBehaviour
     // 리롤
     public void OnClick_Reset_Monster()
     {
-        if (UIManager.Instance.goldCount > 0)
+        if (GameMGR.Instance.uiManager.goldCount > 0)
         {
             GameObject[] monster = GameObject.FindGameObjectsWithTag("Monster");
-            UIManager.Instance.goldCount--;
+            GameMGR.Instance.uiManager.goldCount--;
 
             for (int i = 0; i < monster.Length; i++)
             {
-                Destroy(monster[i]);
+                //Destroy(monster[i]);
+                GameMGR.Instance.objectPool.DestroyPrefab(monster[i]);
             }
             ChooseRandomCard();
         }
@@ -168,26 +182,26 @@ public class Spawner : MonoBehaviour
     // 돈이 없을때 버튼들 끄는 함수
     void Reset_NotMoney()
     {
-        if (UIManager.Instance.goldCount <= 0)
+        if (GameMGR.Instance.uiManager.goldCount <= 0)
         {
-            UIManager.Instance.reFreshButton.interactable = false;
+            GameMGR.Instance.uiManager.reFreshButton.interactable = false;
         }
         else
-            UIManager.Instance.reFreshButton.interactable = true;
+            GameMGR.Instance.uiManager.reFreshButton.interactable = true;
 
-        if (UIManager.Instance.shopLevel > 5)
+        if (GameMGR.Instance.uiManager.shopLevel > 5)
         {
-            UIManager.Instance.levelUpButton.interactable = false;
-            UIManager.Instance.shopLevelTXT.enabled = false;
+            GameMGR.Instance.uiManager.levelUpButton.interactable = false;
+            GameMGR.Instance.uiManager.shopLevelTXT.enabled = false;
         }
         else
         {
-            if (UIManager.Instance.goldCount < UIManager.Instance.shopMoney)
+            if (GameMGR.Instance.uiManager.goldCount < GameMGR.Instance.uiManager.shopMoney)
             {
-                UIManager.Instance.levelUpButton.interactable = false;
+                GameMGR.Instance.uiManager.levelUpButton.interactable = false;
             }
             else
-                UIManager.Instance.levelUpButton.interactable = true;
+                GameMGR.Instance.uiManager.levelUpButton.interactable = true;
         }
     }
 
@@ -195,7 +209,7 @@ public class Spawner : MonoBehaviour
     // 스테이지 마다 퍼센트율을 정해 카드들 소환
     void ChooseRandomCard()
     {
-        if (UIManager.Instance.shopLevel > 5)
+        if (GameMGR.Instance.uiManager.shopLevel > 5)
         {
             for (int i = 0; i < 6; i++)
             {
@@ -240,7 +254,7 @@ public class Spawner : MonoBehaviour
             randomTrans = 0;
         }
 
-        if (UIManager.Instance.shopLevel == 1)
+        if (GameMGR.Instance.uiManager.shopLevel == 1)
         {
             for (int i = 0; i < 3; i++)
             {
@@ -258,7 +272,7 @@ public class Spawner : MonoBehaviour
             createdPlace++;
         }
 
-        if (UIManager.Instance.shopLevel == 2)
+        if (GameMGR.Instance.uiManager.shopLevel == 2)
         {
             for (int i = 0; i < 3; i++)
             {
@@ -284,7 +298,7 @@ public class Spawner : MonoBehaviour
             randomTrans = 0;
             createdPlace++;
         }
-        if (UIManager.Instance.shopLevel == 3)
+        if (GameMGR.Instance.uiManager.shopLevel == 3)
         {
             for (int i = 0; i < 4; i++)
             {
@@ -317,7 +331,7 @@ public class Spawner : MonoBehaviour
             randomTrans = 0;
             createdPlace++;
         }
-        if (UIManager.Instance.shopLevel == 4)
+        if (GameMGR.Instance.uiManager.shopLevel == 4)
         {
             for (int i = 0; i < 5; i++)
             {
@@ -354,7 +368,7 @@ public class Spawner : MonoBehaviour
             randomTrans = 0;
             createdPlace++;
         }
-        if (UIManager.Instance.shopLevel == 5)
+        if (GameMGR.Instance.uiManager.shopLevel == 5)
         {
 
             for (int i = 0; i < 6; i++)
@@ -402,7 +416,8 @@ public class Spawner : MonoBehaviour
     {
         randomNum = Random.Range(a, b);
 
-        GameObject mon = Instantiate(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum]}"), monsterTrans[randomTrans].transform.position, Quaternion.identity);
+        //GameObject mon = Instantiate(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum]}"), monsterTrans[randomTrans].transform.position, Quaternion.identity);
+        GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum]}"), monsterTrans[randomTrans].transform.position, Quaternion.identity);
 
         randomTrans++;
     }

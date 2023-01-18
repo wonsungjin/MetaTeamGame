@@ -26,12 +26,12 @@ public partial class Drag2D : MonoBehaviour
     private void OnMouseEnter()
     {
 
-            UIManager.Instance.OnEnter_Set_SkillExplantion(true,Camera.main.WorldToScreenPoint(transform.position),card.cardInfo);
+        GameMGR.Instance.uiManager.OnEnter_Set_SkillExplantion(true,Camera.main.WorldToScreenPoint(transform.position),card.cardInfo);
         
     }
     private void OnMouseExit()
     {
-        UIManager.Instance.OnEnter_Set_SkillExplantion(false,Vector3.zero);
+        GameMGR.Instance.uiManager.OnEnter_Set_SkillExplantion(false,Vector3.zero);
 
     }
 }

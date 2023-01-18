@@ -3,18 +3,18 @@ using TMPro;
 
 public partial class UIManager : MonoBehaviour
 {
-    [SerializeField] private GameObject skillExplantion;
+    [SerializeField] private GameObject skillExplantion2;
     [SerializeField] private TextMeshProUGUI[] skillExplantionText;
     private bool isExplantionActive;
     public void OnEnter_Set_SkillExplantion(bool set,Vector3 pos,CardInfo cardInfo=null)
     {
         if (isExplantionActive) return;
-        skillExplantion.SetActive(set);
+        skillExplantion2.SetActive(set);
         if (set)
         {
 
-            skillExplantion.transform.position = pos;
-            Camera.main.ScreenToWorldPoint(skillExplantion.transform.position);
+            skillExplantion2.transform.position = pos;
+            Camera.main.ScreenToWorldPoint(skillExplantion2.transform.position);
             if (cardInfo.objName != skillExplantionText[0].text)
             {
                 skillExplantionText[0].text = cardInfo.objName;

@@ -5,20 +5,27 @@ using UnityEngine.SceneManagement;
 
 public partial class GameMGR : Singleton<GameMGR>
 {
-    public UIMGR uIMGR;
     public MetaTrendAPI metaTrendAPI;
     public DataBase dataBase;
-    public CardCreate cardCreate;
-    public CardList cardList;
-    public CustomDeckShop customDeckShop;
     public ObjectPool objectPool;
+
+    public CardCreate cardCreate;
+    public CustomDeckShop customDeckShop;
     public ShopCards shopCards;
+
+    public UIManager uiManager;
+    public Spawner spawner;
+
+    public Batch batch;
+
+    
+
     private void Start()
     {
-        GetComponentAgain();
+        Init(0);
        // metaTrendAPI.GetUserProfile();
         //metaTrendAPI.GetSessionID();
-        StartCoroutine(COR_GetCoin());
+        //StartCoroutine(COR_GetCoin());
         DontDestroyOnLoad(gameObject);
 
     }
@@ -31,7 +38,7 @@ public partial class GameMGR : Singleton<GameMGR>
     public void OnClick_Save_MyCustomDeck( )
     {
         myCustomDeck = lookCustomDeck;
-        uIMGR.OnClick_Move_Home();
+        uiManager.OnClick_Move_Home();
 
         Debug.Log(myCustomDeck.tier_1[0]);
     }
@@ -56,15 +63,28 @@ public partial class GameMGR : Singleton<GameMGR>
         dataBase.Login();
         Debug.Log(metaTrendAPI.GetZera());
     }
-    private void GetComponentAgain()
+    private void Init(int num)
     {
-        uIMGR = FindObjectOfType<UIMGR>();
-        metaTrendAPI = GetComponent<MetaTrendAPI>();
-        cardCreate = GetComponent<CardCreate>();
-        shopCards = GetComponent<ShopCards>();
-        customDeckShop = GetComponent<CustomDeckShop>();
-        dataBase = GetComponent<DataBase>();
-        objectPool = GetComponent<ObjectPool>();
-        cardList = Resources.Load<CardList>("CardList");
+        if (num == 0)
+        {
+            uiManager = FindObjectOfType<UIManager>();
+            metaTrendAPI = GetComponent<MetaTrendAPI>();
+            cardCreate = GetComponent<CardCreate>();
+            shopCards = GetComponent<ShopCards>();
+            customDeckShop = GetComponent<CustomDeckShop>();
+            dataBase = GetComponent<DataBase>();
+            objectPool = GetComponent<ObjectPool>();
+            uiManager.Init_Scene1();
+        }
+        else if (num==1)
+        {
+            spawner = GetComponent<Spawner>();
+            batch = GetComponent<Batch>();
+            uiManager.Init_Scene2();
+        }
+        else if(num==2)
+        {
+
+        }
     }
 }
