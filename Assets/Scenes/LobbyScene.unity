@@ -1399,7 +1399,7 @@ GameObject:
   - component: {fileID: 220315904}
   - component: {fileID: 220315903}
   m_Layer: 0
-  m_Name: Content
+  m_Name: PackList
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3836,8 +3836,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UIMGR, Assembly-CSharp
+      - m_Target: {fileID: 6139308160527906037}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: OnClick_Move_Back
         m_Mode: 1
         m_Arguments:
@@ -6601,8 +6601,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UIMGR, Assembly-CSharp
+      - m_Target: {fileID: 6139308160527906037}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: OnClick_Join_Custom
         m_Mode: 1
         m_Arguments:
@@ -8780,8 +8780,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UIMGR, Assembly-CSharp
+      - m_Target: {fileID: 6139308160527906037}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: OnClick_Move_Home
         m_Mode: 1
         m_Arguments:
@@ -11263,7 +11263,7 @@ MonoBehaviour:
   cardPannel: {fileID: 0}
   myPackList: {fileID: 0}
   packButton: {fileID: -2205685171026601475, guid: 0d25c47e566d58e42be81d6bfba4902f, type: 3}
-  packAddButton: {fileID: 7456306286197777641, guid: fd637963bb3e60d4492804425d6a194b, type: 3}
+  packAddButton: {fileID: 0}
   cardImage: {fileID: 0}
   cardName: {fileID: 0}
   attackValue: {fileID: 0}
@@ -11493,8 +11493,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UIMGR, Assembly-CSharp
+      - m_Target: {fileID: 6139308160527906037}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: OnCilck_Join_PackChoice
         m_Mode: 1
         m_Arguments:

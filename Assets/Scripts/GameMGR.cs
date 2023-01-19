@@ -22,15 +22,15 @@ public partial class GameMGR : Singleton<GameMGR>
 
     private void Start()
     {
-        Init(0);
+        Init(1);
         metaTrendAPI.GetUserProfile();
         metaTrendAPI.GetSessionID();
         StartCoroutine(COR_GetCoin());
         DontDestroyOnLoad(gameObject);
 
     }
-    CustomDeck lookCustomDeck;//µé¾î°£ µ¦ ÀúÀå
-    CustomDeck myCustomDeck;//µé¾î°£ µ¦¿¡¼­ ¼¿·ºÇÒ½Ã È®Á¤;
+    CustomDeck lookCustomDeck;//ï¿½ï¿½î°£ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    CustomDeck myCustomDeck;//ï¿½ï¿½î°£ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ò½ï¿½ È®ï¿½ï¿½;
     public void Save_MyCustomDeck(CustomDeck customDeck)
     {
         lookCustomDeck = customDeck;
@@ -50,7 +50,7 @@ public partial class GameMGR : Singleton<GameMGR>
     {
         if (myCustomDeck != null)
             SceneManager.LoadScene("StoreScene");
-        else Debug.Log("¾ø´Ù");
+        else Debug.Log("ï¿½ï¿½ï¿½ï¿½");
     }
 
 
@@ -63,9 +63,9 @@ public partial class GameMGR : Singleton<GameMGR>
         dataBase.Login();
         Debug.Log(metaTrendAPI.GetZera());
     }
-    private void Init(int num)
+    public void Init(int num)
     {
-        if (num == 0)
+        if (num == 1)
         {
             uiManager = FindObjectOfType<UIManager>();
             metaTrendAPI = GetComponent<MetaTrendAPI>();
@@ -76,13 +76,14 @@ public partial class GameMGR : Singleton<GameMGR>
             objectPool = GetComponent<ObjectPool>();
             uiManager.Init_Scene1();
         }
-        else if (num == 1)
+        else if (num==2)
         {
-            spawner = GetComponent<Spawner>();
-            batch = GetComponent<Batch>();
+            spawner = FindObjectOfType<Spawner>();
+            batch = FindObjectOfType<Batch>();
+            uiManager = FindObjectOfType<UIManager>();
             uiManager.Init_Scene2();
         }
-        else if (num == 2)
+        else if(num==3)
         {
 
         }

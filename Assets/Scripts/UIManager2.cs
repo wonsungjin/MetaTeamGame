@@ -32,8 +32,9 @@ public partial class UIManager : MonoBehaviour
         myDeckPannel = GameObject.Find("MyDeckPannel");
         customPannel = GameObject.Find("CustomPannel");
         cardPannel = GameObject.Find("CardPannel");
+        packAddButton = GameObject.Find("PackAddButton");
         packChoicePannel = GameObject.Find("PackChoicePannel");
-        myPackList = GameObject.Find("PackScrollVeiw");
+        myPackList = GameObject.Find("PackList");
         cardImage= GameObject.Find("CardImage").GetComponent<Image>();
         cardName = GameObject.Find("UINTNAME").GetComponent<TextMeshProUGUI>();
         attackValue = GameObject.Find("UINTATKValue").GetComponent<TextMeshProUGUI>();

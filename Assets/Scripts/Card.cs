@@ -37,13 +37,13 @@ public class Card : MonoBehaviour
     {
         if (key =="hp")
         {
-            curHP += value;
+            curHP = value;
             hpText.text = curHP.ToString();
 
         }
         else if(key == "attack")
         {
-            curAttackValue += value;
+            curAttackValue = value;
             atkText.text = curAttackValue.ToString();
 
         }
