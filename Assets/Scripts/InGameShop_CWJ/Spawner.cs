@@ -115,12 +115,11 @@ public class Spawner : MonoBehaviourPun
         {
             GameMGR.Instance.batch.gameObject.GetPhotonView().RPC("SetBatch", RpcTarget.MasterClient, (int)PhotonNetwork.LocalPlayer.CustomProperties["Number"], cardList[i]);
         }
-        GameObject[] monster = GameObject.FindGameObjectsWithTag("Monster");
 
+        GameObject[] monster = GameObject.FindGameObjectsWithTag("Monster");
+        GameMGR.Instance.uiManager.goldCount = 10;
         for (int i = 0; i < monster.Length; i++)
         {
-            GameMGR.Instance.uiManager.goldCount = 10;
-            //Destroy(monster[i]);
             GameMGR.Instance.objectPool.DestroyPrefab(monster[i]);
         }
 
