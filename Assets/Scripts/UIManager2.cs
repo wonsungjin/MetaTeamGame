@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
-public class UIMGR : MonoBehaviour
+public partial class UIManager : MonoBehaviour
 {
     [Header("Pannel")]
     [SerializeField] private GameObject lobbyPannel;
@@ -26,6 +26,36 @@ public class UIMGR : MonoBehaviour
 
     [Header("Tier")]
     [SerializeField] public Transform[] tier;
+    public void Init_Scene1()
+    {
+        lobbyPannel = GameObject.Find("LobbyPannel");
+        myDeckPannel = GameObject.Find("MyDeckPannel");
+        customPannel = GameObject.Find("CustomPannel");
+        cardPannel = GameObject.Find("CardPannel");
+        packAddButton = GameObject.Find("PackAddButton");
+        packChoicePannel = GameObject.Find("PackChoicePannel");
+        myPackList = GameObject.Find("PackList");
+        cardImage= GameObject.Find("CardImage").GetComponent<Image>();
+        cardName = GameObject.Find("UINTNAME").GetComponent<TextMeshProUGUI>();
+        attackValue = GameObject.Find("UINTATKValue").GetComponent<TextMeshProUGUI>();
+        hpValue = GameObject.Find("UINTHPValue").GetComponent<TextMeshProUGUI>();
+        atkHpValue = GameObject.Find("UINTATKHP").GetComponent<TextMeshProUGUI>();
+        skillExplantion = new TextMeshProUGUI[3];
+        tier = new Transform[6];
+        skillExplantion[0] = GameObject.Find("Skillexplanation1").GetComponent<TextMeshProUGUI>();
+        skillExplantion[1] = GameObject.Find("Skillexplanation2").GetComponent<TextMeshProUGUI>();
+        skillExplantion[2] = GameObject.Find("Skillexplanation3").GetComponent<TextMeshProUGUI>();
+        tier[0] = GameObject.Find("Tier1Content").transform;
+        tier[1] = GameObject.Find("Tier2Content").transform;
+        tier[2] = GameObject.Find("Tier3Content").transform;
+        tier[3] = GameObject.Find("Tier4Content").transform;
+        tier[4] = GameObject.Find("Tier5Content").transform;
+        tier[5] = GameObject.Find("Tier6Content").transform;
+        customPannel.SetActive(false);
+        packChoicePannel.SetActive(false);
+        cardPannel.SetActive(false);
+        myDeckPannel.SetActive(false);
+    }
     public void OnCilck_Join_PackChoice()
     {
         lobbyPannel.SetActive(false);
@@ -37,7 +67,7 @@ public class UIMGR : MonoBehaviour
         obj.SetMyDeck(customDeck);
         obj.transform.SetParent(myPackList.transform);
         obj.transform.localScale = Vector3.one;
-        GameMGR.Instance.uIMGR.SetParentPackAddButton();
+        GameMGR.Instance.uiManager.SetParentPackAddButton();
 
     }
     public void SetParentPackAddButton()

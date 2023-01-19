@@ -5,33 +5,40 @@ using UnityEngine.SceneManagement;
 
 public partial class GameMGR : Singleton<GameMGR>
 {
-    public UIMGR uIMGR;
     public MetaTrendAPI metaTrendAPI;
     public DataBase dataBase;
-    public CardCreate cardCreate;
-    public CardList cardList;
-    public CustomDeckShop customDeckShop;
     public ObjectPool objectPool;
+
+    public CardCreate cardCreate;
+    public CustomDeckShop customDeckShop;
     public ShopCards shopCards;
+
+    public UIManager uiManager;
+    public Spawner spawner;
+
+    public Batch batch;
+
+
+
     private void Start()
     {
-        GetComponentAgain();
+        Init(1);
         metaTrendAPI.GetUserProfile();
         metaTrendAPI.GetSessionID();
         StartCoroutine(COR_GetCoin());
         DontDestroyOnLoad(gameObject);
 
     }
-    CustomDeck lookCustomDeck;//µé¾î°£ µ¦ ÀúÀå
-    CustomDeck myCustomDeck;//µé¾î°£ µ¦¿¡¼­ ¼¿·ºÇÒ½Ã È®Á¤;
+    CustomDeck lookCustomDeck;//ï¿½ï¿½î°£ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    CustomDeck myCustomDeck;//ï¿½ï¿½î°£ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ò½ï¿½ È®ï¿½ï¿½;
     public void Save_MyCustomDeck(CustomDeck customDeck)
     {
         lookCustomDeck = customDeck;
     }
-    public void OnClick_Save_MyCustomDeck( )
+    public void OnClick_Save_MyCustomDeck()
     {
         myCustomDeck = lookCustomDeck;
-        uIMGR.OnClick_Move_Home();
+        uiManager.OnClick_Move_Home();
 
         Debug.Log(myCustomDeck.tier_1[0]);
     }
@@ -43,7 +50,7 @@ public partial class GameMGR : Singleton<GameMGR>
     {
         if (myCustomDeck != null)
             SceneManager.LoadScene("StoreScene");
-        else Debug.Log("¾ø´Ù");
+        else Debug.Log("ï¿½ï¿½ï¿½ï¿½");
     }
 
 
@@ -56,15 +63,29 @@ public partial class GameMGR : Singleton<GameMGR>
         dataBase.Login();
         Debug.Log(metaTrendAPI.GetZera());
     }
-    private void GetComponentAgain()
+    public void Init(int num)
     {
-        uIMGR = FindObjectOfType<UIMGR>();
-        metaTrendAPI = GetComponent<MetaTrendAPI>();
-        cardCreate = GetComponent<CardCreate>();
-        shopCards = GetComponent<ShopCards>();
-        customDeckShop = GetComponent<CustomDeckShop>();
-        dataBase = GetComponent<DataBase>();
-        objectPool = GetComponent<ObjectPool>();
-        cardList = Resources.Load<CardList>("CardList");
+        if (num == 1)
+        {
+            uiManager = FindObjectOfType<UIManager>();
+            metaTrendAPI = GetComponent<MetaTrendAPI>();
+            cardCreate = GetComponent<CardCreate>();
+            shopCards = GetComponent<ShopCards>();
+            customDeckShop = GetComponent<CustomDeckShop>();
+            dataBase = GetComponent<DataBase>();
+            objectPool = GetComponent<ObjectPool>();
+            uiManager.Init_Scene1();
+        }
+        else if (num==2)
+        {
+            spawner = FindObjectOfType<Spawner>();
+            batch = FindObjectOfType<Batch>();
+            uiManager = FindObjectOfType<UIManager>();
+            uiManager.Init_Scene2();
+        }
+        else if(num==3)
+        {
+
+        }
     }
 }

@@ -40,13 +40,7 @@ MonoBehaviour:
   - Fire
   - RespawnSpaceship
   - SyncCurrentRoomPlayer
-  - FailedConnectMaster
-  - FailedJoinRoom
-  - Matching
-  - MatchingSetting
-  - OnConnectMaster
-  - ShowDebug
-  - StartSetting
+  - SetBatch
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

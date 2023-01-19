@@ -8,14 +8,14 @@ using UnityEngine;
 
 public class DataBase : MonoBehaviour
 {
-    MongoClient client = new MongoClient("mongodb+srv://wonsj09:wsj@cluster0.77rho6r.mongodb.net/?retryWrites=true&w=majority");
+    MongoClient client = new MongoClient("mongodb+srv://mongo:mongo1234@cluster0.utsc38e.mongodb.net/?retryWrites=true&w=majority");
     // Start is called before the first frame update
     public IMongoDatabase database = null;
     public IMongoCollection<BsonDocument> collection;
     void Start()
     {
-        database = client.GetDatabase("user");
-        collection = database.GetCollection<BsonDocument>("userlist");
+        database = client.GetDatabase("userlist");
+        collection = database.GetCollection<BsonDocument>("user");
 
         /*collection.InsertOne(new BsonDocument(new Dictionary<string, object>
         {
@@ -85,7 +85,7 @@ public class DataBase : MonoBehaviour
         {
             FindInventoryData();
             GameMGR.Instance.dataBase.InsertInventoryData();
-            GameMGR.Instance.uIMGR.SetParentPackAddButton();
+            GameMGR.Instance.uiManager.SetParentPackAddButton();
         }
 
     }
@@ -153,7 +153,7 @@ public class DataBase : MonoBehaviour
         }
         FindInventoryData();
         GameMGR.Instance.dataBase.InsertInventoryData();
-        GameMGR.Instance.uIMGR.SetParentPackAddButton();
+        GameMGR.Instance.uiManager.SetParentPackAddButton();
     }
 }
 public class InventoryData
@@ -192,61 +192,61 @@ public class InventoryData
         {
             customDeck.Num = 1;
             one = customDeck;
-            GameMGR.Instance.uIMGR.CreateMyPackButton(one);
+            GameMGR.Instance.uiManager.CreateMyPackButton(one);
         }
         else if (two == null && customDeck != null)
         {
             customDeck.Num = 2;
             two = customDeck;
-            GameMGR.Instance.uIMGR.CreateMyPackButton(two);
+            GameMGR.Instance.uiManager.CreateMyPackButton(two);
         }
         else if (three == null && customDeck != null)
         {
             customDeck.Num = 3;
             three = customDeck;
-            GameMGR.Instance.uIMGR.CreateMyPackButton(three);
+            GameMGR.Instance.uiManager.CreateMyPackButton(three);
         }
         else if (four == null && customDeck != null)
         {
             customDeck.Num = 4;
             four = customDeck;
-            GameMGR.Instance.uIMGR.CreateMyPackButton(four);
+            GameMGR.Instance.uiManager.CreateMyPackButton(four);
         }
         else if (five == null && customDeck != null)
         {
             customDeck.Num = 5;
             five = customDeck;
-            GameMGR.Instance.uIMGR.CreateMyPackButton(five);
+            GameMGR.Instance.uiManager.CreateMyPackButton(five);
         }
         else if (six == null && customDeck != null)
         {
             customDeck.Num = 6;
             six = customDeck;
-            GameMGR.Instance.uIMGR.CreateMyPackButton(six);
+            GameMGR.Instance.uiManager.CreateMyPackButton(six);
         }
         else if (seven == null && customDeck != null)
         {
             customDeck.Num = 7;
             seven = customDeck;
-            GameMGR.Instance.uIMGR.CreateMyPackButton(seven);
+            GameMGR.Instance.uiManager.CreateMyPackButton(seven);
         }
         else if (eight == null && customDeck != null)
         {
             customDeck.Num = 8;
             eight = customDeck;
-            GameMGR.Instance.uIMGR.CreateMyPackButton(eight);
+            GameMGR.Instance.uiManager.CreateMyPackButton(eight);
         }
         else if (nine == null && customDeck != null)
         {
             customDeck.Num = 9;
             nine = customDeck;
-            GameMGR.Instance.uIMGR.CreateMyPackButton(nine);
+            GameMGR.Instance.uiManager.CreateMyPackButton(nine);
         }
         else if (ten == null && customDeck != null)
         {
             customDeck.Num = 10;
             ten = customDeck;
-            GameMGR.Instance.uIMGR.CreateMyPackButton(ten);
+            GameMGR.Instance.uiManager.CreateMyPackButton(ten);
         }
         GameMGR.Instance.dataBase.InsertInventoryData(); 
     }

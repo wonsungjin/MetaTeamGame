@@ -4,11 +4,12 @@ using Unity.Burst.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Drag2D : MonoBehaviour
+public partial class Drag2D : MonoBehaviour
 {
-    WaitForSeconds wait = new WaitForSeconds(0.11f);
+    WaitForSeconds wait = new WaitForSeconds(0.1f);
 
-    PolygonCollider2D pol;
+    Card card;
+    BoxCollider2D pol;
     MeshRenderer spriteRenderer;
     Vector2 pos;
     Vector2 battleZonePos;
@@ -18,69 +19,88 @@ public class Drag2D : MonoBehaviour
     float distance = 10;
     private bool isClickBool = false;
     public bool isFreezen = false;
+    bool isClickBattleMonster = false;
 
-
+    private void Awake()
+    {
+        mainCam = Camera.main;
+    }
     private void Start()
     {
         spriteRenderer = GetComponent<MeshRenderer>();
-        pol = GetComponent<PolygonCollider2D>();
+        pol = GetComponent<BoxCollider2D>();
         pos = this.gameObject.transform.position;
+        card = GetComponent<Card>();
     }
 
+    Camera mainCam = null;
     private void OnMouseDrag()
     {
         Vector3 mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance);
-        Vector3 objPosition = Camera.main.ScreenToWorldPoint(mousePosition);
-        transform.position = objPosition;
+        Vector3 objPosition = mainCam.ScreenToWorldPoint(mousePosition);
+        transform.position = objPosition + Vector3.down;
 
         RaycastHit2D hit = Physics2D.Raycast(objPosition, Vector2.zero);
 
-        if (hit.collider != null)
+        // 드래그 할때 마다 레이를 쏴서 밑에 닿은 배틀몬스터를 다른 위치로 보냄
+        if (isClickBattleMonster == true)
         {
-            if (hit.collider.CompareTag("BattleMonster"))
+            if (hit.collider != null)
             {
-                if (hit.collider.name != this.gameObject.name)
-                    hit.collider.gameObject.transform.position = pos;
-
-                else if (hit.collider.name == this.gameObject.name)
+                if (hit.collider.CompareTag("BattleMonster"))
                 {
-                    timer += Time.deltaTime;
+                    if (hit.collider.name != this.gameObject.name)
+                    {
+                        GameObject vec = GameObject.FindGameObjectWithTag("BattleZone");
+                        hit.collider.gameObject.transform.position = vec.transform.position + Vector3.down;
+                    }
 
-                    if (timer > 1f)
-                        hit.collider.gameObject.transform.position = pos;
+                    else if (hit.collider.name == this.gameObject.name)
+                    {
+                        timer += Time.deltaTime;
+                        if (timer > 1f)
+                        {
+                            GameObject vec = GameObject.FindGameObjectWithTag("BattleZone");
+                            hit.collider.gameObject.transform.position = vec.transform.position + Vector3.down;
+                        }
+                    }
                 }
+                else
+                    timer = 0f;
             }
-
-            else
-                timer = 0f;
         }
     }
 
-  
-
     private void OnMouseDown()
     {
+        UpdateOutline(true);
         isClickBool = false;
         pol.enabled = false;
         battleZonePos = pos;
+        GameMGR.Instance.uiManager.OnEnter_Set_SkillExplantion(false, Vector3.zero);
+        GameMGR.Instance.uiManager.SetisExplantionActive(true);
 
         if (gameObject.CompareTag("BattleMonster"))
         {
-            UIManager.Instance.sell.gameObject.SetActive(true);
+            GameMGR.Instance.uiManager.sell.gameObject.SetActive(true);
+
+            isClickBattleMonster = true;
         }
     }
 
     private void OnMouseUp()
     {
+        UpdateOutline(false);
         isClickBool = true;
         pol.enabled = true;
-
+        isClickBattleMonster = false;
+        GameMGR.Instance.uiManager.SetisExplantionActive(false);
 
         if (this.gameObject.CompareTag("Monster") || this.gameObject.CompareTag("BattleMonster") || this.gameObject.CompareTag("FreezeCard"))
         {
             StartCoroutine(COR_BackAgain());
         }
-        if (UIManager.Instance.sell.activeSelf == true)
+        if (GameMGR.Instance.uiManager.sell.activeSelf == true)
         {
             StartCoroutine(COR_SellButton());
         }
@@ -88,15 +108,6 @@ public class Drag2D : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (gameObject.CompareTag("BattleMonster"))
-        {
-            // 잡고 있는 오브젝트가 배틀몬스터에 닿으면 위치값 서로 바뀜
-            if (collision.gameObject.CompareTag("BattleMonster"))
-            {
-                collision.gameObject.transform.position = pos;
-            }
-        }
-
         if (isClickBool == true)
         {
             // 프리즈 카드를 잡았을 때
@@ -107,11 +118,10 @@ public class Drag2D : MonoBehaviour
                 if (collision.gameObject.CompareTag("Freeze"))
                 {
                     StartCoroutine(COR_BackAgain());
-                    gameObject.tag = "MeltCard";
                 }
 
                 // 얼려있을 때 배틀존에 가면 구매 가능하게 하는 예외처리
-                if (UIManager.Instance.goldCount > 0)
+                if (GameMGR.Instance.uiManager.goldCount >= 3)
                 {
                     if (collision.gameObject.CompareTag("BattleZone"))
                     {
@@ -120,9 +130,16 @@ public class Drag2D : MonoBehaviour
                     }
                 }
             }
+
+            if (gameObject.CompareTag("BattleMonster"))
+            {
+                if (gameObject.name == collision.gameObject.name)
+                {
+                    CardLevelUp(collision);
+                }
+            }
         }
     }
-
 
     private void OnTriggerStay2D(Collider2D collision)
     {
@@ -134,7 +151,7 @@ public class Drag2D : MonoBehaviour
                 // 판매
                 if (collision.gameObject.CompareTag("Sell"))
                 {
-                    UIManager.Instance.goldCount += 1;
+                    GameMGR.Instance.uiManager.goldCount += 1;
                     SellButton();
                 }
 
@@ -142,15 +159,6 @@ public class Drag2D : MonoBehaviour
                 if (collision.gameObject.CompareTag("BattleZone"))
                 {
                     pos = collision.gameObject.transform.position;
-                }
-
-                if (gameObject.CompareTag("BattleMonster"))
-                {
-                    // 잡고 있는 오브젝트가 배틀몬스터에 닿으면 위치값 서로 바뀜
-                    if (collision.gameObject.CompareTag("BattleMonster"))
-                    {
-                        collision.gameObject.transform.position = pos;
-                    }
                 }
             }
 
@@ -166,11 +174,11 @@ public class Drag2D : MonoBehaviour
                 // 몬스터가 배틀 존에 닿으면 골드가 차감 되고 배틀몬스터 태그로 바뀐다
                 if (collision.gameObject.CompareTag("BattleZone"))
                 {
-                    if (UIManager.Instance.goldCount >= 3)
+                    if (GameMGR.Instance.uiManager.goldCount >= 3)
                     {
                         spriteRenderer.sortingOrder = 3;
                         gameObject.tag = "BattleMonster";
-                        UIManager.Instance.goldCount -= 3;
+                        GameMGR.Instance.uiManager.goldCount -= 3;
                         pos = collision.gameObject.transform.position;
                     }
                 }
@@ -178,17 +186,78 @@ public class Drag2D : MonoBehaviour
         }
     }
 
+    // 카드 레벨업 
+    void CardLevelUp(Collider2D collision)
+    {
+        int colAttack = collision.GetComponent<Card>().curAttackValue;
+        int colHP = collision.GetComponent<Card>().curHP;
+        int attack = card.curAttackValue;
+        int hP = card.curHP;
+        int plusAttack = 0;
+        int plusHp = 0;
+
+        if (colAttack > attack)
+        {
+            plusAttack = colAttack;
+        }
+        else if (colAttack <= attack)
+        {
+            plusAttack = attack;
+        }
+
+        if (colHP > hP)
+        {
+            plusHp = colHP;
+        }
+        else if (colHP <= hP)
+        {
+            plusHp = hP;
+        }
+
+        collision.GetComponent<Card>().ChangeValue("attack", plusAttack + 1);
+        collision.GetComponent<Card>().ChangeValue("hp", plusHp + 1);
+        collision.GetComponent<Card>().ChangeValue("exp", 1);
+
+        Debug.Log(plusAttack);
+        Debug.Log(plusHp);
+        Debug.Log(card.level);
+
+
+        if (collision.gameObject.transform.position.y > gameObject.transform.position.y)
+        {
+            StartCoroutine(COR_CombineCard(collision));
+        }
+    }
+
+    // 용병들 레벨업 
+    IEnumerator COR_CombineCard(Collider2D collision)
+    {
+        yield return wait;
+        Destroy(collision.gameObject);
+    }
+
     // 판매버튼 ON OFF
     IEnumerator COR_SellButton()
     {
         yield return wait;
-        UIManager.Instance.sell.gameObject.SetActive(false);
+        GameMGR.Instance.uiManager.sell.gameObject.SetActive(false);
     }
     // 원래 위치로 돌리는 함수
     private IEnumerator COR_BackAgain()
     {
         yield return wait;
-        transform.position = pos;
+
+        if (CompareTag("BattleMonster"))
+            transform.position = pos + Vector2.down;
+
+        else if (CompareTag("Monster"))
+            transform.position = pos;
+
+        if (CompareTag("FreezeCard"))
+        {
+            transform.position = pos;
+            gameObject.tag = "MeltCard";
+        }
     }
     // 프리즈카드로 바꾸는 함수
     IEnumerator COR_BackCard()
@@ -196,23 +265,24 @@ public class Drag2D : MonoBehaviour
         yield return wait;
         gameObject.tag = "FreezeCard";
     }
+
     // 얼린카드를 구매시 들어갈 함수 원래 자리로 돌아가 자리의 bool값을 바꾼후 구매된다.
     IEnumerator COR_BackMelt()
     {
         gameObject.tag = "MeltCard";
-        pos = battleZonePos;
+        this.transform.position = battleZonePos;
         yield return wait;
         gameObject.tag = "BattleMonster";
         pos = meltPos;
-        this.gameObject.transform.position = pos;
+        this.gameObject.transform.position = pos + Vector2.down;
         spriteRenderer.sortingOrder = 3;
-        UIManager.Instance.goldCount -= 3;
+        GameMGR.Instance.uiManager.goldCount -= 3;
     }
 
     void SellButton()
     {
-        UIManager.Instance.sell.gameObject.SetActive(false);
-        transform.DetachChildren();
+        GameMGR.Instance.uiManager.sell.gameObject.SetActive(false);
+
         Destroy(gameObject);
     }
 }
