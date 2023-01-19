@@ -14,30 +14,28 @@ public class Node : MonoBehaviour
         if (collision.gameObject.CompareTag("FreezeCard"))
         {
             this.isNotSpawn = true;
+
+            gameObject.tag = "Rect";
         }
 
-        if (collision.gameObject.CompareTag("MeltCard"))
+        if (collision.gameObject.CompareTag("Monster"))
         {
-            this.isNotSpawn = false;
-            collision.gameObject.tag = "Monster";
+            gameObject.tag = "Rect";
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("MeltCard"))
-        {
-            this.isNotSpawn = false;
-            collision.gameObject.tag = "Monster";
-        }
-    }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("MeltCard"))
+        if (collision.gameObject.CompareTag("Monster"))
         {
+            gameObject.tag = "SelectRing";
+        }
+
+        if (collision.gameObject.CompareTag("FreezeCard"))
+        {
+            gameObject.tag = "SelectRing";
             this.isNotSpawn = false;
-            collision.gameObject.tag = "Monster";
         }
     }
 }
