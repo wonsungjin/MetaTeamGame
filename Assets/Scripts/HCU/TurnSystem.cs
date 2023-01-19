@@ -13,6 +13,7 @@ using Unity.VisualScripting;
 using UnityEngine.UIElements;
 using Photon.Pun.Demo.Cockpit;
 using UnityEngine.Experimental.AI;
+using UnityEngine.Networking.Match;
 //using Hashtable = ExitGames.Client.Photon.Hashtable; // 이게 구버전 한정인지 필수인지는 나도 모른다는 것이 학계의 점심
 
 namespace hcu
@@ -31,7 +32,7 @@ namespace hcu
 
         [SerializeField] public InputField inputField; // 닉네임 입력칸
 
-        public int[] setRandom = new int[500]; // 공격할 대상을 랜덤으로 지정한다. 
+        public int[] setRandom = new int[100]; // 공격할 대상을 랜덤으로 지정한다. 
 
         public Player[] savePlayers = null;
 
@@ -341,9 +342,9 @@ namespace hcu
             if (clone) // 클론 있을때
             {
                 Debug.Log("1:1 & 1:1 시작");
-                for (int i = 0; i < num.Length; i++)
+                for (int i = 0; i < num.Length - 1; i++)
                 {
-                    if ((int)PhotonNetwork.LocalPlayer.CustomProperties["Number"] == num[i] && i < num.Length - 1) // 내 번호랑 일치하는지와 배열 번호가 마지막(클론) 이 아닌 경우에만
+                    if ((int)PhotonNetwork.LocalPlayer.CustomProperties["Number"] == num[i]) // 내 번호랑 일치하는지와 배열 번호가 마지막(클론) 이 아닌 경우에만
                     {
                         if (i == 0 || i % 2 == 0)
                         {
@@ -351,6 +352,12 @@ namespace hcu
                             Debug.Log("나는 " + userID + " 닉네임 : " + PhotonNetwork.LocalPlayer.CustomProperties["Number"] + " 상대 : " + num[i+1] );
                             string a = "나는 " + userID + " 닉네임 : " + PhotonNetwork.LocalPlayer.CustomProperties["Number"] + " 상대 : " + num[i + 1];
                             // 내가 선공
+
+                            GameMGR.Instance.matching[0] = num[i];
+                            GameMGR.Instance.matching[1] = num[i + 1];
+                            GameMGR.Instance.randomValue = random;
+                            SceneManager.LoadScene(1);
+
                             photonView.RPC("ShowDebug", RpcTarget.MasterClient, a);
                             
                         }
@@ -361,12 +368,14 @@ namespace hcu
                             Debug.Log("나는 " + userID + " 닉네임 : " + PhotonNetwork.LocalPlayer.CustomProperties["Number"] + " 상대 : " + num[i - 1]);
                             string a = "나는 " + userID + " 닉네임 : " + PhotonNetwork.LocalPlayer.CustomProperties["Number"] + " 상대 : " + num[i - 1];
                             // 내가 후공
+
+                            GameMGR.Instance.matching[0] = num[i];
+                            GameMGR.Instance.matching[1] = num[i - 1];
+                            GameMGR.Instance.randomValue = random;
+                            SceneManager.LoadScene(1);
+
                             photonView.RPC("ShowDebug", RpcTarget.MasterClient, a);
                         }
-                    }
-                    else if(i < num.Length - 1)
-                    {
-
                     }
                 }
             }
@@ -387,7 +396,10 @@ namespace hcu
 
                             // 내가 짝수 상대 +1 홀수
 
-                            
+
+                            GameMGR.Instance.matching[0] = num[i];
+                            GameMGR.Instance.matching[1] = num[i + 1];
+                            GameMGR.Instance.randomValue = random;
                             SceneManager.LoadScene(1);
 
 
@@ -403,6 +415,11 @@ namespace hcu
                             // 내가 후공
 
                             // 내가 홀수 상대 -1짝수
+
+                            GameMGR.Instance.matching[0] = num[i];
+                            GameMGR.Instance.matching[1] = num[i - 1];
+                            GameMGR.Instance.randomValue = random;
+                            SceneManager.LoadScene(1);
 
                             photonView.RPC("ShowDebug", RpcTarget.MasterClient, a);
                         }
