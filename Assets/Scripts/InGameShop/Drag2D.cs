@@ -135,7 +135,6 @@ public partial class Drag2D : MonoBehaviour
         }
     }
 
-
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (isClickBool == true)
@@ -150,15 +149,15 @@ public partial class Drag2D : MonoBehaviour
                     SellButton();
                 }
 
+                if (gameObject.name == collision.gameObject.name)
+                {
+                    CardLevelUp(collision);
+                }
+
                 // 잡고 있는 오브젝트가 배틀존에 닿으면 오브젝트 위치값 저장
                 if (collision.gameObject.CompareTag("BattleZone"))
                 {
                     pos = collision.gameObject.transform.position;
-
-                    //if(gameObject.name == collision.gameObject.name)
-                    //{
-                    // 이름이 같을 땐 합쳐진다 능력치를 따져서 높은쪽으로 결합 하나는 사라지고
-                    //}
                 }
             }
 
@@ -185,6 +184,54 @@ public partial class Drag2D : MonoBehaviour
             }
         }
     }
+
+    // 카드 레벨업 
+    void CardLevelUp(Collider2D collision)
+    {
+        int colAttack = collision.GetComponent<Card>().curAttackValue;
+        int colHP = collision.GetComponent<Card>().curHP;
+        int attack = card.curAttackValue;
+        int hP = card.curHP;
+        int plusAttack;
+        int plusHp;
+
+        if (colAttack > attack)
+        {
+            plusAttack = colAttack;
+        }
+        else if (colAttack < attack)
+        {
+            plusAttack = attack;
+        }
+        else
+        {
+            plusAttack = attack;
+        }
+
+        if (colHP > hP)
+        {
+            plusHp = colHP;
+        }
+        else if (colHP < hP)
+        {
+            plusHp = hP;
+        }
+        else
+        {
+            plusHp = hP;
+        }
+
+        collision.GetComponent<Card>().ChangeValue("attack", plusAttack + 1);
+        collision.GetComponent<Card>().ChangeValue("attack", plusHp + 1);
+
+
+        if (collision.gameObject.transform.position.y > gameObject.transform.position.y)
+        {
+            GameMGR.Instance.objectPool.DestroyPrefab(this.gameObject);
+           
+        }
+    }
+
 
     // 판매버튼 ON OFF
     IEnumerator COR_SellButton()
