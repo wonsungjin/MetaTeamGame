@@ -6,8 +6,7 @@ using UnityEngine;
 
 public partial class Drag2D : MonoBehaviour
 {
-    WaitForSeconds wait = new WaitForSeconds(0.11f);
-    WaitForSeconds meltWait = new WaitForSeconds(0.1f);
+    WaitForSeconds wait = new WaitForSeconds(0.1f);
 
     Card card;
     BoxCollider2D pol;
@@ -59,7 +58,6 @@ public partial class Drag2D : MonoBehaviour
                     else if (hit.collider.name == this.gameObject.name)
                     {
                         timer += Time.deltaTime;
-                        Debug.Log(timer);
                         if (timer > 1f)
                         {
                             GameObject vec = GameObject.FindGameObjectWithTag("BattleZone");
@@ -132,6 +130,14 @@ public partial class Drag2D : MonoBehaviour
                     }
                 }
             }
+
+            if (gameObject.CompareTag("BattleMonster"))
+            {
+                if (gameObject.name == collision.gameObject.name)
+                {
+                    CardLevelUp(collision);
+                }
+            }
         }
     }
 
@@ -147,11 +153,6 @@ public partial class Drag2D : MonoBehaviour
                 {
                     GameMGR.Instance.uiManager.goldCount += 1;
                     SellButton();
-                }
-
-                if (gameObject.name == collision.gameObject.name)
-                {
-                    CardLevelUp(collision);
                 }
 
                 // 잡고 있는 오브젝트가 배틀존에 닿으면 오브젝트 위치값 저장
@@ -192,18 +193,14 @@ public partial class Drag2D : MonoBehaviour
         int colHP = collision.GetComponent<Card>().curHP;
         int attack = card.curAttackValue;
         int hP = card.curHP;
-        int plusAttack;
-        int plusHp;
+        int plusAttack = 0;
+        int plusHp = 0;
 
         if (colAttack > attack)
         {
             plusAttack = colAttack;
         }
-        else if (colAttack < attack)
-        {
-            plusAttack = attack;
-        }
-        else
+        else if (colAttack <= attack)
         {
             plusAttack = attack;
         }
@@ -212,26 +209,32 @@ public partial class Drag2D : MonoBehaviour
         {
             plusHp = colHP;
         }
-        else if (colHP < hP)
-        {
-            plusHp = hP;
-        }
-        else
+        else if (colHP <= hP)
         {
             plusHp = hP;
         }
 
         collision.GetComponent<Card>().ChangeValue("attack", plusAttack + 1);
-        collision.GetComponent<Card>().ChangeValue("attack", plusHp + 1);
+        collision.GetComponent<Card>().ChangeValue("hp", plusHp + 1);
+        collision.GetComponent<Card>().ChangeValue("exp", 1);
+
+        Debug.Log(plusAttack);
+        Debug.Log(plusHp);
+        Debug.Log(card.level);
 
 
         if (collision.gameObject.transform.position.y > gameObject.transform.position.y)
         {
-            GameMGR.Instance.objectPool.DestroyPrefab(this.gameObject);
-           
+            StartCoroutine(COR_CombineCard(collision));
         }
     }
 
+    // 용병들 레벨업 
+    IEnumerator COR_CombineCard(Collider2D collision)
+    {
+        yield return wait;
+        Destroy(collision.gameObject);
+    }
 
     // 판매버튼 ON OFF
     IEnumerator COR_SellButton()
@@ -268,7 +271,7 @@ public partial class Drag2D : MonoBehaviour
     {
         gameObject.tag = "MeltCard";
         this.transform.position = battleZonePos;
-        yield return meltWait;
+        yield return wait;
         gameObject.tag = "BattleMonster";
         pos = meltPos;
         this.gameObject.transform.position = pos + Vector2.down;
