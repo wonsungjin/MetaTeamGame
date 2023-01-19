@@ -1799,6 +1799,13 @@ MonoBehaviour:
   startLife: 10
   isWin: 0
   isLose: 0
+  firstCount: 0
+  afterCount: 0
+  curRound: 0
+  deckCount: 
+  matchingList: 
+  matchingList2: 
+  matchingList3: 
 --- !u!114 &2015253169
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2038,7 +2045,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 274603727291939079, guid: fcdd9b1a8c68a0f48b618240038d400c, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fcdd9b1a8c68a0f48b618240038d400c, type: 3}
@@ -2055,7 +2062,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 766084278230814562, guid: 98dfe0f51ebf24848a153fb233591817, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 766084278230814563, guid: 98dfe0f51ebf24848a153fb233591817, type: 3}
       propertyPath: m_RootOrder

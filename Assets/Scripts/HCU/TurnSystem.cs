@@ -4,6 +4,8 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 using ExitGames.Client.Photon;
 using System;
 using System.Linq;
@@ -55,6 +57,8 @@ namespace hcu
 
         // 덱 수 카운트 ( 각 플레이어들의 덱 수를 가져온다 )
         public int[] deckCount;
+
+        // 
 
         #region 포톤 콜백 함수들
 
@@ -218,6 +222,8 @@ namespace hcu
         }
 
         [SerializeField] List<int> matchingList = new List<int>();
+        [SerializeField] List<int> matchingList2 = new List<int>();
+        [SerializeField] List<int> matchingList3 = new List<int>();
 
         [PunRPC]
         public void MatchingSetting()
@@ -231,37 +237,85 @@ namespace hcu
             int n = 0;
 
             matchingList.Clear(); //  플레이어 리스트 한번 초기화 싹 해준다.
-
             // 중복매칭 방지 스크립트
             for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
             {
+                Debug.Log("현재 " + i);
                 n = UnityEngine.Random.Range(0, PhotonNetwork.PlayerList.Length);
 
-                if(matchingList.Contains(n)){ i--; continue; } // 중복 제외 처리
+                if(matchingList.Contains((int)PhotonNetwork.PlayerList[n].CustomProperties["Number"])|| matchingList2.Contains((int)PhotonNetwork.PlayerList[n].CustomProperties["Number"])) { i--; continue; } // 중복 제외 처리
 
-                if(curRound != 0)
+                if (curRound != 0 && PhotonNetwork.PlayerList.Length>2)
                 {
                     if (i % 2 != 0)
                     {
-                        matchingList.Add(n);
-                        if ((int)PhotonNetwork.PlayerList[matchingList[i]].CustomProperties["Opponent"] == (int)PhotonNetwork.PlayerList[matchingList[i-1]].CustomProperties["Number"])
+                        if (matchingList.Contains((int)PhotonNetwork.PlayerList[n].CustomProperties["Opponent"]))
                         {
-                            Debug.Log($"{(int)PhotonNetwork.PlayerList[matchingList[i - 1]].CustomProperties["Opponent"]}의 이전 상대가 {(int)PhotonNetwork.PlayerList[matchingList[i]].CustomProperties["Number"]}");
-                            
-                            //i--;
-                            //continue;
+                            Debug.Log($"{(int)PhotonNetwork.PlayerList[n].CustomProperties["Opponent"]}가 들어있음");
+
+                            i--;
+                            continue;
                         }
-                        matchingList.Remove(n);
+                        else
+                        {
+                            Debug.Log("3 " + matchingList[0]);
+                            matchingList.Add((int)PhotonNetwork.PlayerList[n].CustomProperties["Number"]);
+                            Debug.Log("4 " + matchingList[1]);
+                            matchingList2.Add(matchingList[0]);
+                            matchingList2.Add(matchingList[1]);
+                            matchingList.Clear();
+                            if (matchingList2.Count >= PhotonNetwork.PlayerList.Length)
+                            {
+                                if (matchingList2.Count % 2 != 0)
+                                {
+                                    matchingList3=matchingList2; // 깍두기를 제외한 나머지 랜덤 범위를 지정하기 위한 일종의 매칭리스트 업데이트 베타 테스트 알파 메가 버젼 3
+
+                                    matchingList3.Remove(matchingList3[matchingList3.Count - 1]);
+                                    int a = UnityEngine.Random.Range(0, matchingList3.Count);
+                                    int clone = matchingList3[a];
+                                    matchingList2.Add(clone);
+                                    for(int j = 0; j < matchNum.Length; j++)
+                                    {
+                                        matchNum[j] = matchingList2[j];
+                                    }
+                                    matchingList2.Clear();
+                                    matchingList3.Clear();
+                                    photonView.RPC("Matching", RpcTarget.All, setRandom, matchNum, true); // Null이 뜨는 이유?}
+                                    return;
+
+                                }
+                                else 
+                                {
+                                    matchNum = new int[matchingList2.Count];
+                                    Debug.Log(matchNum.Length);
+                                    for (int j = 0; j < matchNum.Length; j++)
+                                    {
+                                        matchNum[j] = matchingList2[j];
+                                    }
+                                    matchingList2.Clear();
+                                    photonView.RPC("Matching", RpcTarget.All, setRandom, matchNum, false); // Null이 뜨는 이유?}
+                                    return;
+                                }
+                            }
+                            else
+                            {
+                                continue;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        Debug.Log("디버그 " + (int)PhotonNetwork.PlayerList[n].CustomProperties["Number"]);
+                        matchingList.Add((int)PhotonNetwork.PlayerList[n].CustomProperties["Number"]);
                     }
                 }
-
-                matchingList.Add(n);
-               
+                else
+                {
+                    matchingList.Add((int)PhotonNetwork.PlayerList[n].CustomProperties["Number"]);
+                }
             }
 
             curRound++;
-
-            Debug.Log($"매칭 리스트 카운트 = {matchingList.Count}");
 
             // 플레이어들을 큐에 다 집어넣으면 배열에 순서대로 넣는다.
             matchNum = new int[matchingList.Count];
@@ -281,206 +335,81 @@ namespace hcu
         }
 
         [PunRPC]
-        public void Matching(int[] random, int[] num)
+        public void Matching(int[] random, int[] num,bool clone)
         {
-            for (int i = 0; i < num.Length; i++)
-            {
-                matchMan[i] = PhotonNetwork.PlayerList[num[i]];
-                Debug.Log(i + "번째 순서" + matchMan[i]);
-            }
 
-            // 선공 후공 배열을 나눴을 경우 해당하는 스크립트
-            /*
-            // 선공 후공을 돌아가면서 매칭한다는 전제.
-
-            int arrayLength = 0;
-
-            if (matchMan.Length % 2 == 0)
-            {
-                arrayLength = matchMan.Length / 2;
-            }
-            else
-            {
-                arrayLength = matchMan.Length / 2 + 1;
-            }
-
-            
-            int[] first = new int[arrayLength]; // 선공 배열
-            int[] after = new int[arrayLength]; // 후공 배열
-
-            for (int i = 0; i < first.Length; i++)
-            {
-                if(i % 2 == 0)
-                first[i] = (int)matchMan[i].CustomProperties["Number"];
-                else
-                after[i] = (int)matchMan[i].CustomProperties["Number"];
-            }
-
-            int[] temp = new int[first.Length];
-
-            //선공 후공 뒤집기
-            for (int i = 0; i < first.Length; i++)
-            { 
-                temp[i] = after[0];
-                after[0] = after[i];
-                after[i] = temp[i];
-            }
-
-            // 후공 한칸씩 밀리기
-            for (int i = 0; i < first.Length; i++)
-            {
-                if(i == first.Length - 1)
-                {
-                    temp[i] = after[i];
-                    after[i] = after[0];
-                    after[0] = temp[i];
-                }
-                else
-                {
-                    temp[i] = after[i];
-                    after[i] = after[i + 1];
-                    after[i + 1] = temp[i];
-                }
-            }
-
-            //중간에 나간 놈 있는지 체크
-            for(int i = 0; i < first.Length; i++)
-            {
-                if (!playerList.Contains(first[i]))
-                {
-                    // first[i] 는 방에 존재하지 않는다.
-                }
-                else if (!playerList.Contains(after[i]))
-                {
-                    // after[i] 는 방에 존재하지 않는다.
-                }
-            }
-
-            for(int i = 0; i < first.Length; i++)
-            {
-                Debug.Log($"{i}번 1:1 = {first[i]} vs {after[i]}");
-            }
-            */
-
-            //================================  마스터 클라이언트가 대진 설정을 마치고 각 플레이어들을 1:1로 묶는 함수  =====================================
-            /*
-            for(int i = 0; i < matchMan.Length; i++)
-            {
-                if (matchMan[i].NickName == PhotonNetwork.NickName) // 각자 선공 후공 카운트를 체크
-                {
-                    if (i % 2 == 0)
-                    {
-                        // 선공 누적 체크
-                        firstCount++;
-                        if (firstCount > 1)
-                        {
-                            // 다음턴은 무조건 후공
-                            PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "SetAttack", 2 } });
-                            firstCount = 0;
-                        }
-                    }
-                    else
-                    {
-                        // 후공 누적 체크
-                        afterCount++;
-                        if (afterCount > 1)
-                        {
-                            // 다음턴은 무조건 선공
-                            PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "SetAttack", 1 } });
-                            afterCount = 0;
-                        }
-                    }
-                }
-            }*/
-
-
-            if (num.Length < 2)
-            {
-                Debug.Log("나 혼자 방에 남아버렸다");
-            }
-
-            if (num.Length == 2)
-            {
-                Debug.Log("1:1");
-                if (matchMan[0].NickName == PhotonNetwork.NickName)
-                {
-                    Debug.Log($"나는 {matchMan[0].CustomProperties["Number"]}, 내가 선공");
-                }
-                else
-                {
-                    Debug.Log($"나는 {matchMan[1].CustomProperties["Number"]}, 내가 후공");
-                }
-            }
-
-            // 플레이어가 짝수
-            else if (num.Length % 2 == 0)
+            if (clone) // 클론 있을때
             {
                 Debug.Log("1:1 & 1:1 시작");
                 for (int i = 0; i < num.Length; i++)
                 {
-                    if (matchMan[i].NickName == PhotonNetwork.NickName)
+                    if ((int)PhotonNetwork.LocalPlayer.CustomProperties["Number"] == num[i] && i < num.Length - 1) // 내 번호랑 일치하는지와 배열 번호가 마지막(클론) 이 아닌 경우에만
                     {
                         if (i == 0 || i % 2 == 0)
                         {
-                            Debug.Log("나는 " + userID + " 닉네임 : " + matchMan[i].CustomProperties["Number"] + " 상대 : " + matchMan[i + 1].CustomProperties["Number"] + " 내가 선공");
-                            string a = "나는 " + userID + " 닉네임 : " + matchMan[i].CustomProperties["Number"] + " 상대 : " + matchMan[i + 1].CustomProperties["Number"] + " 내가 선공";
+                            PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "Opponent", num[i+1] } });
+                            Debug.Log("나는 " + userID + " 닉네임 : " + PhotonNetwork.LocalPlayer.CustomProperties["Number"] + " 상대 : " + num[i+1] );
+                            string a = "나는 " + userID + " 닉네임 : " + PhotonNetwork.LocalPlayer.CustomProperties["Number"] + " 상대 : " + num[i + 1];
                             // 내가 선공
                             photonView.RPC("ShowDebug", RpcTarget.MasterClient, a);
-                            matchMan[i].SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "Opponent", (int)matchMan[i + 1].CustomProperties["Number"] } });
+                            
                         }
                         else if ( i % 2 != 0 && i < num.Length )
                         {
                             // 내 상대는 = matchMan[i-1]
-                            Debug.Log("나는 " + userID + " 닉네임 : " + matchMan[i].CustomProperties["Number"] + " 상대 : " + matchMan[i - 1].CustomProperties["Number"] + " 내가 후공");
-                            string a = "나는 " + userID + " 닉네임 : " + matchMan[i].CustomProperties["Number"] + " 상대 : " + matchMan[i - 1].CustomProperties["Number"] + " 내가 후공";
+                            PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "Opponent", num[i - 1] } });
+                            Debug.Log("나는 " + userID + " 닉네임 : " + PhotonNetwork.LocalPlayer.CustomProperties["Number"] + " 상대 : " + num[i - 1]);
+                            string a = "나는 " + userID + " 닉네임 : " + PhotonNetwork.LocalPlayer.CustomProperties["Number"] + " 상대 : " + num[i - 1];
                             // 내가 후공
                             photonView.RPC("ShowDebug", RpcTarget.MasterClient, a);
-                            matchMan[i].SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "Opponent", (int)matchMan[i - 1].CustomProperties["Number"] } });
+                        }
+                    }
+                    else if(i < num.Length - 1)
+                    {
+
+                    }
+                }
+            }
+
+            else if (!clone) // 클론 없을때 01 23 45
+            {
+                Debug.Log("1:1 & 1:1 시작");
+                for (int i = 0; i < num.Length; i++)
+                {
+                    if ((int)PhotonNetwork.LocalPlayer.CustomProperties["Number"] == num[i])
+                    {
+                        if (i == 0 || i % 2 == 0)
+                        {
+                            PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "Opponent", num[i + 1] } });
+                            Debug.Log("나는 " + userID + " 닉네임 : " + PhotonNetwork.LocalPlayer.CustomProperties["Number"] + " 상대 : " + num[i + 1]);
+                            string a = "나는 " + userID + " 닉네임 : " + PhotonNetwork.LocalPlayer.CustomProperties["Number"] + " 상대 : " + num[i + 1];
+                            // 내가 선공
+
+                            // 내가 짝수 상대 +1 홀수
+
+                            
+                            SceneManager.LoadScene(1);
+
+
+                            photonView.RPC("ShowDebug", RpcTarget.MasterClient, a);
+
+                        }
+                        else if (i % 2 != 0 && i < num.Length)
+                        {
+                            // 내 상대는 = matchMan[i-1]
+                            PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "Opponent", num[i - 1] } });
+                            Debug.Log("나는 " + userID + " 닉네임 : " + PhotonNetwork.LocalPlayer.CustomProperties["Number"] + " 상대 : " + num[i - 1]);
+                            string a = "나는 " + userID + " 닉네임 : " + PhotonNetwork.LocalPlayer.CustomProperties["Number"] + " 상대 : " + num[i - 1];
+                            // 내가 후공
+
+                            // 내가 홀수 상대 -1짝수
+
+                            photonView.RPC("ShowDebug", RpcTarget.MasterClient, a);
                         }
                     }
                 }
             }
 
-            // 플레이어가 홀수, 3명 이상이라면
-            else if (num.Length % 2 == 1 && num.Length > 2)
-            {
-                Debug.Log("1:1:1 시작");
-                for (int i = 0; i < num.Length; i++)
-                {
-                    if (matchMan[i].NickName == PhotonNetwork.NickName)
-                    {
-                        if (i == 0 || i % 2 == 0)
-                        {
-                            if (i == num.Length - 1)
-                            {
-                                Debug.Log("마지막 " + userID + " 닉네임 : " + matchMan[i].CustomProperties["Number"] + " 상대 : " + matchMan[i - 1].CustomProperties["Number"] + " 내가 선공");
-                                string a = "마지막 " + userID + " 닉네임 : " + matchMan[i].CustomProperties["Number"] + " 상대 : " + matchMan[i - 1].CustomProperties["Number"] + " 내가 선공";
-                                // 내가 선공
-                                photonView.RPC("ShowDebug", RpcTarget.MasterClient, a);
-                                matchMan[i].SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "Opponent", (int)matchMan[i - 1].CustomProperties["Number"] } });
-                            }
-                            else
-                            {
-                                Debug.Log("나는 " + userID + " 닉네임 : " + matchMan[i].CustomProperties["Number"] + " 상대 : " + matchMan[i + 1].CustomProperties["Number"] + " 내가 선공");
-                                string a = "나는 " + userID + " 닉네임 : " + matchMan[i].CustomProperties["Number"] + " 상대 : " + matchMan[i + 1].CustomProperties["Number"] + " 내가 선공";
-                                // 내가 후공
-                                photonView.RPC("ShowDebug", RpcTarget.MasterClient, a);
-                                matchMan[i].SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "Opponent", (int)matchMan[i + 1].CustomProperties["Number"] } });
-                            }
-                        }
-                        else
-                        {
-                            // 내 상대는 = matchMan[i-1]
-                            Debug.Log("나는 " + userID + " 닉네임 : " + matchMan[i].CustomProperties["Number"] + " 상대 : " + matchMan[i - 1].CustomProperties["Number"] + " 내가 후공");
-                            string a = "나는 " + userID + " 닉네임 : " + matchMan[i].CustomProperties["Number"] + " 상대 : " + matchMan[i - 1].CustomProperties["Number"] + " 내가 후공";
-                            // 내가 후공
-                            photonView.RPC("ShowDebug", RpcTarget.MasterClient, a);
-                            matchMan[i].SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "Opponent", (int)matchMan[i - 1].CustomProperties["Number"] } });
-                        }
-                    }
-                }
-            }
-             // 매칭 구버전
         }
 
         private void GoShop()
@@ -516,6 +445,10 @@ namespace hcu
             //if(PhotonNetwork.IsMasterClient)
             if (Input.GetKeyDown(KeyCode.S))
             {
+/*                if(PhotonNetwork.IsMasterClient)
+                {
+                    MatchingSetting();
+                }*/
                 photonView.RPC("MatchingSetting", RpcTarget.MasterClient);
             }
             if (Input.GetKeyDown(KeyCode.Q))
