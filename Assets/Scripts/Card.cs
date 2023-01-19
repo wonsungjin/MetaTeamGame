@@ -51,10 +51,12 @@ public class Card : MonoBehaviour
         {
             if (level == 1)
             {
+                curEXP++;
                 if (curEXP >= 2) ChangeValue("level");
             }
             else if (level == 2)
             {
+                curEXP++;
                 if (curEXP >= 3) ChangeValue("level");
             }
         }
