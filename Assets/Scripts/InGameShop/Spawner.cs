@@ -122,6 +122,7 @@ public class Spawner : MonoBehaviourPun
         {
             GameMGR.Instance.objectPool.DestroyPrefab(monster[i]);
         }
+
         ChooseRandomCard();
         if (GameMGR.Instance.uiManager.shopLevel < 6 && GameMGR.Instance.uiManager.shopMoney > 0)
             GameMGR.Instance.uiManager.shopMoney--;

@@ -9,37 +9,51 @@ public class Batch : MonoBehaviourPun
 
     // 상점의 배치 정보를 전달 받음
     [PunRPC]
-    public void SetBatch(int playerNum,Card card)
+    public void SetBatch(int playerNum, Card card)
     {
-        List<Card> list = null;
+        List<Card> cardList = null;
         Card instance = Resources.Load<Card>($"Prefabs/{card.name}");
-        bool listCheck = playerList.TryGetValue(playerNum, out list);
+        bool listCheck = playerList.TryGetValue(playerNum, out cardList);
         if (listCheck == false)
         {
-            list = new List<Card>();
+            cardList = new List<Card>();
         }
         instance.ChangeValue("hp", card.curHP);
         instance.ChangeValue("attack", card.curAttackValue);
         instance.ChangeValue("level", card.level);
         instance.ChangeValue("exp", card.curEXP);
-        list.Add(instance);
+        cardList.Add(instance);
     }
 
+
+
     // 배틀씬 유닛 배치
-    public Card CreateBatch(int playerNum,int cardNum,bool myCard=true)
+    /// <summary>
+    ///  playerNum : Photon Customproperties 고유번호, 
+    ///  cardNum : 카드 배치 순서, 
+    ///  myCard : 본인 카드 여부
+    /// </summary>
+    /// <param name="CreateBatch"></param>
+    public Card CreateBatch(int playerNum, int cardNum, bool myCard = true)
     {
-        List<Card> list = null;
-        playerList.TryGetValue(playerNum, out list);
-        Card unitCard = GameObject.Instantiate<Card>(list[cardNum]);
+        List<Card> cardList = null;
+        playerList.TryGetValue(playerNum, out cardList);
+        Card unitCard = GameObject.Instantiate<Card>(cardList[cardNum]);
+
         if (myCard == true)
         {
-            unitCard.transform.position = new Vector3(0, 0, 0);
+            // unitCard.transform.position = GameMGR.Instance.spawner.cardBatch[cardNum];
         }
+
+        else if(myCard == false)
+        {
+            // unitCard.transform.position = GameMGR.Instance.spawner.emnycardBatch[cardNum];
+        }
+
         else
         {
-
+            Debug.Log("CreateBatch : myCard 값 확인필요");
         }
-
         return unitCard;
     }
 }

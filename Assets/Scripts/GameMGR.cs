@@ -18,7 +18,7 @@ public partial class GameMGR : Singleton<GameMGR>
 
     public Batch batch;
 
-    
+
 
     private void Start()
     {
@@ -29,13 +29,13 @@ public partial class GameMGR : Singleton<GameMGR>
         DontDestroyOnLoad(gameObject);
 
     }
-    CustomDeck lookCustomDeck;//µé¾î°£ µ¦ ÀúÀå
-    CustomDeck myCustomDeck;//µé¾î°£ µ¦¿¡¼­ ¼¿·ºÇÒ½Ã È®Á¤;
+    CustomDeck lookCustomDeck;//ï¿½ï¿½î°£ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    CustomDeck myCustomDeck;//ï¿½ï¿½î°£ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ò½ï¿½ È®ï¿½ï¿½;
     public void Save_MyCustomDeck(CustomDeck customDeck)
     {
         lookCustomDeck = customDeck;
     }
-    public void OnClick_Save_MyCustomDeck( )
+    public void OnClick_Save_MyCustomDeck()
     {
         myCustomDeck = lookCustomDeck;
         uiManager.OnClick_Move_Home();
@@ -50,7 +50,7 @@ public partial class GameMGR : Singleton<GameMGR>
     {
         if (myCustomDeck != null)
             SceneManager.LoadScene("StoreScene");
-        else Debug.Log("¾ø´Ù");
+        else Debug.Log("ï¿½ï¿½ï¿½ï¿½");
     }
 
 
