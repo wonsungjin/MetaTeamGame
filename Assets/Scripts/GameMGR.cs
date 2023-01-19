@@ -18,14 +18,14 @@ public partial class GameMGR : Singleton<GameMGR>
 
     public Batch batch;
 
-    
+
 
     private void Start()
     {
         Init(0);
-       // metaTrendAPI.GetUserProfile();
-        //metaTrendAPI.GetSessionID();
-        //StartCoroutine(COR_GetCoin());
+        metaTrendAPI.GetUserProfile();
+        metaTrendAPI.GetSessionID();
+        StartCoroutine(COR_GetCoin());
         DontDestroyOnLoad(gameObject);
 
     }
@@ -35,7 +35,7 @@ public partial class GameMGR : Singleton<GameMGR>
     {
         lookCustomDeck = customDeck;
     }
-    public void OnClick_Save_MyCustomDeck( )
+    public void OnClick_Save_MyCustomDeck()
     {
         myCustomDeck = lookCustomDeck;
         uiManager.OnClick_Move_Home();
@@ -76,13 +76,13 @@ public partial class GameMGR : Singleton<GameMGR>
             objectPool = GetComponent<ObjectPool>();
             uiManager.Init_Scene1();
         }
-        else if (num==1)
+        else if (num == 1)
         {
             spawner = GetComponent<Spawner>();
             batch = GetComponent<Batch>();
             uiManager.Init_Scene2();
         }
-        else if(num==2)
+        else if (num == 2)
         {
 
         }
