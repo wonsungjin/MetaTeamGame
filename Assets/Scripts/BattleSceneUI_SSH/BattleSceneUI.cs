@@ -4,14 +4,17 @@ using UnityEngine;
 
 public class BattleSceneUI : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] GameObject playerProfilPanel = null;
+    GameObject enemyProfilPanel = null;
+
+    private void Awake()
     {
-        
+        playerProfilPanel = GameObject.Find("PlayerProfilPanel");
+        enemyProfilPanel = GameObject.Find("PlayerProfilPanel");
     }
 
-    // Update is called once per frame
-    void Update()
+    // Start is called before the first frame update
+    void Start()
     {
         
     }
@@ -21,11 +24,20 @@ public class BattleSceneUI : MonoBehaviour
 
     }
 
-    public void OnClickProfilButton()
+    public void OnClickPlayerProfilButton()
     {
-        if (gameObject.name.CompareTo("PlayerProfilButton") == 0)
-        {
-            
-        }
+
+    }
+
+    public void OnClickEnemyProfilButton()
+    {
+
+    }
+
+    public void Init()
+    {
+        // option, profil panel 초기화 필요
+
+        
     }
 }
