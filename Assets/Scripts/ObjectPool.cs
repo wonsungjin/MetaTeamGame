@@ -11,11 +11,11 @@ public class ObjectPool : Singleton<ObjectPool>
     {
         List<GameObject> list = null;
         GameObject instance = null;
-        bool listCheck = table.TryGetValue(prefab.name, out list);
+        bool listCheck = table.TryGetValue(prefab.name.Replace("(Clone)", ""), out list);
         if (listCheck == false)
         {
             list = new List<GameObject>();
-            table.Add(prefab.name, list);
+            table.Add(prefab.name.Replace("(Clone)", ""), list);
         }
         if (list.Count == 0)
         {

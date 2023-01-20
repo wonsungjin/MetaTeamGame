@@ -22,59 +22,37 @@ public class Spawner : MonoBehaviourPun
 
     public void SetMyDeckSetting()
     {
-        customDeck = new CustomDeck();
-        customDeck.tier_1.Add("Darkswarm");
-        customDeck.tier_1.Add("slavetrader");
-        customDeck.tier_1.Add("littlegolem");
-        customDeck.tier_1.Add("KaboomG");
-        customDeck.tier_1.Add("richrich");
-        customDeck.tier_1.Add("slavetrader");
-        customDeck.tier_1.Add("Salamander");
-        customDeck.tier_1.Add("orcslave");
-
-        customDeck.tier_2.Add("scarpgolem");
-        customDeck.tier_2.Add("ironingot");
-        customDeck.tier_2.Add("Penetratermaster");
-        customDeck.tier_2.Add("fanatic");
-        customDeck.tier_2.Add("dirtyrat");
-        customDeck.tier_2.Add("Felbeast");
-        customDeck.tier_2.Add("gladiator");
-        customDeck.tier_2.Add("orcmage");
-
-        customDeck.tier_3.Add("reflectgolem");
-        customDeck.tier_3.Add("Shylock");
-        customDeck.tier_3.Add("Stonegolem");
-        customDeck.tier_3.Add("pigeonter");
-        customDeck.tier_3.Add("lizard");
-        customDeck.tier_3.Add("angryrhinoceros");
-        customDeck.tier_3.Add("orcbountyhunter");
-        customDeck.tier_3.Add("orcjudge");
-
-        customDeck.tier_4.Add("firegolem");
-        customDeck.tier_4.Add("crystalgolem");
-        customDeck.tier_4.Add("usurer");
-        customDeck.tier_4.Add("frostghost");
-        customDeck.tier_4.Add("DreadfulEtty");
-        customDeck.tier_4.Add("swarmofrats");
-        customDeck.tier_4.Add("Kodovist");
-        customDeck.tier_4.Add("BubblingBerserker");
-
+        customDeck= GameMGR.Instance.Get_CustomDeck();
+        if (customDeck.tier_1.Count!=0|| customDeck.tier_1[0]!="")
         for (int i = 0; i < customDeck.tier_1.Count; i++)
         {
             monsterNames.Add(customDeck.tier_1[i]);
         }
-        for (int i = 0; i < customDeck.tier_2.Count; i++)
+        if (customDeck.tier_2.Count != 0 || customDeck.tier_2[0] != "")
+            for (int i = 0; i < customDeck.tier_2.Count; i++)
         {
             monsterNames.Add(customDeck.tier_2[i]);
         }
-        for (int i = 0; i < customDeck.tier_3.Count; i++)
+        if (customDeck.tier_3.Count != 0 || customDeck.tier_3[0] != "")
+            for (int i = 0; i < customDeck.tier_3.Count; i++)
         {
             monsterNames.Add(customDeck.tier_3[i]);
         }
-        for (int i = 0; i < customDeck.tier_4.Count; i++)
+        if (customDeck.tier_4.Count != 0 || customDeck.tier_4[0] != "")
+            for (int i = 0; i < customDeck.tier_4.Count; i++)
         {
             monsterNames.Add(customDeck.tier_4[i]);
         }
+        if (customDeck.tier_5.Count != 0 || customDeck.tier_5[0] != "")
+            for (int i = 0; i < customDeck.tier_5.Count; i++)
+            {
+                monsterNames.Add(customDeck.tier_5[i]);
+            }
+        if (customDeck.tier_6.Count != 0 || customDeck.tier_6[0] != "")
+            for (int i = 0; i < customDeck.tier_6.Count; i++)
+            {
+                monsterNames.Add(customDeck.tier_6[i]);
+            }
     }
     private void Start()
     {
