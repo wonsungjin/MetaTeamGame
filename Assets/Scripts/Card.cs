@@ -37,13 +37,13 @@ public class Card : MonoBehaviour
     {
         if (key =="hp")
         {
-            curHP += value;
+            curHP = value;
             hpText.text = curHP.ToString();
 
         }
         else if(key == "attack")
         {
-            curAttackValue += value;
+            curAttackValue = value;
             atkText.text = curAttackValue.ToString();
 
         }
@@ -51,10 +51,13 @@ public class Card : MonoBehaviour
         {
             if (level == 1)
             {
-                if (curEXP >= 2) ChangeValue("level");
+                curEXP++;
+                if (curEXP >= 2) 
+                    ChangeValue("level");
             }
             else if (level == 2)
             {
+                curEXP++;
                 if (curEXP >= 3) ChangeValue("level");
             }
         }

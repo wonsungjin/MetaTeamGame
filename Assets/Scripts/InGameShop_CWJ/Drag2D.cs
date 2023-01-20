@@ -6,8 +6,7 @@ using UnityEngine;
 
 public partial class Drag2D : MonoBehaviour
 {
-    WaitForSeconds wait = new WaitForSeconds(0.11f);
-    WaitForSeconds meltWait = new WaitForSeconds(0.1f);
+    WaitForSeconds wait = new WaitForSeconds(0.1f);
 
     Card card;
     BoxCollider2D pol;
@@ -59,7 +58,6 @@ public partial class Drag2D : MonoBehaviour
                     else if (hit.collider.name == this.gameObject.name)
                     {
                         timer += Time.deltaTime;
-                        Debug.Log(timer);
                         if (timer > 1f)
                         {
                             GameObject vec = GameObject.FindGameObjectWithTag("BattleZone");
@@ -132,9 +130,29 @@ public partial class Drag2D : MonoBehaviour
                     }
                 }
             }
+
+            if (gameObject.CompareTag("Monster"))
+            {
+                if (gameObject.name == collision.gameObject.name && collision.gameObject.CompareTag("BattleMonster"))
+                {
+                    if (GameMGR.Instance.uiManager.goldCount >= 3)
+                    {
+                        GameMGR.Instance.uiManager.goldCount -= 3;
+                        CardLevelUp(collision);
+                        Destroy(gameObject);
+                    }
+                }
+            }
+
+            if (gameObject.CompareTag("BattleMonster"))
+            {
+                if (gameObject.name == collision.gameObject.name && collision.gameObject.CompareTag("BattleMonster"))
+                {
+                    CardLevelUp(collision);
+                }
+            }
         }
     }
-
 
     private void OnTriggerStay2D(Collider2D collision)
     {
@@ -154,11 +172,6 @@ public partial class Drag2D : MonoBehaviour
                 if (collision.gameObject.CompareTag("BattleZone"))
                 {
                     pos = collision.gameObject.transform.position;
-
-                    //if(gameObject.name == collision.gameObject.name)
-                    //{
-                    // 이름이 같을 땐 합쳐진다 능력치를 따져서 높은쪽으로 결합 하나는 사라지고
-                    //}
                 }
             }
 
@@ -186,6 +199,51 @@ public partial class Drag2D : MonoBehaviour
         }
     }
 
+    // 카드 레벨업 
+    void CardLevelUp(Collider2D collision)
+    {
+        int colAttack = collision.GetComponent<Card>().curAttackValue;
+        int colHP = collision.GetComponent<Card>().curHP;
+        int attack = card.curAttackValue;
+        int hP = card.curHP;
+        int plusAttack = 0;
+        int plusHp = 0;
+
+        if (colAttack > attack)
+        {
+            plusAttack = colAttack;
+        }
+        else if (colAttack <= attack)
+        {
+            plusAttack = attack;
+        }
+
+        if (colHP > hP)
+        {
+            plusHp = colHP;
+        }
+        else if (colHP <= hP)
+        {
+            plusHp = hP;
+        }
+
+        collision.GetComponent<Card>().ChangeValue("attack", plusAttack + 1);
+        collision.GetComponent<Card>().ChangeValue("hp", plusHp + 1);
+        collision.GetComponent<Card>().ChangeValue("exp", 1);
+
+        if (collision.gameObject.transform.position.y > gameObject.transform.position.y)
+        {
+            StartCoroutine(COR_CombineCard(collision));
+        }
+    }
+
+    // 용병들 레벨업 
+    IEnumerator COR_CombineCard(Collider2D collision)
+    {
+        yield return wait;
+        Destroy(collision.gameObject);
+    }
+
     // 판매버튼 ON OFF
     IEnumerator COR_SellButton()
     {
@@ -206,7 +264,7 @@ public partial class Drag2D : MonoBehaviour
         if (CompareTag("FreezeCard"))
         {
             transform.position = pos;
-            gameObject.tag = "MeltCard";
+            gameObject.tag = "Monster";
         }
     }
     // 프리즈카드로 바꾸는 함수
@@ -219,9 +277,9 @@ public partial class Drag2D : MonoBehaviour
     // 얼린카드를 구매시 들어갈 함수 원래 자리로 돌아가 자리의 bool값을 바꾼후 구매된다.
     IEnumerator COR_BackMelt()
     {
-        gameObject.tag = "MeltCard";
-        this.transform.position = battleZonePos;
-        yield return meltWait;
+        //gameObject.tag = "MeltCard";
+        //this.transform.position = battleZonePos;
+        yield return wait;
         gameObject.tag = "BattleMonster";
         pos = meltPos;
         this.gameObject.transform.position = pos + Vector2.down;

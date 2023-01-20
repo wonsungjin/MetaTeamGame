@@ -27,6 +27,5 @@ public partial class UIManager : MonoBehaviour
     public void SetisExplantionActive(bool set)
     {
         isExplantionActive=set;
-    }
-    
+    }    
 }
