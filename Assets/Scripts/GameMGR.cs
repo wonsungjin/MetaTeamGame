@@ -22,10 +22,10 @@ public partial class GameMGR : Singleton<GameMGR>
 
     private void Start()
     {
-        Init(1);
+        /*Init(1);
         metaTrendAPI.GetUserProfile();
         metaTrendAPI.GetSessionID();
-        StartCoroutine(COR_GetCoin());
+        StartCoroutine(COR_GetCoin());*/
         DontDestroyOnLoad(gameObject);
 
     }
