@@ -1803,9 +1803,13 @@ MonoBehaviour:
   afterCount: 0
   curRound: 0
   deckCount: 
+  leavePlayerList: 
+  existPlayerList: 
+  prevOpponent: 0000000000000000000000000000000000000000
   matchingList: 
-  matchingList2: 
-  matchingList3: 
+  matchingListReal: 
+  cloneOpponent: -1
+  cloneOpponentsOpponent: -1
 --- !u!114 &2015253169
 MonoBehaviour:
   m_ObjectHideFlags: 0

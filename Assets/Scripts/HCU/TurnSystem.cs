@@ -49,15 +49,15 @@ namespace hcu
         public int[] deckCount;
 
         // 게임 도중 나가버린 플레이어 낙인
-        public List<int> exitPlayerList;
+        public List<int> leavePlayerList;
+
+        // 현존 하는 플레이어 리스트
+        public List<int> existPlayerList;
+
+        // 마스터가 가지고 있는 이전 매칭 상대 기록 배열
+        [SerializeField] public int[] prevOpponent = new int[8];
 
         #region 포톤 콜백 함수들
-
-        public void SetName()
-        {
-            string myName = null;
-            PhotonNetwork.NickName = myName;
-        }
 
         public override void OnConnectedToMaster()
         {
@@ -124,8 +124,13 @@ namespace hcu
                     PhotonNetwork.PlayerList[i].SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "Life", $"{startLife}" } });
                     PhotonNetwork.PlayerList[i].SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "Opponent", -1 } });
                     userID = (int)PhotonNetwork.PlayerList[i].CustomProperties["Number"];  // 고유닉네임이 일치하면 고유번호를 지정한다.
-                    Debug.Log($" 번호 값 잘 들어갔니 {PhotonNetwork.PlayerList[i].CustomProperties["Number"]}");
-                    Debug.Log($" 라이프 잘 들어갔니 {PhotonNetwork.PlayerList[i].CustomProperties["Life"]}");
+                    
+                    if(PhotonNetwork.IsMasterClient)
+                    {
+                        existPlayerList.Add(i);
+                    }
+
+
                     PhotonNetwork.SetPlayerCustomProperties(myCustomProperty);
                 }
                 Debug.Log($"내 지정번호는 {(int)PhotonNetwork.PlayerList[i].CustomProperties["Number"]}");
@@ -136,6 +141,10 @@ namespace hcu
         {
             Debug.Log(newPlayer.NickName + " 입장");
             Debug.Log("방 접속자 수 : " + PhotonNetwork.PlayerList.Length);
+            if (PhotonNetwork.IsMasterClient)
+            {
+                //existPlayerList.Add((int)newPlayer.CustomProperties["Number"]);
+            }
         }
 
         public override void OnPlayerLeftRoom(Player otherPlayer)
@@ -147,6 +156,14 @@ namespace hcu
             {
                 cloneOpponent = -1;
                 cloneOpponentsOpponent = -1;
+                for(int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
+                {
+                    if(!existPlayerList.Contains((int)PhotonNetwork.PlayerList[i].CustomProperties["Number"]))
+                    {
+                        
+                    }
+                }
+                existPlayerList.Remove((int)otherPlayer.CustomProperties["Number"]);
             }
 
             Debug.Log(otherPlayer + "가 나갔다");
@@ -220,6 +237,8 @@ namespace hcu
                 Debug.Log($"포톤 플레이어 {i} 번째 번호는 {PhotonNetwork.PlayerList[i].CustomProperties["Number"]}");
                 Debug.Log($"포톤 플레이어 {i} 번째의 체력은 {PhotonNetwork.PlayerList[i].CustomProperties["Life"]}");
             }
+
+            prevOpponent = new int[8];
         }
 
         [SerializeField] List<int> matchingList = new List<int>();
@@ -237,10 +256,10 @@ namespace hcu
                 setRandom[i] = UnityEngine.Random.Range(0, 3);
             }
 
-            int n = 0;
+            int n = -1; // 플레이어리스트 배열의 랜덤 인덱스 값
 
             matchingList.Clear(); //  플레이어 리스트 한번 초기화 싹 해준다.
-            matchingListReal.Clear();
+            matchingListReal.Clear(); // 실제 플레이어 리스트도 초기화한다.
 
             // 중복매칭 방지 스크립트
             for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
@@ -260,7 +279,7 @@ namespace hcu
                 }
                 else
                 {
-                    n = UnityEngine.Random.Range(0, PhotonNetwork.PlayerList.Length);
+                    n = UnityEngine.Random.Range(0, PhotonNetwork.PlayerList.Length); // 랜덤 인덱스 값 추출
 
                     if (matchingList.Contains((int)PhotonNetwork.PlayerList[n].CustomProperties["Number"]) || matchingListReal.Contains((int)PhotonNetwork.PlayerList[n].CustomProperties["Number"])) { i--; continue; } // 중복 제외 처리
                 }
@@ -273,10 +292,20 @@ namespace hcu
                         if (matchingList.Contains((int)PhotonNetwork.PlayerList[n].CustomProperties["Opponent"]) || cloneOpponentsOpponent == (int)PhotonNetwork.PlayerList[n].CustomProperties["Number"])
                         {
                             Debug.Log($"{(int)PhotonNetwork.PlayerList[n].CustomProperties["Opponent"]}가 들어있음");
+
+                            // 조건식 하나 더 필요
+                            if(PhotonNetwork.PlayerList.Length == 6 && matchingListReal.Count == 4)  // 6명일 떄 랜덤 값 4개가 매칭 되었을 때
+                            {
+                                if(matchingListReal.Contains(prevOpponent[matchingListReal[0]]) && matchingListReal.Contains(prevOpponent[matchingListReal[1]]))
+                                {
+                                    // 6명 들어왔는데 앞 4명이서 서로 교차로 만났다면 3,4번 매칭 제거
+                                    matchingListReal.RemoveRange(2, 2);
+                                }
+                            }
+
                             c++;
                             if (c < 1000)
                             {
-                                
                                 i--;
                                 continue;
                             }
@@ -382,8 +411,14 @@ namespace hcu
                 matchNum[i] = matchingList[i];
             }
 
+            Debug.Log("prevOpponent 길이 : " + prevOpponent.Length);
+
+            /*            
+            */
+
             photonView.RPC("Matching", RpcTarget.All, setRandom, matchNum, isClone);
         }
+
 
 
         [PunRPC] // 각 플레이어들의 매칭이 정상적으로 되었는지 확인하기 위한 RPC 함수
@@ -395,6 +430,28 @@ namespace hcu
         [PunRPC]
         public void Matching(int[] random, int[] num, bool clone)
         {
+            if (PhotonNetwork.IsMasterClient)
+            {
+                Debug.Log("prevOpponent 길이 : " + prevOpponent.Length);
+
+                // 마스터 클라이언트는 대진 정보를 기록
+                for (int i = 0; i < num.Length; i++)
+                {
+                    if (clone && i == num.Length - 1) break; // 만일 클론이 있다면 배열 마지막 값은 클론이므로 대진 정보를 기록하지 않는다.
+                    if (i % 2 == 0)
+                    {
+                        prevOpponent[num[i]] = num[i + 1];
+                        Debug.Log($"{prevOpponent[num[i]]} 의 상대는 {num[i + 1]}");
+                    }
+                    else
+                    {
+                        prevOpponent[num[i]] = num[i - 1];
+                        Debug.Log($"{prevOpponent[num[i]]} 의 상대는 {num[i - 1]}");
+                    }
+                }
+            }
+
+
             Debug.Log(num.Length);
             if (clone) // 클론 있을때
             {
@@ -521,7 +578,7 @@ namespace hcu
 
             if (Input.GetKeyDown(KeyCode.A))
             {
-
+                PhotonNetwork.SetMasterClient(PhotonNetwork.LocalPlayer);
             }
 
             if (Input.GetKeyDown(KeyCode.Q))
