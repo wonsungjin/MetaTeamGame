@@ -223,7 +223,7 @@ namespace hcu
         {
             userName = new int[PhotonNetwork.PlayerList.Length];
             userLife = new int[PhotonNetwork.PlayerList.Length];
-            // 플레이어 라이프 지정 (배열 변경시 연동 위함)
+            // 플레이어 고유번호 및 라이프 지정. 게임 시작하는 시점부터 각 플레이어리스트 배열의 인덱스에 고유번호 지정. 들락날락으로 인한 엑터넘버 불규칙 방지
             for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
             {
                 PhotonNetwork.PlayerList[i].CustomProperties["Number"] = i;
@@ -285,21 +285,29 @@ namespace hcu
                 }
                 if (curRound != 0 && PhotonNetwork.PlayerList.Length > 2)
                 {
-                    //Debug.Log("현재 " + i);
-
                     if (matchingList.Count != 0)
                     {
                         if (matchingList.Contains((int)PhotonNetwork.PlayerList[n].CustomProperties["Opponent"]) || cloneOpponentsOpponent == (int)PhotonNetwork.PlayerList[n].CustomProperties["Number"])
                         {
                             Debug.Log($"{(int)PhotonNetwork.PlayerList[n].CustomProperties["Opponent"]}가 들어있음");
 
-                            // 조건식 하나 더 필요
-                            if(PhotonNetwork.PlayerList.Length == 6 && matchingListReal.Count == 4)  // 6명일 떄 랜덤 값 4개가 매칭 되었을 때
+                            // 조건식 6,7인일 경우
+                            if ((PhotonNetwork.PlayerList.Length == 6 && matchingListReal.Count == 4 )||( PhotonNetwork.PlayerList.Length == 7 && matchingListReal.Count == 4))  // 6명일 떄 랜덤 값 4개가 매칭 되었을 때
                             {
+                                Debug.Log("6인 또는 7인이라 여기로 들어온다");
                                 if(matchingListReal.Contains(prevOpponent[matchingListReal[0]]) && matchingListReal.Contains(prevOpponent[matchingListReal[1]]))
                                 {
                                     // 6명 들어왔는데 앞 4명이서 서로 교차로 만났다면 3,4번 매칭 제거
                                     matchingListReal.RemoveRange(2, 2);
+                                }
+                            }
+
+                            else if (PhotonNetwork.PlayerList.Length == 8 && matchingListReal.Count == 6)
+                            {
+                                if(matchingListReal.Contains(prevOpponent[matchingListReal[0]]) && matchingListReal.Contains(prevOpponent[matchingListReal[1]]) && matchingListReal.Contains(prevOpponent[matchingListReal[2]]) && matchingListReal.Contains(prevOpponent[matchingListReal[3]]) && matchingListReal.Contains(prevOpponent[matchingListReal[4]]) && matchingListReal.Contains(prevOpponent[matchingListReal[5]]))
+                                {
+                                    matchingListReal.Clear(); // 6명 들어왔는데 6명 다 교차로 만났다면 리셋
+                                    matchingList.Clear();
                                 }
                             }
 
