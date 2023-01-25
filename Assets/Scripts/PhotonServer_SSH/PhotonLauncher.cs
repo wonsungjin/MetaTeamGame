@@ -10,14 +10,11 @@ public class PhotonLauncher : MonoBehaviourPunCallbacks
 {
     byte maxPlayer = 2;
 
-    [SerializeField] TextMeshProUGUI serverState = null;
     [SerializeField] TextMeshProUGUI playerCount = null;
-    [SerializeField] TextMeshProUGUI roomName = null;
-    [SerializeField] TextMeshProUGUI buttonState = null;
 
     [SerializeField] Button joinRoomButton = null;
     [SerializeField] Button leaveRoomButton = null;
-    [SerializeField] Button startButton = null;
+    GameObject matchingPannel;
 
     RoomOptions roomOptions = new RoomOptions();
 
@@ -25,6 +22,12 @@ public class PhotonLauncher : MonoBehaviourPunCallbacks
     {
         // 룸 내의 로드된 레벨 동기화
         PhotonNetwork.AutomaticallySyncScene = true;
+        playerCount= GameObject.Find("PlayerCount").GetComponent<TextMeshProUGUI>();
+        joinRoomButton = GameObject.Find("StartButton").GetComponent<Button>();
+        leaveRoomButton = GameObject.Find("LeaveButton").GetComponent<Button>();
+        matchingPannel = GameObject.Find("MatchingPannel");
+        matchingPannel.gameObject.SetActive(false);
+
 
         // 룸 생성 옵션 : MaxPlayer
         roomOptions.MaxPlayers = maxPlayer;
@@ -55,7 +58,6 @@ public class PhotonLauncher : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsConnected)
         {
             Debug.Log("서버 연결 완료");
-            buttonState.text = "Conneced Server";
         }
 
         else
@@ -69,8 +71,6 @@ public class PhotonLauncher : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()
     {
         Debug.Log("OnMaster");
-
-        buttonState.text = "Join Room";
 
         joinRoomButton.enabled = true;
     }
@@ -94,7 +94,6 @@ public class PhotonLauncher : MonoBehaviourPunCallbacks
         photonView.RPC("SyncCurrentRoomPlayer", RpcTarget.Others, true);
         StatusServer();
         leaveRoomButton.gameObject.SetActive(true);
-        buttonState.text = "Joined Room";
         joinRoomButton.enabled = false;
     }
 
@@ -112,7 +111,6 @@ public class PhotonLauncher : MonoBehaviourPunCallbacks
     public override void OnLeftRoom()
     {
         StatusServer();
-        leaveRoomButton.gameObject.SetActive(false);
         joinRoomButton.enabled = true;
     }
 
@@ -120,16 +118,13 @@ public class PhotonLauncher : MonoBehaviourPunCallbacks
     public void StatusServer()
     {
         Debug.Log(PhotonNetwork.NetworkClientState);
-        serverState.text = "Server State : " + PhotonNetwork.NetworkClientState.ToString();
         if (PhotonNetwork.InRoom == true)
         {
             playerCount.text = "Player Count : " + PhotonNetwork.CurrentRoom.PlayerCount;
-            roomName.text = "Room Name : " + PhotonNetwork.CurrentRoom.Name.ToString();
         }
         else
         {
             playerCount.text = "Player Count : - ";
-            roomName.text = "Room Name : - ";
         }
     }
 
@@ -144,30 +139,29 @@ public class PhotonLauncher : MonoBehaviourPunCallbacks
     {
         StatusServer();
         joinRoomButton.enabled = false;
-        leaveRoomButton.gameObject.SetActive(false);
-        startButton.gameObject.SetActive(false);
-        buttonState.text = "Connecting Server";
     }
 
     // JoinRoom Button 클릭시 실행되는 함수
     public void OnClick_Join_Room()
     {
         PhotonNetwork.JoinRandomRoom(null, maxPlayer);
-        if (PhotonNetwork.CurrentRoom.PlayerCount >= maxPlayer)
-        {
-            Debug.Log("LeaveRoom");
-            PhotonNetwork.LeaveRoom();
-            PhotonNetwork.CurrentRoom.IsOpen = false;
-            Debug.Log("CurrentRoom : " + PhotonNetwork.CurrentRoom.IsOpen);
-            PhotonNetwork.JoinRandomRoom(null, maxPlayer);
-        }
+        //if (PhotonNetwork.CurrentRoom.PlayerCount >= maxPlayer)
+        //{
+        //    Debug.Log("LeaveRoom");
+        //    PhotonNetwork.LeaveRoom();
+        //    PhotonNetwork.CurrentRoom.IsOpen = false;
+        //    Debug.Log("CurrentRoom : " + PhotonNetwork.CurrentRoom.IsOpen);
+        //    PhotonNetwork.JoinRandomRoom(null, maxPlayer);
+        //}
         StatusServer();
+        matchingPannel.gameObject.SetActive(true);
     }
 
     // LeaveRoom Button 클릭시 실행되는 함수
     public void OnClick_Leave_Room()
     {
         photonView.RPC("SyncCurrentRoomPlayer", RpcTarget.Others, false);
+        matchingPannel.SetActive(false);
         PhotonNetwork.LeaveRoom();   
     }
 
@@ -193,7 +187,7 @@ public class PhotonLauncher : MonoBehaviourPunCallbacks
 
         if (PhotonNetwork.CurrentRoom.PlayerCount == maxPlayer && PhotonNetwork.IsMasterClient == true)
         {
-            startButton.gameObject.SetActive(true);         
+              
         }
     }
     #endregion

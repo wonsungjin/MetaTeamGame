@@ -68,18 +68,17 @@ public class DataBase : MonoBehaviour
     BsonDocument nullFillter;
     public void Login()
     {
-        //var fillter = Builders<BsonDocument>.Filter.Eq("address", GameMGR.Instance.metaTrendAPI.res_UserProfile.userProfile.public_address);//찾을 도큐먼트의 Name이 아디인것
-        var fillter = Builders<BsonDocument>.Filter.Eq("address", "원성진");//찾을 도큐먼트의 Name이 아디인것
+        var fillter = Builders<BsonDocument>.Filter.Eq("address", GameMGR.Instance.metaTrendAPI.res_UserProfile.userProfile.public_address);//찾을 도큐먼트의 Name이 아디인것
         nullFillter = collection.Find(fillter).FirstOrDefault();//if null 이면 찾지 못함
         if (nullFillter == null)
         {
             Debug.Log("회원가입");
             collection.InsertOne(new BsonDocument(new Dictionary<string, object>
             {
-                ["address"] = "원성진",
-                //["address"] = GameMGR.Instance.metaTrendAPI.res_UserProfile.userProfile.public_address,
-                //["username"] = GameMGR.Instance.metaTrendAPI.res_UserProfile.userProfile.username,
-                ["username"] = "닉네임",
+                //["address"] = "원성진",
+                ["address"] = GameMGR.Instance.metaTrendAPI.res_UserProfile.userProfile.public_address,
+                ["username"] = GameMGR.Instance.metaTrendAPI.res_UserProfile.userProfile.username,
+                //["username"] = "닉네임",
 
             }));
             var update = Builders<BsonDocument>.Update.Set("inventory", inventoryData);//찾은거 바꾸기
@@ -140,7 +139,7 @@ public class DataBase : MonoBehaviour
             Debug.Log("?");
         }
     }
-    public  void InsertInventoryData()
+    public void InsertInventoryData()
     {
         var fillter = Builders<BsonDocument>.Filter.Eq("address", GameMGR.Instance.metaTrendAPI.res_UserProfile.userProfile.public_address);//찾을 도큐먼트의 Name이 아디인것
         var update = Builders<BsonDocument>.Update.Set("inventory", inventoryData);//찾은거 바꾸기
