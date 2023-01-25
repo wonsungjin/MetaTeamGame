@@ -131,9 +131,22 @@ public partial class Drag2D : MonoBehaviour
                 }
             }
 
+            if (gameObject.CompareTag("Monster"))
+            {
+                if (gameObject.name == collision.gameObject.name && collision.gameObject.CompareTag("BattleMonster"))
+                {
+                    if (GameMGR.Instance.uiManager.goldCount >= 3)
+                    {
+                        GameMGR.Instance.uiManager.goldCount -= 3;
+                        CardLevelUp(collision);
+                        Destroy(gameObject);
+                    }
+                }
+            }
+
             if (gameObject.CompareTag("BattleMonster"))
             {
-                if (gameObject.name == collision.gameObject.name)
+                if (gameObject.name == collision.gameObject.name && collision.gameObject.CompareTag("BattleMonster"))
                 {
                     CardLevelUp(collision);
                 }
@@ -218,11 +231,6 @@ public partial class Drag2D : MonoBehaviour
         collision.GetComponent<Card>().ChangeValue("hp", plusHp + 1);
         collision.GetComponent<Card>().ChangeValue("exp", 1);
 
-        Debug.Log(plusAttack);
-        Debug.Log(plusHp);
-        Debug.Log(card.level);
-
-
         if (collision.gameObject.transform.position.y > gameObject.transform.position.y)
         {
             StartCoroutine(COR_CombineCard(collision));
@@ -256,7 +264,7 @@ public partial class Drag2D : MonoBehaviour
         if (CompareTag("FreezeCard"))
         {
             transform.position = pos;
-            gameObject.tag = "MeltCard";
+            gameObject.tag = "Monster";
         }
     }
     // 프리즈카드로 바꾸는 함수
@@ -269,8 +277,8 @@ public partial class Drag2D : MonoBehaviour
     // 얼린카드를 구매시 들어갈 함수 원래 자리로 돌아가 자리의 bool값을 바꾼후 구매된다.
     IEnumerator COR_BackMelt()
     {
-        gameObject.tag = "MeltCard";
-        this.transform.position = battleZonePos;
+        //gameObject.tag = "MeltCard";
+        //this.transform.position = battleZonePos;
         yield return wait;
         gameObject.tag = "BattleMonster";
         pos = meltPos;
