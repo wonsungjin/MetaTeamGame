@@ -46,10 +46,10 @@ namespace hcu
         public int curRound = 0;
 
         // 덱 수 카운트 ( 각 플레이어들의 덱 수를 가져온다. 배열의 인덱스 = 해당 플레이어 인덱스 )
-        public int[] deckCount;
+        public int[] deckCount = new int[8];
 
         // 선공 선정 관련
-        public bool[] isFirst;
+        public bool[] isFirst = new bool[8];
         public int[] firstPoint = new int[8]; // 각 플레이어들의 선공 점수. 해당 점수가 높은 플레이어가 선공권을 가진다.
 
         // 게임 도중 나가버린 플레이어 낙인
@@ -249,14 +249,16 @@ namespace hcu
         [SerializeField] List<int> matchingListReal = new List<int>();
         [SerializeField] int cloneOpponent = -1;
         [SerializeField] int cloneOpponentsOpponent = -1;
-        int c = 0;
+        int c = 0; // 루프 체크 디버그용 임시 변수
 
         //=========================================================================================================================
         // 선공을 선정하는 함수
         public void SetFirstAttack(int me, int you)
         {
+            int myDeckCount = GameMGR.Instance.batch.GetBatch(me).Count;
+            int youDeckCount = GameMGR.Instance.batch.GetBatch(you).Count;
             // 대진이 정해지면 각 상대의 덱 수를 우선 비교 후
-            if (deckCount[me] > deckCount[you])
+            if (myDeckCount > youDeckCount)
             {
                 isFirst[me] = true;
                 isFirst[you] = false;
@@ -265,16 +267,16 @@ namespace hcu
             // 서로 덱 수가 같다면
             else
             {
-                int point = UnityEngine.Random.Range(0, 10);
-                int point2 = UnityEngine.Random.Range(0, 10);
-                firstPoint[me] += point;
-                firstPoint[you] += point;
+                int randomPoint = UnityEngine.Random.Range(0, 10);
+                int randomPoint2 = UnityEngine.Random.Range(0, 10);
+                firstPoint[me] += randomPoint;
+                firstPoint[you] += randomPoint2;
             }
         }
-
+        //=========================================================================================================================
 
         [PunRPC]
-        public void MatchingSetting()
+        public void MatchingSetting() // 마스터가 각 라운드마다 실행하는 대진 설정
         {
             //공격 랜덤값 지정 - 매 스테이지마다 랜덤 값을 받아온다
             for (int i = 0; i < setRandom.Length; i++)
@@ -442,6 +444,7 @@ namespace hcu
             matchNum = new int[matchingList.Count];
             for (int i = 0; i < matchNum.Length; i++)
             {
+
                 matchNum[i] = matchingList[i];
             }
 
@@ -451,21 +454,18 @@ namespace hcu
         }
 
 
-
         [PunRPC] // 각 플레이어들의 매칭이 정상적으로 되었는지 확인하기 위한 RPC 함수
-        public void ShowDebug(string a)
+        public void ShowDebug(string debugMatching)
         {
-            Debug.Log(a);
+            Debug.Log(debugMatching);
         }
 
-        [PunRPC]
+        [PunRPC] // 마스터 클라이언트가 지정한 대진표를 각 로컬들이 받아와서 대진 상 자신과 자신의 상대를 찾는 함수
         public void Matching(int[] random, int[] num, bool clone)
         {
-            if (PhotonNetwork.IsMasterClient)
+            if (PhotonNetwork.IsMasterClient)   // 마스터 클라이언트는 대진 정보를 기록
             {
                 Debug.Log("prevOpponent 길이 : " + prevOpponent.Length);
-
-                // 마스터 클라이언트는 대진 정보를 기록
                 for (int i = 0; i < num.Length; i++)
                 {
                     if (clone && i == num.Length - 1) break; // 만일 클론이 있다면 배열 마지막 값은 클론이므로 대진 정보를 기록하지 않는다.
@@ -495,7 +495,7 @@ namespace hcu
                         {
                             PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "Opponent", num[i + 1] } });
                             Debug.Log("나는 " + userID + " 닉네임 : " + PhotonNetwork.LocalPlayer.CustomProperties["Number"] + " 상대 : " + num[i + 1]);
-                            string a = "나는 " + userID + " 닉네임 : " + PhotonNetwork.LocalPlayer.CustomProperties["Number"] + " 상대 : " + num[i + 1];
+                            string matchingDebug = "나는 " + userID + " 닉네임 : " + PhotonNetwork.LocalPlayer.CustomProperties["Number"] + " 상대 : " + num[i + 1];
                             // 내가 선공
 
                             GameMGR.Instance.matching[0] = num[i];
@@ -503,7 +503,7 @@ namespace hcu
                             GameMGR.Instance.randomValue = random;
                             //SceneManager.LoadScene(1);
 
-                            photonView.RPC("ShowDebug", RpcTarget.MasterClient, a);
+                            photonView.RPC("ShowDebug", RpcTarget.MasterClient, matchingDebug);
 
                         }
                         else if (i % 2 != 0 && i < num.Length)
@@ -511,7 +511,7 @@ namespace hcu
                             // 내 상대는 = matchMan[i-1]
                             PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "Opponent", num[i - 1] } });
                             Debug.Log("나는 " + userID + " 닉네임 : " + PhotonNetwork.LocalPlayer.CustomProperties["Number"] + " 상대 : " + num[i - 1]);
-                            string a = "나는 " + userID + " 닉네임 : " + PhotonNetwork.LocalPlayer.CustomProperties["Number"] + " 상대 : " + num[i - 1];
+                            string matchingDebug = "나는 " + userID + " 닉네임 : " + PhotonNetwork.LocalPlayer.CustomProperties["Number"] + " 상대 : " + num[i - 1];
                             // 내가 후공
 
                             GameMGR.Instance.matching[0] = num[i];
@@ -519,7 +519,7 @@ namespace hcu
                             GameMGR.Instance.randomValue = random;
                             //SceneManager.LoadScene(1);
 
-                            photonView.RPC("ShowDebug", RpcTarget.MasterClient, a);
+                            photonView.RPC("ShowDebug", RpcTarget.MasterClient, matchingDebug);
                         }
                     }
                 }
@@ -536,7 +536,7 @@ namespace hcu
                         {
                             PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "Opponent", num[i + 1] } });
                             Debug.Log("나는 " + userID + " 닉네임 : " + PhotonNetwork.LocalPlayer.CustomProperties["Number"] + " 상대 : " + num[i + 1]);
-                            string a = "나는 " + userID + " 닉네임 : " + PhotonNetwork.LocalPlayer.CustomProperties["Number"] + " 상대 : " + num[i + 1];
+                            string matchingDebug = "나는 " + userID + " 닉네임 : " + PhotonNetwork.LocalPlayer.CustomProperties["Number"] + " 상대 : " + num[i + 1];
                             // 내가 선공
 
                             // 내가 짝수 상대 +1 홀수
@@ -546,7 +546,7 @@ namespace hcu
                             GameMGR.Instance.randomValue = random;
                             //SceneManager.LoadScene(1);
 
-                            photonView.RPC("ShowDebug", RpcTarget.MasterClient, a);
+                            photonView.RPC("ShowDebug", RpcTarget.MasterClient, matchingDebug);
 
                         }
                         else if (i % 2 != 0 && i < num.Length)
@@ -554,7 +554,7 @@ namespace hcu
                             // 내 상대는 = matchMan[i-1]
                             PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "Opponent", num[i - 1] } });
                             Debug.Log("나는 " + userID + " 닉네임 : " + PhotonNetwork.LocalPlayer.CustomProperties["Number"] + " 상대 : " + num[i - 1]);
-                            string a = "나는 " + userID + " 닉네임 : " + PhotonNetwork.LocalPlayer.CustomProperties["Number"] + " 상대 : " + num[i - 1];
+                            string matchingDebug = "나는 " + userID + " 닉네임 : " + PhotonNetwork.LocalPlayer.CustomProperties["Number"] + " 상대 : " + num[i - 1];
                             // 내가 후공
 
                             // 내가 홀수 상대 -1짝수
@@ -563,7 +563,7 @@ namespace hcu
                             GameMGR.Instance.randomValue = random;
                             //SceneManager.LoadScene(1); // 전투 씬으로 이동
 
-                            photonView.RPC("ShowDebug", RpcTarget.MasterClient, a);
+                            photonView.RPC("ShowDebug", RpcTarget.MasterClient, matchingDebug);
                         }
                     }
                 }
