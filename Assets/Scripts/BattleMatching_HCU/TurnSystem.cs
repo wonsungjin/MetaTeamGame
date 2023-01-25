@@ -5,8 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 //using Hashtable = ExitGames.Client.Photon.Hashtable; // 이게 구버전 한정인지 필수인지는 나도 모른다는 것이 학계의 점심
 
-namespace hcu
-{
+
     public class TurnSystem : MonoBehaviourPunCallbacks
     {
         private bool isGameOver;
@@ -677,5 +676,5 @@ namespace hcu
 
     }
 
-}
+
 

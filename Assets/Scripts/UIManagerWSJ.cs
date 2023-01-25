@@ -36,10 +36,10 @@ public partial class UIManager : MonoBehaviour
         packChoicePannel = GameObject.Find("PackChoicePannel");
         myPackList = GameObject.Find("PackList");
         cardImage= GameObject.Find("CardImage").GetComponent<Image>();
-        cardName = GameObject.Find("UINTNAME").GetComponent<TextMeshProUGUI>();
-        attackValue = GameObject.Find("UINTATKValue").GetComponent<TextMeshProUGUI>();
-        hpValue = GameObject.Find("UINTHPValue").GetComponent<TextMeshProUGUI>();
-        atkHpValue = GameObject.Find("UINTATKHP").GetComponent<TextMeshProUGUI>();
+        cardName = GameObject.Find("UNITNAME").GetComponent<TextMeshProUGUI>();
+        attackValue = GameObject.Find("UNITATKValue").GetComponent<TextMeshProUGUI>();
+        hpValue = GameObject.Find("UNITHPValue").GetComponent<TextMeshProUGUI>();
+        atkHpValue = GameObject.Find("UNITATKHP").GetComponent<TextMeshProUGUI>();
         skillExplantion = new TextMeshProUGUI[3];
         tier = new Transform[6];
         skillExplantion[0] = GameObject.Find("Skillexplanation1").GetComponent<TextMeshProUGUI>();
