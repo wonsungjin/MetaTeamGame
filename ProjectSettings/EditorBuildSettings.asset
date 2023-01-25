@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/PhotonScene_SSH.unity
     guid: fd65f21ada08fec4e803cb2bfe948302
+  - enabled: 1
+    path: Assets/Scenes/BattleMatchingScene.unity
+    guid: d773cbb9fdd164c4a87b93d5c70bfa1c
   m_configObjects: {}

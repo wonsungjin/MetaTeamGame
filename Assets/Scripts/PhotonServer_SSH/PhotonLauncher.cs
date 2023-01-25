@@ -123,7 +123,6 @@ public class PhotonLauncher : MonoBehaviourPunCallbacks
         if (PhotonNetwork.InRoom == true)
         {
             playerCount.text = "Player Count : " + PhotonNetwork.CurrentRoom.PlayerCount;
-            // playerCount.text = "Player Count : " + PhotonNetwork.CountOfPlayersInRooms.ToString();
             roomName.text = "Room Name : " + PhotonNetwork.CurrentRoom.Name.ToString();
         }
         else
@@ -152,8 +151,7 @@ public class PhotonLauncher : MonoBehaviourPunCallbacks
     public void OnClick_Join_Room()
     {
         PhotonNetwork.JoinRandomRoom(null, maxPlayer);
-
-        if (PhotonNetwork.CurrentRoom.PlayerCount >= maxPlayer)
+        if (PhotonNetwork.CurrentRoom.PlayerCount >= maxPlayer) // ?
         {
             Debug.Log("LeaveRoom");
             PhotonNetwork.LeaveRoom();
@@ -179,7 +177,6 @@ public class PhotonLauncher : MonoBehaviourPunCallbacks
         {
             playerCount.text = "Player Count : " + PhotonNetwork.CurrentRoom.PlayerCount.ToString();
         }
-
         else
         {
             playerCount.text = "Player Count : " + (PhotonNetwork.CurrentRoom.PlayerCount - 1).ToString();
