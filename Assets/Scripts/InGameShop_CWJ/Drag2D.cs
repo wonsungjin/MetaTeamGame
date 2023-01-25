@@ -233,14 +233,15 @@ public partial class Drag2D : MonoBehaviour
 
         if (collision.gameObject.transform.position.y > gameObject.transform.position.y)
         {
-            StartCoroutine(COR_CombineCard(collision));
+          //  StartCoroutine(COR_CombineCard(collision));
+            CombineCard(collision);
         }
     }
 
-    // 용병들 레벨업 
-    IEnumerator COR_CombineCard(Collider2D collision)
+    // 용병 조합
+    void CombineCard(Collider2D collision)
     {
-        yield return wait;
+        transform.position = collision.transform.position;
         Destroy(collision.gameObject);
     }
 
@@ -259,7 +260,7 @@ public partial class Drag2D : MonoBehaviour
             transform.position = pos + Vector2.down;
 
         else if (CompareTag("Monster"))
-            transform.position = pos;
+            transform.position = battleZonePos;
 
         if (CompareTag("FreezeCard"))
         {
