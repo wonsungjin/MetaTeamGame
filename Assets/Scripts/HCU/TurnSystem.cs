@@ -45,8 +45,12 @@ namespace hcu
         // 라운드 카운트
         public int curRound = 0;
 
-        // 덱 수 카운트 ( 각 플레이어들의 덱 수를 가져온다 )
+        // 덱 수 카운트 ( 각 플레이어들의 덱 수를 가져온다. 배열의 인덱스 = 해당 플레이어 인덱스 )
         public int[] deckCount;
+
+        // 선공 선정 관련
+        public bool[] isFirst;
+        public int[] firstPoint = new int[8]; // 각 플레이어들의 선공 점수. 해당 점수가 높은 플레이어가 선공권을 가진다.
 
         // 게임 도중 나가버린 플레이어 낙인
         public List<int> leavePlayerList;
@@ -247,6 +251,28 @@ namespace hcu
         [SerializeField] int cloneOpponentsOpponent = -1;
         int c = 0;
 
+        //=========================================================================================================================
+        // 선공을 선정하는 함수
+        public void SetFirstAttack(int me, int you)
+        {
+            // 대진이 정해지면 각 상대의 덱 수를 우선 비교 후
+            if (deckCount[me] > deckCount[you])
+            {
+                isFirst[me] = true;
+                isFirst[you] = false;
+            }
+
+            // 서로 덱 수가 같다면
+            else
+            {
+                int point = UnityEngine.Random.Range(0, 10);
+                int point2 = UnityEngine.Random.Range(0, 10);
+                firstPoint[me] += point;
+                firstPoint[you] += point;
+            }
+        }
+
+
         [PunRPC]
         public void MatchingSetting()
         {
@@ -420,9 +446,6 @@ namespace hcu
             }
 
             Debug.Log("prevOpponent 길이 : " + prevOpponent.Length);
-
-            /*            
-            */
 
             photonView.RPC("Matching", RpcTarget.All, setRandom, matchNum, isClone);
         }
