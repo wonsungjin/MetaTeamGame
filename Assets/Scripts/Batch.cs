@@ -1,4 +1,5 @@
 using Photon.Pun;
+using Photon.Pun.Demo.PunBasics;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,23 +7,29 @@ using UnityEngine;
 public class Batch : MonoBehaviourPun
 {
     Dictionary<int, List<Card>> playerList = new Dictionary<int, List<Card>>();
-
+    List<Card> cardList;
     // 상점의 배치 정보를 전달 받음
     [PunRPC]
     public void SetBatch(int playerNum, Card card)
     {
-        List<Card> cardList = null;
+        cardList = null;
         Card instance = Resources.Load<Card>($"Prefabs/{card.name}");
         bool listCheck = playerList.TryGetValue(playerNum, out cardList);
         if (listCheck == false)
         {
             cardList = new List<Card>();
         }
-        instance.ChangeValue("hp", card.curHP);
-        instance.ChangeValue("attack", card.curAttackValue);
-        instance.ChangeValue("level", card.level);
-        instance.ChangeValue("exp", card.curEXP);
+        instance.ChangeValue(CardStatus.Hp, card.curHP);
+        instance.ChangeValue(CardStatus.Attack, card.curAttackValue);
+        instance.ChangeValue(CardStatus.Level, card.level);
+        instance.ChangeValue(CardStatus.Exp, card.curEXP);
         cardList.Add(instance);
+    }
+    public List<Card> GetBatch(int num)
+    {
+        cardList = null;
+        bool listCheck = playerList.TryGetValue(num, out cardList);
+        return cardList;
     }
 
 
