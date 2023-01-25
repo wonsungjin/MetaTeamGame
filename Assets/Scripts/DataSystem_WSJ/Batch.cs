@@ -56,6 +56,21 @@ public class Batch : MonoBehaviourPun
         bool listCheck = playerList.TryGetValue(playerNum, out cardList);
         return cardList;
     }
+    public void unitPlacement()
+    {
+        // 유닛 배치 정보
+        // 선공 후공 정보
+        for (int i = 0; i < 6; i++)
+        {
+            GameMGR.Instance.batch.CreateBatch(GameMGR.Instance.matching[0], i, GameMGR.Instance.matching[0] == (int)PhotonNetwork.LocalPlayer.CustomProperties["Number"]);
+        }
+
+        // 매칭된 상대방의 상점에서 받아온 유닛 배치 정보
+        for (int i = 0; i < 6; i++)
+        {
+            GameMGR.Instance.batch.CreateBatch(GameMGR.Instance.matching[1], i, GameMGR.Instance.matching[1] == (int)PhotonNetwork.LocalPlayer.CustomProperties["Number"]);
+        }
+    }
 
     // 배틀씬 유닛 배치
     /// <summary>
@@ -87,22 +102,6 @@ public class Batch : MonoBehaviourPun
             Debug.Log("CreateBatch : myCard 값 확인필요");
         }
         return unitCard;
-    }
-
-    public void unitPlacement()
-    {
-        // 유닛 배치 정보
-        // 선공 후공 정보
-        for (int i = 0; i < 6; i++)
-        {
-            GameMGR.Instance.batch.CreateBatch(GameMGR.Instance.matching[0], i, GameMGR.Instance.matching[0] == (int)PhotonNetwork.LocalPlayer.CustomProperties["Number"]);
-        }
-
-        // 매칭된 상대방의 상점에서 받아온 유닛 배치 정보
-        for (int i = 0; i < 6; i++)
-        {
-            GameMGR.Instance.batch.CreateBatch(GameMGR.Instance.matching[1], i, GameMGR.Instance.matching[1] == (int)PhotonNetwork.LocalPlayer.CustomProperties["Number"]);
-        }
     }
 
 
