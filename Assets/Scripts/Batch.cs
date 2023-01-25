@@ -19,10 +19,10 @@ public class Batch : MonoBehaviourPun
         {
             cardList = new List<Card>();
         }
-        instance.ChangeValue("hp", card.curHP);
-        instance.ChangeValue("attack", card.curAttackValue);
-        instance.ChangeValue("level", card.level);
-        instance.ChangeValue("exp", card.curEXP);
+        instance.ChangeValue(CardStatus.Hp, card.curHP);
+        instance.ChangeValue(CardStatus.Attack, card.curAttackValue);
+        instance.ChangeValue(CardStatus.Level, card.level);
+        instance.ChangeValue(CardStatus.Exp, card.curEXP);
         cardList.Add(instance);
     }
     public List<Card> GetBatch(int num)
