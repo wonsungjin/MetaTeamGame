@@ -71,9 +71,9 @@ public class Skill : MonoBehaviour
         // 상점 씬으로 넘어가서 
         GameMGR.Instance.uiManager.goldCount += value;
     }
-    public void Target(Card who, Card whom)  // 타겟팅 - 누가, 누구에게
+    public void ReduceHire(int value) // 고용 비용 감소
     {
-
+        // 용병 고용소 레벨업 비용 value 만큼 감소
     }
     public void Summon(GameObject summoned) // 소환
     {
@@ -81,8 +81,25 @@ public class Skill : MonoBehaviour
 
         // 빈 칸이 있다면 해당 위치에 소환(빈칸 중 인덱스 순서대로 우선순위)
 
+        // 빈 칸이 없다면 소환 실패 처리
     }
-    public void Buff(Card card,string key, bool isTemp) // 버프 - 버프 대상, 버프 키워드(공격력/체력/경험치), 일시적 여부
+
+    public void Summon(int count) // 랜덤 소환, 소환 갯수
+    {
+
+    }
+
+    public void Buff(Card card,string key, bool isTemp) // 지정 버프 - 버프 대상, 버프 키워드(공격력/체력/경험치), 일시적 여부
+    {
+
+    }
+
+    public void Buff(int count, string key, bool isTemp) // 랜덤 버프 - 버프 대상 갯수, 버프 키워드, 일시적 여부
+    {
+
+    }
+
+    public void Target(Card target, string key, int value)  // 타겟팅 - 타겟 대상, 타겟팅능력 키워드, 값
     {
 
     }
