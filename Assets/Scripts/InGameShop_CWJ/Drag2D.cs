@@ -233,7 +233,6 @@ public partial class Drag2D : MonoBehaviour
 
         if (collision.gameObject.transform.position.y > gameObject.transform.position.y)
         {
-          //  StartCoroutine(COR_CombineCard(collision));
             CombineCard(collision);
         }
     }
@@ -241,7 +240,7 @@ public partial class Drag2D : MonoBehaviour
     // 용병 조합
     void CombineCard(Collider2D collision)
     {
-        transform.position = collision.transform.position;
+        transform.position = collision.gameObject.transform.position;
         Destroy(collision.gameObject);
     }
 
