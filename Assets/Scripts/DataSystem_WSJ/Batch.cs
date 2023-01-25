@@ -8,6 +8,30 @@ public class Batch : MonoBehaviourPun
 {
     Dictionary<int, List<Card>> playerList = new Dictionary<int, List<Card>>();
     List<Card> cardList;
+
+    Transform[] myCardPosition = null;
+    Transform[] enemyCardPosition = null;
+
+    bool isMinePlayerNum = true;
+
+    private void Awake()
+    {
+        Init();
+    }
+
+    private void Start()
+    {
+        unitPlacement();
+    }
+
+    public void Init()
+    {
+        GameObject temporaryPlayerObjects = GameObject.Find("PlayerPosition");
+        GameObject temporaryEnemyObjects = GameObject.Find("EnemyPosition");
+        myCardPosition = temporaryPlayerObjects.transform.GetComponentsInChildren<Transform>();
+        enemyCardPosition = temporaryEnemyObjects.transform.GetComponentsInChildren<Transform>();
+    }
+
     // 상점의 배치 정보를 전달 받음
     [PunRPC]
     public void SetBatch(int playerNum, Card card)
@@ -25,14 +49,13 @@ public class Batch : MonoBehaviourPun
         instance.ChangeValue(CardStatus.Exp, card.curEXP);
         cardList.Add(instance);
     }
-    public List<Card> GetBatch(int num)
+
+    public List<Card> GetBatch(int playerNum)
     {
         cardList = null;
-        bool listCheck = playerList.TryGetValue(num, out cardList);
+        bool listCheck = playerList.TryGetValue(playerNum, out cardList);
         return cardList;
     }
-
-
 
     // 배틀씬 유닛 배치
     /// <summary>
@@ -47,14 +70,16 @@ public class Batch : MonoBehaviourPun
         playerList.TryGetValue(playerNum, out cardList);
         Card unitCard = GameObject.Instantiate<Card>(cardList[cardNum]);
 
+        // player Unit 위치 설정
         if (myCard == true)
         {
-            // unitCard.transform.position = GameMGR.Instance.spawner.cardBatch[cardNum];
+            unitCard.transform.position = myCardPosition[cardNum + 1].position;
         }
 
-        else if(myCard == false)
+        // enemy Unit 위치 설정
+        else if (myCard == false)
         {
-            // unitCard.transform.position = GameMGR.Instance.spawner.emnycardBatch[cardNum];
+            unitCard.transform.position = enemyCardPosition[cardNum + 1].position;
         }
 
         else
@@ -63,4 +88,22 @@ public class Batch : MonoBehaviourPun
         }
         return unitCard;
     }
+
+    public void unitPlacement()
+    {
+        // 유닛 배치 정보
+        // 선공 후공 정보
+        for (int i = 0; i < 6; i++)
+        {
+            GameMGR.Instance.batch.CreateBatch(GameMGR.Instance.matching[0], i, GameMGR.Instance.matching[0] == (int)PhotonNetwork.LocalPlayer.CustomProperties["Number"]);
+        }
+
+        // 매칭된 상대방의 상점에서 받아온 유닛 배치 정보
+        for (int i = 0; i < 6; i++)
+        {
+            GameMGR.Instance.batch.CreateBatch(GameMGR.Instance.matching[1], i, GameMGR.Instance.matching[1] == (int)PhotonNetwork.LocalPlayer.CustomProperties["Number"]);
+        }
+    }
+
+
 }
