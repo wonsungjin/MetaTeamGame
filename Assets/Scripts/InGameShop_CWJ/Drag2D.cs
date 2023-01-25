@@ -227,9 +227,9 @@ public partial class Drag2D : MonoBehaviour
             plusHp = hP;
         }
 
-        collision.GetComponent<Card>().ChangeValue("attack", plusAttack + 1);
-        collision.GetComponent<Card>().ChangeValue("hp", plusHp + 1);
-        collision.GetComponent<Card>().ChangeValue("exp", 1);
+        collision.GetComponent<Card>().ChangeValue(CardStatus.Attack, plusAttack + 1);
+        collision.GetComponent<Card>().ChangeValue(CardStatus.Hp, plusHp + 1);
+        collision.GetComponent<Card>().ChangeValue(CardStatus.Exp, 1);
 
         if (collision.gameObject.transform.position.y > gameObject.transform.position.y)
         {

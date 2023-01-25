@@ -3,7 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using TMPro;
-
+public enum CardStatus
+{
+    Hp,
+    Attack,
+    Exp,
+    Level,
+}
 public class Card : MonoBehaviour
 {
     [SerializeField] public CardInfo cardInfo;
@@ -33,35 +39,35 @@ public class Card : MonoBehaviour
         level = 1;
         levelText.text = level.ToString();
     }
-    public void ChangeValue(string key,int value=0)
+    public void ChangeValue(CardStatus key,int value=0)
     {
-        if (key =="hp")
+        if (key ==CardStatus.Hp)
         {
             curHP = value;
             hpText.text = curHP.ToString();
 
         }
-        else if(key == "attack")
+        else if(key == CardStatus.Attack)
         {
             curAttackValue = value;
             atkText.text = curAttackValue.ToString();
 
         }
-        else if(key=="exp")
+        else if(key== CardStatus.Exp)
         {
             if (level == 1)
             {
                 curEXP++;
                 if (curEXP >= 2) 
-                    ChangeValue("level");
+                    ChangeValue(CardStatus.Level);
             }
             else if (level == 2)
             {
                 curEXP++;
-                if (curEXP >= 3) ChangeValue("level");
+                if (curEXP >= 3) ChangeValue(CardStatus.Level);
             }
         }
-        else if(key == "level")
+        else if(key == CardStatus.Level)
         {
             level++;
             levelText.text = level.ToString();
