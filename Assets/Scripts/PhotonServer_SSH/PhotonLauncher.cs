@@ -145,14 +145,6 @@ public class PhotonLauncher : MonoBehaviourPunCallbacks
     public void OnClick_Join_Room()
     {
         PhotonNetwork.JoinRandomRoom(null, maxPlayer);
-        //if (PhotonNetwork.CurrentRoom.PlayerCount >= maxPlayer)
-        //{
-        //    Debug.Log("LeaveRoom");
-        //    PhotonNetwork.LeaveRoom();
-        //    PhotonNetwork.CurrentRoom.IsOpen = false;
-        //    Debug.Log("CurrentRoom : " + PhotonNetwork.CurrentRoom.IsOpen);
-        //    PhotonNetwork.JoinRandomRoom(null, maxPlayer);
-        //}
         StatusServer();
         matchingPannel.gameObject.SetActive(true);
     }
@@ -175,14 +167,21 @@ public class PhotonLauncher : MonoBehaviourPunCallbacks
     [PunRPC]
     public void SyncCurrentRoomPlayer(bool roomState)
     {
+        if (PhotonNetwork.IsMasterClient)
+            if (PhotonNetwork.CurrentRoom.PlayerCount >= maxPlayer)
+            {
+                PhotonNetwork.CurrentRoom.IsOpen = false;
+                PhotonNetwork.LoadLevel("StoreScene");
+            }
+            else PhotonNetwork.CurrentRoom.IsOpen = true;
         if (roomState)
         {
-            playerCount.text = "Player Count : " + PhotonNetwork.CurrentRoom.PlayerCount.ToString();
+            playerCount.text = "Player Count : " + PhotonNetwork.CurrentRoom.PlayerCount.ToString()+"/"+maxPlayer;
         }
 
         else
         {
-            playerCount.text = "Player Count : " + (PhotonNetwork.CurrentRoom.PlayerCount - 1).ToString();
+            playerCount.text = "Player Count : " + (PhotonNetwork.CurrentRoom.PlayerCount - 1).ToString() + "/" + maxPlayer;
         }
 
         if (PhotonNetwork.CurrentRoom.PlayerCount == maxPlayer && PhotonNetwork.IsMasterClient == true)

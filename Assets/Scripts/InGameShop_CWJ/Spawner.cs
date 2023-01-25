@@ -38,21 +38,21 @@ public class Spawner : MonoBehaviourPun
         {
                 if (customDeck.tier_3[0] != "") monsterNames.Add(customDeck.tier_3[i]);
         }
-        if (customDeck.tier_4.Count != 0 || customDeck.tier_4[0] != "")
-            for (int i = 0; i < customDeck.tier_4.Count; i++)
-        {
-                if (customDeck.tier_4[0] != "") monsterNames.Add(customDeck.tier_4[i]);
-        }
-        if (customDeck.tier_5.Count != 0 || customDeck.tier_5[0] != "")
-            for (int i = 0; i < customDeck.tier_5.Count; i++)
-            {
-                if(customDeck.tier_5[0] != "") monsterNames.Add(customDeck.tier_5[i]);
-            }
-        if (customDeck.tier_6.Count != 0 || customDeck.tier_6[0] != "")
-            for (int i = 0; i < customDeck.tier_6.Count; i++)
-            {
-                if (customDeck.tier_6[0] != "") monsterNames.Add(customDeck.tier_6[i]);
-            }
+        //if (customDeck.tier_4.Count != 0 || customDeck.tier_4[0] != "")
+        //    for (int i = 0; i < customDeck.tier_4.Count; i++)
+        //{
+        //        if (customDeck.tier_4[0] != "") monsterNames.Add(customDeck.tier_4[i]);
+        //}
+        //if (customDeck.tier_5.Count != 0 || customDeck.tier_5[0] != "")
+        //    for (int i = 0; i < customDeck.tier_5.Count; i++)
+        //    {
+        //        if(customDeck.tier_5[0] != "") monsterNames.Add(customDeck.tier_5[i]);
+        //    }
+        //if (customDeck.tier_6.Count != 0 || customDeck.tier_6[0] != "")
+        //    for (int i = 0; i < customDeck.tier_6.Count; i++)
+        //    {
+        //        if (customDeck.tier_6[0] != "") monsterNames.Add(customDeck.tier_6[i]);
+        //    }
     }
     private void Start()
     {
