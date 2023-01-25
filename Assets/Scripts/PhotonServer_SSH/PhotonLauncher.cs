@@ -17,6 +17,7 @@ public class PhotonLauncher : MonoBehaviourPunCallbacks
 
     [SerializeField] Button joinRoomButton = null;
     [SerializeField] Button leaveRoomButton = null;
+    [SerializeField] Button startButton = null;
 
     RoomOptions roomOptions = new RoomOptions();
 
@@ -144,6 +145,7 @@ public class PhotonLauncher : MonoBehaviourPunCallbacks
         StatusServer();
         joinRoomButton.enabled = false;
         leaveRoomButton.gameObject.SetActive(false);
+        startButton.gameObject.SetActive(false);
         buttonState.text = "Connecting Server";
     }
 
@@ -151,7 +153,7 @@ public class PhotonLauncher : MonoBehaviourPunCallbacks
     public void OnClick_Join_Room()
     {
         PhotonNetwork.JoinRandomRoom(null, maxPlayer);
-        if (PhotonNetwork.CurrentRoom.PlayerCount >= maxPlayer) // ?
+        if (PhotonNetwork.CurrentRoom.PlayerCount >= maxPlayer)
         {
             Debug.Log("LeaveRoom");
             PhotonNetwork.LeaveRoom();
@@ -169,6 +171,12 @@ public class PhotonLauncher : MonoBehaviourPunCallbacks
         PhotonNetwork.LeaveRoom();   
     }
 
+    public void OnClick_Start_Room()
+    {
+        PhotonNetwork.LoadLevel("BattleMatchingScene");
+        photonView.RPC("StartSetting", RpcTarget.MasterClient);
+    }
+
     // 현재의 플레이어 수 동기화
     [PunRPC]
     public void SyncCurrentRoomPlayer(bool roomState)
@@ -177,6 +185,7 @@ public class PhotonLauncher : MonoBehaviourPunCallbacks
         {
             playerCount.text = "Player Count : " + PhotonNetwork.CurrentRoom.PlayerCount.ToString();
         }
+
         else
         {
             playerCount.text = "Player Count : " + (PhotonNetwork.CurrentRoom.PlayerCount - 1).ToString();
@@ -184,7 +193,7 @@ public class PhotonLauncher : MonoBehaviourPunCallbacks
 
         if (PhotonNetwork.CurrentRoom.PlayerCount == maxPlayer && PhotonNetwork.IsMasterClient == true)
         {
-            PhotonNetwork.LoadLevel("MongoDBScene");            
+            startButton.gameObject.SetActive(true);         
         }
     }
     #endregion
