@@ -8,6 +8,7 @@ public class Batch : MonoBehaviourPun
 {
     Dictionary<int, List<Card>> playerList = new Dictionary<int, List<Card>>();
     List<Card> cardList;
+
     // 상점의 배치 정보를 전달 받음
     [PunRPC]
     public void SetBatch(int playerNum, Card card)

@@ -36,6 +36,6 @@ public class BattleSceneUI : MonoBehaviour
 
     public void Init()
     {
-        // option, profil panel �ʱ�ȭ �ʿ�        
+        // option, profil panel 초기화 필요        
     }
 }
