@@ -15,23 +15,25 @@ public partial class GameMGR : Singleton<GameMGR>
 
     public UIManager uiManager;
     public Spawner spawner;
+    public PhotonLauncher photonLauncher;
 
     public Batch batch;
 
 
-
-    private void Start()
+    private void Awake()
     {
         Init(1);
-        //metaTrendAPI.GetUserProfile();
-        //metaTrendAPI.GetSessionID();
-        //StartCoroutine(COR_GetCoin());
-        dataBase.Login();
+    }
+    private void Start()
+    {
+        metaTrendAPI.GetUserProfile();
+        metaTrendAPI.GetSessionID();
+        StartCoroutine(COR_GetCoin());
         DontDestroyOnLoad(gameObject);
 
     }
-    CustomDeck lookCustomDeck;//�� �� ����
-    CustomDeck myCustomDeck;//�� ������ �����ҽ� Ȯ��;
+    CustomDeck lookCustomDeck;//
+    CustomDeck myCustomDeck;//
     public void Save_MyCustomDeck(CustomDeck customDeck)
     {
         lookCustomDeck = customDeck;
@@ -50,19 +52,22 @@ public partial class GameMGR : Singleton<GameMGR>
     public void OnClick_Move_Matching()
     {
         if (myCustomDeck != null)
-            SceneManager.LoadScene("StoreScene");
-        else Debug.Log("����");
+        {
+            photonLauncher.OnClick_Join_Room();
+           // SceneManager.LoadScene("StoreScene");
+        }
+        else Debug.Log("덱선택");
     }
 
 
     IEnumerator COR_GetCoin()
     {
         yield return new WaitForSeconds(0.5f);
-        metaTrendAPI.GetCoin(100);
+        //metaTrendAPI.GetCoin(100);
 
         yield return new WaitForSeconds(1f);
         dataBase.Login();
-        Debug.Log(metaTrendAPI.GetZera());
+        //Debug.Log(metaTrendAPI.GetZera());
     }
     public void Init(int num)
     {
@@ -75,6 +80,7 @@ public partial class GameMGR : Singleton<GameMGR>
             customDeckShop = GetComponent<CustomDeckShop>();
             dataBase = GetComponent<DataBase>();
             objectPool = GetComponent<ObjectPool>();
+            photonLauncher = FindObjectOfType<PhotonLauncher>();
             uiManager.Init_Scene1();
         }
         else if (num==2)
