@@ -63,7 +63,7 @@ public partial class UIManager : MonoBehaviour
             // 시간이 변경한 만큼 slider Value 변경을 합니다.
             timer -= Time.deltaTime;
             timerSlider.value = timer;
-            timerTXT.text = string.Format("Time : {0:N0}sec" , timer);
+            timerTXT.text = string.Format("Timer : {0:N0}", timer);
 
             goldTXT.text = "" + goldCount.ToString();
             shopLevelTXT.text = "Shop Gold :" + shopMoney.ToString();
