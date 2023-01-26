@@ -3,7 +3,7 @@ using UnityEngine;
 public class BattleZone : MonoBehaviour
 {
     public bool isHere = false;
-    [SerializeField] int myNum;
+    [SerializeField] int myNum; // 상점 유닛 배치 순서 (0~5)
 
     private void OnTriggerStay2D(Collider2D collision)
     {

@@ -26,8 +26,8 @@ public class DataBase : MonoBehaviour
         }));
         var projection = Builders<BsonDocument>.Projection.Include("Name").Include("Email").Include("Password").Exclude("_id");*/
 
-        /*var fillter = Builders<BsonDocument>.Filter.Eq("Name", "¾Æµğ");//Ã£À» µµÅ¥¸ÕÆ®ÀÇ NameÀÌ ¾ÆµğÀÎ°Í
-        var nullFillter = collection.Find(fillter).FirstOrDefault();//if null ÀÌ¸é Ã£Áö ¸øÇÔ
+        /*var fillter = Builders<BsonDocument>.Filter.Eq("Name", "ì•„ë””");//ì°¾ì„ ë„íë¨¼íŠ¸ì˜ Nameì´ ì•„ë””ì¸ê²ƒ
+        var nullFillter = collection.Find(fillter).FirstOrDefault();//if null ì´ë©´ ì°¾ì§€ ëª»í•¨
         if (nullFillter != null)
         {
            Debug.Log(nullFillter.GetValue("Name"));
@@ -50,12 +50,12 @@ public class DataBase : MonoBehaviour
         //    Console.WriteLine("Name: {0}, Type: {1}",
         //        fields["NAME"].AsString, fields["TYPE"].AsString);
         //}
-        // var document = new BsonDocument { {"id:","¾Æµğ"}, {"password:", "ºñ¹ø"}, {"nickname:", "´Ğ³×ÀÓ"}, { "nickname:", "´Ğ³×ÀÓ" } };
+        // var document = new BsonDocument { {"id:","ì•„ë””"}, {"password:", "ë¹„ë²ˆ"}, {"nickname:", "ë‹‰ë„¤ì„"}, { "nickname:", "ë‹‰ë„¤ì„" } };
 
-        //var nullFillter = collection.Find(fillter).FirstOrDefault();//if null ÀÌ¸é Ã£Áö ¸øÇÔ
+        //var nullFillter = collection.Find(fillter).FirstOrDefault();//if null ì´ë©´ ì°¾ì§€ ëª»í•¨
 
-        //var update = Builders<BsonDocument>.Update.Set("merge:", "´ĞÄÌ");//Ã£Àº°Å ¹Ù²Ù±â
-        //collection.UpdateOne(fillter, update);//¹Ù²Ù´ÂÇÔ¼ö
+        //var update = Builders<BsonDocument>.Update.Set("merge:", "ë‹‰ì¼ˆ");//ì°¾ì€ê±° ë°”ê¾¸ê¸°
+        //collection.UpdateOne(fillter, update);//ë°”ê¾¸ëŠ”í•¨ìˆ˜
         //collection.Find(document);
         //GetScoresFromDataBase();
     }
@@ -68,21 +68,20 @@ public class DataBase : MonoBehaviour
     BsonDocument nullFillter;
     public void Login()
     {
-        //var fillter = Builders<BsonDocument>.Filter.Eq("address", GameMGR.Instance.metaTrendAPI.res_UserProfile.userProfile.public_address);//Ã£À» µµÅ¥¸ÕÆ®ÀÇ NameÀÌ ¾ÆµğÀÎ°Í
-        var fillter = Builders<BsonDocument>.Filter.Eq("address", "¿ø¼ºÁø");//Ã£À» µµÅ¥¸ÕÆ®ÀÇ NameÀÌ ¾ÆµğÀÎ°Í
-        nullFillter = collection.Find(fillter).FirstOrDefault();//if null ÀÌ¸é Ã£Áö ¸øÇÔ
+        var fillter = Builders<BsonDocument>.Filter.Eq("address", GameMGR.Instance.metaTrendAPI.res_UserProfile.userProfile.public_address);//ì°¾ì„ ë„íë¨¼íŠ¸ì˜ Nameì´ ì•„ë””ì¸ê²ƒ
+        nullFillter = collection.Find(fillter).FirstOrDefault();//if null ì´ë©´ ì°¾ì§€ ëª»í•¨
         if (nullFillter == null)
         {
-            Debug.Log("È¸¿ø°¡ÀÔ");
+            Debug.Log("íšŒì›ê°€ì…");
             collection.InsertOne(new BsonDocument(new Dictionary<string, object>
             {
-                ["address"] = "¿ø¼ºÁø",
-                //["address"] = GameMGR.Instance.metaTrendAPI.res_UserProfile.userProfile.public_address,
-                //["username"] = GameMGR.Instance.metaTrendAPI.res_UserProfile.userProfile.username,
-                ["username"] = "´Ğ³×ÀÓ",
+                //["address"] = "ì›ì„±ì§„",
+                ["address"] = GameMGR.Instance.metaTrendAPI.res_UserProfile.userProfile.public_address,
+                ["username"] = GameMGR.Instance.metaTrendAPI.res_UserProfile.userProfile.username,
+                //["username"] = "ë‹‰ë„¤ì„",
 
             }));
-            var update = Builders<BsonDocument>.Update.Set("inventory", inventoryData);//Ã£Àº°Å ¹Ù²Ù±â
+            var update = Builders<BsonDocument>.Update.Set("inventory", inventoryData);//ì°¾ì€ê±° ë°”ê¾¸ê¸°
             collection.UpdateOne(fillter, update);
         }
         else
@@ -96,8 +95,8 @@ public class DataBase : MonoBehaviour
     public InventoryData inventoryData = new InventoryData();
     public void FindInventoryData()
     {
-        var fillter = Builders<BsonDocument>.Filter.Eq("address", GameMGR.Instance.metaTrendAPI.res_UserProfile.userProfile.public_address);//Ã£À» µµÅ¥¸ÕÆ®ÀÇ NameÀÌ ¾ÆµğÀÎ°Í
-        nullFillter = collection.Find(fillter).FirstOrDefault();//if null ÀÌ¸é Ã£Áö ¸øÇÔ
+        var fillter = Builders<BsonDocument>.Filter.Eq("address", GameMGR.Instance.metaTrendAPI.res_UserProfile.userProfile.public_address);//ì°¾ì„ ë„íë¨¼íŠ¸ì˜ Nameì´ ì•„ë””ì¸ê²ƒ
+        nullFillter = collection.Find(fillter).FirstOrDefault();//if null ì´ë©´ ì°¾ì§€ ëª»í•¨
         BsonValue value = null;
         BsonValue value2 = null;
         string number = null;
@@ -105,7 +104,7 @@ public class DataBase : MonoBehaviour
         {
             nullFillter.TryGetValue("inventory", out value);
 
-            if (value.ToString() == "BsonNull") return;//ÀÎº¥Åä¸®°¡ ºñ¾îÀÖÀ¸¸é ¸®ÅÏ
+            if (value.ToString() == "BsonNull") return;//ì¸ë²¤í† ë¦¬ê°€ ë¹„ì–´ìˆìœ¼ë©´ ë¦¬í„´
             if (i == 0) number = "one";
             else if (i == 1) number = "two";
             else if (i == 2) number = "three";
@@ -117,7 +116,7 @@ public class DataBase : MonoBehaviour
             else if (i == 8) number = "nine";
             else if (i == 9) number = "ten";
             value.ToBsonDocument().TryGetValue(number, out value);
-            if (value.ToString() == "BsonNull") continue;// ÇØ´ç Ä­¿¡ µ¦ÀÌ ¾ø´Ù¸é ´ÙÀ½À¸·Î ÀÌµ¿
+            if (value.ToString() == "BsonNull") continue;// í•´ë‹¹ ì¹¸ì— ë±ì´ ì—†ë‹¤ë©´ ë‹¤ìŒìœ¼ë¡œ ì´ë™
             Debug.Log(number);
             CustomDeck customDeck = new CustomDeck();
             for (int num = 1; num < 7; num++)
@@ -140,10 +139,10 @@ public class DataBase : MonoBehaviour
             Debug.Log("?");
         }
     }
-    public  void InsertInventoryData()
+    public void InsertInventoryData()
     {
-        var fillter = Builders<BsonDocument>.Filter.Eq("address", GameMGR.Instance.metaTrendAPI.res_UserProfile.userProfile.public_address);//Ã£À» µµÅ¥¸ÕÆ®ÀÇ NameÀÌ ¾ÆµğÀÎ°Í
-        var update = Builders<BsonDocument>.Update.Set("inventory", inventoryData);//Ã£Àº°Å ¹Ù²Ù±â
+        var fillter = Builders<BsonDocument>.Filter.Eq("address", GameMGR.Instance.metaTrendAPI.res_UserProfile.userProfile.public_address);//ì°¾ì„ ë„íë¨¼íŠ¸ì˜ Nameì´ ì•„ë””ì¸ê²ƒ
+        var update = Builders<BsonDocument>.Update.Set("inventory", inventoryData);//ì°¾ì€ê±° ë°”ê¾¸ê¸°
        collection.UpdateOne(fillter, update);
         
     }
