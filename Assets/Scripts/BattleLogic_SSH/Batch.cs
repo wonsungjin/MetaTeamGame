@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class Batch : MonoBehaviourPun
 {
-    Dictionary<int, List<Card>> playerList = new Dictionary<int, List<Card>>();
     List<Card> cardList;
 
     Transform[] myCardPosition = null;
@@ -20,22 +19,13 @@ public class Batch : MonoBehaviourPun
     int tempExp = 0;
     int tempLevel = 0;
 
-    private void Awake()
-    {
-        Init();
-    }
-
-    private void Start()
-    {
-        unitPlacement();
-    }
-
     public void Init()
     {
         GameObject temporaryPlayerObjects = GameObject.Find("PlayerPosition");
         GameObject temporaryEnemyObjects = GameObject.Find("EnemyPosition");
         myCardPosition = temporaryPlayerObjects.transform.GetComponentsInChildren<Transform>();
         enemyCardPosition = temporaryEnemyObjects.transform.GetComponentsInChildren<Transform>();
+        unitPlacement();
     }
 
     // 상점의 배치 정보를 전달 받음 *수정됨
@@ -44,7 +34,7 @@ public class Batch : MonoBehaviourPun
     {
         cardList = null;
         Card instance = Resources.Load<Card>($"Prefabs/{card.name}");
-        bool listCheck = playerList.TryGetValue(playerNum, out cardList);
+        bool listCheck = GameMGR.Instance.playerList.TryGetValue(playerNum, out cardList);
         if (listCheck == false)
         {
             cardList = new List<Card>();
@@ -53,13 +43,13 @@ public class Batch : MonoBehaviourPun
         instance.ChangeValue(CardStatus.Attack, card.curAttackValue + tempAtk);
         instance.ChangeValue(CardStatus.Exp, card.curEXP + tempExp);
         instance.ChangeValue(CardStatus.Level, card.level + tempLevel);
-        cardList.Add(instance);
+        GameMGR.Instance.cardList.Add(instance);
     }
 
     public List<Card> GetBatch(int playerNum)
     {
         cardList = null;
-        bool listCheck = playerList.TryGetValue(playerNum, out cardList);
+        bool listCheck = GameMGR.Instance.playerList.TryGetValue(playerNum, out cardList);
         return cardList;
     }
     public void unitPlacement()
@@ -88,7 +78,7 @@ public class Batch : MonoBehaviourPun
     public Card CreateBatch(int playerNum, int cardNum, bool myCard = true)
     {
         List<Card> cardList = null;
-        playerList.TryGetValue(playerNum, out cardList);
+        GameMGR.Instance.playerList.TryGetValue(playerNum, out cardList);
         Card unitCard = GameObject.Instantiate<Card>(cardList[cardNum]);
 
         // player Unit 위치 설정

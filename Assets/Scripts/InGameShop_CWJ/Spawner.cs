@@ -26,36 +26,36 @@ public class Spawner : MonoBehaviourPun
     public void SetMyDeckSetting()
     {
         customDeck= GameMGR.Instance.Get_CustomDeck();
-        if (customDeck.tier_1.Count!=0|| customDeck.tier_1[0]!="")
+        if (customDeck.tier_1 != null) 
         for (int i = 0; i < customDeck.tier_1.Count; i++)
         {
-                if (customDeck.tier_1[0] != "") monsterNames.Add(customDeck.tier_1[i]);
+                monsterNames.Add(customDeck.tier_1[i]);
         }
-        if (customDeck.tier_2.Count != 0 || customDeck.tier_2[0] != "")
+        if (customDeck.tier_2 != null)
             for (int i = 0; i < customDeck.tier_2.Count; i++)
         {
-                if (customDeck.tier_2[0] != "") monsterNames.Add(customDeck.tier_2[i]);
+                monsterNames.Add(customDeck.tier_2[i]);
         }
-        if (customDeck.tier_3.Count != 0 || customDeck.tier_3[0] != "")
+        if (customDeck.tier_3 != null)
             for (int i = 0; i < customDeck.tier_3.Count; i++)
         {
-                if (customDeck.tier_3[0] != "") monsterNames.Add(customDeck.tier_3[i]);
+                monsterNames.Add(customDeck.tier_3[i]);
         }
-        //if (customDeck.tier_4.Count != 0 || customDeck.tier_4[0] != "")
-        //    for (int i = 0; i < customDeck.tier_4.Count; i++)
-        //{
-        //        if (customDeck.tier_4[0] != "") monsterNames.Add(customDeck.tier_4[i]);
-        //}
-        //if (customDeck.tier_5.Count != 0 || customDeck.tier_5[0] != "")
-        //    for (int i = 0; i < customDeck.tier_5.Count; i++)
-        //    {
-        //        if(customDeck.tier_5[0] != "") monsterNames.Add(customDeck.tier_5[i]);
-        //    }
-        //if (customDeck.tier_6.Count != 0 || customDeck.tier_6[0] != "")
-        //    for (int i = 0; i < customDeck.tier_6.Count; i++)
-        //    {
-        //        if (customDeck.tier_6[0] != "") monsterNames.Add(customDeck.tier_6[i]);
-        //    }
+        if (customDeck.tier_4 != null)
+            for (int i = 0; i < customDeck.tier_4.Count; i++)
+            {
+                 monsterNames.Add(customDeck.tier_4[i]);
+            }
+        if (customDeck.tier_5 != null)
+            for (int i = 0; i < customDeck.tier_5.Count; i++)
+            {
+                monsterNames.Add(customDeck.tier_5[i]);
+            }
+        if (customDeck.tier_6 != null)
+            for (int i = 0; i < customDeck.tier_6.Count; i++)
+            {
+                monsterNames.Add(customDeck.tier_6[i]);
+            }
     }
     private void Start()
     {
@@ -94,17 +94,17 @@ public class Spawner : MonoBehaviourPun
     {
         for (int i = 0; i < cardList.Count; i++)
         {
-            GameMGR.Instance.batch.gameObject.GetPhotonView().RPC("SetBatch", RpcTarget.MasterClient, (int)PhotonNetwork.LocalPlayer.CustomProperties["Number"], cardList[i]);
+            GameMGR.Instance.batch.gameObject.GetPhotonView().RPC("SetBatch", RpcTarget.All, (int)PhotonNetwork.LocalPlayer.CustomProperties["Number"], cardList[i]);
         }
+        photonView.RPC("MatchingReady", RpcTarget.All);
 
-        GameObject[] monster = GameObject.FindGameObjectsWithTag("Monster");
-        GameMGR.Instance.uiManager.goldCount = 10;
-        for (int i = 0; i < monster.Length; i++)
-        {
-            GameMGR.Instance.objectPool.DestroyPrefab(monster[i]);
-        }
+        //GameObject[] monster = GameObject.FindGameObjectsWithTag("Monster");
+        //GameMGR.Instance.uiManager.goldCount = 10;
+        //for (int i = 0; i < monster.Length; i++)
+        //{
+        //    GameMGR.Instance.objectPool.DestroyPrefab(monster[i]);
+        //}
 
-        SceneManager.LoadScene("BattleScene_SSH");
     }
 
     public void TestButton()
@@ -207,29 +207,29 @@ public class Spawner : MonoBehaviourPun
                     // 1티어
                     if (randomCard < 10)
                     {
-                        SummonMonster(0, 8);
+                        SummonMonster(0, customDeck.tier_1.Count);
                     }
                     // 2티어
                     else if (randomCard > 10 && randomCard < 30)
                     {
-                        SummonMonster(8, 16);
+                        SummonMonster(customDeck.tier_1.Count, customDeck.tier_1.Count+ customDeck.tier_2.Count);
                     }
                     // 3티어
                     else if (randomCard > 30 && randomCard < 55)
                     {
-                        SummonMonster(16, 24);
+                        SummonMonster(customDeck.tier_1.Count + customDeck.tier_2.Count, customDeck.tier_1.Count + customDeck.tier_2.Count+ customDeck.tier_3.Count);
                     }
                     else if (randomCard > 55 && randomCard < 75)
                     {
-                        SummonMonster(24, 32);
+                        SummonMonster(customDeck.tier_1.Count + customDeck.tier_2.Count + customDeck.tier_3.Count, customDeck.tier_1.Count + customDeck.tier_2.Count + customDeck.tier_3.Count + customDeck.tier_4.Count);
                     }
                     else if (randomCard > 75 && randomCard < 90)
                     {
-                        SummonMonster(32, 40);
+                        SummonMonster(customDeck.tier_1.Count + customDeck.tier_2.Count + customDeck.tier_3.Count + customDeck.tier_4.Count, customDeck.tier_1.Count + customDeck.tier_2.Count + customDeck.tier_3.Count + customDeck.tier_4.Count+customDeck.tier_5.Count);
                     }
                     else
                     {
-                        SummonMonster(40, 48);
+                        SummonMonster(customDeck.tier_1.Count + customDeck.tier_2.Count + customDeck.tier_3.Count + customDeck.tier_4.Count + customDeck.tier_5.Count, customDeck.tier_1.Count + customDeck.tier_2.Count + customDeck.tier_3.Count + customDeck.tier_4.Count + customDeck.tier_5.Count+ customDeck.tier_5.Count);
                     }
                 }
                 else
@@ -247,7 +247,7 @@ public class Spawner : MonoBehaviourPun
                 if (monsterTrans[i].isNotSpawn == false)
                 {
 
-                    SummonMonster(0, 8);
+                    SummonMonster(0, customDeck.tier_1.Count);
                 }
                 else
                 {
@@ -269,11 +269,11 @@ public class Spawner : MonoBehaviourPun
                 {
                     if (randomCard < 7)
                     {
-                        SummonMonster(0, 8);
+                        SummonMonster(0, customDeck.tier_1.Count);
                     }
                     else
                     {
-                        SummonMonster(8, 16);
+                        SummonMonster(customDeck.tier_1.Count, customDeck.tier_1.Count + customDeck.tier_2.Count);
                     }
                 }
                 else
@@ -296,17 +296,17 @@ public class Spawner : MonoBehaviourPun
                     // 1티어
                     if (randomCard < 6)
                     {
-                        SummonMonster(0, 8);
+                        SummonMonster(0, customDeck.tier_1.Count);
                     }
                     // 2티어
                     else if (randomCard > 6 && randomCard < 9)
                     {
-                        SummonMonster(8, 16);
+                        SummonMonster(customDeck.tier_1.Count, customDeck.tier_1.Count + customDeck.tier_2.Count);
                     }
                     // 3티어
                     else
                     {
-                        SummonMonster(16, 24);
+                        SummonMonster(customDeck.tier_1.Count + customDeck.tier_2.Count, customDeck.tier_1.Count + customDeck.tier_2.Count + customDeck.tier_3.Count);
                     }
                 }
                 else
@@ -329,21 +329,21 @@ public class Spawner : MonoBehaviourPun
                     // 1티어
                     if (randomCard < 40)
                     {
-                        SummonMonster(0, 8);
+                        SummonMonster(0, customDeck.tier_1.Count);
                     }
                     // 2티어
                     else if (randomCard > 40 && randomCard < 65)
                     {
-                        SummonMonster(8, 16);
+                        SummonMonster(customDeck.tier_1.Count, customDeck.tier_1.Count + customDeck.tier_2.Count);
                     }
                     // 3티어
                     else if (randomCard > 65 && randomCard < 85)
                     {
-                        SummonMonster(16, 24);
+                        SummonMonster(customDeck.tier_1.Count + customDeck.tier_2.Count, customDeck.tier_1.Count + customDeck.tier_2.Count + customDeck.tier_3.Count);
                     }
                     else
                     {
-                        SummonMonster(24, 32);
+                        SummonMonster(customDeck.tier_1.Count + customDeck.tier_2.Count + customDeck.tier_3.Count, customDeck.tier_1.Count + customDeck.tier_2.Count + customDeck.tier_3.Count + customDeck.tier_4.Count);
                     }
                 }
                 else
@@ -367,25 +367,25 @@ public class Spawner : MonoBehaviourPun
                     // 1티어
                     if (randomCard < 25)
                     {
-                        SummonMonster(0, 8);
+                        SummonMonster(0, customDeck.tier_1.Count);
                     }
                     // 2티어
                     else if (randomCard > 25 && randomCard < 45)
                     {
-                        SummonMonster(8, 16);
+                        SummonMonster(customDeck.tier_1.Count, customDeck.tier_1.Count + customDeck.tier_2.Count);
                     }
                     // 3티어
                     else if (randomCard > 45 && randomCard < 70)
                     {
-                        SummonMonster(16, 24);
+                        SummonMonster(customDeck.tier_1.Count + customDeck.tier_2.Count, customDeck.tier_1.Count + customDeck.tier_2.Count + customDeck.tier_3.Count);
                     }
                     else if (randomCard > 70 && randomCard < 90)
                     {
-                        SummonMonster(24, 32);
+                        SummonMonster(customDeck.tier_1.Count + customDeck.tier_2.Count + customDeck.tier_3.Count, customDeck.tier_1.Count + customDeck.tier_2.Count + customDeck.tier_3.Count + customDeck.tier_4.Count);
                     }
                     else
                     {
-                        SummonMonster(32, 40);
+                        SummonMonster(customDeck.tier_1.Count + customDeck.tier_2.Count + customDeck.tier_3.Count + customDeck.tier_4.Count, customDeck.tier_1.Count + customDeck.tier_2.Count + customDeck.tier_3.Count + customDeck.tier_4.Count + customDeck.tier_5.Count);
                     }
                 }
                 else
