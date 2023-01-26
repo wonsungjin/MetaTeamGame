@@ -126,12 +126,42 @@ public class DataBase : MonoBehaviour
                 string[] valueSplit = value2.ToString().Replace("[", "").Replace("]", "").Replace(" ", "").Split(',');
                 for (int j = 0; j < valueSplit.Length; j++)
                 {
-                    if (num == 1) customDeck.tier_1.Add(valueSplit[j]);
-                    else if (num == 2) customDeck.tier_2.Add(valueSplit[j]);
-                    else if (num == 3) customDeck.tier_3.Add(valueSplit[j]);
-                    else if (num == 4) customDeck.tier_4.Add(valueSplit[j]);
-                    else if (num == 5) customDeck.tier_5.Add(valueSplit[j]);
-                    else if (num == 6) customDeck.tier_6.Add(valueSplit[j]);
+                    if (num == 1)
+                    {
+                        if (customDeck.tier_1 == null) customDeck.tier_1 = new List<string>();
+                        customDeck.tier_1.Add(valueSplit[j]);
+                        if (customDeck.tier_1[0] == "BsonNull") customDeck.tier_1 = null;
+                    }
+                    else if (num == 2)
+                    {
+                        if (customDeck.tier_2 == null) customDeck.tier_2 = new List<string>();
+                        customDeck.tier_2.Add(valueSplit[j]);
+                        if (customDeck.tier_2[0] == "BsonNull") customDeck.tier_2 = null;
+                    }
+                    else if (num == 3)
+                    {
+                        if (customDeck.tier_3 == null) customDeck.tier_3 = new List<string>();
+                        customDeck.tier_3.Add(valueSplit[j]);
+                        if (customDeck.tier_3[0] == "BsonNull") customDeck.tier_3 = null;
+                    }
+                    else if (num == 4)
+                    {
+                        if (customDeck.tier_4 == null) customDeck.tier_4 = new List<string>();
+                        customDeck.tier_4.Add(valueSplit[j]);
+                        if (customDeck.tier_4[0] == "BsonNull") customDeck.tier_4 = null;
+                    }
+                    else if (num == 5)
+                    {
+                        if (customDeck.tier_5 == null) customDeck.tier_5 = new List<string>();
+                        customDeck.tier_5.Add(valueSplit[j]);
+                        if (customDeck.tier_5[0] == "BsonNull") customDeck.tier_5 = null;
+                    }
+                    else if (num == 6)
+                    {
+                        if (customDeck.tier_6 == null) customDeck.tier_6 = new List<string>();
+                        customDeck.tier_6.Add(valueSplit[j]);
+                        if (customDeck.tier_6[0] == "BsonNull") customDeck.tier_6 = null;
+                    }
                     Debug.Log(valueSplit[j]);
                 }
             }
@@ -257,10 +287,10 @@ public class InventoryData
 public class CustomDeck
 {
     public int Num = 0;
-    public List<string> tier_1 = new List<string>();
-    public List<string> tier_2 = new List<string>();
-    public List<string> tier_3 = new List<string>();
-    public List<string> tier_4 = new List<string>();
-    public List<string> tier_5 = new List<string>();
-    public List<string> tier_6 = new List<string>();
+    public List<string> tier_1;
+    public List<string> tier_2;
+    public List<string> tier_3;
+    public List<string> tier_4;
+    public List<string> tier_5;
+    public List<string> tier_6 ;
 }
