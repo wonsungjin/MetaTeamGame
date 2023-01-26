@@ -68,7 +68,6 @@ public class Spawner : MonoBehaviourPun
             {
                 randomNum = Random.Range(0, 8);
                 Debug.Log(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum]}"));
-                //GameObject mon = Instantiate(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum]}"), monsterTrans[randomTrans].transform.position, Quaternion.identity);
                 GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum]}"), monsterTrans[randomTrans].transform.position, Quaternion.identity);
 
                 randomTrans++;
