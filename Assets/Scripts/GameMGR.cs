@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,7 @@ public partial class GameMGR : Singleton<GameMGR>
     public MetaTrendAPI metaTrendAPI;
     public DataBase dataBase;
     public ObjectPool objectPool;
+    public AudioMGR audioMGR;
 
     public CardCreate cardCreate;
     public CustomDeckShop customDeckShop;
@@ -29,7 +31,7 @@ public partial class GameMGR : Singleton<GameMGR>
         metaTrendAPI.GetUserProfile();
         metaTrendAPI.GetSessionID();
         StartCoroutine(COR_GetCoin());
-        DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(Instance);
 
     }
     CustomDeck lookCustomDeck;//
@@ -73,6 +75,7 @@ public partial class GameMGR : Singleton<GameMGR>
     {
         if (num == 1)
         {
+            audioMGR = GetComponent<AudioMGR>();
             uiManager = FindObjectOfType<UIManager>();
             metaTrendAPI = GetComponent<MetaTrendAPI>();
             cardCreate = GetComponent<CardCreate>();
@@ -86,12 +89,15 @@ public partial class GameMGR : Singleton<GameMGR>
         else if (num==2)
         {
             spawner = FindObjectOfType<Spawner>();
-            batch = FindObjectOfType<Batch>();
             uiManager = FindObjectOfType<UIManager>();
             uiManager.Init_Scene2();
+            spawner.gameObject.GetPhotonView().RPC("StartSetting", RpcTarget.MasterClient);
+            batch = FindObjectOfType<Batch>();
         }
         else if(num==3)
         {
+            batch = FindObjectOfType<Batch>();
+            batch.Init();
 
         }
     }

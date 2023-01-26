@@ -120,7 +120,7 @@ public class PhotonLauncher : MonoBehaviourPunCallbacks
         Debug.Log(PhotonNetwork.NetworkClientState);
         if (PhotonNetwork.InRoom == true)
         {
-            playerCount.text = "Player Count : " + PhotonNetwork.CurrentRoom.PlayerCount;
+            playerCount.text = "Player Count : " + PhotonNetwork.CurrentRoom.PlayerCount + "/" + maxPlayer;
         }
         else
         {
