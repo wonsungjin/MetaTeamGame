@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class Spawner : MonoBehaviourPun
 {
     [SerializeField] Node[] monsterTrans;
+    [SerializeField] Node[] specialTrans;
     [Header("몬스터 프리팹")]
     public List<string> monsterNames = new List<string>();
 
@@ -68,7 +69,6 @@ public class Spawner : MonoBehaviourPun
                 randomNum = Random.Range(0, 8);
                 Debug.Log(monsterNames[randomNum]);
                 Debug.Log(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum]}"));
-                //GameObject mon = Instantiate(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum]}"), monsterTrans[randomTrans].transform.position, Quaternion.identity);
                 GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum]}"), monsterTrans[randomTrans].transform.position, Quaternion.identity);
 
                 randomTrans++;
@@ -394,10 +394,65 @@ public class Spawner : MonoBehaviourPun
     void SummonMonster(int a, int b)
     {
         randomNum = Random.Range(a, b);
-
-        //GameObject mon = Instantiate(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum]}"), monsterTrans[randomTrans].transform.position, Quaternion.identity);
         GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum]}"), monsterTrans[randomTrans].transform.position, Quaternion.identity);
 
         randomTrans++;
+    }
+    public void SpecialMonster()
+    {
+        int randomNum1 = Random.Range(8, 16);
+        int randomNum2 = Random.Range(16, 24);
+        int randomNum3 = Random.Range(24, 32);
+        int randomNum4 = Random.Range(32, 40);
+        int randomNum5 = Random.Range(40, 48);
+
+        switch (GameMGR.Instance.uiManager.shopLevel)
+        {
+            case 1:
+                GameObject[] trans = GameObject.FindGameObjectsWithTag("SpecialZone");
+                if (trans == null)
+                    return;
+                else
+                {
+                    GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum1]}"), trans[0].transform.position, Quaternion.identity);
+                }
+                break;
+            case 2:
+                trans = GameObject.FindGameObjectsWithTag("SpecialZone");
+                if (trans == null)
+                    return;
+                else
+                {
+                    GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum2]}"), trans[0].transform.position, Quaternion.identity);
+                }
+                break;
+            case 3:
+                trans = GameObject.FindGameObjectsWithTag("SpecialZone");
+                if (trans == null)
+                    return;
+                else
+                {
+                    GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum3]}"), trans[0].transform.position, Quaternion.identity);
+                }
+                break;
+            case 4:
+                trans = GameObject.FindGameObjectsWithTag("SpecialZone");
+                if (trans == null)
+                    return;
+                else
+                {
+                    GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum4]}"), trans[0].transform.position, Quaternion.identity);
+                }
+                break;
+            case 5:
+                trans = GameObject.FindGameObjectsWithTag("SpecialZone");
+                if (trans == null)
+                    return;
+                else
+                {
+                    GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum5]}"), trans[0].transform.position, Quaternion.identity);
+                }
+                break;
+        }
     }
 }

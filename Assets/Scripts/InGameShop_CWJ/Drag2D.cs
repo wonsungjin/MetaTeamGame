@@ -13,6 +13,7 @@ public partial class Drag2D : MonoBehaviour
     MeshRenderer spriteRenderer;
     Vector2 pos;
     Vector2 battleZonePos;
+    Vector2 selectZonePos;
     Vector2 meltPos;
 
     float timer = 0f;
@@ -20,6 +21,7 @@ public partial class Drag2D : MonoBehaviour
     private bool isClickBool = false;
     public bool isFreezen = false;
     bool isClickBattleMonster = false;
+    bool isSelectZone = false;
 
     private void Awake()
     {
@@ -76,7 +78,7 @@ public partial class Drag2D : MonoBehaviour
         UpdateOutline(true);
         isClickBool = false;
         pol.enabled = false;
-        battleZonePos = pos;
+        battleZonePos = this.gameObject.transform.position;
         GameMGR.Instance.uiManager.OnEnter_Set_SkillExplantion(false, Vector3.zero);
         GameMGR.Instance.uiManager.SetisExplantionActive(true);
 
@@ -138,8 +140,7 @@ public partial class Drag2D : MonoBehaviour
                     if (GameMGR.Instance.uiManager.goldCount >= 3)
                     {
                         GameMGR.Instance.uiManager.goldCount -= 3;
-                        CardLevelUp(collision);
-                        Destroy(gameObject);
+                        ShopCardLevelUp(collision);
                     }
                 }
             }
@@ -197,6 +198,14 @@ public partial class Drag2D : MonoBehaviour
                 }
             }
         }
+        if(isSelectZone == false)
+        {
+            if (gameObject.CompareTag("Monster"))
+            {
+                selectZonePos = collision.gameObject.transform.position;
+                isSelectZone = true;
+            }
+        }
     }
 
     // 카드 레벨업 
@@ -237,6 +246,40 @@ public partial class Drag2D : MonoBehaviour
         }
     }
 
+    void ShopCardLevelUp(Collider2D collision)
+    {
+        int colAttack = collision.GetComponent<Card>().curAttackValue;
+        int colHP = collision.GetComponent<Card>().curHP;
+        int attack = card.curAttackValue;
+        int hP = card.curHP;
+        int plusAttack = 0;
+        int plusHp = 0;
+
+        if (colAttack > attack)
+        {
+            plusAttack = colAttack;
+        }
+        else if (colAttack <= attack)
+        {
+            plusAttack = attack;
+        }
+
+        if (colHP > hP)
+        {
+            plusHp = colHP;
+        }
+        else if (colHP <= hP)
+        {
+            plusHp = hP;
+        }
+
+        collision.GetComponent<Card>().ChangeValue(CardStatus.Attack, plusAttack + 1);
+        collision.GetComponent<Card>().ChangeValue(CardStatus.Hp, plusHp + 1);
+        collision.GetComponent<Card>().ChangeValue(CardStatus.Exp, 1);
+
+        Destroy(this.gameObject);
+    }
+
     // 용병 조합
     void CombineCard(Collider2D collision)
     {
@@ -250,6 +293,7 @@ public partial class Drag2D : MonoBehaviour
         yield return wait;
         GameMGR.Instance.uiManager.sell.gameObject.SetActive(false);
     }
+
     // 원래 위치로 돌리는 함수
     private IEnumerator COR_BackAgain()
     {
@@ -259,11 +303,11 @@ public partial class Drag2D : MonoBehaviour
             transform.position = pos + Vector2.down;
 
         else if (CompareTag("Monster"))
-            transform.position = battleZonePos;
+            transform.position = selectZonePos;
 
-        if (CompareTag("FreezeCard"))
+        else if (CompareTag("FreezeCard"))
         {
-            transform.position = pos;
+            transform.position = selectZonePos;
             gameObject.tag = "Monster";
         }
     }
@@ -277,8 +321,6 @@ public partial class Drag2D : MonoBehaviour
     // 얼린카드를 구매시 들어갈 함수 원래 자리로 돌아가 자리의 bool값을 바꾼후 구매된다.
     IEnumerator COR_BackMelt()
     {
-        //gameObject.tag = "MeltCard";
-        //this.transform.position = battleZonePos;
         yield return wait;
         gameObject.tag = "BattleMonster";
         pos = meltPos;

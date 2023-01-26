@@ -14,6 +14,12 @@ public class Batch : MonoBehaviourPun
 
     bool isMinePlayerNum = true;
 
+    // 한시적 스탯 증가 구현을 위한 추가 코드 - HCU *수정됨
+    int tempHp = 0;
+    int tempAtk = 0;
+    int tempExp = 0;
+    int tempLevel = 0;
+
     private void Awake()
     {
         Init();
@@ -32,9 +38,9 @@ public class Batch : MonoBehaviourPun
         enemyCardPosition = temporaryEnemyObjects.transform.GetComponentsInChildren<Transform>();
     }
 
-    // 상점의 배치 정보를 전달 받음
+    // 상점의 배치 정보를 전달 받음 *수정됨
     [PunRPC]
-    public void SetBatch(int playerNum, Card card)
+    public void SetBatch(int playerNum, Card card, int tempHp, int tempAtk, int tempExp, int tempLevel)
     {
         cardList = null;
         Card instance = Resources.Load<Card>($"Prefabs/{card.name}");
@@ -43,10 +49,10 @@ public class Batch : MonoBehaviourPun
         {
             cardList = new List<Card>();
         }
-        instance.ChangeValue(CardStatus.Hp, card.curHP);
-        instance.ChangeValue(CardStatus.Attack, card.curAttackValue);
-        instance.ChangeValue(CardStatus.Level, card.level);
-        instance.ChangeValue(CardStatus.Exp, card.curEXP);
+        instance.ChangeValue(CardStatus.Hp, card.curHP + tempHp);
+        instance.ChangeValue(CardStatus.Attack, card.curAttackValue + tempAtk);
+        instance.ChangeValue(CardStatus.Exp, card.curEXP + tempExp);
+        instance.ChangeValue(CardStatus.Level, card.level + tempLevel);
         cardList.Add(instance);
     }
 
