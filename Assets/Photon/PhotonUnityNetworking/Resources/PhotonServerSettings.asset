@@ -48,6 +48,8 @@ MonoBehaviour:
   - OnConnectMaster
   - ShowDebug
   - StartSetting
+  - MatchingReady
+  - MatchingFinish
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

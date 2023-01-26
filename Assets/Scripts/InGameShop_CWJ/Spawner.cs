@@ -94,17 +94,17 @@ public class Spawner : MonoBehaviourPun
     {
         for (int i = 0; i < cardList.Count; i++)
         {
-            GameMGR.Instance.batch.gameObject.GetPhotonView().RPC("SetBatch", RpcTarget.MasterClient, (int)PhotonNetwork.LocalPlayer.CustomProperties["Number"], cardList[i]);
+            GameMGR.Instance.batch.gameObject.GetPhotonView().RPC("SetBatch", RpcTarget.All, (int)PhotonNetwork.LocalPlayer.CustomProperties["Number"], cardList[i]);
         }
+        photonView.RPC("MatchingReady", RpcTarget.All);
 
-        GameObject[] monster = GameObject.FindGameObjectsWithTag("Monster");
-        GameMGR.Instance.uiManager.goldCount = 10;
-        for (int i = 0; i < monster.Length; i++)
-        {
-            GameMGR.Instance.objectPool.DestroyPrefab(monster[i]);
-        }
+        //GameObject[] monster = GameObject.FindGameObjectsWithTag("Monster");
+        //GameMGR.Instance.uiManager.goldCount = 10;
+        //for (int i = 0; i < monster.Length; i++)
+        //{
+        //    GameMGR.Instance.objectPool.DestroyPrefab(monster[i]);
+        //}
 
-        SceneManager.LoadScene("BattleScene_SSH");
     }
 
     public void TestButton()

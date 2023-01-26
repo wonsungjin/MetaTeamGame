@@ -31,6 +31,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
     private void Awake()
     {
         Init();
+        GameMGR.Instance.Init(3);
     }
 
     private void Start()
