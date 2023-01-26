@@ -65,7 +65,7 @@ public partial class UIManager : MonoBehaviour
             timerSlider.value = timer;
             timerTXT.text = string.Format("Timer : {0:N0}", timer);
 
-            goldTXT.text = "Gold : " + goldCount.ToString();
+            goldTXT.text = "" + goldCount.ToString();
             shopLevelTXT.text = "Shop Gold :" + shopMoney.ToString();
             NowShopLevelTXT.text = "Shop Level :" + shopLevel.ToString();
         
