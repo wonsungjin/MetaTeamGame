@@ -21,6 +21,7 @@ public partial class Drag2D : MonoBehaviour
     private bool isClickBool = false;
     public bool isFreezen = false;
     bool isClickBattleMonster = false;
+    bool isSelectZone = false;
 
     private void Awake()
     {
@@ -152,11 +153,6 @@ public partial class Drag2D : MonoBehaviour
                 }
             }
         }
-
-        if (gameObject.CompareTag("SelectRing"))
-        {
-            selectZonePos =  collision.gameObject.transform.position;
-        }
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -200,6 +196,14 @@ public partial class Drag2D : MonoBehaviour
                         pos = collision.gameObject.transform.position;
                     }
                 }
+            }
+        }
+        if(isSelectZone == false)
+        {
+            if (gameObject.CompareTag("Monster"))
+            {
+                selectZonePos = collision.gameObject.transform.position;
+                isSelectZone = true;
             }
         }
     }
