@@ -45,13 +45,11 @@ public class Card : MonoBehaviour
         {
             curHP = value;
             hpText.text = curHP.ToString();
-
         }
         else if (key == CardStatus.Attack)
         {
             curAttackValue = value;
             atkText.text = curAttackValue.ToString();
-
         }
         else if (key == CardStatus.Exp)
         {
@@ -62,7 +60,6 @@ public class Card : MonoBehaviour
                 {
                     ChangeValue(CardStatus.Level);
                 }
-
             }
             else if (level == 2)
             {
