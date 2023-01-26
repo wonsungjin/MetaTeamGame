@@ -98,7 +98,6 @@ public partial class GameMGR : Singleton<GameMGR>
         {
             batch = FindObjectOfType<Batch>();
             batch.Init();
-
         }
     }
 }
