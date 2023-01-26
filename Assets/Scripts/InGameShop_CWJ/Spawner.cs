@@ -2,6 +2,8 @@ using Photon.Pun;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 
 public class Spawner : MonoBehaviourPun
 {
@@ -102,6 +104,11 @@ public class Spawner : MonoBehaviourPun
             GameMGR.Instance.objectPool.DestroyPrefab(monster[i]);
         }
 
+        SceneManager.LoadScene("BattleScene_SSH");
+    }
+
+    public void TestButton()
+    {
         ChooseRandomCard();
         if (GameMGR.Instance.uiManager.shopLevel < 6 && GameMGR.Instance.uiManager.shopMoney > 0)
             GameMGR.Instance.uiManager.shopMoney--;
