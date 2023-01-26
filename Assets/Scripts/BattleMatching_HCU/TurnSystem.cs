@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 //using Hashtable = ExitGames.Client.Photon.Hashtable; // 이게 구버전 한정인지 필수인지는 나도 모른다는 것이 학계의 점심
 
 
@@ -199,24 +200,6 @@ public class TurnSystem : MonoBehaviourPunCallbacks
     }
     #endregion
 
-    private void Awake()
-    {
-        PhotonNetwork.ConnectUsingSettings(); // 포톤 기본세팅 사용 및 마스터서버 연결
-    }
-
-    private void Start()
-    {
-        GameLoop();
-    }
-
-    private void GameLoop()
-    {
-        //BattleOrder(); // 순서대로 전투
-
-        if (!isGameOver)
-            GoShop(); // 상점으로 가!
-    }
-
     //List<Player> matchMan = null;
     Player[] matchMan = new Player[8]; // 최대 8인이고 그 이상을 넘을 수는 없으니 일단 이 값으로 지정.
     int[] matchNum;
@@ -280,6 +263,7 @@ public class TurnSystem : MonoBehaviourPunCallbacks
     [PunRPC]
     public void MatchingSetting() // 마스터가 각 라운드마다 실행하는 대진 설정
     {
+        PhotonNetwork.AutomaticallySyncScene = true;
         //공격 랜덤값 지정 - 매 스테이지마다 랜덤 값을 받아온다
         for (int i = 0; i < setRandom.Length; i++)
         {
@@ -486,6 +470,8 @@ public class TurnSystem : MonoBehaviourPunCallbacks
 
 
         Debug.Log(num.Length);
+        Debug.Log(num[0]);
+        Debug.Log(num[1]);
         if (clone) // 클론 있을때
         {
             Debug.Log("클론 있는 홀수");
@@ -571,7 +557,7 @@ public class TurnSystem : MonoBehaviourPunCallbacks
             }
 
         }
-        photonView.RPC("MatchingFinish", RpcTarget.MasterClient);
+        StartCoroutine(COR_MoveScene());
 
     }
 
@@ -611,19 +597,6 @@ public class TurnSystem : MonoBehaviourPunCallbacks
             if (readyCount[0] >= PhotonNetwork.PlayerList.Length)
             {
                 photonView.RPC("MatchingSetting", RpcTarget.MasterClient);
-                StartCoroutine(COR_MoveScene());
-            }
-        }
-    }
-    [PunRPC]
-    public void MatchingFinish()
-    {
-        readyCount[1]++;
-        if (PhotonNetwork.IsMasterClient)
-        {
-            if (readyCount[1] >= PhotonNetwork.PlayerList.Length)
-            {
-                StartCoroutine(COR_MoveScene());
             }
         }
     }
@@ -631,56 +604,7 @@ public class TurnSystem : MonoBehaviourPunCallbacks
     {
         //yield return new WaitUntil(()=> waitMatchingSetting==true);
         yield return new WaitForSeconds(1f);
-        PhotonNetwork.LoadLevel("BattleScene_SSH");
-    }
-    private void Update()
-    {
-        //if(PhotonNetwork.IsMasterClient)
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            photonView.RPC("MatchingSetting", RpcTarget.MasterClient);
-        }
-
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            PhotonNetwork.SetMasterClient(PhotonNetwork.LocalPlayer);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            photonView.RPC("StartSetting", RpcTarget.MasterClient);
-        }
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            // photonView.RPC("LifeManager", RpcTarget.MasterClient);
-            LifeManager();
-        }
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            isWin = true;
-        }
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            isWin = false;
-        }
-
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            LifeDown();
-        }
-
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            LifeUp();
-        }
-
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
-            {
-                Debug.Log($"{PhotonNetwork.PlayerList[i].NickName}");
-            }
-        }
+        SceneManager.LoadScene("BattleScene_SSH");
     }
 
     public void LifeDown()

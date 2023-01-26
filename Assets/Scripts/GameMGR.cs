@@ -2,7 +2,6 @@ using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public partial class GameMGR : Singleton<GameMGR>
 {
@@ -93,12 +92,6 @@ public partial class GameMGR : Singleton<GameMGR>
             uiManager.Init_Scene2();
             spawner.gameObject.GetPhotonView().RPC("StartSetting", RpcTarget.MasterClient);
             batch = FindObjectOfType<Batch>();
-        }
-        else if(num==3)
-        {
-            batch = FindObjectOfType<Batch>();
-            batch.Init();
-
         }
     }
 }
