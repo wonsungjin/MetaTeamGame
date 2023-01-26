@@ -108,6 +108,7 @@ public class Spawner : MonoBehaviourPun
         GameMGR.Instance.uiManager.timer = 60f;
         Reset_NotMoney();
     }
+    
 
     public void OnClick_ShopLevelUp()
     {
