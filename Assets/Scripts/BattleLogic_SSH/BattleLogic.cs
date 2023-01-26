@@ -42,10 +42,8 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
     public void Init()
     {
         // Master Clinet가 매 라운드마다 생성하는 Random Array
-        for (int i = 0; i < exArray.Length; i++)
-        {
-            exArray[i] = Random.Range(0, 3);
-        }
+        exArray = GameMGR.Instance.randomValue;
+
 
         // player 공격리스트 추가
         for (int i = 0; i < playerForwardUnits.Count; i++)
