@@ -4,7 +4,7 @@ using UnityEngine;
 using Photon.Pun;
 using System.Linq;
 
-public class BattleLogic : MonoBehaviourPunCallbacks
+public partial class BattleLogic : MonoBehaviourPunCallbacks
 {
     [SerializeField] private List<GameObject> playerForwardUnits = new List<GameObject>();
     [SerializeField] private List<GameObject> playerBackwardUnits = new List<GameObject>();
