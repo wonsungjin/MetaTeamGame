@@ -15,6 +15,7 @@ TagManager:
   - BattleMonster
   - Rect
   - FullZone
+  - SpecialZone
   layers:
   - Default
   - TransparentFX
