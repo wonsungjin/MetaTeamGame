@@ -21,7 +21,6 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
             {
                 randomArrayNum = 0;
             }
-
             // [Player -> Enemy Attack] 적의 전열이 살아있는 경우
             if (isEnemyPreemptiveAlive)
             {
@@ -39,12 +38,14 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
 
                 // 공격 시작
 
+
                 // 플레이어 유닛이 적 전열 유닛 랜덤 공격
                 playerAttackList[playerTurnCount].GetComponent<AttackLogic>().UnitAttack(enemyForwardUnits[exArray[randomArrayNum]]);
 
-                // 공격 시작 후
+                // 공격 전(대상만 체크)
 
-                // 피격 받은 유닛을 공격 리스트에서 삭제
+
+                // 피격 대상 선정
                 for (int i = 0; i < enemyAttackList.Count; i++)
                 {
                     if (enemyAttackList[i] == enemyForwardUnits[exArray[randomArrayNum]])
@@ -58,7 +59,8 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                     }
                 }
 
-                // 피격 받은 유닛을 전열 리스트에서 삭제
+                // 피격 받은 유닛의 체력이 0이하로 내려가면
+                if(enemyForwardUnits[exArray[randomArrayNum]])
                 enemyForwardUnits[exArray[randomArrayNum]] = null;
 
                 // 새로운 random num 부여

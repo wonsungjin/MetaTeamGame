@@ -3,16 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using TMPro;
-public enum CardStatus
-{
-    Hp,
-    Attack,
-    Exp,
-    Level,
-}
+
 public partial class Card : MonoBehaviour
 {
-    [SerializeField] public CardInfo cardInfo;
+    /*[SerializeField] public CardInfo cardInfo;
     public TextMeshPro hpText;
     public TextMeshPro atkText;
     public TextMeshPro levelText;
@@ -21,8 +15,8 @@ public partial class Card : MonoBehaviour
     public int curHP;
     public int curEXP;
 
-    /*자신의 오브젝트 이름과 같은 스크립터블 데이터를 읽어와서 설정한다
-    스프라이트 랜더러도 같은 원리로 설정*/
+    *//*자신의 오브젝트 이름과 같은 스크립터블 데이터를 읽어와서 설정한다
+    스프라이트 랜더러도 같은 원리로 설정*//*
     public void SetMyInfo(string myname)
     {
         name = myname;
@@ -78,6 +72,6 @@ public partial class Card : MonoBehaviour
     private void Awake()
     {
         SetMyInfo(name);
-    }
+    }*/
 }
 
