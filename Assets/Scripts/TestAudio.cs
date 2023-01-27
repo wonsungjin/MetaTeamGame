@@ -14,19 +14,19 @@ public class TestAudio : MonoBehaviour
 
     public void OnclickBackgound()
     {
-        audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.UI, "Back1");
+        audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.Background, "Back1");
         audioSource.Play();
     }
 
     public void OnclickUnit()
     {
-        audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.Unit, "USFX1");
+        audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.Unit, "UISFX1");
         audioSource.Play();
     }
 
     public void OnclickUI()
     {
-        audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.UI, "UISFX1");
+        audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.UI, "USFX1");
         audioSource.Play();
     }
 }
