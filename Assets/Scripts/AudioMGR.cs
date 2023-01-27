@@ -28,19 +28,28 @@ public class AudioMGR : MonoBehaviour
     //  AudioClip Name을 키, AudioClip을 값으로 Dictionary에 추가 
     private void Init()
     {
-        for (int i = 0; i < BackGroundClip.Length; i++)
+        if (BackGroundClip != null)
         {
-            BackgroundDic.Add(BackGroundClip[i].name, BackGroundClip[i]);
+            for (int i = 0; i < BackGroundClip.Length; i++)
+            {
+                BackgroundDic.Add(BackGroundClip[i].name, BackGroundClip[i]);
+            }
         }
 
-        for (int i = 0; i < UnitSFXClip.Length; i++)
+        if (UnitSFXClip != null)
         {
-            UnitSFXDic.Add(UnitSFXClip[i].name, UnitSFXClip[i]);
+            for (int i = 0; i < UnitSFXClip.Length; i++)
+            {
+                UnitSFXDic.Add(UnitSFXClip[i].name, UnitSFXClip[i]);
+            }
         }
 
-        for (int i = 0; i < UISFXClip.Length; i++)
+        if (UISFXClip != null)
         {
-            UISFXDic.Add(UISFXClip[i].name, UISFXClip[i]);
+            for (int i = 0; i < UISFXClip.Length; i++)
+            {
+                UISFXDic.Add(UISFXClip[i].name, UISFXClip[i]);
+            }
         }
     }
 
@@ -63,9 +72,8 @@ public class AudioMGR : MonoBehaviour
     }
 
     // 사용자는 해당 함수로 오디오클립을 결정하고 플레이까지
-    
     public void PlaySound(bool loop, AudioClip clip)
     {
-        
+
     }
 }
