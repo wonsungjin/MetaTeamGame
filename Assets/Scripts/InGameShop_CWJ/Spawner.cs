@@ -29,32 +29,32 @@ public class Spawner : MonoBehaviourPun
         if (customDeck.tier_1 != null) 
         for (int i = 0; i < customDeck.tier_1.Count; i++)
         {
-                monsterNames.Add(customDeck.tier_1[i]);
+                monsterNames.Add(customDeck.tier_1[i].Replace(" ", ""));
         }
         if (customDeck.tier_2 != null)
             for (int i = 0; i < customDeck.tier_2.Count; i++)
         {
-                monsterNames.Add(customDeck.tier_2[i]);
+                monsterNames.Add(customDeck.tier_2[i].Replace(" ", ""));
         }
         if (customDeck.tier_3 != null)
             for (int i = 0; i < customDeck.tier_3.Count; i++)
         {
-                monsterNames.Add(customDeck.tier_3[i]);
+                monsterNames.Add(customDeck.tier_3[i].Replace(" ", ""));
         }
         if (customDeck.tier_4 != null)
             for (int i = 0; i < customDeck.tier_4.Count; i++)
             {
-                 monsterNames.Add(customDeck.tier_4[i]);
+                 monsterNames.Add(customDeck.tier_4[i].Replace(" ", ""));
             }
         if (customDeck.tier_5 != null)
             for (int i = 0; i < customDeck.tier_5.Count; i++)
             {
-                monsterNames.Add(customDeck.tier_5[i]);
+                monsterNames.Add(customDeck.tier_5[i].Replace(" ", ""));
             }
         if (customDeck.tier_6 != null)
             for (int i = 0; i < customDeck.tier_6.Count; i++)
             {
-                monsterNames.Add(customDeck.tier_6[i]);
+                monsterNames.Add(customDeck.tier_6[i].Replace(" ", ""));
             }
     }
     private void Start()
@@ -68,7 +68,7 @@ public class Spawner : MonoBehaviourPun
 
             for (int i = 0; i < createdPlace; i++)
             {
-                randomNum = Random.Range(0, 8);
+                randomNum = Random.Range(0, customDeck.tier_1.Count);
                 Debug.Log(monsterNames[randomNum]);
                 Debug.Log(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum]}"));
                 GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum]}"), monsterTrans[randomTrans].transform.position, Quaternion.identity);
