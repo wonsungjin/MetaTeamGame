@@ -6,7 +6,7 @@ using UnityEngine;
 public enum SkillTiming     // 스킬이 발동되는 때
 {
     turnStart,
-    startBattle,
+    battleStart,
     buy,
     sell,
     reroll,
@@ -14,10 +14,24 @@ public enum SkillTiming     // 스킬이 발동되는 때
     attackAfter,
     kill,
     hit,
-    enemyHit,
+    hitEnemy,
     death,
-    summonAlly,
+    summon,
     turnEnd
+}
+public enum EffectTarget // 타겟 유형 - 적, 나, 아군 등
+{
+    none,
+    self,
+    unitAll,
+    enemyUnit,
+    enemyUnitExceptMe,
+    enemyFront,
+    enemyBack,
+    allyUnit,
+    allyUnitExceptMe,
+    allyFront,
+    allyBack
 }
 
 public enum TargetType // 스킬이 어떤 타입을 노리는지(ex - 공격력 높은 유닛)
@@ -35,19 +49,6 @@ public enum TargetType // 스킬이 어떤 타입을 노리는지(ex - 공격력 높은 유닛)
     back,
     near,
     otherSide,
-}
-
-public enum EffectTarget // 타겟 유형 - 적, 나, 아군 등
-{
-    none,
-    self,
-    unit,
-    enemyUnit,
-    allyUint,
-    enemyFront,
-    enemyBack,
-    allyFront,
-    allyBack
 }
 
 public enum TriggerCondition // 발동되기 위한 조건 - ex ) 빈 자리가 있어야한다
@@ -79,15 +80,15 @@ public partial class CardInfo : ScriptableObject
     [Header("Skill Data")]
     [SerializeField] internal SkillTiming skillTiming; 
     [SerializeField] internal TargetType targetType; 
-    [SerializeField] internal EffectTarget target; // 타겟 유형 - 적군, 아군, 자신 등
+    [SerializeField] internal EffectTarget effectTarget; // 타겟 유형 - 적군, 아군, 자신 등
     [SerializeField] internal int Min_target; // 최소 타겟 수
     [SerializeField] internal int Max_target; // 최대 타겟 수
     [SerializeField] internal TriggerCondition triggerCondition; //발동 조건 - 어떤 상황에서 발동되는가(ex - 빈 자리 있을 때)
-    [SerializeField] internal EffectType EffectType;
+    [SerializeField] internal EffectType effectType; // 실제 발동 효과
     [SerializeField] internal int value1; //값1
     [SerializeField] internal int value2; //값2
     [SerializeField] internal int triggerCount; // 발동횟수
-    [SerializeField] internal int groupIndex; // 그룹인덱스
+    [SerializeField] internal int groupIndex; // 그룹인덱스 = 딱히 필요 없을듯
 
     /*//858ed67e0d64b72429e8c773f1903334
     [SerializeField] internal int ID;

@@ -6,6 +6,13 @@ using System.Linq;
 
 public partial class BattleLogic : MonoBehaviourPunCallbacks
 {
+
+    // 스킬 능력 함수들 모음집
+    public void ThrowMissile(int value)
+    {
+        enemyForwardUnits[exArray[randomArrayNum]].gameObject.GetComponent<Card>().curHP -= value;
+    }
+
     #region Player 선제 공격
     // Player 선제 공격
     public void PreemptiveAttack_HCU()
@@ -37,7 +44,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                 }
 
                 // 공격 시작
-
+                // 투사체 공격 함수 실행
 
                 // 플레이어 유닛이 적 전열 유닛 랜덤 공격
                 playerAttackList[playerTurnCount].GetComponent<AttackLogic>().UnitAttack(enemyForwardUnits[exArray[randomArrayNum]]);
