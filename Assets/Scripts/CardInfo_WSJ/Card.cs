@@ -31,9 +31,9 @@ public class Card : MonoBehaviour
         name = myname;
         cardInfo = Resources.Load<CardInfo>($"ScriptableDBs/{name.Replace("(Clone)", "")}");
         transform.GetChild(0).localScale = Vector3.one;
-        hpText = transform.GetChild(0).GetChild(0).GetComponent<TextMeshPro>();
+        hpText = transform.GetChild(0).GetChild(1).GetComponent<TextMeshPro>();
         atkText = transform.GetChild(0).GetChild(3).GetComponent<TextMeshPro>();
-        levelText = transform.GetChild(0).GetChild(7).GetComponent<TextMeshPro>();
+        levelText = transform.GetChild(0).GetChild(5).GetComponent<TextMeshPro>();
         curHP = cardInfo.hp;
         hpText.text = curHP.ToString();
         curAttackValue = cardInfo.attackValue;

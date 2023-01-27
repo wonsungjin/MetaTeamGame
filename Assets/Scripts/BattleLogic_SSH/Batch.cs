@@ -93,12 +93,17 @@ public class Batch : MonoBehaviourPun
             if (myCard == true)
             {
                 unitCard.transform.position = myCardPosition[i + 1].position;
+                if(i<3) GameMGR.Instance.battleLogic.playerForwardUnits.Add(unitCard.gameObject);
+                else GameMGR.Instance.battleLogic.playerBackwardUnits.Add(unitCard.gameObject);
             }
 
             // enemy Unit 위치 설정
             else if (myCard == false)
             {
                 unitCard.transform.position = enemyCardPosition[i + 1].position;
+                unitCard.SetFlip(true);
+                if (i < 3) GameMGR.Instance.battleLogic.enemyForwardUnits.Add(unitCard.gameObject);
+                else GameMGR.Instance.battleLogic.enemyBackwardUnits.Add(unitCard.gameObject);                
             }
         else
         {

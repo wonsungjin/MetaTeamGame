@@ -83,10 +83,6 @@ public class Spawner : MonoBehaviourPun
         }
     }
 
-    private void Update()
-    {
-        Reset_NotMoney();
-    }
 
     // 레디 버튼 누르면 이루어짐 몬스터 삭제 , 시간 초기화 , 머니 초기화
     Card card;

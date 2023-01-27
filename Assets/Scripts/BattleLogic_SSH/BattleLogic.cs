@@ -6,10 +6,10 @@ using System.Linq;
 
 public partial class BattleLogic : MonoBehaviourPunCallbacks
 {
-    [SerializeField] private List<GameObject> playerForwardUnits = new List<GameObject>();
-    [SerializeField] private List<GameObject> playerBackwardUnits = new List<GameObject>();
-    [SerializeField] private List<GameObject> enemyForwardUnits = new List<GameObject>();
-    [SerializeField] private List<GameObject> enemyBackwardUnits = new List<GameObject>();
+    [SerializeField] public List<GameObject> playerForwardUnits = new List<GameObject>();
+    [SerializeField] public List<GameObject> playerBackwardUnits = new List<GameObject>();
+    [SerializeField] public List<GameObject> enemyForwardUnits = new List<GameObject>();
+    [SerializeField] public List<GameObject> enemyBackwardUnits = new List<GameObject>();
     [SerializeField] private List<GameObject> playerAttackList = new List<GameObject>();
     [SerializeField] private List<GameObject> enemyAttackList = new List<GameObject>();
 
@@ -28,10 +28,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
     private int playerCurRound = 0;
     private int enemyCurRound = 0;
 
-    private void Awake()
-    {
-        Init();
-    }
+    
 
     #region Player, EnemyList 초기화
     public void Init()
@@ -72,7 +69,8 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
     // Player 선제 공격
     public void PreemptiveAttack()
     {
-        exArray = GameMGR.Instance.randomValue;
+        for (int i = 0; i < GameMGR.Instance.randomValue.Length; i++)
+            exArray[i] = GameMGR.Instance.randomValue[i];
         Debug.Log("player 선공");
 
         while (playerAttackList.Count != 0 || enemyAttackList.Count != 0)
