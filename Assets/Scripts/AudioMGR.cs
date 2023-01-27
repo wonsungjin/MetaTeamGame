@@ -61,4 +61,11 @@ public class AudioMGR : MonoBehaviour
         }
         return audioClip;
     }
+
+    // 사용자는 해당 함수로 오디오클립을 결정하고 플레이까지
+    
+    public void PlaySound(bool loop, AudioClip clip)
+    {
+        
+    }
 }
