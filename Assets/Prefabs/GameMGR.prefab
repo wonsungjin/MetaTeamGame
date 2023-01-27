@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 6544229276892394814}
   - component: {fileID: 4093828023173428372}
   - component: {fileID: 727266096}
+  - component: {fileID: 2063491190}
   m_Layer: 0
   m_Name: GameMGR
   m_TagString: Untagged
@@ -50,14 +51,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f1eb402b98526543b0a309b3e41e9d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uIMGR: {fileID: 0}
   metaTrendAPI: {fileID: 0}
   dataBase: {fileID: 0}
-  cardCreate: {fileID: 0}
-  cardList: {fileID: 0}
-  customDeckShop: {fileID: 0}
   objectPool: {fileID: 0}
+  audioMGR: {fileID: 0}
+  cardCreate: {fileID: 0}
+  customDeckShop: {fileID: 0}
   shopCards: {fileID: 0}
+  uiManager: {fileID: 0}
+  spawner: {fileID: 0}
+  photonLauncher: {fileID: 0}
+  batch: {fileID: 0}
+  matching: 0000000000000000
+  randomValue: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  cardList:
+  - {fileID: 0}
 --- !u!114 &6544229276892394784
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -157,3 +165,25 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   clearList: []
+--- !u!114 &2063491190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6544229276892394788}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbe6cd7823d350e47808c8b82e760a7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BackGroundClip:
+  - {fileID: 8300000, guid: 89fd4f3437cd24b469bd37320b6181f4, type: 3}
+  - {fileID: 8300000, guid: 297f9e7a4423dcc4b8be483045c3b1ea, type: 3}
+  UnitSFXClip:
+  - {fileID: 8300000, guid: 5645ea9efaa2aba458a7a17c2c02b6df, type: 3}
+  - {fileID: 8300000, guid: 8724ce741dfaa6440b9aa75cfe7e4f20, type: 3}
+  - {fileID: 8300000, guid: 053efb9ce7e228241af5c62fbf0eea3f, type: 3}
+  UISFXClip:
+  - {fileID: 8300000, guid: 7a97cced90c3a74488d06d36bb6b271e, type: 3}
+  - {fileID: 8300000, guid: eea5d6e21e97a9747b5b2cc92dfcbee5, type: 3}

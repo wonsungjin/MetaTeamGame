@@ -20,6 +20,7 @@ public partial class UIManager : MonoBehaviour
     [SerializeField] public Text sellTXT = null;
     [SerializeField] public Text timerTXT = null;
     [SerializeField] public GameObject sell = null;
+    public GameObject storePannel;
 
     public int shopMoney = 0;
     public int goldCount = 10;
@@ -29,6 +30,7 @@ public partial class UIManager : MonoBehaviour
 
     public void Init_Scene2()
     {
+        storePannel = GameObject.Find("StorePannel");
         skillExplantion2 = GameObject.Find("Explantion");
         skillExplantionText[0] = GameObject.Find("cardName").GetComponent<TextMeshProUGUI>();
         skillExplantionText[1] = GameObject.Find("level1").GetComponent<TextMeshProUGUI>();
@@ -37,7 +39,6 @@ public partial class UIManager : MonoBehaviour
         timerSlider = GameObject.Find("TimerSlider").GetComponent<Slider>();
         reFreshButton = GameObject.Find("ReFreshButton").GetComponent<Button>();
         levelUpButton = GameObject.Find("LevelUPButton").GetComponent<Button>();
-        infoButton = GameObject.Find("InfoButton").GetComponent<Button>();
         optionButton = GameObject.Find("OptionButton").GetComponent<Button>();
         NowShopLevelTXT = GameObject.Find("NowShopLevelTXT").GetComponent<Text>();
         goldTXT = GameObject.Find("GoldTXT").GetComponent<Text>();
@@ -63,7 +64,7 @@ public partial class UIManager : MonoBehaviour
             // 시간이 변경한 만큼 slider Value 변경을 합니다.
             timer -= Time.deltaTime;
             timerSlider.value = timer;
-            timerTXT.text = string.Format("Timer : {0:N0}", timer);
+            timerTXT.text = string.Format("Time : {0:N0}sec", timer);
 
             goldTXT.text = "" + goldCount.ToString();
             shopLevelTXT.text = "Shop Gold :" + shopMoney.ToString();
@@ -80,9 +81,3 @@ public partial class UIManager : MonoBehaviour
         }
     }
 }
-
-//41 23 56 70
-//4 23 5 70
-//42 31 47 60
-//40 27 35
-//0
