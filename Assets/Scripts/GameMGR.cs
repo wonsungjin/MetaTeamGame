@@ -17,6 +17,7 @@ public partial class GameMGR : Singleton<GameMGR>
     public UIManager uiManager;
     public Spawner spawner;
     public PhotonLauncher photonLauncher;
+    public BattleLogic battleLogic;
 
     public Batch batch;
 
@@ -92,6 +93,7 @@ public partial class GameMGR : Singleton<GameMGR>
             uiManager.Init_Scene2();
             spawner.gameObject.GetPhotonView().RPC("StartSetting", RpcTarget.MasterClient);
             batch = FindObjectOfType<Batch>();
+            battleLogic = FindObjectOfType<BattleLogic>();
         }
     }
 }

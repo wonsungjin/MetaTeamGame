@@ -207,6 +207,7 @@ MonoBehaviour:
   level: 0
   curAttackValue: 0
   curHP: 0
+  curEXP: 0
 --- !u!1001 &482461374715920953
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -217,6 +218,14 @@ PrefabInstance:
     - target: {fileID: 1670660031074491714, guid: 306e3f38cec157842b453c50aac32a45, type: 3}
       propertyPath: m_Name
       value: InfoText
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691777542393770043, guid: 306e3f38cec157842b453c50aac32a45, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691777542393770043, guid: 306e3f38cec157842b453c50aac32a45, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8359877118856600461, guid: 306e3f38cec157842b453c50aac32a45, type: 3}
       propertyPath: m_RootOrder

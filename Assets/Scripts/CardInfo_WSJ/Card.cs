@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using TMPro;
+using Spine.Unity;
 public enum CardStatus
 {
     Hp,
@@ -20,7 +21,7 @@ public class Card : MonoBehaviour
     public int curAttackValue;
     public int curHP;
     public int curEXP;
-
+    SkeletonAnimation skeletonAnimation;
 
 
     /*자신의 오브젝트 이름과 같은 스크립터블 데이터를 읽어와서 설정한다
@@ -29,15 +30,21 @@ public class Card : MonoBehaviour
     {
         name = myname;
         cardInfo = Resources.Load<CardInfo>($"ScriptableDBs/{name.Replace("(Clone)", "")}");
-        hpText = transform.GetChild(0).GetChild(1).GetComponent<TextMeshPro>();
+        transform.GetChild(0).localScale = Vector3.one;
+        hpText = transform.GetChild(0).GetChild(0).GetComponent<TextMeshPro>();
         atkText = transform.GetChild(0).GetChild(3).GetComponent<TextMeshPro>();
-        levelText = transform.GetChild(0).GetChild(5).GetComponent<TextMeshPro>();
+        levelText = transform.GetChild(0).GetChild(7).GetComponent<TextMeshPro>();
         curHP = cardInfo.hp;
         hpText.text = curHP.ToString();
         curAttackValue = cardInfo.attackValue;
         atkText.text = curAttackValue.ToString();
         level = 1;
         levelText.text = level.ToString();
+        skeletonAnimation = GetComponent<SkeletonAnimation>();
+    }
+    public void SetFlip(bool isSet)
+    {
+        skeletonAnimation.SetFlip(isSet);
     }
     public void ChangeValue(CardStatus key, int value = 0)
     {
