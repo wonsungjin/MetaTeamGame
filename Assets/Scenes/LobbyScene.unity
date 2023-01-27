@@ -11879,6 +11879,7 @@ MonoBehaviour:
   sellTXT: {fileID: 0}
   timerTXT: {fileID: 0}
   sell: {fileID: 0}
+  storePannel: {fileID: 0}
   shopMoney: 0
   goldCount: 10
   shopLevel: 1

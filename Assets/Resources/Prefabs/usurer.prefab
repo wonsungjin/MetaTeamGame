@@ -32,7 +32,7 @@ Transform:
   m_GameObject: {fileID: 1680258370376334}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.109627806, y: 0.053112328, z: 0}
-  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1999755895821832431}
@@ -207,6 +207,7 @@ MonoBehaviour:
   level: 0
   curAttackValue: 0
   curHP: 0
+  curEXP: 0
 --- !u!1001 &8053756192686148450
 PrefabInstance:
   m_ObjectHideFlags: 0

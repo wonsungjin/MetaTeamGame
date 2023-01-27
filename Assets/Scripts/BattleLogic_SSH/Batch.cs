@@ -43,13 +43,18 @@ public class Batch : MonoBehaviourPun
         {
             cardList = new List<Card>();
         }
-        instance.SetMyInfo(cardName);
-        instance.ChangeValue(CardStatus.Hp, hp);
-        instance.ChangeValue(CardStatus.Attack, attackValue);
-        instance.ChangeValue(CardStatus.Exp, exp);
-        instance.ChangeValue(CardStatus.Level, level);
-        cardList.Add(instance);
-        for (int i = 0; i < cardList.Count; i++) Debug.Log("»ðÀÔ"+cardList[i].name);
+        if (cardName != "")
+        {
+            instance.SetMyInfo(cardName);
+            instance.ChangeValue(CardStatus.Hp, hp);
+            instance.ChangeValue(CardStatus.Attack, attackValue);
+            instance.ChangeValue(CardStatus.Exp, exp);
+            instance.ChangeValue(CardStatus.Level, level);
+            cardList.Add(instance);
+        }
+        else cardList.Add(null);
+        
+
         GameMGR.Instance.playerList.TryAdd(playerNum, cardList);
     }
 
@@ -86,6 +91,7 @@ public class Batch : MonoBehaviourPun
         GameMGR.Instance.playerList.TryGetValue(playerNum, out cardList);
         for (int i = 0; i < cardList.Count; i++)
         { 
+            if(cardList[i] == null) continue;
             Debug.Log("»ý¼º" + cardList[i].name);
             Card unitCard = GameObject.Instantiate<Card>(cardList[i]);
 
