@@ -83,18 +83,18 @@ public class Spawner : MonoBehaviourPun
         }
     }
 
-    private void Update()
-    {
-        Reset_NotMoney();
-    }
 
     // 레디 버튼 누르면 이루어짐 몬스터 삭제 , 시간 초기화 , 머니 초기화
-    List<Card> cardList = new List<Card>();
+    Card card;
     public void OnCLick_ReadyButton()
     {
-        for (int i = 0; i < cardList.Count; i++)
+        for (int i = 0; i < cardBatch.Length; i++)
         {
-            GameMGR.Instance.batch.gameObject.GetPhotonView().RPC("SetBatch", RpcTarget.All, (int)PhotonNetwork.LocalPlayer.CustomProperties["Number"], cardList[i]);
+            if (cardBatch[i] != null)
+            {
+                card = cardBatch[i].GetComponent<Card>();
+                GameMGR.Instance.batch.gameObject.GetPhotonView().RPC("SetBatch", RpcTarget.All, (int)PhotonNetwork.LocalPlayer.CustomProperties["Number"], card.name.Replace("(Clone)", ""), card.curHP, card.curAttackValue, card.curEXP, card.level);
+            }
         }
         photonView.RPC("MatchingReady", RpcTarget.All);
 
