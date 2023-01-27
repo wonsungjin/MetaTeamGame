@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 //using Hashtable = ExitGames.Client.Photon.Hashtable; // 이게 구버전 한정인지 필수인지는 나도 모른다는 것이 학계의 점심
 
 
@@ -57,8 +58,6 @@ public class TurnSystem : MonoBehaviourPunCallbacks
     // 게임 도중 나가버린 플레이어 낙인
     public List<int> leavePlayerList;
 
-    // 현존 하는 플레이어 리스트
-    public List<int> existPlayerList;
 
     // 마스터가 가지고 있는 이전 매칭 상대 기록 배열
     [SerializeField] public int[] prevOpponent = new int[8];
@@ -76,82 +75,12 @@ public class TurnSystem : MonoBehaviourPunCallbacks
     {
         Debug.Log(name);
     }
-    public override void OnJoinedLobby()
-    {
-        Debug.Log("로비에 입장 성공");
-        PhotonNetwork.JoinRoom("test");
-    }
-
-    public override void OnJoinRoomFailed(short returnCode, string message)
-    {
-        // 룸옵션에 대한 정보
-        RoomOptions roomOptions = new RoomOptions() { MaxPlayers = 20 };
-        roomOptions.IsOpen = true;
-        roomOptions.IsVisible = true;
-        PhotonNetwork.CreateRoom("test", roomOptions);
-        Debug.Log("test룸 생성");
-
-        photonView.RPC("FailedJoinRoom", RpcTarget.All, PhotonNetwork.NickName);
-    }
-
-    [PunRPC]
-    public void FailedJoinRoom(string name)
-    {
-        Debug.Log(name + "가 방 들어오는데 실패했다");
-    }
-
-    [PunRPC]
-    public void FailedConnectMaster(string name)
-    {
-        Debug.Log(name + "가 마스터서버 연결에 실패했다");
-    }
 
     private void OnFailedToConnectToMasterServer()
     {
         photonView.RPC("FailedConnectMaster", RpcTarget.All, PhotonNetwork.NickName);
     }
     //Hashtable playerCP = PhotonNetwork.LocalPlayer.CustomProperties;
-    public override void OnJoinedRoom() // 자기 자신만
-    {
-        Debug.Log("test룸 입장");
-        players = PhotonNetwork.PlayerList;
-        Debug.Log("방 접속자 수 : " + PhotonNetwork.PlayerList.Length);
-        Debug.Log(players[0].ActorNumber);
-        for (int i = 0; i < players.Length; i++)
-        {
-            PhotonNetwork.PlayerList[i].NickName = (PhotonNetwork.PlayerList[i].ActorNumber - 1).ToString();
-            if (PhotonNetwork.PlayerList[i].NickName == PhotonNetwork.NickName)
-            {
-                ExitGames.Client.Photon.Hashtable myCustomProperty = new ExitGames.Client.Photon.Hashtable();
-                myCustomProperty = PhotonNetwork.LocalPlayer.CustomProperties;
-                PhotonNetwork.PlayerList[i].CustomProperties["Number"] = i;
-                PhotonNetwork.PlayerList[i].CustomProperties["Life"] = startLife;
-                PhotonNetwork.PlayerList[i].SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "Number", $"{i}" } });
-                PhotonNetwork.PlayerList[i].SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "Life", $"{startLife}" } });
-                PhotonNetwork.PlayerList[i].SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "Opponent", -1 } });
-                userID = (int)PhotonNetwork.PlayerList[i].CustomProperties["Number"];  // 고유닉네임이 일치하면 고유번호를 지정한다.
-
-                if (PhotonNetwork.IsMasterClient)
-                {
-                    existPlayerList.Add(i);
-                }
-
-
-                PhotonNetwork.SetPlayerCustomProperties(myCustomProperty);
-            }
-            Debug.Log($"내 지정번호는 {(int)PhotonNetwork.PlayerList[i].CustomProperties["Number"]}");
-        }
-    }
-
-    public override void OnPlayerEnteredRoom(Player newPlayer) // 다른 사람 입장시
-    {
-        Debug.Log(newPlayer.NickName + " 입장");
-        Debug.Log("방 접속자 수 : " + PhotonNetwork.PlayerList.Length);
-        if (PhotonNetwork.IsMasterClient)
-        {
-            //existPlayerList.Add((int)newPlayer.CustomProperties["Number"]);
-        }
-    }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
@@ -159,19 +88,9 @@ public class TurnSystem : MonoBehaviourPunCallbacks
         //matchingList.Remove((int)otherPlayer.CustomProperties["Number"]);
         //exitPlayerList.Add((int)otherPlayer.CustomProperties["Nunber"]);
         //if (PhotonNetwork.PlayerList.Length == 2) 
-        {
+        
             cloneOpponent = -1;
             cloneOpponentsOpponent = -1;
-            for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
-            {
-                if (!existPlayerList.Contains((int)PhotonNetwork.PlayerList[i].CustomProperties["Number"]))
-                {
-
-                }
-            }
-            existPlayerList.Remove((int)otherPlayer.CustomProperties["Number"]);
-        }
-
         Debug.Log(otherPlayer + "가 나갔다");
         if (otherPlayer.IsInactive) Debug.Log(" IsInactive");
         else Debug.Log("NotInactive");
@@ -198,24 +117,6 @@ public class TurnSystem : MonoBehaviourPunCallbacks
     {
     }
     #endregion
-
-    private void Awake()
-    {
-        PhotonNetwork.ConnectUsingSettings(); // 포톤 기본세팅 사용 및 마스터서버 연결
-    }
-
-    private void Start()
-    {
-        GameLoop();
-    }
-
-    private void GameLoop()
-    {
-        //BattleOrder(); // 순서대로 전투
-
-        if (!isGameOver)
-            GoShop(); // 상점으로 가!
-    }
 
     //List<Player> matchMan = null;
     Player[] matchMan = new Player[8]; // 최대 8인이고 그 이상을 넘을 수는 없으니 일단 이 값으로 지정.
@@ -280,6 +181,7 @@ public class TurnSystem : MonoBehaviourPunCallbacks
     [PunRPC]
     public void MatchingSetting() // 마스터가 각 라운드마다 실행하는 대진 설정
     {
+        PhotonNetwork.AutomaticallySyncScene = true;
         //공격 랜덤값 지정 - 매 스테이지마다 랜덤 값을 받아온다
         for (int i = 0; i < setRandom.Length; i++)
         {
@@ -485,7 +387,10 @@ public class TurnSystem : MonoBehaviourPunCallbacks
         }
 
 
+        Debug.Log((int)PhotonNetwork.LocalPlayer.CustomProperties["Number"]);
         Debug.Log(num.Length);
+        Debug.Log(num[0]);
+        Debug.Log(num[1]);
         if (clone) // 클론 있을때
         {
             Debug.Log("클론 있는 홀수");
@@ -571,15 +476,17 @@ public class TurnSystem : MonoBehaviourPunCallbacks
             }
 
         }
-        photonView.RPC("MatchingFinish", RpcTarget.MasterClient);
+        StartCoroutine(COR_DelayMove());
 
     }
-
-    private void GoShop()
+    IEnumerator COR_DelayMove()
     {
-        // 상점 씬으로 이동
+        yield return new WaitForSeconds(1f);
+        Camera.main.gameObject.transform.position = new Vector3(20, 0, -10);
+        GameMGR.Instance.uiManager.storePannel.SetActive(false);
+        GameMGR.Instance.batch.UnitPlacement();
+        GameMGR.Instance.battleLogic.AttackLogic();
     }
-
     /*
     private void BattleOrder()
     {
@@ -601,7 +508,6 @@ public class TurnSystem : MonoBehaviourPunCallbacks
         GoShop();
     }
     */
-    bool waitMatchingSetting;
     [PunRPC]
     public void MatchingReady()
     {
@@ -611,77 +517,10 @@ public class TurnSystem : MonoBehaviourPunCallbacks
             if (readyCount[0] >= PhotonNetwork.PlayerList.Length)
             {
                 photonView.RPC("MatchingSetting", RpcTarget.MasterClient);
-                StartCoroutine(COR_MoveScene());
             }
         }
     }
-    [PunRPC]
-    public void MatchingFinish()
-    {
-        readyCount[1]++;
-        if (PhotonNetwork.IsMasterClient)
-        {
-            if (readyCount[1] >= PhotonNetwork.PlayerList.Length)
-            {
-                StartCoroutine(COR_MoveScene());
-            }
-        }
-    }
-    IEnumerator COR_MoveScene()
-    {
-        //yield return new WaitUntil(()=> waitMatchingSetting==true);
-        yield return new WaitForSeconds(1f);
-        PhotonNetwork.LoadLevel("BattleScene_SSH");
-    }
-    private void Update()
-    {
-        //if(PhotonNetwork.IsMasterClient)
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            photonView.RPC("MatchingSetting", RpcTarget.MasterClient);
-        }
-
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            PhotonNetwork.SetMasterClient(PhotonNetwork.LocalPlayer);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            photonView.RPC("StartSetting", RpcTarget.MasterClient);
-        }
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            // photonView.RPC("LifeManager", RpcTarget.MasterClient);
-            LifeManager();
-        }
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            isWin = true;
-        }
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            isWin = false;
-        }
-
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            LifeDown();
-        }
-
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            LifeUp();
-        }
-
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
-            {
-                Debug.Log($"{PhotonNetwork.PlayerList[i].NickName}");
-            }
-        }
-    }
+  
 
     public void LifeDown()
     {

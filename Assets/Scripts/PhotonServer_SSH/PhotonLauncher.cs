@@ -95,6 +95,26 @@ public class PhotonLauncher : MonoBehaviourPunCallbacks
         StatusServer();
         leaveRoomButton.gameObject.SetActive(true);
         joinRoomButton.enabled = false;
+        Debug.Log("test룸 입장");
+        Debug.Log("방 접속자 수 : " + PhotonNetwork.PlayerList.Length);
+        for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
+        {
+            PhotonNetwork.PlayerList[i].NickName = (PhotonNetwork.PlayerList[i].ActorNumber - 1).ToString();
+            if (PhotonNetwork.PlayerList[i].NickName == PhotonNetwork.NickName)
+            {
+                ExitGames.Client.Photon.Hashtable myCustomProperty = new ExitGames.Client.Photon.Hashtable();
+                myCustomProperty = PhotonNetwork.LocalPlayer.CustomProperties;
+                PhotonNetwork.PlayerList[i].CustomProperties["Number"] = i;
+                PhotonNetwork.PlayerList[i].CustomProperties["Life"] = 10;
+                PhotonNetwork.PlayerList[i].SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "Number", $"{i}" } });
+                PhotonNetwork.PlayerList[i].SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "Life", $"{10}" } });
+                PhotonNetwork.PlayerList[i].SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "Opponent", -1 } });                
+
+
+                PhotonNetwork.SetPlayerCustomProperties(myCustomProperty);
+            }
+            Debug.Log($"내 지정번호는 {(int)PhotonNetwork.PlayerList[i].CustomProperties["Number"]}");
+        }
     }
 
     // 방 입장 실패 시 호출되는 콜백 함수

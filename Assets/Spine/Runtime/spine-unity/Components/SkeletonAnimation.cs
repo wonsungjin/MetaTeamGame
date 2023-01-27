@@ -151,11 +151,16 @@ namespace Spine.Unity {
 			bool quiet = false) {
 			return SkeletonRenderer.NewSpineGameObject<SkeletonAnimation>(skeletonDataAsset, quiet);
 		}
-		#endregion
+        #endregion
 
-		/// <summary>
-		/// Clears the previously generated mesh, resets the skeleton's pose, and clears all previously active animations.</summary>
-		public override void ClearState () {
+        /// <summary>
+        /// Clears the previously generated mesh, resets the skeleton's pose, and clears all previously active animations.</summary>
+        /// 
+        public void SetFlip(bool isSet)
+        {
+			skeleton.FlipX = isSet;
+		}
+        public override void ClearState () {
 			base.ClearState();
 			if (state != null) state.ClearTracks();
 		}
