@@ -39,7 +39,6 @@ public partial class UIManager : MonoBehaviour
         timerSlider = GameObject.Find("TimerSlider").GetComponent<Slider>();
         reFreshButton = GameObject.Find("ReFreshButton").GetComponent<Button>();
         levelUpButton = GameObject.Find("LevelUPButton").GetComponent<Button>();
-        infoButton = GameObject.Find("InfoButton").GetComponent<Button>();
         optionButton = GameObject.Find("OptionButton").GetComponent<Button>();
         NowShopLevelTXT = GameObject.Find("NowShopLevelTXT").GetComponent<Text>();
         goldTXT = GameObject.Find("GoldTXT").GetComponent<Text>();
@@ -82,9 +81,3 @@ public partial class UIManager : MonoBehaviour
         }
     }
 }
-
-//41 23 56 70
-//4 23 5 70
-//42 31 47 60
-//40 27 35
-//0
