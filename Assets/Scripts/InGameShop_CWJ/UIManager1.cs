@@ -39,7 +39,6 @@ public partial class UIManager : MonoBehaviour
         timerSlider = GameObject.Find("TimerSlider").GetComponent<Slider>();
         reFreshButton = GameObject.Find("ReFreshButton").GetComponent<Button>();
         levelUpButton = GameObject.Find("LevelUPButton").GetComponent<Button>();
-        infoButton = GameObject.Find("InfoButton").GetComponent<Button>();
         optionButton = GameObject.Find("OptionButton").GetComponent<Button>();
         NowShopLevelTXT = GameObject.Find("NowShopLevelTXT").GetComponent<Text>();
         goldTXT = GameObject.Find("GoldTXT").GetComponent<Text>();
@@ -61,15 +60,14 @@ public partial class UIManager : MonoBehaviour
     {
         if (!isScene) return;
 
-
             // 시간이 변경한 만큼 slider Value 변경을 합니다.
             timer -= Time.deltaTime;
             timerSlider.value = timer;
             timerTXT.text = string.Format("Time : {0:N0}sec", timer);
 
             goldTXT.text = "" + goldCount.ToString();
-            shopLevelTXT.text = "Shop Gold :" + shopMoney.ToString();
-            NowShopLevelTXT.text = "Shop Level :" + shopLevel.ToString();
+            shopLevelTXT.text = "" + shopMoney.ToString();
+            NowShopLevelTXT.text = "" + shopLevel.ToString();
         
 
         if (sell.activeSelf == false)
@@ -82,9 +80,3 @@ public partial class UIManager : MonoBehaviour
         }
     }
 }
-
-//41 23 56 70
-//4 23 5 70
-//42 31 47 60
-//40 27 35
-//0

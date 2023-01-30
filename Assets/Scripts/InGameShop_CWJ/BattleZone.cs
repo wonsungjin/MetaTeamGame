@@ -22,6 +22,7 @@ public class BattleZone : MonoBehaviour
         if(collision.gameObject.CompareTag("BattleMonster"))
         {
             this.gameObject.tag = "BattleZone";
+            GameMGR.Instance.spawner.cardBatch[myNum] = null;
         }
     }
 }

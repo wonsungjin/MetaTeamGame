@@ -15,6 +15,7 @@ public partial class Drag2D : MonoBehaviour
     Vector2 battleZonePos;
     Vector2 selectZonePos;
     Vector2 meltPos;
+    Vector3 monsterPos = new Vector3(0, -0.6f, 0);
 
     float timer = 0f;
     float distance = 10;
@@ -40,9 +41,11 @@ public partial class Drag2D : MonoBehaviour
     {
         Vector3 mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance);
         Vector3 objPosition = mainCam.ScreenToWorldPoint(mousePosition);
-        transform.position = objPosition + Vector3.down;
-
+        
         RaycastHit2D hit = Physics2D.Raycast(objPosition, Vector2.zero);
+
+        if (CompareTag("BattleMonster")) transform.position = objPosition + Vector3.down;
+        else transform.position = objPosition + monsterPos;
 
         // 드래그 할때 마다 레이를 쏴서 밑에 닿은 배틀몬스터를 다른 위치로 보냄
         if (isClickBattleMonster == true)
@@ -194,6 +197,8 @@ public partial class Drag2D : MonoBehaviour
                         gameObject.tag = "BattleMonster";
                         GameMGR.Instance.uiManager.goldCount -= 3;
                         pos = collision.gameObject.transform.position;
+                        Vector2 monTras = gameObject.transform.localScale;
+                        gameObject.transform.localScale = monTras * 2;
                     }
                 }
             }
