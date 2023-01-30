@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: -5634167372538512893}
   - component: {fileID: 7248162901638299418}
   - component: {fileID: -670425855736281981}
+  - component: {fileID: -5919113159977568198}
   m_Layer: 0
   m_Name: orcmage
   m_TagString: Monster
@@ -208,6 +209,18 @@ MonoBehaviour:
   curAttackValue: 0
   curHP: 0
   curEXP: 0
+--- !u!114 &-5919113159977568198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 380915959349513599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e05b8c94d5fb69948b8dd34210bf692f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3430501524843487965
 PrefabInstance:
   m_ObjectHideFlags: 0

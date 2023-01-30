@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 4239741068177032651}
   - component: {fileID: -85205622891047639}
   - component: {fileID: -4775062250452265806}
+  - component: {fileID: 3038946696309926084}
   m_Layer: 0
   m_Name: angryrhinoceros
   m_TagString: Monster
@@ -208,6 +209,18 @@ MonoBehaviour:
   curAttackValue: 0
   curHP: 0
   curEXP: 0
+--- !u!114 &3038946696309926084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 622407916316473686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e05b8c94d5fb69948b8dd34210bf692f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3346049238334682883
 PrefabInstance:
   m_ObjectHideFlags: 0

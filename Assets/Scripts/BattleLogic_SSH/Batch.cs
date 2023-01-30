@@ -89,6 +89,7 @@ public class Batch : MonoBehaviourPun
     {
         List<Card> cardList = null;
         GameMGR.Instance.playerList.TryGetValue(playerNum, out cardList);
+
         for (int i = 0; i < cardList.Count; i++)
         { 
             if(cardList[i] == null) continue;
@@ -111,12 +112,13 @@ public class Batch : MonoBehaviourPun
                 if (i < 3) GameMGR.Instance.battleLogic.enemyForwardUnits.Add(unitCard.gameObject);
                 else GameMGR.Instance.battleLogic.enemyBackwardUnits.Add(unitCard.gameObject);
             }
+
             else
             {
                 Debug.Log("CreateBatch : myCard �� Ȯ���ʿ�");
             }
         }
+        if(myCard) GameMGR.Instance.battleLogic.InitPlayerList();
+        else GameMGR.Instance.battleLogic.InitEnemyList();
     }
-
-
 }

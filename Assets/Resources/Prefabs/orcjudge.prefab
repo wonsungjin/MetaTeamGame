@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 5289313842234402194}
   - component: {fileID: 9217655626534900632}
   - component: {fileID: -4014655520239047448}
+  - component: {fileID: -7516369443171365476}
   m_Layer: 0
   m_Name: orcjudge
   m_TagString: Monster
@@ -208,6 +209,18 @@ MonoBehaviour:
   curAttackValue: 0
   curHP: 0
   curEXP: 0
+--- !u!114 &-7516369443171365476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4051551510004340613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e05b8c94d5fb69948b8dd34210bf692f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &902935832819511964
 PrefabInstance:
   m_ObjectHideFlags: 0

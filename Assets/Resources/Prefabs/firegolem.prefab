@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 3014156561101699339}
   - component: {fileID: 6986115454986519626}
   - component: {fileID: 3269420609915280404}
+  - component: {fileID: 1725132815155157637}
   m_Layer: 0
   m_Name: firegolem
   m_TagString: Monster
@@ -208,6 +209,18 @@ MonoBehaviour:
   curAttackValue: 0
   curHP: 0
   curEXP: 0
+--- !u!114 &1725132815155157637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3334768089148048914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e05b8c94d5fb69948b8dd34210bf692f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7555629286547355078
 PrefabInstance:
   m_ObjectHideFlags: 0

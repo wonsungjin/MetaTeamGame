@@ -28,25 +28,69 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
     private int playerCurRound = 0;
     private int enemyCurRound = 0;
 
-    
-
     #region Player, EnemyList 초기화
-    public void Init()
+    public void InitPlayerList()
     {
+        Debug.Log("PlayerList 초기화");
         // Master Clinet가 매 라운드마다 생성하는 Random Array
 
         // player 공격리스트 추가
-        for (int i = 0; i < playerForwardUnits.Count; i++)
+        if (playerForwardUnits.Count != 0)
         {
-            playerAttackList.Add(playerForwardUnits[i]);
-            playerAttackList.Add(playerBackwardUnits[i]);
+            for (int i = 0; i < playerForwardUnits.Count; i++)
+            {
+                playerAttackList.Add(playerForwardUnits[i]);
+            }
         }
 
-        // enemy 공격리스트 추가
-        for (int i = 0; i < enemyForwardUnits.Count; i++)
+        else
         {
-            enemyAttackList.Add(enemyForwardUnits[i]);
-            enemyAttackList.Add(enemyBackwardUnits[i]);
+            Debug.Log("공격 가능한 Player 전열이 없음");
+        }
+
+        if (playerBackwardUnits.Count != 0)
+        {
+            for (int i = 0; i < playerBackwardUnits.Count; i++)
+            {
+                playerAttackList.Add(playerBackwardUnits[i]);
+            }
+        }
+
+        else
+        {
+            Debug.Log("공격 가능한 Player 후열이 없음");
+        }
+    }
+    #endregion
+
+    #region Player, EnemyList 초기화
+    public void InitEnemyList()
+    {
+        // enemy 공격리스트 추가
+        if (enemyForwardUnits.Count != 0)
+        {
+            for (int i = 0; i < enemyForwardUnits.Count; i++)
+            {
+                enemyAttackList.Add(enemyForwardUnits[i]);
+            }
+        }
+
+        else
+        {
+            Debug.Log("공격가능한 Enemy 전열이 없음");
+        }
+
+        if (enemyBackwardUnits.Count != 0)
+        {
+            for (int i = 0; i < enemyBackwardUnits.Count; i++)
+            {
+                enemyAttackList.Add(enemyBackwardUnits[i]);
+            }
+        }
+
+        else
+        {
+            Debug.Log("공격 가능한 Enemy 후열이 없음");
         }
     }
     #endregion
@@ -95,7 +139,12 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                 // 공격 가능한 플레이어가 나올때 까지 playerturnCount 증가
                 while (playerAttackList[playerTurnCount] == null)
                 {
-                    playerTurnCount++;
+                    playerTurnCount++; 
+
+                    if (playerTurnCount > playerAttackList.Count)
+                    {
+                        playerTurnCount = 0;
+                    }
                 }
 
                 // 플레이어 유닛이 적 전열 유닛 랜덤 공격
@@ -213,6 +262,10 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                     while (enemyAttackList[enemyTurnCount] == null)
                     {
                         enemyTurnCount++;
+                        if (enemyTurnCount > enemyAttackList.Count)
+                        {
+                            enemyTurnCount = 0;
+                        }
                     }
                 }
 

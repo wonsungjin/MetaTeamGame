@@ -520,7 +520,6 @@ public class TurnSystem : MonoBehaviourPunCallbacks
             }
         }
     }
-  
 
     public void LifeDown()
     {

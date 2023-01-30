@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: -3500510323829592173}
   - component: {fileID: 1657788728062712940}
   - component: {fileID: -4246177013781859602}
+  - component: {fileID: 2551946047974033826}
   m_Layer: 0
   m_Name: OrcBattler
   m_TagString: Monster
@@ -207,7 +208,19 @@ MonoBehaviour:
   level: 1
   curAttackValue: 1
   curHP: 2
-  curEXP: 8
+  curEXP: 44
+--- !u!114 &2551946047974033826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2959011329948085731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e05b8c94d5fb69948b8dd34210bf692f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7350323688505281664
 PrefabInstance:
   m_ObjectHideFlags: 0
