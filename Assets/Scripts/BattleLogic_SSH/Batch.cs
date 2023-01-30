@@ -12,7 +12,7 @@ public class Batch : MonoBehaviourPun
 
     bool isMinePlayerNum = true;
 
-    // ÇÑ½ÃÀû ½ºÅÈ Áõ°¡ ±¸ÇöÀ» À§ÇÑ Ãß°¡ ÄÚµå - HCU *¼öÁ¤µÊ
+    // ï¿½Ñ½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ ï¿½Úµï¿½ - HCU *ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     int tempHp = 0;
     int tempAtk = 0;
     int tempExp = 0;
@@ -30,7 +30,7 @@ public class Batch : MonoBehaviourPun
         enemyCardPosition = temporaryEnemyObjects.transform.GetComponentsInChildren<Transform>();
     }
 
-    // »óÁ¡ÀÇ ¹èÄ¡ Á¤º¸¸¦ Àü´Þ ¹ÞÀ½ *¼öÁ¤µÊ
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ *ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     [PunRPC]
     public void SetBatch(int playerNum, string cardName, int hp, int attackValue, int exp, int level)
     {
@@ -43,13 +43,18 @@ public class Batch : MonoBehaviourPun
         {
             cardList = new List<Card>();
         }
-        instance.SetMyInfo(cardName);
-        instance.ChangeValue(CardStatus.Hp, hp);
-        instance.ChangeValue(CardStatus.Attack, attackValue);
-        instance.ChangeValue(CardStatus.Exp, exp);
-        instance.ChangeValue(CardStatus.Level, level);
-        cardList.Add(instance);
-        for (int i = 0; i < cardList.Count; i++) Debug.Log("»ðÀÔ" + cardList[i].name);
+        if (cardName != "")
+        {
+            instance.SetMyInfo(cardName);
+            instance.ChangeValue(CardStatus.Hp, hp);
+            instance.ChangeValue(CardStatus.Attack, attackValue);
+            instance.ChangeValue(CardStatus.Exp, exp);
+            instance.ChangeValue(CardStatus.Level, level);
+            cardList.Add(instance);
+        }
+        else cardList.Add(null);
+        
+
         GameMGR.Instance.playerList.TryAdd(playerNum, cardList);
     }
 
@@ -61,23 +66,23 @@ public class Batch : MonoBehaviourPun
     }
     public void UnitPlacement()
     {
-        // À¯´Ö ¹èÄ¡ Á¤º¸
-        // ¼±°ø ÈÄ°ø Á¤º¸
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½Ä°ï¿½ ï¿½ï¿½ï¿½ï¿½
 
         GameMGR.Instance.batch.CreateBatch(GameMGR.Instance.matching[0], GameMGR.Instance.matching[0] == (int)PhotonNetwork.LocalPlayer.CustomProperties["Number"]);
 
 
-        // ¸ÅÄªµÈ »ó´ë¹æÀÇ »óÁ¡¿¡¼­ ¹Þ¾Æ¿Â À¯´Ö ¹èÄ¡ Á¤º¸
+        // ï¿½ï¿½Äªï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¾Æ¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½
 
         GameMGR.Instance.batch.CreateBatch(GameMGR.Instance.matching[1], GameMGR.Instance.matching[1] == (int)PhotonNetwork.LocalPlayer.CustomProperties["Number"]);
 
     }
 
-    // ¹èÆ²¾À À¯´Ö ¹èÄ¡
+    // ï¿½ï¿½Æ²ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡
     /// <summary>
-    ///  playerNum : Photon Customproperties °íÀ¯¹øÈ£, 
-    ///  cardNum : Ä«µå ¹èÄ¡ ¼ø¼­, 
-    ///  myCard : º»ÀÎ Ä«µå ¿©ºÎ
+    ///  playerNum : Photon Customproperties ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È£, 
+    ///  cardNum : Ä«ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½, 
+    ///  myCard : ï¿½ï¿½ï¿½ï¿½ Ä«ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     /// </summary>
     /// <param name="CreateBatch"></param>
     public void CreateBatch(int playerNum, bool myCard = true)
@@ -85,11 +90,12 @@ public class Batch : MonoBehaviourPun
         List<Card> cardList = null;
         GameMGR.Instance.playerList.TryGetValue(playerNum, out cardList);
         for (int i = 0; i < cardList.Count; i++)
-        {
-            Debug.Log("»ý¼º" + cardList[i].name);
+        { 
+            if(cardList[i] == null) continue;
+            Debug.Log("ï¿½ï¿½ï¿½ï¿½" + cardList[i].name);
             Card unitCard = GameObject.Instantiate<Card>(cardList[i]);
 
-            // player Unit À§Ä¡ ¼³Á¤
+            // player Unit ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½
             if (myCard == true)
             {
                 unitCard.transform.position = myCardPosition[i + 1].position;
@@ -97,7 +103,7 @@ public class Batch : MonoBehaviourPun
                 else GameMGR.Instance.battleLogic.playerBackwardUnits.Add(unitCard.gameObject);
             }
 
-            // enemy Unit À§Ä¡ ¼³Á¤
+            // enemy Unit ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½
             else if (myCard == false)
             {
                 unitCard.transform.position = enemyCardPosition[i + 1].position;
@@ -107,7 +113,7 @@ public class Batch : MonoBehaviourPun
             }
             else
             {
-                Debug.Log("CreateBatch : myCard °ª È®ÀÎÇÊ¿ä");
+                Debug.Log("CreateBatch : myCard ï¿½ï¿½ È®ï¿½ï¿½ï¿½Ê¿ï¿½");
             }
         }
     }

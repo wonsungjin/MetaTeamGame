@@ -1,8 +1,6 @@
 using Photon.Pun;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 
 public class Spawner : MonoBehaviourPun
@@ -21,8 +19,9 @@ public class Spawner : MonoBehaviourPun
     int randomNum;
     bool isFirstStart = false;
 
-    public GameObject[] cardBatch = new GameObject[6];
+    Vector3 vec = new Vector3(0, 0.6f, 0);
 
+    public GameObject[] cardBatch = new GameObject[6];
     public void SetMyDeckSetting()
     {
         customDeck= GameMGR.Instance.Get_CustomDeck();
@@ -71,7 +70,7 @@ public class Spawner : MonoBehaviourPun
                 randomNum = Random.Range(0, customDeck.tier_1.Count);
                 Debug.Log(monsterNames[randomNum]);
                 Debug.Log(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum]}"));
-                GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum]}"), monsterTrans[randomTrans].transform.position, Quaternion.identity);
+                GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum]}"), monsterTrans[randomTrans].transform.position - vec, Quaternion.identity);
 
                 randomTrans++;
 
@@ -93,8 +92,11 @@ public class Spawner : MonoBehaviourPun
             if (cardBatch[i] != null)
             {
                 card = cardBatch[i].GetComponent<Card>();
-                GameMGR.Instance.batch.gameObject.GetPhotonView().RPC("SetBatch", RpcTarget.All, (int)PhotonNetwork.LocalPlayer.CustomProperties["Number"], card.name.Replace("(Clone)", ""), card.curHP, card.curAttackValue, card.curEXP, card.level);
+                GameMGR.Instance.batch.gameObject.GetPhotonView().RPC("SetBatch", RpcTarget.All,
+                    (int)PhotonNetwork.LocalPlayer.CustomProperties["Number"], card.name.Replace("(Clone)", ""), card.curHP, card.curAttackValue, card.curEXP, card.level);
             }
+            else GameMGR.Instance.batch.gameObject.GetPhotonView().RPC("SetBatch", RpcTarget.All,
+                (int)PhotonNetwork.LocalPlayer.CustomProperties["Number"], "", 0, 0, 0, 0);
         }
         photonView.RPC("MatchingReady", RpcTarget.All);
 
@@ -402,8 +404,9 @@ public class Spawner : MonoBehaviourPun
     void SummonMonster(int a, int b)
     {
         randomNum = Random.Range(a, b);
-        GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum]}"), monsterTrans[randomTrans].transform.position, Quaternion.identity);
-
+        GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum]}"),
+            monsterTrans[randomTrans].transform.position - vec, Quaternion.identity);
+        
         randomTrans++;
     }
     public void SpecialMonster()
