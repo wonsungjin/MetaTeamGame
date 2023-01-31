@@ -16,6 +16,8 @@ GameObject:
   - component: {fileID: 3799513738927386349}
   - component: {fileID: -2274415606155860591}
   - component: {fileID: -2091181858838936634}
+  - component: {fileID: 439582148713684964}
+  - component: {fileID: 3427270255803576312}
   m_Layer: 0
   m_Name: slavetrader
   m_TagString: Monster
@@ -208,6 +210,36 @@ MonoBehaviour:
   curAttackValue: 0
   curHP: 0
   curEXP: 0
+--- !u!114 &439582148713684964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6146345602450129758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e05b8c94d5fb69948b8dd34210bf692f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3427270255803576312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6146345602450129758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31476c45569d86b489c9b4862b659ee5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerForwardUnits: []
+  playerBackwardUnits: []
+  enemyForwardUnits: []
+  enemyBackwardUnits: []
+  playerAttackList: []
+  enemyAttackList: []
 --- !u!1001 &6649299400753187761
 PrefabInstance:
   m_ObjectHideFlags: 0

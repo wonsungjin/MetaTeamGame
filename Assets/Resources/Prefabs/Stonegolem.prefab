@@ -16,6 +16,8 @@ GameObject:
   - component: {fileID: -6199222832772343888}
   - component: {fileID: 6780334076446405906}
   - component: {fileID: 2721737612955717156}
+  - component: {fileID: -6403028269602898319}
+  - component: {fileID: 9160203195762526165}
   m_Layer: 0
   m_Name: Stonegolem
   m_TagString: Monster
@@ -208,6 +210,36 @@ MonoBehaviour:
   curAttackValue: 0
   curHP: 0
   curEXP: 0
+--- !u!114 &-6403028269602898319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1052317940946996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e05b8c94d5fb69948b8dd34210bf692f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &9160203195762526165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1052317940946996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31476c45569d86b489c9b4862b659ee5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerForwardUnits: []
+  playerBackwardUnits: []
+  enemyForwardUnits: []
+  enemyBackwardUnits: []
+  playerAttackList: []
+  enemyAttackList: []
 --- !u!1001 &2311126208779398505
 PrefabInstance:
   m_ObjectHideFlags: 0

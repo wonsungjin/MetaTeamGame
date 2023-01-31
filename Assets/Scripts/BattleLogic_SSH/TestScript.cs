@@ -1,30 +1,23 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestScript : MonoBehaviour
+public class TestScript 
 {
-    [SerializeField] List<GameObject> player = new List<GameObject>();
+    long result = 0;
+    string[] inNum;
 
-    // Start is called before the first frame update
-    void Start()
+    public long solution(int price, int money, int count)
     {
-        Debug.Log(player.Count);
 
-        player[0] = null;
+        price = 0;
+        money = 0;
+        count = 0;
 
-        Debug.Log(player.Count);
-        Debug.Log(player[0] + "player[0]");
-
-        if (player[0] == null)
-        {
-            Debug.Log("Null!!");
-        }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
+        inNum = Console.ReadLine().Split(" ");
         
+
+        return result;
     }
 }

@@ -16,6 +16,8 @@ GameObject:
   - component: {fileID: -3934646774624281726}
   - component: {fileID: 6514979770706055998}
   - component: {fileID: 8339056261689079573}
+  - component: {fileID: -7245678051789738562}
+  - component: {fileID: 3042906351736400659}
   m_Layer: 0
   m_Name: Shylock
   m_TagString: Monster
@@ -208,6 +210,36 @@ MonoBehaviour:
   curAttackValue: 0
   curHP: 0
   curEXP: 0
+--- !u!114 &-7245678051789738562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1992850962502506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e05b8c94d5fb69948b8dd34210bf692f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3042906351736400659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1992850962502506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31476c45569d86b489c9b4862b659ee5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerForwardUnits: []
+  playerBackwardUnits: []
+  enemyForwardUnits: []
+  enemyBackwardUnits: []
+  playerAttackList: []
+  enemyAttackList: []
 --- !u!1001 &595970263977719551
 PrefabInstance:
   m_ObjectHideFlags: 0
