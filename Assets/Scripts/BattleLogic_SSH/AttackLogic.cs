@@ -13,9 +13,6 @@ public partial class AttackLogic : MonoBehaviour
         playerPosition = gameObject.transform.position;
         enemyPosition = targetUnit.transform.position;
 */
-        Debug.Log(gameObject.name + " 공격");
-        Debug.Log(targetUnit.name + " 피격");
-
         // enemy 피격 후 돌아옴
     }
 }
