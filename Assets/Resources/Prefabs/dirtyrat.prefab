@@ -16,8 +16,7 @@ GameObject:
   - component: {fileID: 6793799770956366961}
   - component: {fileID: 3415351992153422085}
   - component: {fileID: -8970553599001712716}
-  - component: {fileID: 680155400342618483}
-  - component: {fileID: 8977043192845722408}
+  - component: {fileID: 2542001535939499745}
   m_Layer: 0
   m_Name: dirtyrat
   m_TagString: Monster
@@ -210,7 +209,7 @@ MonoBehaviour:
   curAttackValue: 2
   curHP: 1
   curEXP: 4
---- !u!114 &680155400342618483
+--- !u!114 &2542001535939499745
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -222,24 +221,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e05b8c94d5fb69948b8dd34210bf692f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &8977043192845722408
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4560409355958465693}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31476c45569d86b489c9b4862b659ee5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerForwardUnits: []
-  playerBackwardUnits: []
-  enemyForwardUnits: []
-  enemyBackwardUnits: []
-  playerAttackList: []
-  enemyAttackList: []
 --- !u!1001 &6570714268836421804
 PrefabInstance:
   m_ObjectHideFlags: 0

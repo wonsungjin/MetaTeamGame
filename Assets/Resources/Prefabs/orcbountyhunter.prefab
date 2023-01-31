@@ -16,8 +16,7 @@ GameObject:
   - component: {fileID: -7152431092367770191}
   - component: {fileID: -1144359153630189102}
   - component: {fileID: 752430368222125568}
-  - component: {fileID: -5575115889293253724}
-  - component: {fileID: -1496931641704150074}
+  - component: {fileID: -8802727314780353669}
   m_Layer: 0
   m_Name: orcbountyhunter
   m_TagString: Monster
@@ -210,7 +209,7 @@ MonoBehaviour:
   curAttackValue: 0
   curHP: 0
   curEXP: 0
---- !u!114 &-5575115889293253724
+--- !u!114 &-8802727314780353669
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -222,24 +221,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e05b8c94d5fb69948b8dd34210bf692f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &-1496931641704150074
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1129450139034144747}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31476c45569d86b489c9b4862b659ee5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerForwardUnits: []
-  playerBackwardUnits: []
-  enemyForwardUnits: []
-  enemyBackwardUnits: []
-  playerAttackList: []
-  enemyAttackList: []
 --- !u!1001 &4898577906446754338
 PrefabInstance:
   m_ObjectHideFlags: 0

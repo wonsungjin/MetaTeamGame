@@ -16,8 +16,7 @@ GameObject:
   - component: {fileID: 756117429704340333}
   - component: {fileID: 797362138575439167}
   - component: {fileID: -1169275120561656407}
-  - component: {fileID: 2227906862658569050}
-  - component: {fileID: -5219340694462078458}
+  - component: {fileID: -7107169508914419895}
   m_Layer: 0
   m_Name: lizard
   m_TagString: Monster
@@ -210,7 +209,7 @@ MonoBehaviour:
   curAttackValue: 0
   curHP: 0
   curEXP: 0
---- !u!114 &2227906862658569050
+--- !u!114 &-7107169508914419895
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -222,24 +221,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e05b8c94d5fb69948b8dd34210bf692f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &-5219340694462078458
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5893283217648903366}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31476c45569d86b489c9b4862b659ee5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerForwardUnits: []
-  playerBackwardUnits: []
-  enemyForwardUnits: []
-  enemyBackwardUnits: []
-  playerAttackList: []
-  enemyAttackList: []
 --- !u!1001 &3117430902022775512
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -141,10 +141,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
             Debug.Log("공격 시작");
 
             // 랜덤 수를 가지고 있는 배열 1바퀴 돌았을 때 0번째로 초기화
-            if (randomArrayNum == exArray.Length)
-            {
-                randomArrayNum = 0;
-            }
+            if (randomArrayNum == exArray.Length) { randomArrayNum = 0; }
 
             // [Player -> Enemy Attack] 적의 전열이 살아있는 경우
             if (isEnemyPreemptiveAlive)
@@ -193,6 +190,8 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                     if (isPlayerAliveCount == playerAttackList.Count) { break; }
                 }
 
+                Debug.Log("playerAttackList[playerTurnCount] : " + playerAttackList[playerTurnCount]);
+                Debug.Log("enemyForwardUnits[exArray[randomArrayNum]] : " + enemyForwardUnits[exArray[randomArrayNum]]);
                 // 플레이어 유닛이 적 전열 유닛 랜덤 공격
                 playerAttackList[playerTurnCount].GetComponent<AttackLogic>().UnitAttack(enemyForwardUnits[exArray[randomArrayNum]]);
 
@@ -271,6 +270,9 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                         break;
                     }
                 }
+
+                Debug.Log("playerAttackList[playerTurnCount] : " + playerAttackList[playerTurnCount]);
+                Debug.Log("enemyBackwardUnits[exArray[randomArrayNum]] : " + enemyBackwardUnits[exArray[randomArrayNum]]);
 
                 // 플레이어 유닛이 적 후열 유닛 랜덤 공격
                 playerAttackList[playerTurnCount].GetComponent<AttackLogic>().UnitAttack(enemyBackwardUnits[exArray[randomArrayNum]]);

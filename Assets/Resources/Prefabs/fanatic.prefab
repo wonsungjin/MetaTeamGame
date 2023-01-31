@@ -16,8 +16,7 @@ GameObject:
   - component: {fileID: 8744254552039342802}
   - component: {fileID: 3341205296199373679}
   - component: {fileID: 2833448174293176785}
-  - component: {fileID: 578902593643102207}
-  - component: {fileID: 7877457488095365291}
+  - component: {fileID: 7180841377224145236}
   m_Layer: 0
   m_Name: fanatic
   m_TagString: Monster
@@ -210,7 +209,7 @@ MonoBehaviour:
   curAttackValue: 1
   curHP: 1
   curEXP: 9
---- !u!114 &578902593643102207
+--- !u!114 &7180841377224145236
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -222,24 +221,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e05b8c94d5fb69948b8dd34210bf692f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &7877457488095365291
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2569123230379368284}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31476c45569d86b489c9b4862b659ee5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerForwardUnits: []
-  playerBackwardUnits: []
-  enemyForwardUnits: []
-  enemyBackwardUnits: []
-  playerAttackList: []
-  enemyAttackList: []
 --- !u!1001 &2476519875204391971
 PrefabInstance:
   m_ObjectHideFlags: 0

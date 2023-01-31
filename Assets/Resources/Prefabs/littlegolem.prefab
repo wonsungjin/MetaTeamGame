@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 3058657480218705788}
   - component: {fileID: 525743357874183556}
   - component: {fileID: 1606708643817406744}
-  - component: {fileID: 7169345744669942016}
+  - component: {fileID: 6716394388071395309}
   m_Layer: 0
   m_Name: littlegolem
   m_TagString: Monster
@@ -208,8 +208,8 @@ MonoBehaviour:
   level: 1
   curAttackValue: 1
   curHP: 3
-  curEXP: 19
---- !u!114 &7169345744669942016
+  curEXP: 31
+--- !u!114 &6716394388071395309
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -218,15 +218,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 113424600587252965}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31476c45569d86b489c9b4862b659ee5, type: 3}
+  m_Script: {fileID: 11500000, guid: e05b8c94d5fb69948b8dd34210bf692f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerForwardUnits: []
-  playerBackwardUnits: []
-  enemyForwardUnits: []
-  enemyBackwardUnits: []
-  playerAttackList: []
-  enemyAttackList: []
 --- !u!1001 &1897235606876080951
 PrefabInstance:
   m_ObjectHideFlags: 0
