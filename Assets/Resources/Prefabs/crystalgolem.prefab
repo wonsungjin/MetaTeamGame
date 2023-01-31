@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 6967783964965364877}
   - component: {fileID: -1773266439956216755}
   - component: {fileID: 3266979729169502436}
+  - component: {fileID: 9160713130200205367}
   m_Layer: 0
   m_Name: crystalgolem
   m_TagString: Monster
@@ -221,6 +222,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e05b8c94d5fb69948b8dd34210bf692f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &9160713130200205367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8378535947524655575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31476c45569d86b489c9b4862b659ee5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerForwardUnits: []
+  playerBackwardUnits: []
+  enemyForwardUnits: []
+  enemyBackwardUnits: []
+  playerAttackList: []
+  enemyAttackList: []
 --- !u!1001 &7070450426151074686
 PrefabInstance:
   m_ObjectHideFlags: 0

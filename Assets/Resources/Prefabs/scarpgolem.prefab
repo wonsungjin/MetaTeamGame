@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 8452249714868586503}
   - component: {fileID: 7450805374771786990}
   - component: {fileID: 6202419071717866069}
+  - component: {fileID: 2975785057895896947}
   m_Layer: 0
   m_Name: scarpgolem
   m_TagString: Monster
@@ -221,6 +222,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e05b8c94d5fb69948b8dd34210bf692f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2975785057895896947
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1118019117831746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31476c45569d86b489c9b4862b659ee5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerForwardUnits: []
+  playerBackwardUnits: []
+  enemyForwardUnits: []
+  enemyBackwardUnits: []
+  playerAttackList: []
+  enemyAttackList: []
 --- !u!1001 &3174205331877909902
 PrefabInstance:
   m_ObjectHideFlags: 0
