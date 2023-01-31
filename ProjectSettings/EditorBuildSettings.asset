@@ -8,7 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/LobbyScene_SSH.unity
     guid: 408cbe5a0315f4741b89b9e45dd9be4a
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/LobbyScene.unity
     guid: b1a3370c24082704fb805e2cad62cf21
   - enabled: 1
