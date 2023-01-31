@@ -82,7 +82,10 @@ public partial class Card : MonoBehaviour
             SkillActive();
         }
         this.curHP -= damage;
-        if (this.curHP <= 0) Destroy(this.GameObject());
+        if (this.curHP <= 0)
+        {
+            
+        }
     }
 
     public void SkillActive() // 스킬 효과 발동

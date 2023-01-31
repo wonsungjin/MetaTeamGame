@@ -22,13 +22,11 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
 
     private int playerTurnCount = 0; // Player Turn Count
     private int enemyTurnCount = 0; // Enemy Turn Count
-<<<<<<< HEAD
-    private int randomArrayNum = 0; 
-=======
+
     private int randomArrayNum = 0;
     private int isPlayerAliveCount = 0;
     private int isEnemyAliveCount = 0;
->>>>>>> develop
+
 
     // 추후 master client가 gamemananger에서 생성한 랜덤 배열로 대체 예정 (매 라운드 생성 및 배포)
     private int[] exArray = new int[100];
