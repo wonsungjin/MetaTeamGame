@@ -10,16 +10,23 @@ public partial class Card : MonoBehaviour
 {
     //[SerializeField] public CardInfo cardInfo;
     [SerializeField] List<Card> skillTarget;
+    [SerializeField] Vector2 TargetPos;
 
     [SerializeField] GameObject curPos;
 
     //스킬 관련 변수
-    GameObject AllyCamp = GameObject.Find("Me");        // 아군 진형
-    GameObject EnemyCamp = GameObject.Find("Enemy");   // 적 진형
+    [SerializeField] GameObject AllyCamp;   // 아군 진형
+    [SerializeField] GameObject EnemyCamp;   // 적 진형
 
     //스킬 효과 관련 변수
     public int giveDamage = 0;
     public int takeDamage = 0;
+
+    public void Start()
+    {
+        AllyCamp = GameObject.Find("PlayerUnit");   // 아군 진형
+        EnemyCamp = GameObject.Find("EnemyUnit");   // 적 진형
+    }
 
     public void SetSkillTiming() // 스킬을 언제 발동시키느냐에 따라서 각 이벤트에 추가시켜준다.
     {
@@ -75,7 +82,7 @@ public partial class Card : MonoBehaviour
             SkillActive();
         }
         this.curHP -= damage;
-        if (this.curHP <= 0) Destroy(this.GetComponent<Card>());
+        if (this.curHP <= 0) Destroy(this.GameObject());
     }
 
     public void SkillActive() // 스킬 효과 발동
@@ -147,7 +154,6 @@ public partial class Card : MonoBehaviour
         else
             searchArea = EnemyCamp; // 적군 범위
 
-        
 
         switch (cardInfo.targetType)
         {
@@ -156,14 +162,17 @@ public partial class Card : MonoBehaviour
                 break;
 
             case TargetType.empty: // 빈 공간을 찾는다 = 소환시
-                for(int i = 0; i < 6; i++)
+                for(int i = 0; i < 3; i++)
                 {
-                    if (transform.parent.GetChild(i).gameObject.GetComponent<Card>() == null)
+                    if (GameMGR.Instance.battleLogic.playerForwardUnits[i] == null)
                     {
-                        
+                        TargetPos = GameMGR.Instance.battleLogic.playerForwardUnits[i].transform.position;
+                        Card summonCard = Resources.Load<Card>($"Prefabs/{cardInfo.summonName}");
+                        GameMGR.Instance.battleLogic.playerForwardUnits.Add(summonCard.gameObject);
                     }
                 }
                 break;
+
             case TargetType.random:
                 int random = Random.Range(0, 6);
                 while (searchArea.transform.GetChild(random).gameObject.GetComponent<Card>().curHP <= 0) // 죽은 아군이 아닐 때까지 랜덤값을 돌려

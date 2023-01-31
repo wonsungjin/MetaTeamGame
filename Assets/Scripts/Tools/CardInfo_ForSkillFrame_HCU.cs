@@ -84,6 +84,7 @@ public partial class CardInfo : ScriptableObject
     [SerializeField] internal int value2; //값2
     [SerializeField] internal int triggerCount; // 발동횟수
     [SerializeField] internal int groupIndex; // 그룹인덱스 = 딱히 필요 없을듯
+    [SerializeField] internal string summonName; //소환수이름
 
     /*//858ed67e0d64b72429e8c773f1903334
     [SerializeField] internal int ID;

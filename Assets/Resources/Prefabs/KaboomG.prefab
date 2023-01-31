@@ -207,7 +207,13 @@ MonoBehaviour:
   level: 1
   curAttackValue: 2
   curHP: 1
-  curEXP: 13
+  curEXP: 18
+  skillTarget: []
+  curPos: {fileID: 0}
+  AllyCamp: {fileID: 0}
+  EnemyCamp: {fileID: 0}
+  giveDamage: 0
+  takeDamage: 0
 --- !u!1001 &3395645782965401093
 PrefabInstance:
   m_ObjectHideFlags: 0
