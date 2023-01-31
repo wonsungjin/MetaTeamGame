@@ -46,6 +46,10 @@ public class Card : MonoBehaviour
     {
         skeletonAnimation.SetFlip(isSet);
     }
+    public void PlayAnimation(string ani,bool isSet = false)
+    {
+        skeletonAnimation.AnimationState.SetAnimation(0, ani, isSet);
+    }
     public void ChangeValue(CardStatus key, int value = 0)
     {
         if (key == CardStatus.Hp)
