@@ -16,6 +16,8 @@ GameObject:
   - component: {fileID: 6699218410248981617}
   - component: {fileID: 2471808741674068152}
   - component: {fileID: -5643554231295872500}
+  - component: {fileID: -9001234933348500539}
+  - component: {fileID: -481918924587937519}
   m_Layer: 0
   m_Name: Penetratermaster
   m_TagString: Monster
@@ -32,7 +34,7 @@ Transform:
   m_GameObject: {fileID: 5077731667976541851}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -0.7, z: 0}
-  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2164977094854997857}
@@ -207,6 +209,37 @@ MonoBehaviour:
   level: 0
   curAttackValue: 0
   curHP: 0
+  curEXP: 0
+--- !u!114 &-9001234933348500539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5077731667976541851}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e05b8c94d5fb69948b8dd34210bf692f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-481918924587937519
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5077731667976541851}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31476c45569d86b489c9b4862b659ee5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerForwardUnits: []
+  playerBackwardUnits: []
+  enemyForwardUnits: []
+  enemyBackwardUnits: []
+  playerAttackList: []
+  enemyAttackList: []
 --- !u!1001 &7642525829648182508
 PrefabInstance:
   m_ObjectHideFlags: 0

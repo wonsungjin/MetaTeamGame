@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: -3500510323829592173}
   - component: {fileID: 1657788728062712940}
   - component: {fileID: -4246177013781859602}
+  - component: {fileID: 1877892191350948669}
   m_Layer: 0
   m_Name: OrcBattler
   m_TagString: Monster
@@ -32,7 +33,7 @@ Transform:
   m_GameObject: {fileID: 2959011329948085731}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -0.68, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1298628240161773325}
@@ -207,7 +208,25 @@ MonoBehaviour:
   level: 1
   curAttackValue: 1
   curHP: 2
-  curEXP: 4
+  curEXP: 10
+--- !u!114 &1877892191350948669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2959011329948085731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31476c45569d86b489c9b4862b659ee5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerForwardUnits: []
+  playerBackwardUnits: []
+  enemyForwardUnits: []
+  enemyBackwardUnits: []
+  playerAttackList: []
+  enemyAttackList: []
 --- !u!1001 &7350323688505281664
 PrefabInstance:
   m_ObjectHideFlags: 0

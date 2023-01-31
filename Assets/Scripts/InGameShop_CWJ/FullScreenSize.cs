@@ -10,7 +10,7 @@ public class FullScreenSize : MonoBehaviour
     public AspectRatioFitter fit;
 
     // Update is called once per frame
-    void Update()
+    void Start()
     {
         float ratio = (float)Screen.width / (float)Screen.height;
         fit.aspectRatio = ratio;

@@ -1,8 +1,7 @@
 using Photon.Pun;
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 
 public class Spawner : MonoBehaviourPun
@@ -21,8 +20,9 @@ public class Spawner : MonoBehaviourPun
     int randomNum;
     bool isFirstStart = false;
 
-    public GameObject[] cardBatch = new GameObject[6];
+    Vector3 vec = new Vector3(0, 0.6f, 0);
 
+    public GameObject[] cardBatch = new GameObject[6];
     public void SetMyDeckSetting()
     {
         customDeck= GameMGR.Instance.Get_CustomDeck();
@@ -64,20 +64,24 @@ public class Spawner : MonoBehaviourPun
         // 처음에 카드 생성
         if (isFirstStart == false)
         {
+            GameMGR.Instance.uiManager.shopLevelTXT.text = "" + GameMGR.Instance.uiManager.shopMoney.ToString();
             GameMGR.Instance.uiManager.shopLevel = 1;
+            GameMGR.Instance.uiManager.goldCount = 10;
+            GameMGR.Instance.uiManager.goldTXT.text = "" + GameMGR.Instance.uiManager.goldCount.ToString();
 
             for (int i = 0; i < createdPlace; i++)
             {
                 randomNum = Random.Range(0, customDeck.tier_1.Count);
                 Debug.Log(monsterNames[randomNum]);
                 Debug.Log(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum]}"));
-                GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum]}"), monsterTrans[randomTrans].transform.position, Quaternion.identity);
+                GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum]}"), monsterTrans[randomTrans].transform.position - vec, Quaternion.identity);
 
                 randomTrans++;
 
                 isFirstStart = true;
 
                 GameMGR.Instance.uiManager.shopMoney = 7;
+                GameMGR.Instance.uiManager.shopLevelTXT.text = "" + GameMGR.Instance.uiManager.shopMoney.ToString();
             }
             randomTrans = 0;
         }
@@ -93,8 +97,11 @@ public class Spawner : MonoBehaviourPun
             if (cardBatch[i] != null)
             {
                 card = cardBatch[i].GetComponent<Card>();
-                GameMGR.Instance.batch.gameObject.GetPhotonView().RPC("SetBatch", RpcTarget.All, (int)PhotonNetwork.LocalPlayer.CustomProperties["Number"], card.name.Replace("(Clone)", ""), card.curHP, card.curAttackValue, card.curEXP, card.level);
+                GameMGR.Instance.batch.gameObject.GetPhotonView().RPC("SetBatch", RpcTarget.All,
+                    (int)PhotonNetwork.LocalPlayer.CustomProperties["Number"], card.name.Replace("(Clone)", ""), card.curHP, card.curAttackValue, card.curEXP, card.level);
             }
+            else GameMGR.Instance.batch.gameObject.GetPhotonView().RPC("SetBatch", RpcTarget.All,
+                (int)PhotonNetwork.LocalPlayer.CustomProperties["Number"], "", 0, 0, 0, 0);
         }
         photonView.RPC("MatchingReady", RpcTarget.All);
 
@@ -104,7 +111,6 @@ public class Spawner : MonoBehaviourPun
         //{
         //    GameMGR.Instance.objectPool.DestroyPrefab(monster[i]);
         //}
-
     }
 
     public void TestButton()
@@ -112,16 +118,30 @@ public class Spawner : MonoBehaviourPun
         ChooseRandomCard();
         if (GameMGR.Instance.uiManager.shopLevel < 6 && GameMGR.Instance.uiManager.shopMoney > 0)
             GameMGR.Instance.uiManager.shopMoney--;
+        GameMGR.Instance.uiManager.shopLevelTXT.text = "" + GameMGR.Instance.uiManager.shopMoney.ToString();
         GameMGR.Instance.uiManager.timer = 60f;
+
+        GameMGR.Instance.uiManager.goldCount = 10;
+        GameMGR.Instance.uiManager.goldTXT.text = "" + GameMGR.Instance.uiManager.goldCount.ToString();
+
+        GameObject[] monster = GameObject.FindGameObjectsWithTag("Monster");
+        for (int i = 0; i < monster.Length; i++)
+        {
+            GameMGR.Instance.objectPool.DestroyPrefab(monster[i]);
+        }
+        ChooseRandomCard();
         Reset_NotMoney();
     }
+    
 
     public void OnClick_ShopLevelUp()
     {
         if (GameMGR.Instance.uiManager.shopMoney <= GameMGR.Instance.uiManager.goldCount)
         {
             GameMGR.Instance.uiManager.shopLevel++;
+            GameMGR.Instance.uiManager.NowShopLevelTXT.text = "" + GameMGR.Instance.uiManager.shopLevel.ToString();
             GameMGR.Instance.uiManager.goldCount -= GameMGR.Instance.uiManager.shopMoney;
+            GameMGR.Instance.uiManager.shopLevelTXT.text = "" + GameMGR.Instance.uiManager.shopMoney.ToString();
 
             // 함수 호출 레벨 업 후 돈?
             ShopLevelUp();
@@ -135,15 +155,19 @@ public class Spawner : MonoBehaviourPun
         {
             case 2:
                 GameMGR.Instance.uiManager.shopMoney = 8;
+                GameMGR.Instance.uiManager.shopLevelTXT.text = "" + GameMGR.Instance.uiManager.shopMoney.ToString();
                 break;
             case 3:
                 GameMGR.Instance.uiManager.shopMoney = 9;
+                GameMGR.Instance.uiManager.shopLevelTXT.text = "" + GameMGR.Instance.uiManager.shopMoney.ToString();
                 break;
             case 4:
                 GameMGR.Instance.uiManager.shopMoney = 10;
+                GameMGR.Instance.uiManager.shopLevelTXT.text = "" + GameMGR.Instance.uiManager.shopMoney.ToString();
                 break;
             case 5:
                 GameMGR.Instance.uiManager.shopMoney = 11;
+                GameMGR.Instance.uiManager.shopLevelTXT.text = "" + GameMGR.Instance.uiManager.shopMoney.ToString();
                 break;
         }
     }
@@ -155,10 +179,10 @@ public class Spawner : MonoBehaviourPun
         {
             GameObject[] monster = GameObject.FindGameObjectsWithTag("Monster");
             GameMGR.Instance.uiManager.goldCount--;
+            GameMGR.Instance.uiManager.goldTXT.text = "" + GameMGR.Instance.uiManager.goldCount.ToString();
 
             for (int i = 0; i < monster.Length; i++)
             {
-                //Destroy(monster[i]);
                 GameMGR.Instance.objectPool.DestroyPrefab(monster[i]);
             }
             ChooseRandomCard();
@@ -170,7 +194,7 @@ public class Spawner : MonoBehaviourPun
     {
         if (GameMGR.Instance.uiManager.goldCount <= 0)
         {
-            GameMGR.Instance.uiManager.reFreshButton.interactable = false;
+            GameMGR.Instance.uiManager.reFreshButton.interactable = false; 
         }
         else
             GameMGR.Instance.uiManager.reFreshButton.interactable = true;
@@ -401,8 +425,9 @@ public class Spawner : MonoBehaviourPun
     void SummonMonster(int a, int b)
     {
         randomNum = Random.Range(a, b);
-        GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum]}"), monsterTrans[randomTrans].transform.position, Quaternion.identity);
-
+        GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum]}"),
+            monsterTrans[randomTrans].transform.position - vec, Quaternion.identity);
+        
         randomTrans++;
     }
     public void SpecialMonster()
