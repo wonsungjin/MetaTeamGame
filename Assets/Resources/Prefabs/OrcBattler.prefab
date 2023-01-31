@@ -207,7 +207,7 @@ MonoBehaviour:
   level: 1
   curAttackValue: 1
   curHP: 2
-  curEXP: 8
+  curEXP: 9
 --- !u!1001 &7350323688505281664
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -207,7 +207,7 @@ MonoBehaviour:
   level: 1
   curAttackValue: 1
   curHP: 3
-  curEXP: 15
+  curEXP: 17
 --- !u!1001 &1897235606876080951
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -218,6 +218,10 @@ PrefabInstance:
     - target: {fileID: 1670660031074491714, guid: 306e3f38cec157842b453c50aac32a45, type: 3}
       propertyPath: m_Name
       value: InfoText
+      objectReference: {fileID: 0}
+    - target: {fileID: 2360689887713349569, guid: 306e3f38cec157842b453c50aac32a45, type: 3}
+      propertyPath: m_text
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2360689889277071081, guid: 306e3f38cec157842b453c50aac32a45, type: 3}
       propertyPath: m_text
