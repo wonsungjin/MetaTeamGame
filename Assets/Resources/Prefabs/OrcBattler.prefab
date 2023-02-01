@@ -208,7 +208,7 @@ MonoBehaviour:
   level: 1
   curAttackValue: 1
   curHP: 2
-  curEXP: 63
+  curEXP: 93
 --- !u!114 &6855142078038835894
 MonoBehaviour:
   m_ObjectHideFlags: 0
