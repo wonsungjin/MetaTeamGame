@@ -31,7 +31,7 @@ public partial class Batch : MonoBehaviourPun
             {
                 unitCard.transform.position = enemyCardPosition[i + 1].position;
                 unitCard.SetFlip(true);
-                if (i < 3) GameMGR.Instance.battleLogic.enemyForwardUnits.Add(unitCard.gameObject);
+                if (i < 3) GameMGR.Instance.battleLogic.enemyForwardUnits.Add(unitCard.gameObject);         
                 else GameMGR.Instance.battleLogic.enemyBackwardUnits.Add(unitCard.gameObject);                
             }
         else

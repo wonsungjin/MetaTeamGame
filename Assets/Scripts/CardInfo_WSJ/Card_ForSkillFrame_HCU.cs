@@ -10,8 +10,8 @@ public partial class Card : MonoBehaviour
 {
     //[SerializeField] public CardInfo cardInfo;
     [SerializeField] List<Card> skillTarget;
-    [SerializeField] Vector2 MyPos;
-    [SerializeField] Vector2 TargetPos;
+    [SerializeField] Vector2 batchPos;
+    [SerializeField] Vector2 targetPos;
 
     [SerializeField] GameObject curPos;
 
@@ -135,7 +135,9 @@ public partial class Card : MonoBehaviour
                 }
                 break;
             case EffectType.summon:
-                
+                Card summonCard = Resources.Load<Card>($"Prefabs/{cardInfo.summonName}");
+                GameMGR.Instance.battleLogic.playerForwardUnits.Add(summonCard.gameObject);
+                summonCard.transform.position = targetPos;
                 break;
             case EffectType.reduceHireCost:
                 // 유닛 고용비용 감소
@@ -170,9 +172,13 @@ public partial class Card : MonoBehaviour
                 {
                     if (GameMGR.Instance.battleLogic.playerForwardUnits[i] == null)
                     {
-                        TargetPos = GameMGR.Instance.battleLogic.playerForwardUnits[i].transform.position;
-                        Card summonCard = Resources.Load<Card>($"Prefabs/{cardInfo.summonName}");
-                        GameMGR.Instance.battleLogic.playerForwardUnits.Add(summonCard.gameObject);
+                        targetPos = GameMGR.Instance.battleLogic.playerForwardUnits[i].transform.position;
+                        break;
+                    }
+                    if (GameMGR.Instance.battleLogic.playerBackwardUnits[i] == null)
+                    {
+                        targetPos = GameMGR.Instance.battleLogic.playerForwardUnits[i].transform.position;
+                        break;
                     }
                 }
                 break;
@@ -183,6 +189,7 @@ public partial class Card : MonoBehaviour
                 {
                     random = Random.Range(0, 6);
                 }
+                //skillTarget.Add(GameMGR.Instance.battleLogic.)
                 skillTarget.Add(transform.parent.transform.GetChild(random).gameObject.GetComponent<Card>());
                 break;
 
