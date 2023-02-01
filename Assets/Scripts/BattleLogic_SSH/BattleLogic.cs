@@ -97,6 +97,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
         isEnemyAliveCount = 0;
     }
 
+
     #region Player 선제 공격
     // Player 선제 공격
     public void PreemptiveAttack()
@@ -115,6 +116,9 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
             // [Player -> Enemy Attack] 적의 전열이 살아있는 경우
             if (isEnemyPreemptiveAlive)
             {
+                isPlayerAliveCount = 0;
+                isEnemyAliveCount = 0;
+
                 // 피격 가능한 적이 나올때까지 randomArray 순회
                 while (enemyForwardUnits[exArray[randomArrayNum]] == null)
                 {
@@ -124,8 +128,13 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                     for (int i = 0; i < enemyForwardUnits.Length; i++)
                     {
                         if (enemyForwardUnits[i] == null) { isEnemyAliveCount++; }
-                        if (isEnemyAliveCount == enemyForwardUnits.Length) { isEnemyPreemptiveAlive = false; }
+                        if (isEnemyAliveCount == enemyForwardUnits.Length) 
+                        {
+                            isEnemyAliveCount = 0;
+                            isEnemyPreemptiveAlive = false; 
+                        }
                     }
+                    isEnemyAliveCount = 0;
                     if (isEnemyPreemptiveAlive == false) { break; }
                 }
 
@@ -144,7 +153,11 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                         if (playerAttackArray[i] == null) { isPlayerAliveCount++; }
                     }
 
-                    if (isPlayerAliveCount == playerAttackArray.Length) { break; }
+                    if (isPlayerAliveCount == playerAttackArray.Length)
+                    {
+                        Debug.Log("공격가능한 player unit이 없음");
+                        break;
+                    }
                 }
 
                 Debug.Log("Player Attack Unit name : " + playerAttackArray[playerTurnCount].name);
@@ -152,7 +165,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                 // 플레이어 유닛이 적 전열 유닛 랜덤 공격
                 playerAttackArray[playerTurnCount].GetComponent<AttackLogic>().UnitAttack(enemyForwardUnits[exArray[randomArrayNum]]);
 
-                // 피격 받은 유닛을 리스트에서 삭제
+                // 피격 받은 유닛을 배열에서 삭제
                 for (int i = 0; i < enemyAttackArray.Length; i++)
                 {
                     if (enemyAttackArray[i] == enemyForwardUnits[exArray[randomArrayNum]])
@@ -168,23 +181,24 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                     else { Debug.Log("enemyAttackArray 탐색중"); }
                 }
 
+                for (int i = 0; i < enemyForwardUnits.Length; i++)
+                {
+                    if (enemyForwardUnits[i] == null)
+                    {
+                        isEnemyAliveCount++;
+                    }
+                }
+                if (enemyForwardUnits.Length == isEnemyAliveCount)
+                {
+                    isEnemyAliveCount = 0;
+                    isEnemyPreemptiveAlive = false;
+                }
+
+                isEnemyAliveCount = 0;
+
                 // 새로운 random num 부여
                 // ex) 플레이어가 적의 2번째를 공격했을 때 적도 플레이어의 2번째를 공격하기 때문에 다른 random num 부여
                 randomArrayNum++;
-
-                // 적이 전멸한 경우
-                for (int i = 0; i < enemyAttackArray.Length; i++)
-                {
-                    if (enemyAttackArray[i] == null) { isEnemyAliveCount++; }
-                }
-
-                if (isEnemyAliveCount == enemyAttackArray.Length)
-                {
-                    isEnemyAliveCount = 0;
-                    PlayerBattleWin();
-                    break;
-                }
-                isEnemyAliveCount = 0;
 
                 // 1턴 종료에 따른 턴 변수 증가 
                 playerTurnCount++;
@@ -194,6 +208,9 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
             // 후열을 공격 가능한 상태로 변경
             else if (!isEnemyPreemptiveAlive)
             {
+                isPlayerAliveCount = 0;
+                isEnemyAliveCount = 0;
+
                 while (enemyBackwardUnits[exArray[randomArrayNum]] == null) { randomArrayNum++; }
 
                 if (playerAttackArray.Length <= playerTurnCount) { playerTurnCount = 0; }
@@ -202,6 +219,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                 while (playerAttackArray[playerTurnCount] == null)
                 {
                     playerTurnCount++;
+                    isPlayerAliveCount = 0;
 
                     if (playerAttackArray.Length <= playerTurnCount) { playerTurnCount = 0; }
 
@@ -213,10 +231,12 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                     if (isPlayerAliveCount == playerAttackArray.Length)
                     {
                         isPlayerAliveCount = 0;
+                        Debug.Log("공격가능한 player unit이 없음");
                         break;
                     }
                 }
 
+                Debug.Log("playerTurnCount : " + playerTurnCount);
                 Debug.Log("player attack unit : " + playerAttackArray[playerTurnCount].name);
                 Debug.Log("enemy backward hit unit : " + enemyBackwardUnits[exArray[randomArrayNum]].name);
 
@@ -242,32 +262,35 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                 // ex) 플레이어가 적의 2번째를 공격했을 때 적도 플레이어의 2번째를 공격하기 때문에 다른 random num 부여
                 randomArrayNum++;
 
-                // 적이 전멸한 경우
-                for (int i = 0; i < enemyAttackArray.Length; i++)
-                {
-                    if (enemyAttackArray[i] == null) { isEnemyAliveCount++; }
-
-                }
-                if (isEnemyAliveCount == enemyAttackArray.Length)
-                {
-                    isEnemyAliveCount = 0;
-                    PlayerBattleWin();
-                    break;
-                }
-                isEnemyAliveCount = 0;
-
                 // 1턴 종료에 따른 턴 변수 증가 
                 playerTurnCount++;
             }
 
+            // 적이 전멸한 경우
+            for (int i = 0; i < enemyAttackArray.Length; i++)
+            {
+                if (enemyAttackArray[i] == null) { isEnemyAliveCount++; }
+            }
+            if (isEnemyAliveCount == enemyAttackArray.Length)
+            {
+                Debug.Log("2. isEnemyAliveCount : " + isEnemyAliveCount);
+                isEnemyAliveCount = 0;
+                PlayerBattleWin();
+                break;
+            }
+
+            isEnemyAliveCount = 0;
+
             // [Enemy -> Player Attack] 플레이어의 전열이 살아있는 경우
             if (isPlayerPreemptiveAlive)
             {
+                isPlayerAliveCount = 0;
+                isEnemyAliveCount = 0;
+
                 // 피격 가능한 Player가 나올때까지 랜덤 수 를 받음
                 while (playerForwardUnits[exArray[randomArrayNum]] == null)
                 {
                     randomArrayNum++;
-
                     isPlayerAliveCount = 0;
 
                     for (int i = 0; i < playerForwardUnits.Length; i++)
@@ -301,6 +324,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                     if (isEnemyAliveCount == enemyAttackArray.Length)
                     {
                         isEnemyAliveCount = 0;
+                        Debug.Log("공격가능한 Enemy uint이 없음");
                         break;
                     }
                 }
@@ -323,27 +347,26 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                         playerForwardUnits[exArray[randomArrayNum]] = null;
                         break;
                     }
-
                     else { Debug.Log("playerForwardUnits 탐색중"); }
+                }
+
+                for (int i = 0; i < playerForwardUnits.Length; i++)
+                {
+                    if (playerForwardUnits[i] == null)
+                    {
+                        isPlayerAliveCount++;
+                    }
+                }
+                if (playerForwardUnits.Length == isPlayerAliveCount)
+                {
+                    isPlayerAliveCount = 0;
+                    isPlayerPreemptiveAlive = false;
                 }
 
                 // 새로운 random num 부여
                 // ex) 적이 플레이어의 2번째를 공격했을 때 적도 플레이어의 2번째를 공격하기 때문에 다른 random num 부여
                 randomArrayNum++;
 
-                // 플레이어 유닛이 전멸한 경우
-                for (int i = 0; i < playerAttackArray.Length; i++)
-                {
-                    if (playerAttackArray[i] == null) { isPlayerAliveCount++; }
-
-                    if (isPlayerAliveCount == playerAttackArray.Length)
-                    {
-                        isPlayerAliveCount = 0;
-                        PlayerBattleLose();
-                        break;
-                    }
-                }
-                isPlayerAliveCount = 0;
 
                 // 1턴 종료에 따른 턴 변수 증가
                 enemyTurnCount++;
@@ -353,6 +376,9 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
             // 후열을 공격 가능한 상태로 변경
             else if (!isPlayerPreemptiveAlive)
             {
+                isPlayerAliveCount = 0;
+                isEnemyAliveCount = 0;
+
                 while (playerBackwardUnits[exArray[randomArrayNum]] == null) { randomArrayNum++; }
 
                 if (enemyAttackArray.Length <= enemyTurnCount) { enemyTurnCount = 0; }
@@ -390,28 +416,28 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                 // ex) 플레이어가 적의 2번째를 공격했을 때 적도 플레이어의 2번째를 공격하기 때문에 다른 random num 부여
                 randomArrayNum++;
 
-
-                // 플레이어 유닛이 전멸한 경우
-                for (int i = 0; i < playerAttackArray.Length; i++)
-                {
-                    if (playerAttackArray[i] == null) { isPlayerAliveCount++; }
-                    if (isPlayerAliveCount == playerAttackArray.Length)
-                    {
-                        isPlayerAliveCount = 0;
-                        PlayerBattleLose();
-                        break;
-                    }
-                }
                 isPlayerAliveCount = 0;
 
                 // 1턴 종료에 따른 턴 변수 증가 
                 enemyTurnCount++;
-                // player 공격 순서 초기화
+                // enemy 공격 순서 초기화
                 enemyTurnCount = 0;
             }
 
-            else { Debug.Log("전열/후열 생존여부 확인 필요 rq_SSH"); }
+            // 플레이어 유닛이 전멸한 경우
+            for (int i = 0; i < playerAttackArray.Length; i++)
+            {
+                if (playerAttackArray[i] == null) { isPlayerAliveCount++; }
+                if (isPlayerAliveCount == playerAttackArray.Length)
+                {
+                    isPlayerAliveCount = 0;
+                    PlayerBattleLose();
+                    break;
+                }
+            }
+            isPlayerAliveCount = 0;
         }
+
     }
     #endregion
 
