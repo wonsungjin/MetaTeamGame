@@ -7,7 +7,9 @@ using UnityEngine;
 public class Spawner : MonoBehaviourPun
 {
     [SerializeField] Node[] monsterTrans;
-    [SerializeField] Node[] specialTrans;
+
+    public GameObject[] trans = null;
+
     [Header("몬스터 프리팹")]
     public List<string> monsterNames = new List<string>();
 
@@ -22,29 +24,31 @@ public class Spawner : MonoBehaviourPun
 
     Vector3 vec = new Vector3(0, 0.6f, 0);
 
+   
+
     public GameObject[] cardBatch = new GameObject[6];
     public void SetMyDeckSetting()
     {
-        customDeck= GameMGR.Instance.Get_CustomDeck();
-        if (customDeck.tier_1 != null) 
-        for (int i = 0; i < customDeck.tier_1.Count; i++)
-        {
+        customDeck = GameMGR.Instance.Get_CustomDeck();
+        if (customDeck.tier_1 != null)
+            for (int i = 0; i < customDeck.tier_1.Count; i++)
+            {
                 monsterNames.Add(customDeck.tier_1[i].Replace(" ", ""));
-        }
+            }
         if (customDeck.tier_2 != null)
             for (int i = 0; i < customDeck.tier_2.Count; i++)
-        {
+            {
                 monsterNames.Add(customDeck.tier_2[i].Replace(" ", ""));
-        }
+            }
         if (customDeck.tier_3 != null)
             for (int i = 0; i < customDeck.tier_3.Count; i++)
-        {
+            {
                 monsterNames.Add(customDeck.tier_3[i].Replace(" ", ""));
-        }
+            }
         if (customDeck.tier_4 != null)
             for (int i = 0; i < customDeck.tier_4.Count; i++)
             {
-                 monsterNames.Add(customDeck.tier_4[i].Replace(" ", ""));
+                monsterNames.Add(customDeck.tier_4[i].Replace(" ", ""));
             }
         if (customDeck.tier_5 != null)
             for (int i = 0; i < customDeck.tier_5.Count; i++)
@@ -193,7 +197,7 @@ public class Spawner : MonoBehaviourPun
     {
         if (GameMGR.Instance.uiManager.goldCount <= 0)
         {
-            GameMGR.Instance.uiManager.reFreshButton.interactable = false; 
+            GameMGR.Instance.uiManager.reFreshButton.interactable = false;
         }
         else
             GameMGR.Instance.uiManager.reFreshButton.interactable = true;
@@ -235,12 +239,12 @@ public class Spawner : MonoBehaviourPun
                     // 2티어
                     else if (randomCard > 10 && randomCard < 30)
                     {
-                        SummonMonster(customDeck.tier_1.Count, customDeck.tier_1.Count+ customDeck.tier_2.Count);
+                        SummonMonster(customDeck.tier_1.Count, customDeck.tier_1.Count + customDeck.tier_2.Count);
                     }
                     // 3티어
                     else if (randomCard > 30 && randomCard < 55)
                     {
-                        SummonMonster(customDeck.tier_1.Count + customDeck.tier_2.Count, customDeck.tier_1.Count + customDeck.tier_2.Count+ customDeck.tier_3.Count);
+                        SummonMonster(customDeck.tier_1.Count + customDeck.tier_2.Count, customDeck.tier_1.Count + customDeck.tier_2.Count + customDeck.tier_3.Count);
                     }
                     else if (randomCard > 55 && randomCard < 75)
                     {
@@ -248,11 +252,11 @@ public class Spawner : MonoBehaviourPun
                     }
                     else if (randomCard > 75 && randomCard < 90)
                     {
-                        SummonMonster(customDeck.tier_1.Count + customDeck.tier_2.Count + customDeck.tier_3.Count + customDeck.tier_4.Count, customDeck.tier_1.Count + customDeck.tier_2.Count + customDeck.tier_3.Count + customDeck.tier_4.Count+customDeck.tier_5.Count);
+                        SummonMonster(customDeck.tier_1.Count + customDeck.tier_2.Count + customDeck.tier_3.Count + customDeck.tier_4.Count, customDeck.tier_1.Count + customDeck.tier_2.Count + customDeck.tier_3.Count + customDeck.tier_4.Count + customDeck.tier_5.Count);
                     }
                     else
                     {
-                        SummonMonster(customDeck.tier_1.Count + customDeck.tier_2.Count + customDeck.tier_3.Count + customDeck.tier_4.Count + customDeck.tier_5.Count, customDeck.tier_1.Count + customDeck.tier_2.Count + customDeck.tier_3.Count + customDeck.tier_4.Count + customDeck.tier_5.Count+ customDeck.tier_5.Count);
+                        SummonMonster(customDeck.tier_1.Count + customDeck.tier_2.Count + customDeck.tier_3.Count + customDeck.tier_4.Count + customDeck.tier_5.Count, customDeck.tier_1.Count + customDeck.tier_2.Count + customDeck.tier_3.Count + customDeck.tier_4.Count + customDeck.tier_5.Count + customDeck.tier_5.Count);
                     }
                 }
                 else
@@ -426,64 +430,44 @@ public class Spawner : MonoBehaviourPun
         randomNum = Random.Range(a, b);
         GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum]}"),
             monsterTrans[randomTrans].transform.position - vec, Quaternion.identity);
-        
+
         randomTrans++;
     }
     public void SpecialMonster()
     {
-        int randomNum1 = Random.Range(8, 16);
-        int randomNum2 = Random.Range(16, 24);
-        int randomNum3 = Random.Range(24, 32);
-        int randomNum4 = Random.Range(32, 40);
-        int randomNum5 = Random.Range(40, 48);
+        int randomNum1 = Random.Range(customDeck.tier_1.Count, customDeck.tier_1.Count + customDeck.tier_2.Count);
+       // int randomNum2 = Random.Range(customDeck.tier_1.Count + customDeck.tier_2.Count, customDeck.tier_1.Count + customDeck.tier_2.Count + customDeck.tier_3.Count);
+        //int randomNum3 = Random.Range(customDeck.tier_1.Count + customDeck.tier_2.Count + customDeck.tier_3.Count, customDeck.tier_1.Count + customDeck.tier_2.Count + customDeck.tier_3.Count + customDeck.tier_4.Count);
+        //int randomNum4 = Random.Range(customDeck.tier_1.Count + customDeck.tier_2.Count + customDeck.tier_3.Count + customDeck.tier_4.Count, customDeck.tier_1.Count + customDeck.tier_2.Count + customDeck.tier_3.Count + customDeck.tier_4.Count + customDeck.tier_5.Count);
+        //int randomNum5 = Random.Range(customDeck.tier_1.Count + customDeck.tier_2.Count + customDeck.tier_3.Count + customDeck.tier_4.Count + customDeck.tier_5.Count, customDeck.tier_1.Count + customDeck.tier_2.Count + customDeck.tier_3.Count + customDeck.tier_4.Count + customDeck.tier_5.Count + customDeck.tier_5.Count);
 
-        switch (GameMGR.Instance.uiManager.shopLevel)
+        trans = GameObject.FindGameObjectsWithTag("SpecialZone");
+
+        if (trans != null)
         {
-            case 1:
-                GameObject[] trans = GameObject.FindGameObjectsWithTag("SpecialZone");
-                if (trans == null)
-                    return;
-                else
-                {
+            switch (GameMGR.Instance.uiManager.shopLevel)
+            {
+                case 1:
+                    Debug.Log("1");
                     GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum1]}"), trans[0].transform.position, Quaternion.identity);
-                }
-                break;
-            case 2:
-                trans = GameObject.FindGameObjectsWithTag("SpecialZone");
-                if (trans == null)
-                    return;
-                else
-                {
-                    GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum2]}"), trans[0].transform.position, Quaternion.identity);
-                }
-                break;
-            case 3:
-                trans = GameObject.FindGameObjectsWithTag("SpecialZone");
-                if (trans == null)
-                    return;
-                else
-                {
-                    GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum3]}"), trans[0].transform.position, Quaternion.identity);
-                }
-                break;
-            case 4:
-                trans = GameObject.FindGameObjectsWithTag("SpecialZone");
-                if (trans == null)
-                    return;
-                else
-                {
-                    GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum4]}"), trans[0].transform.position, Quaternion.identity);
-                }
-                break;
-            case 5:
-                trans = GameObject.FindGameObjectsWithTag("SpecialZone");
-                if (trans == null)
-                    return;
-                else
-                {
-                    GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum5]}"), trans[0].transform.position, Quaternion.identity);
-                }
-                break;
+                    mon.transform.position -= vec;
+                  //  GameObject mons = Instantiate(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum1]}"), trans[0].transform.position, Quaternion.identity);
+                    break;
+                //case 2:
+                //    Debug.Log("2");
+                //    mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum2]}"), trans[0].transform.position, Quaternion.identity);
+                //    break;
+                //case 3:
+                //    Debug.Log("3");
+                //    mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum3]}"), trans[0].transform.position, Quaternion.identity);
+                //    break;
+                //case 4:
+                //    mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum4]}"), trans[0].transform.position, Quaternion.identity);
+                //    break;
+                //case 5:
+                //    mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum5]}"), trans[0].transform.position, Quaternion.identity);
+                //    break;
+            }
         }
     }
 }

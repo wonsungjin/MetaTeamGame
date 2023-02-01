@@ -524,7 +524,7 @@ GameObject:
   - component: {fileID: 40659979}
   m_Layer: 0
   m_Name: TEXT (5)
-  m_TagString: Untagged
+  m_TagString: Sell
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -821,7 +821,7 @@ GameObject:
   - component: {fileID: 63285078}
   m_Layer: 0
   m_Name: SpecialZone
-  m_TagString: SpecialZone
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1015,9 +1015,7 @@ MonoBehaviour:
   - {fileID: 1726932551}
   - {fileID: 899408586}
   - {fileID: 1217976076}
-  specialTrans:
-  - {fileID: 0}
-  - {fileID: 0}
+  trans: []
   monsterNames: []
   createdPlace: 3
   isFreeze: 0
@@ -1111,6 +1109,7 @@ GameObject:
   - component: {fileID: 119581529}
   - component: {fileID: 119581528}
   - component: {fileID: 119581530}
+  - component: {fileID: 119581531}
   m_Layer: 0
   m_Name: Sell
   m_TagString: Sell
@@ -1156,8 +1155,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1457141671
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 8d44159a77d104ab08307d8ee207b755, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1213,6 +1212,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 4.44, y: 4.36}
   m_EdgeRadius: 0
+--- !u!114 &119581531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 119581526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cb38748aa781d649bc6ddefedc65dc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &143967772
 GameObject:
   m_ObjectHideFlags: 0
@@ -1358,6 +1369,7 @@ GameObject:
   - component: {fileID: 160308683}
   - component: {fileID: 160308686}
   - component: {fileID: 160308685}
+  - component: {fileID: 160308687}
   m_Layer: 0
   m_Name: Special1
   m_TagString: SpecialZone
@@ -1448,6 +1460,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &160308687
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 160308682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 066b2d10c61aed84cbda691af9d32831, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mySprite: {fileID: 0}
 --- !u!1 &172358141
 GameObject:
   m_ObjectHideFlags: 0
@@ -2693,7 +2718,7 @@ GameObject:
   - component: {fileID: 421614146}
   m_Layer: 0
   m_Name: TEXT (4)
-  m_TagString: Untagged
+  m_TagString: Sell
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3606,6 +3631,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isNotSpawn: 0
   mySprite: {fileID: 0}
+  isNotMonster: 0
 --- !u!1001 &659131963
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3795,6 +3821,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isNotSpawn: 0
   mySprite: {fileID: 0}
+  isNotMonster: 0
 --- !u!1 &729819285
 GameObject:
   m_ObjectHideFlags: 0
@@ -4970,6 +4997,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isNotSpawn: 0
   mySprite: {fileID: 0}
+  isNotMonster: 0
 --- !u!1 &909630952
 GameObject:
   m_ObjectHideFlags: 0
@@ -5745,6 +5773,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isNotSpawn: 0
   mySprite: {fileID: 0}
+  isNotMonster: 0
 --- !u!1 &1274356505
 GameObject:
   m_ObjectHideFlags: 0
@@ -6152,6 +6181,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isNotSpawn: 0
   mySprite: {fileID: 0}
+  isNotMonster: 0
 --- !u!1 &1336953169
 GameObject:
   m_ObjectHideFlags: 0
@@ -6163,6 +6193,7 @@ GameObject:
   - component: {fileID: 1336953170}
   - component: {fileID: 1336953173}
   - component: {fileID: 1336953172}
+  - component: {fileID: 1336953174}
   m_Layer: 0
   m_Name: Special2
   m_TagString: SpecialZone
@@ -6253,6 +6284,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1336953174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1336953169}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 066b2d10c61aed84cbda691af9d32831, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mySprite: {fileID: 0}
 --- !u!1 &1350394028
 GameObject:
   m_ObjectHideFlags: 0
@@ -7580,6 +7624,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isNotSpawn: 0
   mySprite: {fileID: 0}
+  isNotMonster: 0
 --- !u!1 &1737555474
 GameObject:
   m_ObjectHideFlags: 0

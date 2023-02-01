@@ -38,6 +38,7 @@ public class Card : MonoBehaviour
         hpText.text = curHP.ToString();
         curAttackValue = cardInfo.attackValue;
         atkText.text = curAttackValue.ToString();
+        curEXP = 0;
         level = 1;
         levelText.text = level.ToString();
         skeletonAnimation = GetComponent<SkeletonAnimation>();
@@ -79,11 +80,20 @@ public class Card : MonoBehaviour
                     ChangeValue(CardStatus.Level);
                 }
             }
-            else if (key == CardStatus.Level)
+        }
+        else if (key == CardStatus.Level)
+        {
+            curEXP = 0;
+            level++;
+            levelText.text = level.ToString();
+            GameMGR.Instance.spawner.SpecialMonster();
+            if (level == 2)
             {
-                level++;
-                levelText.text = level.ToString();
-                GameMGR.Instance.spawner.SpecialMonster();
+                gameObject.tag = "BattleMonster2";
+            }
+            else if (level == 3)
+            {
+                gameObject.tag = "BattleMonster3";
             }
         }
     }

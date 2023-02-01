@@ -1,6 +1,4 @@
-using MongoDB.Driver;
 using System.Collections;
-//using Unity.Burst.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -12,18 +10,15 @@ public partial class Drag2D : MonoBehaviour
     BoxCollider2D pol;
     MeshRenderer spriteRenderer;
     Vector2 pos;
-    Vector2 battleZonePos;
     Vector2 selectZonePos;
     Vector2 meltPos;
     Vector3 monsterPos = new Vector3(0, -0.6f, 0);
-    Vector2 monsterBackPos = new Vector2(0, -0.6f);
 
     float timer = 0f;
     float distance = 10;
     private bool isClickBool = false;
     public bool isFreezen = false;
     bool isClickBattleMonster = false;
-    bool isSelectZone = false;
 
     private void Awake()
     {
@@ -35,14 +30,17 @@ public partial class Drag2D : MonoBehaviour
         pol = GetComponent<BoxCollider2D>();
         pos = this.gameObject.transform.position;
         card = GetComponent<Card>();
+
+        this.selectZonePos = this.transform.position;
     }
 
     Camera mainCam = null;
+
     private void OnMouseDrag()
     {
         Vector3 mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance);
         Vector3 objPosition = mainCam.ScreenToWorldPoint(mousePosition);
-        
+
         RaycastHit2D hit = Physics2D.Raycast(objPosition, Vector2.zero);
 
         if (CompareTag("BattleMonster")) transform.position = objPosition + Vector3.down;
@@ -82,7 +80,7 @@ public partial class Drag2D : MonoBehaviour
         UpdateOutline(true);
         isClickBool = false;
         pol.enabled = false;
-        battleZonePos = this.gameObject.transform.position;
+
         GameMGR.Instance.uiManager.OnEnter_Set_SkillExplantion(false, Vector3.zero);
         GameMGR.Instance.uiManager.SetisExplantionActive(true);
 
@@ -102,16 +100,21 @@ public partial class Drag2D : MonoBehaviour
         isClickBattleMonster = false;
         GameMGR.Instance.uiManager.SetisExplantionActive(false);
 
-        if (this.gameObject.CompareTag("Monster") || this.gameObject.CompareTag("BattleMonster") || this.gameObject.CompareTag("FreezeCard"))
+        if (this.gameObject.CompareTag("Monster"))
         {
             StartCoroutine(COR_BackAgain());
         }
-        if (GameMGR.Instance.uiManager.sell.activeSelf == true)
+
+        if(this.gameObject.CompareTag("FreezeCard"))
         {
-            StartCoroutine(COR_SellButton());
+            StartCoroutine(COR_BackAgain());
         }
 
-        GameMGR.Instance.uiManager.sell.gameObject.SetActive(false);
+        if (this.gameObject.CompareTag("BattleMonster"))
+        {
+            StartCoroutine(COR_SellButton());
+            StartCoroutine(COR_BackAgain());
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -125,6 +128,7 @@ public partial class Drag2D : MonoBehaviour
                 // 멜트카드로 태그 변경이 되고 원래 위치로 돌아가면 다시 몬스터 상태가 된다. 
                 if (collision.gameObject.CompareTag("Freeze"))
                 {
+                    gameObject.tag = "Monster";
                     StartCoroutine(COR_BackAgain());
                 }
 
@@ -169,14 +173,6 @@ public partial class Drag2D : MonoBehaviour
             // 배틀 몬스터를 잡았을 때
             if (gameObject.CompareTag("BattleMonster"))
             {
-                // 판매
-                if (collision.gameObject.CompareTag("Sell"))
-                {
-                    GameMGR.Instance.uiManager.goldCount += 1;
-                    GameMGR.Instance.uiManager.goldTXT.text = "" + GameMGR.Instance.uiManager.goldCount.ToString();
-                    SellButton();
-                }
-
                 // 잡고 있는 오브젝트가 배틀존에 닿으면 오브젝트 위치값 저장
                 if (collision.gameObject.CompareTag("BattleZone"))
                 {
@@ -191,14 +187,14 @@ public partial class Drag2D : MonoBehaviour
                 if (collision.gameObject.CompareTag("Freeze"))
                 {
                     StartCoroutine(COR_BackAgain());
-                    StartCoroutine(COR_BackCard());
+                    gameObject.tag = "FreezeCard";
                 }
                 // 몬스터가 배틀 존에 닿으면 골드가 차감 되고 배틀몬스터 태그로 바뀐다
                 if (collision.gameObject.CompareTag("BattleZone"))
                 {
                     if (GameMGR.Instance.uiManager.goldCount >= 3)
                     {
-                        spriteRenderer.sortingOrder = 3;
+                        spriteRenderer.sortingLayerName = "SellTXT";
                         gameObject.tag = "BattleMonster";
                         GameMGR.Instance.uiManager.goldCount -= 3;
                         GameMGR.Instance.uiManager.goldTXT.text = "" + GameMGR.Instance.uiManager.goldCount.ToString();
@@ -207,14 +203,6 @@ public partial class Drag2D : MonoBehaviour
                         gameObject.transform.localScale = monTras * 2;
                     }
                 }
-            }
-        }
-        if(isSelectZone == false)
-        {
-            if (gameObject.CompareTag("Monster"))
-            {
-                selectZonePos = collision.gameObject.transform.position;
-                isSelectZone = true;
             }
         }
     }
@@ -301,8 +289,9 @@ public partial class Drag2D : MonoBehaviour
     // 판매버튼 ON OFF
     IEnumerator COR_SellButton()
     {
-        yield return wait;
+        yield return new WaitForSeconds(0.12f);
         GameMGR.Instance.uiManager.sell.gameObject.SetActive(false);
+        //  GameMGR.Instance.uiManager.cardPannel.gameObject.SetActive(false);
     }
 
     // 원래 위치로 돌리는 함수
@@ -310,23 +299,18 @@ public partial class Drag2D : MonoBehaviour
     {
         yield return wait;
 
-        if (CompareTag("BattleMonster"))
+        if (CompareTag("BattleMonster") || CompareTag("BattleMonster2") || CompareTag("BattleMonster3"))
             transform.position = pos + Vector2.down;
 
         else if (CompareTag("Monster"))
-            transform.position = selectZonePos + monsterBackPos;
+        {
+            transform.position = selectZonePos;
+        }
 
         else if (CompareTag("FreezeCard"))
         {
-            transform.position = selectZonePos + monsterBackPos;
-            gameObject.tag = "Monster";
+            transform.position = selectZonePos;
         }
-    }
-    // 프리즈카드로 바꾸는 함수
-    IEnumerator COR_BackCard()
-    {
-        yield return wait;
-        gameObject.tag = "FreezeCard";
     }
 
     // 얼린카드를 구매시
@@ -339,12 +323,5 @@ public partial class Drag2D : MonoBehaviour
         spriteRenderer.sortingOrder = 3;
         GameMGR.Instance.uiManager.goldCount -= 3;
         GameMGR.Instance.uiManager.goldTXT.text = "" + GameMGR.Instance.uiManager.goldCount.ToString();
-    }
-
-    void SellButton()
-    {
-        GameMGR.Instance.uiManager.sell.gameObject.SetActive(false);
-
-        Destroy(gameObject);
     }
 }
