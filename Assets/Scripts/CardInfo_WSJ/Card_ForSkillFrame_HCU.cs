@@ -10,6 +10,7 @@ public partial class Card : MonoBehaviour
 {
     //[SerializeField] public CardInfo cardInfo;
     [SerializeField] List<Card> skillTarget;
+    [SerializeField] Vector2 MyPos;
     [SerializeField] Vector2 TargetPos;
 
     [SerializeField] GameObject curPos;
@@ -84,7 +85,7 @@ public partial class Card : MonoBehaviour
         this.curHP -= damage;
         if (this.curHP <= 0)
         {
-            
+            Destroy(this.gameObject);
         }
     }
 
