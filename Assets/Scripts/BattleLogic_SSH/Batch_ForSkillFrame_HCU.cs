@@ -7,7 +7,6 @@ using UnityEngine;
 public partial class Batch : MonoBehaviourPun
 {
 
-    
     public void NewCreateBatch(int playerNum,  bool myCard = true)
     {
         List<Card> cardList = null;

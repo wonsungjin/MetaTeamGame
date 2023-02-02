@@ -18,8 +18,8 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
     [SerializeField] public GameObject[] _enemyForwardUnits = new GameObject[3];
     [SerializeField] public GameObject[] _enemyBackwardUnits = new GameObject[3];
 
-    [SerializeField] private List<GameObject> playerAttackList = new List<GameObject>();
-    [SerializeField] private List<GameObject> enemyAttackList = new List<GameObject>();
+    [SerializeField] public List<GameObject> playerAttackList = new List<GameObject>(); //외부에서 접근하기 위해 attackList 2개 퍼블릭으로 변경.
+    [SerializeField] public List<GameObject> enemyAttackList = new List<GameObject>();
 
     private bool isPlayerPreemptiveAlive = true; // player 전열 생존 여부
     private bool isEnemyPreemptiveAlive = true; // enemy 전열 생존 여부

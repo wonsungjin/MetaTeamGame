@@ -25,6 +25,10 @@ public enum EffectTarget // 타겟 유형 - 적, 나, 아군 등
     both,
     ally,
     enemy,
+    allyForward,
+    allyBackward,
+    enemyForward,
+    enemyBackward,
     
 }
 
@@ -44,7 +48,7 @@ public enum TargetType // 스킬이 어떤 타입을 노리는지(ex - 공격력 높은 유닛)
     near,
     otherSide,
     forward,
-    backword,
+    backward,
     self,
     empty,
 
@@ -89,8 +93,8 @@ public partial class CardInfo : ScriptableObject
     [SerializeField] internal EffectType effectType; // 실제 발동 효과
     [SerializeField] internal int value1; //값1
     [SerializeField] internal int value2; //값2
+    [SerializeField] internal int value3; //값2
     [SerializeField] internal int triggerCount; // 발동횟수
-    [SerializeField] internal int groupIndex; // 그룹인덱스 = 딱히 필요 없을듯
     [SerializeField] internal string summonName; //소환수이름
 
     /*//858ed67e0d64b72429e8c773f1903334
