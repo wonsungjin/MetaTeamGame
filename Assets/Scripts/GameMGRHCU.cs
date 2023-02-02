@@ -29,5 +29,30 @@ public partial class GameMGR : Singleton<GameMGR>
     public event _callback_SkillTiming callbackEvent_Summon;
 
 
+    #region 델리게이트 함수 모음. 전역적으로 사용될 수 있는 것들만 쓴다.
+
+    public void Event_TurnStart()
+    {
+        callbackEvent_TurnStart();
+    }
+    public void Event_TurnEnd()
+    {
+        callbackEvent_TurnEnd();
+    }
+    public void Event_Reroll()
+    {
+        callbackEvent_Reroll();
+    }
+    public void Event_BattleStart()
+    {
+        callbackEvent_BattleStart();
+    }
+
+    public void Event_HitEnemy()
+    {
+        callbackEvent_HitEnemy();
+    }
+    
+    #endregion
 
 }

@@ -13,8 +13,6 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
         enemyForwardUnits[exArray[randomArrayNum]].GetComponent<Card>().curHP -= value;
     }
 
-    
-
     #region Player 선제 공격
     // Player 선제 공격
     public void PreemptiveAttack_HCU()
