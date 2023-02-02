@@ -168,24 +168,32 @@ public partial class Card : MonoBehaviour
                 break;
 
             case TargetType.empty: // 빈 공간을 찾는다 = 소환시
-                for(int i = 0; i < 3; i++)
+                bool isFind = false;
+                for(int i = 0; i < 3; i++) // 앞열 검사
                 {
                     if (GameMGR.Instance.battleLogic.playerForwardUnits[i] == null)
                     {
                         targetPos = GameMGR.Instance.battleLogic.playerForwardUnits[i].transform.position;
+                        isFind = true;
                         break;
                     }
-                    if (GameMGR.Instance.battleLogic.playerBackwardUnits[i] == null)
+                }
+                if(!isFind)
+                {
+                    for (int i = 0; i < 3; i++) // 뒷열 검사
                     {
-                        targetPos = GameMGR.Instance.battleLogic.playerForwardUnits[i].transform.position;
-                        break;
+                        if (GameMGR.Instance.battleLogic.playerBackwardUnits[i] == null)
+                        {
+                            targetPos = GameMGR.Instance.battleLogic.playerForwardUnits[i].transform.position;
+                            break;
+                        }
                     }
                 }
                 break;
 
             case TargetType.random:
                 int random = Random.Range(0, 6);
-                while (searchArea.transform.GetChild(random).gameObject.GetComponent<Card>().curHP <= 0) // 죽은 아군이 아닐 때까지 랜덤값을 돌려
+                while (GameMGR.Instance.battleLogic.playerForwardUnits[random].GetComponent<Card>().curHP <= 0) // 죽은 아군이 아닐 때까지 랜덤값을 돌려
                 {
                     random = Random.Range(0, 6);
                 }

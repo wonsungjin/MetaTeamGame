@@ -22,15 +22,15 @@ public enum SkillTiming     // 스킬이 발동되는 때
 public enum EffectTarget // 타겟 유형 - 적, 나, 아군 등
 {
     none,
+    both,
     ally,
     enemy,
-    both,
+    
 }
 
 public enum TargetType // 스킬이 어떤 타입을 노리는지(ex - 공격력 높은 유닛)
 {
     none,
-    self,
     all,
     allExceptMe,
     random,
@@ -41,15 +41,20 @@ public enum TargetType // 스킬이 어떤 타입을 노리는지(ex - 공격력 높은 유닛)
     mostHP,
     front,
     back,
-    otherSide,
-    empty,
     near,
+    otherSide,
+    forward,
+    backword,
+    self,
+    empty,
+
 }
 
 public enum TriggerCondition // 발동되기 위한 조건 - ex ) 빈 자리가 있어야한다
 {
-    allyEmpty
+    allyEmpty,
 }
+
 
 public enum EffectType // 스킬 효과
 {
@@ -62,8 +67,10 @@ public enum EffectType // 스킬 효과
     summon,         //소환
     reduceHireCost, //고용비용 감소
     reduceShopLevelUpCost,  //상점렙업비용 감소
-    grantEXP,       //경험치 부여
     addHireUnit,    //고용유닛추가
+    grantEXP,       //경험치 부여
+    crossChangeHPandATK, // 공격력과 체력 맞바꿈
+    oneShotKill,    //즉사기
     attackTargeting,//공격 타겟팅(대상어그로)
 
 }
