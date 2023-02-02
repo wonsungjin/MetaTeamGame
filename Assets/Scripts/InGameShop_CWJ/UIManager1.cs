@@ -22,6 +22,7 @@ public partial class UIManager : MonoBehaviour
     public int shopMoney = 0;
     public int goldCount = 0;
     public int shopLevel = 1;
+    public int hireUnitCost = 3; // 유닛 고용 비용
     public float timer = 60f;
     private bool isScene = false;
 

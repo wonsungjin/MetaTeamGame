@@ -134,7 +134,7 @@ public partial class Drag2D : MonoBehaviour
                 }
 
                 // 얼려있을 때 배틀존에 가면 구매 가능하게 하는 예외처리
-                if (GameMGR.Instance.uiManager.goldCount >= 3)
+                if (GameMGR.Instance.uiManager.goldCount >= GameMGR.Instance.uiManager.hireUnitCost)
                 {
                     if (collision.gameObject.CompareTag("BattleZone"))
                     {
@@ -149,9 +149,9 @@ public partial class Drag2D : MonoBehaviour
             {
                 if (gameObject.name == collision.gameObject.name && collision.gameObject.CompareTag("BattleMonster") || collision.gameObject.CompareTag("BattleMonster2"))
                 {
-                    if (GameMGR.Instance.uiManager.goldCount >= 3)
+                    if (GameMGR.Instance.uiManager.goldCount >= GameMGR.Instance.uiManager.hireUnitCost)
                     {
-                        GameMGR.Instance.uiManager.goldCount -= 3;
+                        GameMGR.Instance.uiManager.goldCount -= GameMGR.Instance.uiManager.hireUnitCost;
                         GameMGR.Instance.uiManager.goldTXT.text = "" + GameMGR.Instance.uiManager.goldCount.ToString();
                         ShopCardLevelUp(collision);
                     }
@@ -195,11 +195,11 @@ public partial class Drag2D : MonoBehaviour
                 // 몬스터가 배틀 존에 닿으면 골드가 차감 되고 배틀몬스터 태그로 바뀐다
                 if (collision.gameObject.CompareTag("BattleZone"))
                 {
-                    if (GameMGR.Instance.uiManager.goldCount >= 3)
+                    if (GameMGR.Instance.uiManager.goldCount >= GameMGR.Instance.uiManager.hireUnitCost)
                     {
                         spriteRenderer.sortingLayerName = "SellTXT";
                         gameObject.tag = "BattleMonster";
-                        GameMGR.Instance.uiManager.goldCount -= 3;
+                        GameMGR.Instance.uiManager.goldCount -= GameMGR.Instance.uiManager.hireUnitCost;
                         GameMGR.Instance.uiManager.goldTXT.text = "" + GameMGR.Instance.uiManager.goldCount.ToString();
                         pos = collision.gameObject.transform.position;
                         Vector2 monTras = gameObject.transform.localScale;
@@ -324,7 +324,7 @@ public partial class Drag2D : MonoBehaviour
         pos = meltPos;
         this.gameObject.transform.position = pos + Vector2.down;
         spriteRenderer.sortingOrder = 3;
-        GameMGR.Instance.uiManager.goldCount -= 3;
+        GameMGR.Instance.uiManager.goldCount -= GameMGR.Instance.uiManager.hireUnitCost;
         GameMGR.Instance.uiManager.goldTXT.text = "" + GameMGR.Instance.uiManager.goldCount.ToString();
     }
 }
