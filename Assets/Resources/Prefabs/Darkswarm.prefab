@@ -33,7 +33,7 @@ Transform:
   m_GameObject: {fileID: 2995369307480685505}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.18, y: -0.53, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7793794988496447972}
@@ -209,6 +209,14 @@ MonoBehaviour:
   curAttackValue: 2
   curHP: 1
   curEXP: 24
+  skillTarget: []
+  batchPos: {x: 0, y: 0}
+  targetPos: {x: 0, y: 0}
+  curPos: {fileID: 0}
+  AllyCamp: {fileID: 0}
+  EnemyCamp: {fileID: 0}
+  giveDamage: 0
+  takeDamage: 0
 --- !u!114 &8875790275648727760
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -221,6 +229,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e05b8c94d5fb69948b8dd34210bf692f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillType: 
 --- !u!1001 &1742084699440935529
 PrefabInstance:
   m_ObjectHideFlags: 0
