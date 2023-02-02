@@ -11,7 +11,7 @@ public enum CardStatus
     Exp,
     Level,
 }
-public class Card : MonoBehaviour
+public partial class Card : MonoBehaviour
 {
     [SerializeField] public CardInfo cardInfo;
     public TextMeshPro hpText;
@@ -23,9 +23,9 @@ public class Card : MonoBehaviour
     public int curEXP;
     SkeletonAnimation skeletonAnimation;
 
-
     /*자신의 오브젝트 이름과 같은 스크립터블 데이터를 읽어와서 설정한다
     스프라이트 랜더러도 같은 원리로 설정*/
+
     public void SetMyInfo(string myname)
     {
         name = myname;
@@ -46,6 +46,10 @@ public class Card : MonoBehaviour
     public void SetFlip(bool isSet)
     {
         skeletonAnimation.SetFlip(isSet);
+    }
+    public void PlayAnimation(string ani,bool isSet = false)
+    {
+        skeletonAnimation.AnimationState.SetAnimation(0, ani, isSet);
     }
     public void ChangeValue(CardStatus key, int value = 0)
     {

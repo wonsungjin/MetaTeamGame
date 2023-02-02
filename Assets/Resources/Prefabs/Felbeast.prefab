@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 2239751956888648967}
   - component: {fileID: 7948145211335291721}
   - component: {fileID: -4176869525726530873}
+  - component: {fileID: -6198696746335393823}
   m_Layer: 0
   m_Name: Felbeast
   m_TagString: Monster
@@ -208,6 +209,18 @@ MonoBehaviour:
   curAttackValue: 1
   curHP: 1
   curEXP: 8
+--- !u!114 &-6198696746335393823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7352649744475480358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e05b8c94d5fb69948b8dd34210bf692f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1079568743747307886
 PrefabInstance:
   m_ObjectHideFlags: 0

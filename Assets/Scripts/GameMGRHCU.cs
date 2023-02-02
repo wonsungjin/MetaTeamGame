@@ -12,4 +12,22 @@ public partial class GameMGR : Singleton<GameMGR>
     public int[] randomValue = new int[100];
     public Dictionary<int, List<Card>> playerList = new Dictionary<int, List<Card>>();
 
+    // 델리게이트 이벤트들의 총집합이라고 보면 되는 것입니다.
+    public delegate void _callback_SkillTiming();
+    public event _callback_SkillTiming callbackEvent_TurnStart;
+    public event _callback_SkillTiming callbackEvent_TurnEnd;
+    public event _callback_SkillTiming callbackEvent_Buy;
+    public event _callback_SkillTiming callbackEvent_Sell;
+    public event _callback_SkillTiming callbackEvent_Reroll;
+    public event _callback_SkillTiming callbackEvent_BattleStart;
+    public event _callback_SkillTiming callbackEvent_BeforeAttack;
+    public event _callback_SkillTiming callbackEvent_AfterAttack;
+    public event _callback_SkillTiming callbackEvent_Kill;
+    public event _callback_SkillTiming callbackEvent_Hit;
+    public event _callback_SkillTiming callbackEvent_HitEnemy;
+    public event _callback_SkillTiming callbackEvent_Death;
+    public event _callback_SkillTiming callbackEvent_Summon;
+
+
+
 }

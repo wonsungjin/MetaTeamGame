@@ -121,6 +121,9 @@ public class DataBase : MonoBehaviour
             CustomDeck customDeck = new CustomDeck();
             for (int num = 1; num < 7; num++)
             {
+
+                //BsonArray value3 =  value2.AsBsonArray;
+                //value3[1];
                 Debug.Log(value);
                 value.ToBsonDocument().TryGetValue($"tier_{num}", out value2);
                 string[] valueSplit = value2.ToString().Replace("[", "").Replace("]", "").Replace(" ", "").Split(',');

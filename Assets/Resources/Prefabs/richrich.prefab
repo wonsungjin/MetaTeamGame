@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 2962831365144905705}
   - component: {fileID: 2107785717647656012}
   - component: {fileID: -4375998013888351288}
+  - component: {fileID: 1745358194902060545}
   m_Layer: 0
   m_Name: richrich
   m_TagString: Monster
@@ -208,6 +209,18 @@ MonoBehaviour:
   curAttackValue: 0
   curHP: 0
   curEXP: 0
+--- !u!114 &1745358194902060545
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1111748603430822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e05b8c94d5fb69948b8dd34210bf692f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1237298312607943667
 PrefabInstance:
   m_ObjectHideFlags: 0

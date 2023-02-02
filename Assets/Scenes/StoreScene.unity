@@ -3703,6 +3703,22 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8764880348193027033, guid: d978163e108c84b4b928a03dbe6cc9fe, type: 3}
+      propertyPath: enemyForwardUnits.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8764880348193027033, guid: d978163e108c84b4b928a03dbe6cc9fe, type: 3}
+      propertyPath: enemyBackwardUnits.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8764880348193027033, guid: d978163e108c84b4b928a03dbe6cc9fe, type: 3}
+      propertyPath: playerForwardUnits.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8764880348193027033, guid: d978163e108c84b4b928a03dbe6cc9fe, type: 3}
+      propertyPath: playerBackwardUnits.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d978163e108c84b4b928a03dbe6cc9fe, type: 3}
 --- !u!1 &717212064

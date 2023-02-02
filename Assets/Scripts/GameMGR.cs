@@ -30,8 +30,7 @@ public partial class GameMGR : Singleton<GameMGR>
     {
         metaTrendAPI.GetUserProfile();
         metaTrendAPI.GetSessionID();
-        StartCoroutine(COR_GetCoin());
-        DontDestroyOnLoad(Instance);
+        StartCoroutine(COR_GetCoin());        DontDestroyOnLoad(Instance);
 
     }
     CustomDeck lookCustomDeck;//

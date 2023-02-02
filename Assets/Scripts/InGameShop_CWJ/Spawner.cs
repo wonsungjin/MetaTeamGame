@@ -137,6 +137,7 @@ public class Spawner : MonoBehaviourPun
         ChooseRandomCard();
         Reset_NotMoney();
     }
+    
 
     public void OnClick_ShopLevelUp()
     {
