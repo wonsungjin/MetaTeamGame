@@ -49,6 +49,8 @@ public class Card : MonoBehaviour
     }
     public void ChangeValue(CardStatus key, int value = 0)
     {
+        Debug.Log(curEXP);
+
         if (key == CardStatus.Hp)
         {
             curHP = value;
@@ -69,6 +71,7 @@ public class Card : MonoBehaviour
                 if (curEXP >= 2)
                 {
                     ChangeValue(CardStatus.Level);
+                    gameObject.tag = "BattleMonster2";
                 }
 
             }
@@ -78,6 +81,7 @@ public class Card : MonoBehaviour
                 if (curEXP >= 3)
                 {
                     ChangeValue(CardStatus.Level);
+                    gameObject.tag = "BattleMonster3";
                 }
             }
         }
@@ -87,14 +91,6 @@ public class Card : MonoBehaviour
             level++;
             levelText.text = level.ToString();
             GameMGR.Instance.spawner.SpecialMonster();
-            if (level == 2)
-            {
-                gameObject.tag = "BattleMonster2";
-            }
-            else if (level == 3)
-            {
-                gameObject.tag = "BattleMonster3";
-            }
         }
     }
     private void Awake()

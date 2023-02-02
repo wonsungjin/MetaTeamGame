@@ -1,7 +1,4 @@
-using MongoDB.Driver;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Node : MonoBehaviour
 {
@@ -37,9 +34,6 @@ public class Node : MonoBehaviour
             }
         
     }
-
-    // bool 로 하면 exit가 안먹음
-
 
     private void OnTriggerExit2D(Collider2D collision)
     {
