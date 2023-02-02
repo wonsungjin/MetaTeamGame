@@ -71,7 +71,6 @@ public enum EffectType // 스킬 효과
     summon,         //소환
     reduceHireCost, //고용비용 감소
     reduceShopLevelUpCost,  //상점렙업비용 감소
-    addHireUnit,    //고용유닛추가
     grantEXP,       //경험치 부여
     crossChangeHPandATK, // 공격력과 체력 맞바꿈
     oneShotKill,    //즉사기

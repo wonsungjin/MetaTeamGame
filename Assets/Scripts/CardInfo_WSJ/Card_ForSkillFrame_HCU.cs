@@ -11,18 +11,24 @@ public partial class Card : MonoBehaviour
 
     [SerializeField] GameObject curPos;
 
-    //스킬 관련 변수
-    [SerializeField] GameObject AllyCamp;   // 아군 진형
-    [SerializeField] GameObject EnemyCamp;   // 적 진형
-
     //스킬 효과 관련 변수
     public int giveDamage = 0;
     public int takeDamage = 0;
 
-    public void Start()
+
+    #region 스킬 효과 적용 관련 변수 모음
+
+    public void Hit(int damage) // 자신이 피격시 호출되는 함수
     {
-        AllyCamp = GameObject.Find("PlayerUnit");   // 아군 진형
-        EnemyCamp = GameObject.Find("EnemyUnit");   // 적 진형
+        if (cardInfo.skillTiming == SkillTiming.hit)
+        {
+            SkillActive();
+        }
+        this.curHP -= damage;
+        if (this.curHP <= 0)
+        {
+            Destroy(this.gameObject);
+        }
     }
 
     public void SetSkillTiming() // 스킬을 언제 발동시키느냐에 따라서 각 이벤트에 추가시켜준다.
@@ -72,18 +78,7 @@ public partial class Card : MonoBehaviour
         }
     }
 
-    public void Hit(int damage) // 자신이 피격시 호출되는 함수
-    {
-        if (cardInfo.skillTiming == SkillTiming.hit)
-        {
-            SkillActive();
-        }
-        this.curHP -= damage;
-        if (this.curHP <= 0)
-        {
-            Destroy(this.gameObject);
-        }
-    }
+    #endregion
 
     public void SkillActive() // 스킬 효과 발동 // FindTargetType 함수를 통해 구체적인 스킬 적용 대상이 정해지고 난 이후에 발동하는 게 맞다고 볼 수 있는 부분적인 부분
     {
@@ -135,9 +130,6 @@ public partial class Card : MonoBehaviour
                 GameMGR.Instance.battleLogic.playerForwardUnits.Add(summonCard.gameObject);
                 summonCard.transform.position = targetPos;
                 break;
-            case EffectType.reduceHireCost:
-                // 유닛 고용비용 감소
-                break;
             case EffectType.reduceShopLevelUpCost:
                 // 상점 레벨업 비용 감소
                 if(GameMGR.Instance.uiManager.shopMoney > 0)
@@ -145,6 +137,7 @@ public partial class Card : MonoBehaviour
                 break;
             case EffectType.addHireUnit:
                 // 고용가능 유닛 추가
+                GameMGR.Instance.spawner.SpecialMonster();
                 break;
         }
     }

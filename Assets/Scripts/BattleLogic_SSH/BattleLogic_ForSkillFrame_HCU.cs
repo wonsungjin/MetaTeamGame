@@ -10,8 +10,10 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
     // 스킬 능력 함수들 모음집
     public void ThrowMissile(int value)
     {
-        enemyForwardUnits[exArray[randomArrayNum]].gameObject.GetComponent<Card>().curHP -= value;
+        enemyForwardUnits[exArray[randomArrayNum]].GetComponent<Card>().curHP -= value;
     }
+
+    
 
     #region Player 선제 공격
     // Player 선제 공격
