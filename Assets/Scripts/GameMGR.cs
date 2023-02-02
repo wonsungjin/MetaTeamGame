@@ -84,6 +84,7 @@ public partial class GameMGR : Singleton<GameMGR>
             objectPool = GetComponent<ObjectPool>();
             photonLauncher = FindObjectOfType<PhotonLauncher>();
             uiManager.Init_Scene1();
+           
         }
         else if (num==2)
         {
