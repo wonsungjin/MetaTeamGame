@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 858ed67e0d64b72429e8c773f1903334, type: 3}
+  m_Name: FireDragon
+  m_EditorClassIdentifier:
+  ID: 16
+  objName: Fire Dragon
+  level: 1
+  tier: 3
+  hp: 3
+  atk: 3
+  description: Deal 1 damage to all enemy units. Deal 2 damage to all enemy units. Deal 3 damage to all enemy units.
+  skillTiming: 1
+  targetType: 1
+  effectTarget: 2
+  minTarget: 1
+  maxTarget: 6
+  triggerCondition: 0
+  effectType: 0
+  value1: 1.2.3
+  value2: 
+  value3: 
+  sumom_Unit: 
+  num_Triggers: 1
+  duration: 1

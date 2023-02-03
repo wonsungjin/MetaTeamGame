@@ -11,12 +11,18 @@ public class MyDeck : MonoBehaviour
     public void SetMyDeck(CustomDeck customDeck)
     {
         myDeck = customDeck;
+        GameMGR.Instance.uiManager.SetMyDeckName(myDeck.DeckName);
     }
     public void OnClick_Delete_MyDeck()
     {
         Debug.Log("삭제");
         GameMGR.Instance.dataBase.inventoryData.DeleteCustomDeck(myDeck.Num);
         Destroy(gameObject);
+    }
+    public void OnClick_Select_Deck()
+    {
+        
+        GameMGR.Instance.Save_MyCustomDeck(myDeck);
     }
     public void OnClick_Move_MyDeckInfo()//내 덱 누를때
     {
@@ -25,7 +31,7 @@ public class MyDeck : MonoBehaviour
             Debug.Log("머지");
             for (int i = 0; i < myDeckList.Count; i++)
                 myDeckList[i].gameObject.SetActive(true);
-            GameMGR.Instance.uiManager.OnClick_Join_MyDeckInfo(myDeck);
+            GameMGR.Instance.uiManager.OnClick_Join_MyDeckInfo();
         }
         else//처음 들어올때 덱에든 유닛을 모두 생성
         {
@@ -37,7 +43,7 @@ public class MyDeck : MonoBehaviour
                     obj = GameObject.Instantiate<CardUI>(card);
                     myDeckList.Add(obj.gameObject);
                     obj.SetMyInfo(myDeck.tier_1[i].Replace(" ",""));
-                    obj.transform.SetParent(GameMGR.Instance.uiManager.tier[0].transform);
+                    obj.transform.SetParent(GameMGR.Instance.uiManager.myContent.transform);
                     obj.transform.localScale = Vector3.one;
                 }
             //Debug.Log(myDeck.tier_2[0]);
@@ -47,7 +53,7 @@ public class MyDeck : MonoBehaviour
                     obj = GameObject.Instantiate<CardUI>(card);
                     myDeckList.Add(obj.gameObject);
                     obj.SetMyInfo(myDeck.tier_2[i].Replace(" ", ""));
-                    obj.transform.SetParent(GameMGR.Instance.uiManager.tier[1].transform);
+                    obj.transform.SetParent(GameMGR.Instance.uiManager.myContent.transform);
                     obj.transform.localScale = Vector3.one;
                 }
             if (myDeck.tier_3 != null)
@@ -56,7 +62,7 @@ public class MyDeck : MonoBehaviour
                     obj = GameObject.Instantiate<CardUI>(card);
                     myDeckList.Add(obj.gameObject);
                     obj.SetMyInfo(myDeck.tier_3[i].Replace(" ", ""));
-                    obj.transform.SetParent(GameMGR.Instance.uiManager.tier[2].transform);
+                    obj.transform.SetParent(GameMGR.Instance.uiManager.myContent.transform);
                     obj.transform.localScale = Vector3.one;
                 }
             if (myDeck.tier_4!=null)
@@ -65,7 +71,7 @@ public class MyDeck : MonoBehaviour
                     obj = GameObject.Instantiate<CardUI>(card);
                     myDeckList.Add(obj.gameObject);
                     obj.SetMyInfo(myDeck.tier_4[i].Replace(" ", ""));
-                    obj.transform.SetParent(GameMGR.Instance.uiManager.tier[3].transform);
+                    obj.transform.SetParent(GameMGR.Instance.uiManager.myContent.transform);
                     obj.transform.localScale = Vector3.one;
                 }
             if (myDeck.tier_5 != null)
@@ -74,7 +80,7 @@ public class MyDeck : MonoBehaviour
                     obj = GameObject.Instantiate<CardUI>(card);
                     myDeckList.Add(obj.gameObject);
                     obj.SetMyInfo(myDeck.tier_5[i].Replace(" ", ""));
-                    obj.transform.SetParent(GameMGR.Instance.uiManager.tier[4].transform);
+                    obj.transform.SetParent(GameMGR.Instance.uiManager.myContent.transform);
                     obj.transform.localScale = Vector3.one;
                 }
             if (myDeck.tier_6 != null)
@@ -83,10 +89,10 @@ public class MyDeck : MonoBehaviour
                     obj = GameObject.Instantiate<CardUI>(card);
                     myDeckList.Add(obj.gameObject);
                     obj.SetMyInfo(myDeck.tier_6[i].Replace(" ", ""));
-                    obj.transform.SetParent(GameMGR.Instance.uiManager.tier[5].transform);
+                    obj.transform.SetParent(GameMGR.Instance.uiManager.myContent.transform);
                     obj.transform.localScale = Vector3.one;
                 }
-            GameMGR.Instance.uiManager.OnClick_Join_MyDeckInfo(myDeck);
+            GameMGR.Instance.uiManager.OnClick_Join_MyDeckInfo();
         }
 
     }

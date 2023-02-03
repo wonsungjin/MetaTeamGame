@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 858ed67e0d64b72429e8c773f1903334, type: 3}
+  m_Name: EvilSlime
+  m_EditorClassIdentifier:
+  ID: 2
+  objName: Evil Slime
+  level: 1
+  tier: 1
+  hp: 1
+  atk: 1
+  description: Summons a Slime. Summon two slimes. Summons three slimes.
+  skillTiming: 3
+  targetType: 16
+  effectTarget: 0
+  minTarget: 0
+  maxTarget: 0
+  triggerCondition: 0
+  effectType: 3
+  value1: 1.2.3
+  value2: 
+  value3: 
+  sumom_Unit: Slime
+  num_Triggers: 1
+  duration: 0

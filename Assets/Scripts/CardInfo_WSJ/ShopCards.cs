@@ -5,10 +5,9 @@ using UnityEngine;
 public class ShopCards : MonoBehaviour
 {
     [SerializeField] private CardUI card;
-    [SerializeField] private GameObject[] tier;
     private Dictionary<int, List<CardInfo>> customDeckList = new Dictionary<int, List<CardInfo>>();
     public List<CardUI> clearList = new List<CardUI>();
-    void Start()
+    public void Init()
     {
         CardUI obj = null;
         CardInfo[] cards = Resources.LoadAll<CardInfo>($"ScriptableDBs/");
@@ -23,9 +22,10 @@ public class ShopCards : MonoBehaviour
             for (int i = 0; i < list.Count; i++)
             {
                 obj = GameObject.Instantiate<CardUI>(card);
-                obj.transform.SetParent(tier[tierNum-1].transform);
+                obj.transform.SetParent(GameMGR.Instance.uiManager.tier1[tierNum-1].transform);
                 obj.transform.localScale = Vector3.one;
                 obj.SetMyInfo(list[i].name);
+                obj.OffFrame();
                 clearList.Add(obj);
             }
         }

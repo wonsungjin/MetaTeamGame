@@ -10,16 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 858ed67e0d64b72429e8c773f1903334, type: 3}
-  m_Name: crystalgolem
+  m_Name: CrystalGolem
   m_EditorClassIdentifier:
-  ID: 25
-  objName: crystal golem
+  ID: 43
+  objName: Crystal Golem
   level: 1
-  tier: 4
-  tribe: golem
-  hp: 4
-  attackValue: 2
-  skilltype: turn_end
-  skill:  +2 attack power and +2 health to a random friendly golem unit. +2 attack power and +2 health to two random friendly golem units. +2 attack power and +2 health to 3 random friendly golem units.
-  appear: TRUE
-  : 
+  tier: 6
+  hp: 3
+  atk: 3
+  description: Grants all friendly units HP +2 Attack +2. Grants all friendly units HP +3 Attack +3. Grants all friendly units HP +4 Attack +4.
+  skillTiming: 0
+  targetType: 1
+  effectTarget: 3
+  minTarget: 1
+  maxTarget: 6
+  triggerCondition: 0
+  effectType: 4
+  value1: 2.3.4
+  value2: 2.3.4
+  value3: 
+  sumom_Unit: 
+  num_Triggers: 1
+  duration: 0

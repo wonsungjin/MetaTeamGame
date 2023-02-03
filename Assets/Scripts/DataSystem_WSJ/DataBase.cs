@@ -290,6 +290,7 @@ public class InventoryData
 public class CustomDeck
 {
     public int Num = 0;
+    public string DeckName = "Free Pack";
     public List<string> tier_1;
     public List<string> tier_2;
     public List<string> tier_3;

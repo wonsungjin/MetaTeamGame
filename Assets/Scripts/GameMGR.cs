@@ -9,8 +9,7 @@ public partial class GameMGR : Singleton<GameMGR>
     public DataBase dataBase;
     public ObjectPool objectPool;
     public AudioMGR audioMGR;
-
-    public CardCreate cardCreate;
+    
     public CustomDeckShop customDeckShop;
     public ShopCards shopCards;
 
@@ -30,7 +29,8 @@ public partial class GameMGR : Singleton<GameMGR>
     {
         metaTrendAPI.GetUserProfile();
         metaTrendAPI.GetSessionID();
-        StartCoroutine(COR_GetCoin());        DontDestroyOnLoad(Instance);
+        StartCoroutine(COR_GetCoin());
+        DontDestroyOnLoad(Instance);
 
     }
     CustomDeck lookCustomDeck;//
@@ -38,13 +38,7 @@ public partial class GameMGR : Singleton<GameMGR>
     public void Save_MyCustomDeck(CustomDeck customDeck)
     {
         lookCustomDeck = customDeck;
-    }
-    public void OnClick_Save_MyCustomDeck()
-    {
         myCustomDeck = lookCustomDeck;
-        uiManager.OnClick_Move_Home();
-
-        Debug.Log(myCustomDeck.tier_1[0]);
     }
     public CustomDeck Get_CustomDeck()
     {
@@ -77,14 +71,13 @@ public partial class GameMGR : Singleton<GameMGR>
             audioMGR = GetComponent<AudioMGR>();
             uiManager = FindObjectOfType<UIManager>();
             metaTrendAPI = GetComponent<MetaTrendAPI>();
-            cardCreate = GetComponent<CardCreate>();
             shopCards = GetComponent<ShopCards>();
             customDeckShop = GetComponent<CustomDeckShop>();
             dataBase = GetComponent<DataBase>();
             objectPool = GetComponent<ObjectPool>();
             photonLauncher = FindObjectOfType<PhotonLauncher>();
             uiManager.Init_Scene1();
-           
+            shopCards.Init();
         }
         else if (num==2)
         {
