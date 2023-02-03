@@ -18,7 +18,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
 
     private bool isPlayerPreemptiveAlive = true; // player ���� ���� ����
     private bool isEnemyPreemptiveAlive = true; // enemy ���� ���� ����
-    private bool isFirstAttack = false; // ���� �İ��� ���� bool ���� => true : Player ����
+    public bool isFirstAttack = false; // ���� �İ��� ���� bool ���� => true : Player ����
     private bool isResurrection = true; // ��ȯ Ư���� ���� bool ����
 
     private int playerTurnCount = 0; // Player Turn Count
@@ -102,15 +102,15 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
     }
 
 
-    #region Player ���� ����
-    // Player ���� ����
+    #region Player PreemptiveAttack
+    // Player Attack
     public void PreemptiveAttack()
     {
         // ���� ��ġ���� Ȯ��
         AliveUnit();
 
         for (int i = 0; i < GameMGR.Instance.randomValue.Length; i++) exArray[i] = GameMGR.Instance.randomValue[i];
-        Debug.Log("player ����");
+        Debug.Log("player PreemptiveAttack");
 
         while (true)
         {
@@ -445,8 +445,8 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
     }
     #endregion
 
-    #region Enemy ���� ����
-    // Enemy ���� ����
+    #region Enemy PreemptiveAttack
+    // Enemy Attack
     public void SubordinatedAttack()
     {
         // ���� ��ġ���� Ȯ��
