@@ -130,11 +130,10 @@ public partial class Drag2D : MonoBehaviour
                 if (collision.gameObject.CompareTag("Freeze"))
                 {
                     StartCoroutine(COR_BackAgain());
-                    gameObject.tag = "Monster";
                 }
 
                 // 얼려있을 때 배틀존에 가면 구매 가능하게 하는 예외처리
-                if (GameMGR.Instance.uiManager.goldCount >= GameMGR.Instance.uiManager.hireUnitCost)
+                if (GameMGR.Instance.uiManager.goldCount >= 3)
                 {
                     if (collision.gameObject.CompareTag("BattleZone"))
                     {
@@ -149,9 +148,31 @@ public partial class Drag2D : MonoBehaviour
             {
                 if (gameObject.name == collision.gameObject.name && collision.gameObject.CompareTag("BattleMonster") || collision.gameObject.CompareTag("BattleMonster2"))
                 {
-                    if (GameMGR.Instance.uiManager.goldCount >= GameMGR.Instance.uiManager.hireUnitCost)
+
+                    // 프리즈에 닿으면 프리즈카드로 태그를 바꾼 후 원래 위치로 돌린다.
+                    if (collision.gameObject.CompareTag("Freeze"))
                     {
-                        GameMGR.Instance.uiManager.goldCount -= GameMGR.Instance.uiManager.hireUnitCost;
+                        StartCoroutine(COR_BackAgain());
+                    }
+
+                    // 몬스터가 배틀 존에 닿으면 골드가 차감 되고 배틀몬스터 태그로 바뀐다
+                    if (collision.gameObject.CompareTag("BattleZone"))
+                    {
+                        if (GameMGR.Instance.uiManager.goldCount >= 3)
+                        {
+                            spriteRenderer.sortingLayerName = "SellTXT";
+                            gameObject.tag = "BattleMonster";
+                            GameMGR.Instance.uiManager.goldCount -= 3;
+                            GameMGR.Instance.uiManager.goldTXT.text = "" + GameMGR.Instance.uiManager.goldCount.ToString();
+                            pos = collision.gameObject.transform.position;
+                            Vector2 monTras = gameObject.transform.localScale;
+                            gameObject.transform.localScale = monTras * 2;
+                        }
+                    }
+
+                    if (GameMGR.Instance.uiManager.goldCount >= 3)
+                    {
+                        GameMGR.Instance.uiManager.goldCount -= 3;
                         GameMGR.Instance.uiManager.goldTXT.text = "" + GameMGR.Instance.uiManager.goldCount.ToString();
                         ShopCardLevelUp(collision);
                     }
@@ -161,6 +182,16 @@ public partial class Drag2D : MonoBehaviour
             // 카드 레벨업
             if (gameObject.CompareTag("BattleMonster"))
             {
+                // 배틀 몬스터를 잡았을 때 위치 바꾼다
+                if (gameObject.CompareTag("BattleMonster") || gameObject.CompareTag("BattleMonster2") || gameObject.CompareTag("BattleMonster3"))
+                {
+                    // 잡고 있는 오브젝트가 배틀존에 닿으면 오브젝트 위치값 저장
+                    if (collision.gameObject.CompareTag("BattleZone"))
+                    {
+                        pos = collision.gameObject.transform.position;
+                    }
+                }
+
                 if (gameObject.name == collision.gameObject.name && collision.gameObject.CompareTag("BattleMonster") || collision.gameObject.CompareTag("BattleMonster2"))
                 {
                     CardLevelUp(collision);
@@ -169,46 +200,6 @@ public partial class Drag2D : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (isClickBool == true)
-        {
-            // 배틀 몬스터를 잡았을 때 위치 바꾼다
-            if (gameObject.CompareTag("BattleMonster") || gameObject.CompareTag("BattleMonster2") || gameObject.CompareTag("BattleMonster3"))
-            {
-                // 잡고 있는 오브젝트가 배틀존에 닿으면 오브젝트 위치값 저장
-                if (collision.gameObject.CompareTag("BattleZone"))
-                {
-                    pos = collision.gameObject.transform.position;
-                }
-            }
-
-            // 몬스터를 잡았을 때
-            if (gameObject.CompareTag("Monster"))
-            {
-                // 프리즈에 닿으면 프리즈카드로 태그를 바꾼 후 원래 위치로 돌린다.
-                if (collision.gameObject.CompareTag("Freeze"))
-                {
-                    gameObject.tag = "FreezeCard";
-                    StartCoroutine(COR_BackAgain());
-                }
-                // 몬스터가 배틀 존에 닿으면 골드가 차감 되고 배틀몬스터 태그로 바뀐다
-                if (collision.gameObject.CompareTag("BattleZone"))
-                {
-                    if (GameMGR.Instance.uiManager.goldCount >= GameMGR.Instance.uiManager.hireUnitCost)
-                    {
-                        spriteRenderer.sortingLayerName = "SellTXT";
-                        gameObject.tag = "BattleMonster";
-                        GameMGR.Instance.uiManager.goldCount -= GameMGR.Instance.uiManager.hireUnitCost;
-                        GameMGR.Instance.uiManager.goldTXT.text = "" + GameMGR.Instance.uiManager.goldCount.ToString();
-                        pos = collision.gameObject.transform.position;
-                        Vector2 monTras = gameObject.transform.localScale;
-                        gameObject.transform.localScale = monTras * 2;
-                    }
-                }
-            }
-        }
-    }
 
     // 카드 레벨업 
     void CardLevelUp(Collider2D collision)
@@ -324,7 +315,7 @@ public partial class Drag2D : MonoBehaviour
         pos = meltPos;
         this.gameObject.transform.position = pos + Vector2.down;
         spriteRenderer.sortingOrder = 3;
-        GameMGR.Instance.uiManager.goldCount -= GameMGR.Instance.uiManager.hireUnitCost;
+        GameMGR.Instance.uiManager.goldCount -= 3;
         GameMGR.Instance.uiManager.goldTXT.text = "" + GameMGR.Instance.uiManager.goldCount.ToString();
     }
 }
