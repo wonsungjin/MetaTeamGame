@@ -6,12 +6,13 @@ using UnityEngine;
 public class AudioMGR : MonoBehaviour
 {
     // Clip 카테고리 분류를 위한 Enum
-    public enum Type { Background, Unit, UI };
+    public enum Type { Background, Unit, UI, Effect};
 
     // Type 별 Audio Clip 분류
     [SerializeField] AudioClip[] BackGroundClip = null;
     [SerializeField] AudioClip[] UnitSFXClip = null;
     [SerializeField] AudioClip[] UISFXClip = null;
+    [SerializeField] AudioClip[] EffectSFXClip = null;
 
     AudioClip audioClip = null;
 
@@ -19,6 +20,7 @@ public class AudioMGR : MonoBehaviour
     Dictionary<string, AudioClip> BackgroundDic = new Dictionary<string, AudioClip>();
     Dictionary<string, AudioClip> UnitSFXDic = new Dictionary<string, AudioClip>();
     Dictionary<string, AudioClip> UISFXDic = new Dictionary<string, AudioClip>();
+    Dictionary<string, AudioClip> EffectSFXDic = new Dictionary<string, AudioClip>();
 
     private void Awake()
     {
@@ -43,6 +45,11 @@ public class AudioMGR : MonoBehaviour
         {
             UISFXDic.Add(UISFXClip[i].name, UISFXClip[i]);
         }
+
+        for (int i = 0; i < EffectSFXClip.Length; i++)
+        {
+            EffectSFXDic.Add(EffectSFXClip[i].name, EffectSFXClip[i]);
+        }
     }
 
     // 타 클래스에서 함수 호출 시 Type, ClipName에 맞는 AudioClip 반환
@@ -59,15 +66,10 @@ public class AudioMGR : MonoBehaviour
             case "UI":
                 audioClip = UISFXDic[clipName];
                 break;
+            case "Effect":
+                audioClip = EffectSFXDic[clipName];
+                break;
         }
         return audioClip;
     }
-
-    /*
-        // 사용자는 해당 함수로 오디오클립을 결정하고 플레이까지
-        public void PlaySound(bool loop, AudioClip clip)
-        {
-
-        }
-    */
 }
