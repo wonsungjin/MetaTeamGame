@@ -36,7 +36,7 @@ public class Card : MonoBehaviour
         levelText = transform.GetChild(0).GetChild(5).GetComponent<TextMeshPro>();
         curHP = cardInfo.hp;
         hpText.text = curHP.ToString();
-        curAttackValue = cardInfo.attackValue;
+        curAttackValue = cardInfo.atk;
         atkText.text = curAttackValue.ToString();
         level = 1;
         levelText.text = level.ToString();

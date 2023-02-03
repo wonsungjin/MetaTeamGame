@@ -9,28 +9,39 @@ public class CardInfo : ScriptableObject
     [SerializeField] internal string objName;
     [SerializeField] internal int level;
     [SerializeField] internal int tier;
-    [SerializeField] internal int tribe;
     [SerializeField] internal int hp;
-    [SerializeField] internal int attackValue;
-    [SerializeField] internal string skilltype;
+    [SerializeField] internal int atk;
     [SerializeField] internal string skill;
-    [SerializeField] internal bool appear;
+    [SerializeField] internal int triggerTiming;
+    [SerializeField] internal int targetType;
+    [SerializeField] internal int target;
+    [SerializeField] internal int min_Target;
+    [SerializeField] internal int max_Target;
+    [SerializeField] internal int triggerCondition;
+    [SerializeField] internal int effectType;
+    [SerializeField] internal int value_1;
+    [SerializeField] internal int value_2;
+    [SerializeField] internal int value_3;
+    [SerializeField] internal string sumom_Unit;
+    [SerializeField] internal int num_Triggers;
+    [SerializeField] internal int duration;
+
     public string GetSkillExplantion(int num)
     {
         string [] skillExplantion =  skill.Split(".");
         if (num == 1)
         {
-            return $"Level 1: {skillExplantion[0]}";
+            return $"Lv 1: {skillExplantion[0]}";
         }
         else if (num == 2)
         {
-            if (skillExplantion.Length==2) return $"Level 2:{skillExplantion[0]}";
-            return $"Level 2:{skillExplantion[1]}";
+            if (skillExplantion.Length==2) return $"Lv 2:{skillExplantion[0]}";
+            return $"Lv 2:{skillExplantion[1]}";
         }
         else if (num == 3)
         {
-            if (skillExplantion.Length == 2) return $"Level 3:{skillExplantion[0]}";
-            return $"Level 3:{skillExplantion[2]}";
+            if (skillExplantion.Length == 2) return $"Lv 3:{skillExplantion[0]}";
+            return $"Lv 3:{skillExplantion[2]}";
         }
         return null;
     }

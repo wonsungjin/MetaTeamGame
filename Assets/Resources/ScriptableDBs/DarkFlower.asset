@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 858ed67e0d64b72429e8c773f1903334, type: 3}
+  m_Name: DarkFlower
+  m_EditorClassIdentifier:
+  ID: 114
+  objName: Dark Flower
+  level: 1
+  tier: 5
+  hp: 3
+  attackValue: 4
+  skill: Gold +1 Can be used twice per turn
+  triggerTiming: 4
+  targetType: 0
+  target: 0
+  min_Target: 0
+  max_Target: 0
+  triggerCondition: 0
+  effectType: 1
+  value_1: 1
+  value_2: 
+  value_3: 
+  sumom_Unit: 
+  num_Triggers: 2
+  duration: 0

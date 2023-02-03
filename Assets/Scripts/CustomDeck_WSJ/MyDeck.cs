@@ -18,6 +18,11 @@ public class MyDeck : MonoBehaviour
         GameMGR.Instance.dataBase.inventoryData.DeleteCustomDeck(myDeck.Num);
         Destroy(gameObject);
     }
+    public void OnClick_Select_Deck()
+    {
+        
+        GameMGR.Instance.Save_MyCustomDeck(myDeck);
+    }
     public void OnClick_Move_MyDeckInfo()//내 덱 누를때
     {
         if (isJoin)//두번째부터는 생성 해둔애들 풀링
@@ -25,7 +30,7 @@ public class MyDeck : MonoBehaviour
             Debug.Log("머지");
             for (int i = 0; i < myDeckList.Count; i++)
                 myDeckList[i].gameObject.SetActive(true);
-            GameMGR.Instance.uiManager.OnClick_Join_MyDeckInfo(myDeck);
+            GameMGR.Instance.uiManager.OnClick_Join_MyDeckInfo();
         }
         else//처음 들어올때 덱에든 유닛을 모두 생성
         {
@@ -86,7 +91,7 @@ public class MyDeck : MonoBehaviour
                     obj.transform.SetParent(GameMGR.Instance.uiManager.tier[5].transform);
                     obj.transform.localScale = Vector3.one;
                 }
-            GameMGR.Instance.uiManager.OnClick_Join_MyDeckInfo(myDeck);
+            GameMGR.Instance.uiManager.OnClick_Join_MyDeckInfo();
         }
 
     }

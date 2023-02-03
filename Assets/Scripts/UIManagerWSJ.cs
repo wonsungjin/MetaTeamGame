@@ -16,6 +16,7 @@ public partial class UIManager : MonoBehaviour
     [SerializeField] private GameObject myPackList;
     [SerializeField] private MyDeck packButton;
     [SerializeField] private GameObject packAddButton;
+    [SerializeField] private ToggleGroup toggleGroup;
     [Header("CardInfo")]
     [SerializeField] private Image cardImage;
     [SerializeField] private TextMeshProUGUI cardName;
@@ -51,6 +52,7 @@ public partial class UIManager : MonoBehaviour
         tier[3] = GameObject.Find("Tier4Content").transform;
         tier[4] = GameObject.Find("Tier5Content").transform;
         tier[5] = GameObject.Find("Tier6Content").transform;
+        toggleGroup = FindObjectOfType<ToggleGroup>();
         customPannel.SetActive(false);
         packChoicePannel.SetActive(false);
         cardPannel.SetActive(false);
@@ -64,12 +66,14 @@ public partial class UIManager : MonoBehaviour
     public void CreateMyPackButton(CustomDeck customDeck)
     {
         MyDeck obj = GameObject.Instantiate<MyDeck>(packButton);
+        obj.transform.GetChild(3).GetComponent<Toggle>().group = toggleGroup;
+        obj.transform.GetChild(2).transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = customDeck.DeckName;
         obj.SetMyDeck(customDeck);
         obj.transform.SetParent(myPackList.transform);
         obj.transform.localScale = Vector3.one;
         GameMGR.Instance.uiManager.SetParentPackAddButton();
-
     }
+
     public void SetParentPackAddButton()
     {
         packAddButton.transform.SetParent(null);
@@ -82,9 +86,8 @@ public partial class UIManager : MonoBehaviour
         packChoicePannel.SetActive(false);
         customPannel.SetActive(true);
     }
-    public void OnClick_Join_MyDeckInfo(CustomDeck customDeck)
+    public void OnClick_Join_MyDeckInfo()
     {
-        GameMGR.Instance.Save_MyCustomDeck(customDeck);
         myDecks = FindObjectsOfType<MyDeck>();
         packChoicePannel.SetActive(false);
         myDeckPannel.SetActive(true);
@@ -117,8 +120,8 @@ public partial class UIManager : MonoBehaviour
     public void OnPointerEnter_CardInfo(CardInfo cardInfo)
     {
         cardPannel.SetActive(true);
-        atkHpValue.text = $"{cardInfo.attackValue}/{cardInfo.hp}";
-        attackValue.text = $"{cardInfo.attackValue}";
+        atkHpValue.text = $"{cardInfo.atk}/{cardInfo.hp}";
+        attackValue.text = $"{cardInfo.atk}";
         hpValue.text = $"{cardInfo.hp}";
         cardName.text = $"{cardInfo.objName}";
         cardImage.sprite = Resources.Load<Sprite>($"Sprites/{cardInfo.objName}");
