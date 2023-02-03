@@ -1,3 +1,4 @@
+//using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -15,6 +16,7 @@ public partial class Card : MonoBehaviour
     public int giveDamage = 0;
     public int takeDamage = 0;
 
+    GameObject[] shopBatchInfoo = GameMGR.Instance.spawner.cardBatch;
 
     #region 스킬 효과 적용 관련 변수 모음
 
@@ -142,7 +144,7 @@ public partial class Card : MonoBehaviour
                 break;
             case EffectType.summon:
                 Card summonCard = Resources.Load<Card>($"Prefabs/{cardInfo.summonName}");
-                GameMGR.Instance.battleLogic.playerForwardUnits.Add(summonCard.gameObject);
+                //GameMGR.Instance.battleLogic.playerForwardUnits.Add(summonCard.gameObject);
                 summonCard.transform.position = targetPos;
                 break;
             case EffectType.reduceShopLevelUpCost:
@@ -158,12 +160,14 @@ public partial class Card : MonoBehaviour
     }
     public void FindTargetType() // 어떤 유형의 대상을 찾는지에 따라 실행하는 경우가 다르다는 말이란 말이란 말이란 말이란 말이란 말
     {
-        List<GameObject> searchArea = new List<GameObject>(); // 대상 범위가 아군인지 적군인지에 따라 구분하여 담는 게임오브젝트 변수
+        GameObject[] searchArea = new GameObject[6]; // 대상 범위가 아군인지 적군인지에 따라 구분하여 담는 게임오브젝트 변수
 
+        
         switch (cardInfo.effectTarget) // 스킬 효과 적용 대상에 따른 탐색 범위 지정
         {
+            
             case EffectTarget.ally:
-                searchArea = GameMGR.Instance.battleLogic.playerAttackList;
+                searchArea = GameMGR.Instance.battleLogic.playerAttackArray;
                 break;
             case EffectTarget.allyForward:
                 searchArea = GameMGR.Instance.battleLogic.playerForwardUnits;
@@ -172,7 +176,7 @@ public partial class Card : MonoBehaviour
                 searchArea = GameMGR.Instance.battleLogic.playerBackwardUnits;
                 break;
             case EffectTarget.enemy:
-                searchArea = GameMGR.Instance.battleLogic.enemyAttackList;
+                searchArea = GameMGR.Instance.battleLogic.enemyAttackArray;
                 break;
             case EffectTarget.enemyForward:
                 searchArea = GameMGR.Instance.battleLogic.enemyForwardUnits;
@@ -181,9 +185,15 @@ public partial class Card : MonoBehaviour
                 searchArea = GameMGR.Instance.battleLogic.enemyBackwardUnits;
                 break;
             case EffectTarget.both:
-                for (int i = 0; i < GameMGR.Instance.battleLogic.playerAttackList.Count; i++)
+                //Array.Resize<GameObject>(ref searchArea, 12);
+                searchArea = new GameObject[12];
+                for (int i = 0; i < GameMGR.Instance.battleLogic.playerAttackArray.Length; i++)
                 {
-                    searchArea.Add(GameMGR.Instance.battleLogic.playerAttackList[i]);
+                    searchArea[i] = (GameMGR.Instance.battleLogic.playerAttackArray[i]);
+                }
+                for (int i = 0; i < GameMGR.Instance.battleLogic.enemyAttackArray.Length; i++)
+                {
+                    searchArea[i+6] = (GameMGR.Instance.battleLogic.enemyAttackArray[i+6]);
                 }
                 break;
             case EffectTarget.none:
@@ -255,7 +265,7 @@ public partial class Card : MonoBehaviour
                     //대상이 없으므로 스킬 무효 
                     skillTarget.Clear();
                 }
-                if (searchArea.Count == 0)
+                if (searchArea.Length == 0)
                 {
                     skillTarget.Clear();
                 }
@@ -298,8 +308,9 @@ public partial class Card : MonoBehaviour
                 break;
 
             case TargetType.otherSide:
-                int myIndex = searchArea.FindIndex(i => i.gameObject == this.gameObject); // 나를 찾는 과정 나에게로 떠나는 여행 모놀로그 에필로그 프롤로그 사이보그 아이언호그
-                searchArea = GameMGR.Instance.battleLogic.enemyAttackList;
+                searchArea = GameMGR.Instance.battleLogic.playerAttackArray;
+                int myIndex = System.Array.IndexOf(searchArea, gameObject); // 나를 찾는 과정 나에게로 떠나는 여행 모놀로그 에필로그 프롤로그 사이보그 아이언호그
+                searchArea = GameMGR.Instance.battleLogic.enemyAttackArray;
                 skillTarget.Add(searchArea[myIndex].GetComponent<Card>());
                 break;
 
