@@ -12,21 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 858ed67e0d64b72429e8c773f1903334, type: 3}
   m_Name: RockTurtle
   m_EditorClassIdentifier:
-  ID: 24
+  ID: 8
   objName: Rock Turtle
   level: 1
   tier: 2
   hp: 2
-  attackValue: 2
-  skill: Reduces all damage by 1.
-  triggerTiming: 8
-  targetType: 15
+  atk: 2
+  description: Reduces all damage by 1. Reduces all damage by 2. Reduces all damage by 3.
+  trigger_Timing: 8
+  target_Type: 15
   target: 3
   min_Target: 1
   max_Target: 1
-  triggerCondition: 0
-  effectType: 6
-  value_1: -1
+  trigger_Condition: 0
+  effect_Type: 6
+  value_1:  -1.-2.-3
   value_2: 
   value_3: 
   sumom_Unit: 

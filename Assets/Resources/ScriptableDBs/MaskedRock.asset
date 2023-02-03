@@ -12,21 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 858ed67e0d64b72429e8c773f1903334, type: 3}
   m_Name: MaskedRock
   m_EditorClassIdentifier:
-  ID: 81
+  ID: 27
   objName: Masked Rock
   level: 1
   tier: 4
   hp: 3
-  attackValue: 4
-  skill: Gives +1 experience to a random friendly unit
-  triggerTiming: 3
-  targetType: 3
+  atk: 4
+  description: Gives +1 experience to a random friendly unit. Gives +2 experience to a random friendly unit. Gives +3 experience to a random friendly unit.
+  trigger_Timing: 3
+  target_Type: 3
   target: 3
   min_Target: 0
   max_Target: 1
-  triggerCondition: 0
-  effectType: 8
-  value_1: 1
+  trigger_Condition: 0
+  effect_Type: 8
+  value_1: 1.2.3
   value_2: 
   value_3: 
   sumom_Unit: 

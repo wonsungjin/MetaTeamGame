@@ -12,21 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 858ed67e0d64b72429e8c773f1903334, type: 3}
   m_Name: JungleRapter
   m_EditorClassIdentifier:
-  ID: 42
+  ID: 14
   objName: Jungle Rapter
   level: 1
   tier: 2
   hp: 2
-  attackValue: 5
-  skill: Give +1 experience to one friendly unit in front of you.
-  triggerTiming: 1
-  targetType: 9
+  atk: 5
+  description: Give +1 experience to one friendly unit in front of you. Give +2 experience to one friendly unit in front of you. Give +3 experience to one friendly unit in front of you.
+  trigger_Timing: 1
+  target_Type: 9
   target: 3
   min_Target: 0
   max_Target: 1
-  triggerCondition: 0
-  effectType: 8
-  value_1: 1
+  trigger_Condition: 0
+  effect_Type: 8
+  value_1: 1.2.3
   value_2: 
   value_3: 
   sumom_Unit: 

@@ -12,20 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 858ed67e0d64b72429e8c773f1903334, type: 3}
   m_Name: Magmashell
   m_EditorClassIdentifier:
-  ID: 96
+  ID: 32
   objName: Magma shell
   level: 1
   tier: 5
   hp: 4
-  attackValue: 8
-  skill: Deal damage to a random enemy unit equal to the amount of excess damage.
-  triggerTiming: 7
-  targetType: 3
+  atk: 8
+  description: Deal damage to a random enemy unit equal to the amount of excess damage. Deal damage to 2 random enemy units equal to the amount of excess damage. Deal damage to three random enemy units equal to the amount of excess damage.
+  trigger_Timing: 7
+  target_Type: 3
   target: 2
   min_Target: 0
   max_Target: 1
-  triggerCondition: 2
-  effectType: 0
+  trigger_Condition: 2
+  effect_Type: 0
   value_1: 
   value_2: 
   value_3: 

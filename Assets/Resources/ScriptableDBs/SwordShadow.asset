@@ -12,21 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 858ed67e0d64b72429e8c773f1903334, type: 3}
   m_Name: SwordShadow
   m_EditorClassIdentifier:
-  ID: 12
-  objName: SwordShadow
+  ID: 4
+  objName: Sword Shadow
   level: 1
   tier: 1
   hp: 1
-  attackValue: 3
-  skill: Self Attack Power +1
-  triggerTiming: 9
-  targetType: 0
+  atk: 3
+  description: Self Attack Power +1. Self Attack Power +2. Self Attack Power +3.
+  trigger_Timing: 9
+  target_Type: 0
   target: 1
   min_Target: 1
   max_Target: 1
-  triggerCondition: 0
-  effectType: 3
-  value_1: 1
+  trigger_Condition: 0
+  effect_Type: 3
+  value_1: 1.2.3
   value_2: 
   value_3: 
   sumom_Unit: 

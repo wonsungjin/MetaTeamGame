@@ -1,9 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.EventSystems;
-using TMPro;
 using Spine.Unity;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+
 public enum CardStatus
 {
     Hp,
@@ -21,6 +20,7 @@ public class Card : MonoBehaviour
     public int curAttackValue;
     public int curHP;
     public int curEXP;
+    public Slider expSlider;
     SkeletonAnimation skeletonAnimation;
 
 
@@ -30,10 +30,10 @@ public class Card : MonoBehaviour
     {
         name = myname;
         cardInfo = Resources.Load<CardInfo>($"ScriptableDBs/{name.Replace("(Clone)", "")}");
-        transform.GetChild(0).localScale = Vector3.one;
-        hpText = transform.GetChild(0).GetChild(1).GetComponent<TextMeshPro>();
-        atkText = transform.GetChild(0).GetChild(3).GetComponent<TextMeshPro>();
-        levelText = transform.GetChild(0).GetChild(5).GetComponent<TextMeshPro>();
+        hpText = transform.parent.GetChild(1).GetChild(1).GetComponent<TextMeshPro>();
+        atkText = transform.parent.GetChild(1).GetChild(3).GetComponent<TextMeshPro>();
+        levelText = transform.parent.GetChild(1).GetChild(5).GetComponent<TextMeshPro>();
+        expSlider = transform.parent.GetChild(1).GetChild(8).GetChild(0).GetComponent<Slider>();
         curHP = cardInfo.hp;
         hpText.text = curHP.ToString();
         curAttackValue = cardInfo.atk;
@@ -46,49 +46,53 @@ public class Card : MonoBehaviour
     {
         skeletonAnimation.SetFlip(isSet);
     }
-    public void PlayAnimation(string ani,bool isSet = false)
+    public void PlayAnimation(string ani, bool isSet = false)
     {
         skeletonAnimation.AnimationState.SetAnimation(0, ani, isSet);
     }
     public void ChangeValue(CardStatus key, int value = 0)
     {
-        if (key == CardStatus.Hp)
+        switch (key)
         {
-            curHP = value;
-            hpText.text = curHP.ToString();
+            case CardStatus.Hp:
+                curHP = value;
+                hpText.text = curHP.ToString();
+                break;
 
-        }
-        else if (key == CardStatus.Attack)
-        {
-            curAttackValue = value;
-            atkText.text = curAttackValue.ToString();
+            case CardStatus.Attack:
+                curAttackValue = value;
+                atkText.text = curAttackValue.ToString();
+                break;
 
-        }
-        else if (key == CardStatus.Exp)
-        {
-            if (level == 1)
-            {
-                curEXP++;
-                if (curEXP >= 2)
+            case CardStatus.Exp:
+                if (level == 1)
                 {
-                    ChangeValue(CardStatus.Level);
-                }
+                    curEXP++;
+                    if (curEXP >= 2)
+                    {
+                        ChangeValue(CardStatus.Level);
+                    }
+                    else expSlider.value = curEXP * 0.5f;
 
-            }
-            else if (level == 2)
-            {
-                curEXP++;
-                if (curEXP >= 3)
-                {
-                    ChangeValue(CardStatus.Level);
                 }
-            }
-            else if (key == CardStatus.Level)
-            {
+                else if (level == 2)
+                {
+                    curEXP++;
+                    if (curEXP >= 3)
+                    {
+                        ChangeValue(CardStatus.Level);
+                    }
+                    else expSlider.value = curEXP * 0.33f;
+                }
+                break;
+
+            case CardStatus.Level:
+                expSlider.value = 0;
                 level++;
                 levelText.text = level.ToString();
                 GameMGR.Instance.spawner.SpecialMonster();
-            }
+
+                break;
         }
     }
     private void Awake()

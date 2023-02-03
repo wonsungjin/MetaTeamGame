@@ -17,16 +17,16 @@ MonoBehaviour:
   level: 1
   tier: 1
   hp: 2
-  attackValue: 2
-  skill: Deal 1 damage to a random enemy unit.
-  triggerTiming: 1
-  targetType: 3
+  atk: 2
+  description: Deal 1 damage to a random enemy unit. Deal 2 damage to a random enemy unit. Deal 3 damage to a random enemy unit.
+  trigger_Timing: 1
+  target_Type: 3
   target: 2
   min_Target: 1
   max_Target: 1
-  triggerCondition: 0
-  effectType: 0
-  value_1: 1
+  trigger_Condition: 0
+  effect_Type: 0
+  value_1: 1.2.3
   value_2: 
   value_3: 
   sumom_Unit: 

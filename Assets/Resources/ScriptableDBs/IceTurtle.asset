@@ -12,20 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 858ed67e0d64b72429e8c773f1903334, type: 3}
   m_Name: IceTurtle
   m_EditorClassIdentifier:
-  ID: 57
+  ID: 19
   objName: Ice Turtle
   level: 1
   tier: 3
   hp: 5
-  attackValue: 1
-  skill: Gives a unit on a random row  +2 Health +2 Attack Damage.
-  triggerTiming: 0
-  targetType: 14
+  atk: 1
+  description: Gives a unit on a random row +2 Health +2 Attack Damage. Give 2 units on a random row +2 Health +2 Attack Damage. Give three units on a random row +2 Health +2 Attack Damage.
+  trigger_Timing: 0
+  target_Type: 14
   target: 3
   min_Target: 0
-  max_Target: 1
-  triggerCondition: 0
-  effectType: 4
+  max_Target: 1.2.3
+  trigger_Condition: 0
+  effect_Type: 4
   value_1: 2
   value_2: 2
   value_3: 

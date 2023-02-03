@@ -10,24 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 858ed67e0d64b72429e8c773f1903334, type: 3}
-  m_Name: ExtinctOX
+  m_Name: ExtinctOx
   m_EditorClassIdentifier:
-  ID: 75
-  objName: Extinct OX
+  ID: 25
+  objName: Extinct Ox
   level: 1
   tier: 4
   hp: 6
-  attackValue: 3
-  skill: If there is an empty slot you gain +2 health and +2 attack damage.
-  triggerTiming: 12
-  targetType: 15
+  atk: 3
+  description: If there is an empty slot you gain +2 health and +2 attack damage. If there is an empty slot you gain +4 health and +4 attack damage. If there is an empty slot you gain +6 health and +6 attack damage.
+  trigger_Timing: 12
+  target_Type: 15
   target: 3
   min_Target: 1
   max_Target: 1
-  triggerCondition: 1
-  effectType: 4
-  value_1: 2
-  value_2: 2
+  trigger_Condition: 1
+  effect_Type: 4
+  value_1: 2.4.6
+  value_2: 2.4.6
   value_3: 
   sumom_Unit: 
   num_Triggers: 1

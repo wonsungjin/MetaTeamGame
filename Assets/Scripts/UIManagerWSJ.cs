@@ -22,11 +22,12 @@ public partial class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI cardName;
     [SerializeField] private TextMeshProUGUI attackValue;
     [SerializeField] private TextMeshProUGUI hpValue;
-    [SerializeField] private TextMeshProUGUI atkHpValue;
+    [SerializeField] private TextMeshProUGUI myDeckName;
     [SerializeField] private TextMeshProUGUI[] skillExplantion;
 
     [Header("Tier")]
-    [SerializeField] public Transform[] tier;
+    [SerializeField] public Transform myContent;
+    [SerializeField] public Transform[] tier1;
     public void Init_Scene1()
     {
         lobbyPannel = GameObject.Find("LobbyPannel");
@@ -39,24 +40,29 @@ public partial class UIManager : MonoBehaviour
         cardImage= GameObject.Find("CardImage").GetComponent<Image>();
         cardName = GameObject.Find("UNITNAME").GetComponent<TextMeshProUGUI>();
         attackValue = GameObject.Find("UNITATKValue").GetComponent<TextMeshProUGUI>();
+        myDeckName = GameObject.Find("MyDeckName").GetComponent<TextMeshProUGUI>();
         hpValue = GameObject.Find("UNITHPValue").GetComponent<TextMeshProUGUI>();
-        atkHpValue = GameObject.Find("UNITATKHP").GetComponent<TextMeshProUGUI>();
         skillExplantion = new TextMeshProUGUI[3];
-        tier = new Transform[6];
+        tier1 = new Transform[6];
         skillExplantion[0] = GameObject.Find("Skillexplanation1").GetComponent<TextMeshProUGUI>();
         skillExplantion[1] = GameObject.Find("Skillexplanation2").GetComponent<TextMeshProUGUI>();
         skillExplantion[2] = GameObject.Find("Skillexplanation3").GetComponent<TextMeshProUGUI>();
-        tier[0] = GameObject.Find("Tier1Content").transform;
-        tier[1] = GameObject.Find("Tier2Content").transform;
-        tier[2] = GameObject.Find("Tier3Content").transform;
-        tier[3] = GameObject.Find("Tier4Content").transform;
-        tier[4] = GameObject.Find("Tier5Content").transform;
-        tier[5] = GameObject.Find("Tier6Content").transform;
+        myContent = GameObject.Find("MyContent").transform;
+        tier1[0] = GameObject.Find("ContentTier1").transform;
+        tier1[1] = GameObject.Find("ContentTier2").transform;
+        tier1[2] = GameObject.Find("ContentTier3").transform;
+        tier1[3] = GameObject.Find("ContentTier4").transform;
+        tier1[4] = GameObject.Find("ContentTier5").transform;
+        tier1[5] = GameObject.Find("ContentTier6").transform;
         toggleGroup = FindObjectOfType<ToggleGroup>();
         customPannel.SetActive(false);
         packChoicePannel.SetActive(false);
         cardPannel.SetActive(false);
         myDeckPannel.SetActive(false);
+    }
+    public void SetMyDeckName(string name)
+    {
+        myDeckName.text = name;
     }
     public void OnCilck_Join_PackChoice()
     {
@@ -119,12 +125,11 @@ public partial class UIManager : MonoBehaviour
     }
     public void OnPointerEnter_CardInfo(CardInfo cardInfo)
     {
-        cardPannel.SetActive(true);
-        atkHpValue.text = $"{cardInfo.atk}/{cardInfo.hp}";
+        cardPannel.SetActive(true);        
         attackValue.text = $"{cardInfo.atk}";
         hpValue.text = $"{cardInfo.hp}";
         cardName.text = $"{cardInfo.objName}";
-        cardImage.sprite = Resources.Load<Sprite>($"Sprites/{cardInfo.objName}");
+        cardImage.sprite = Resources.Load<Sprite>($"Sprites/Nomal/{cardInfo.objName.Replace(" ","")}");
         skillExplantion[0].text = cardInfo.GetSkillExplantion(1);
         skillExplantion[1].text = cardInfo.GetSkillExplantion(2);
         skillExplantion[2].text = cardInfo.GetSkillExplantion(3);

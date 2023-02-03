@@ -12,21 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 858ed67e0d64b72429e8c773f1903334, type: 3}
   m_Name: FireDragon
   m_EditorClassIdentifier:
-  ID: 48
+  ID: 16
   objName: Fire Dragon
   level: 1
   tier: 3
   hp: 3
-  attackValue: 3
-  skill: Deal 1 damage to all enemy units.
-  triggerTiming: 1
-  targetType: 1
+  atk: 3
+  description: Deal 1 damage to all enemy units. Deal 2 damage to all enemy units. Deal 3 damage to all enemy units.
+  trigger_Timing: 1
+  target_Type: 1
   target: 2
   min_Target: 1
   max_Target: 6
-  triggerCondition: 0
-  effectType: 0
-  value_1: 1
+  trigger_Condition: 0
+  effect_Type: 0
+  value_1: 1.2.3
   value_2: 
   value_3: 
   sumom_Unit: 

@@ -12,21 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 858ed67e0d64b72429e8c773f1903334, type: 3}
   m_Name: Rabbit
   m_EditorClassIdentifier:
-  ID: 18
+  ID: 6
   objName: Rabbit
   level: 1
   tier: 1
   hp: 2
-  attackValue: 2
-  skill: Reduce Unit Hire Level Up Cost by (1)
-  triggerTiming: 3
-  targetType: 0
+  atk: 2
+  description: Reduce Unit Hire Level Up Cost by (1)
+  trigger_Timing: 3
+  target_Type: 0
   target: 0
   min_Target: 0
   max_Target: 0
-  triggerCondition: 0
-  effectType: 7
-  value_1: 1
+  trigger_Condition: 0
+  effect_Type: 7
+  value_1: 1.2.3
   value_2: 
   value_3: 
   sumom_Unit: 

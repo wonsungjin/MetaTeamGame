@@ -12,21 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 858ed67e0d64b72429e8c773f1903334, type: 3}
   m_Name: Cactus
   m_EditorClassIdentifier:
-  ID: 54
+  ID: 18
   objName: Cactus
   level: 1
   tier: 3
   hp: 3
-  attackValue: 4
-  skill: +1 Gold next turn.
-  triggerTiming: 10
-  targetType: 0
+  atk: 4
+  description:  +1 Gold next turn. +2 Gold next turn. +3 Gold next turn.
+  trigger_Timing: 10
+  target_Type: 0
   target: 0
   min_Target: 0
   max_Target: 0
-  triggerCondition: 0
-  effectType: 1
-  value_1: 1
+  trigger_Condition: 0
+  effect_Type: 1
+  value_1: 1.2.3
   value_2: 
   value_3: 
   sumom_Unit: 

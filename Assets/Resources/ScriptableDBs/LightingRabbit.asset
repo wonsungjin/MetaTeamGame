@@ -12,22 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 858ed67e0d64b72429e8c773f1903334, type: 3}
   m_Name: LightingRabbit
   m_EditorClassIdentifier:
-  ID: 51
+  ID: 17
   objName: Lighting Rabbit
   level: 1
   tier: 3
   hp: 4
-  attackValue: 3
-  skill: Gain +1 Health +1 Attack Damage until the end of the battle.
-  triggerTiming: 11
-  targetType: 15
+  atk: 3
+  description: Gain +1 Health +1 Attack Damage until the end of the battle. Gain +2 Health +2 Attack Damage until end of battle. Gains +3 HP and +3 ATK until the battle is over.
+  trigger_Timing: 11
+  target_Type: 15
   target: 3
   min_Target: 1
   max_Target: 1
-  triggerCondition: 0
-  effectType: 4
-  value_1: 1
-  value_2: 1
+  trigger_Condition: 0
+  effect_Type: 4
+  value_1: 1.2.3
+  value_2: 1.2.3
   value_3: 
   sumom_Unit: 
   num_Triggers: 1

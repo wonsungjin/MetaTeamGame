@@ -12,22 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 858ed67e0d64b72429e8c773f1903334, type: 3}
   m_Name: RedBlock
   m_EditorClassIdentifier:
-  ID: 27
+  ID: 9
   objName: Red Block
   level: 1
   tier: 2
   hp: 1
-  attackValue: 3
-  skill: Grants +1 HP and +1 ATK to friendly backline units
-  triggerTiming: 10
-  targetType: 13
+  atk: 3
+  description: Grants +1 HP and +1 ATK to friendly backline units. Grants +2 HP and +2 ATK to allied backline units. Grants HP +3 and ATK +3 to allied backline units.
+  trigger_Timing: 10
+  target_Type: 13
   target: 3
   min_Target: 0
   max_Target: 3
-  triggerCondition: 0
-  effectType: 4
-  value_1: 1
-  value_2: 1
+  trigger_Condition: 0
+  effect_Type: 4
+  value_1: 1.2.3
+  value_2: 1.2.3
   value_3: 
   sumom_Unit: 
   num_Triggers: 1

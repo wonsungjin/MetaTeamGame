@@ -11,7 +11,7 @@ public class CardInfo : ScriptableObject
     [SerializeField] internal int tier;
     [SerializeField] internal int hp;
     [SerializeField] internal int atk;
-    [SerializeField] internal string skill;
+    [SerializeField] internal string description;
     [SerializeField] internal int triggerTiming;
     [SerializeField] internal int targetType;
     [SerializeField] internal int target;
@@ -28,19 +28,19 @@ public class CardInfo : ScriptableObject
 
     public string GetSkillExplantion(int num)
     {
-        string [] skillExplantion =  skill.Split(".");
+        string [] skillExplantion =  description.Split(".");
         if (num == 1)
         {
             return $"Lv 1: {skillExplantion[0]}";
         }
         else if (num == 2)
         {
-            if (skillExplantion.Length==2) return $"Lv 2:{skillExplantion[0]}";
+            if (skillExplantion.Length==1) return $"";
             return $"Lv 2:{skillExplantion[1]}";
         }
         else if (num == 3)
         {
-            if (skillExplantion.Length == 2) return $"Lv 3:{skillExplantion[0]}";
+            if (skillExplantion.Length == 1) return $"";
             return $"Lv 3:{skillExplantion[2]}";
         }
         return null;
