@@ -13,8 +13,8 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
     public GameObject[] enemyForwardUnits = null; // enemy ����
     public GameObject[] enemyBackwardUnits = null; // enemy �Ŀ�
 
-    [SerializeField] private GameObject[] playerAttackArray = new GameObject[6]; // player attack unit
-    [SerializeField] private GameObject[] enemyAttackArray = new GameObject[6]; // enemy atack unit
+    public GameObject[] playerAttackArray = new GameObject[6]; // player attack unit
+    public GameObject[] enemyAttackArray = new GameObject[6]; // enemy atack unit
 
     private bool isPlayerPreemptiveAlive = true; // player ���� ���� ����
     private bool isEnemyPreemptiveAlive = true; // enemy ���� ���� ����
