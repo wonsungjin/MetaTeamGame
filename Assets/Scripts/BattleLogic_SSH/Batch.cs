@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Batch : MonoBehaviourPun
+public partial class Batch : MonoBehaviourPun
 {
 
     Transform[] myCardPosition = null;
@@ -100,18 +100,8 @@ public class Batch : MonoBehaviourPun
             if (myCard == true)
             {
                 unitCard.transform.position = myCardPosition[i + 1].position;
-                if (i < 3)
-                {
-                    GameMGR.Instance.battleLogic.playerForwardUnits.Add(unitCard.gameObject);
-                    GameMGR.Instance.battleLogic._playerForwardUnits[i] = unitCard.gameObject;
-                }
-
-                else
-                {
-                    GameMGR.Instance.battleLogic.playerBackwardUnits.Add(unitCard.gameObject);
-                    GameMGR.Instance.battleLogic._playerBackwardUnits[i] = unitCard.gameObject;
-                }
-
+                if (i < 3) { GameMGR.Instance.battleLogic.playerForwardUnits[i] = unitCard.gameObject; }
+                else { GameMGR.Instance.battleLogic.playerBackwardUnits[i - 3] = unitCard.gameObject; }
             }
 
             // enemy Unit ��ġ ����
@@ -119,25 +109,13 @@ public class Batch : MonoBehaviourPun
             {
                 unitCard.transform.position = enemyCardPosition[i + 1].position;
                 unitCard.SetFlip(true);
-                if (i < 3)
-                {
-                    GameMGR.Instance.battleLogic.enemyForwardUnits.Add(unitCard.gameObject);
-                    GameMGR.Instance.battleLogic._enemyForwardUnits[i] = unitCard.gameObject;
-                }
-                else
-                {
-                    GameMGR.Instance.battleLogic.enemyBackwardUnits.Add(unitCard.gameObject);
-                    GameMGR.Instance.battleLogic._enemyBackwardUnits[i] = unitCard.gameObject;
-                }
-
+                if (i < 3) { GameMGR.Instance.battleLogic.enemyForwardUnits[i] = unitCard.gameObject; }
+                else { GameMGR.Instance.battleLogic.enemyBackwardUnits[i - 3] = unitCard.gameObject; }
             }
-
-            else
-            {
-                Debug.Log("CreateBatch : myCard �� Ȯ���ʿ�");
-            }
+            else { Debug.Log("CreateBatch : myCard �� Ȯ���ʿ�"); }
         }
         if (myCard) GameMGR.Instance.battleLogic.InitPlayerList();
         else GameMGR.Instance.battleLogic.InitEnemyList();
     }
+
 }

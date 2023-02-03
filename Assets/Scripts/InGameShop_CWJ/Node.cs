@@ -1,7 +1,4 @@
-using MongoDB.Driver;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Node : MonoBehaviour
 {
@@ -9,48 +6,52 @@ public class Node : MonoBehaviour
     public bool isNotSpawn = false;
     public SpriteRenderer mySprite = null;
 
+    public bool isNotMonster = false;
+
+    GameObject collisionObj;
     private void Start()
     {
         mySprite = GetComponent<SpriteRenderer>();
     }
 
-    private void Update()
-    {
-       
-    }
-
-
     private void OnTriggerStay2D(Collider2D collision)
     {
-        mySprite.sprite = Resources.Load<Sprite>("FrameOn");
 
         if (collision.gameObject.CompareTag("FreezeCard"))
         {
             this.isNotSpawn = true;
-
-            gameObject.tag = "Rect";
+            gameObject.tag = "FullZone";
+            gameObject.transform.localScale = new Vector3(0.245f, 0.245f, 1);
+            mySprite.sprite = Resources.Load<Sprite>("FrameFreeze");
         }
 
-        if (collision.gameObject.CompareTag("Monster"))
+        if (collisionObj == null && collision.gameObject.CompareTag("Monster"))
         {
-            gameObject.tag = "Rect";
+            collisionObj = collision.gameObject;
+            gameObject.tag = "FullZone";
+            mySprite.sprite = Resources.Load<Sprite>("FrameOn");
+            isNotMonster = true;
         }
-    }
 
+    }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        mySprite.sprite = Resources.Load<Sprite>("FrameOff");
-
-        if (collision.gameObject.CompareTag("Monster"))
+        if (collisionObj == collision.gameObject && collision.gameObject.CompareTag("Monster"))
         {
             gameObject.tag = "SelectRing";
+            mySprite.sprite = Resources.Load<Sprite>("FrameOff");
+            isNotMonster = false;
+            collisionObj = null;
+
         }
 
         if (collision.gameObject.CompareTag("FreezeCard"))
         {
             gameObject.tag = "SelectRing";
             this.isNotSpawn = false;
+            gameObject.transform.localScale = new Vector3(1, 1, 1);
+            mySprite.sprite = Resources.Load<Sprite>("FrameOff");
         }
     }
 }

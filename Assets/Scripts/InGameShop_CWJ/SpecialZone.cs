@@ -4,10 +4,19 @@ using UnityEngine;
 
 public class SpecialZone : MonoBehaviour
 {
+    public SpriteRenderer mySprite = null;
+
+
+    private void Start()
+    {
+        mySprite = GetComponent<SpriteRenderer>();
+    }
+
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if(CompareTag("Monster") || CompareTag("FreezeCard"))
+        if(collision.CompareTag("Monster") ||collision.CompareTag("FreezeCard"))
         {
+            mySprite.sprite = Resources.Load<Sprite>("FrameSp");
             gameObject.tag = "FullZone";
         }
     }
@@ -15,5 +24,6 @@ public class SpecialZone : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         gameObject.tag = "SpecialZone";
+        mySprite.sprite = Resources.Load<Sprite>("FrameOff");
     }
 }

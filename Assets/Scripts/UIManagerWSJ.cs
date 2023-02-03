@@ -11,7 +11,7 @@ public partial class UIManager : MonoBehaviour
     [SerializeField] private GameObject myDeckPannel;
     [SerializeField] private GameObject packChoicePannel;
     [SerializeField] private GameObject customPannel;
-    [SerializeField] private GameObject cardPannel;
+    [SerializeField] public GameObject cardPannel;
     [Header("PackList")]
     [SerializeField] private GameObject myPackList;
     [SerializeField] private MyDeck packButton;

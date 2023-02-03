@@ -8,782 +8,799 @@ using System.Data;
 
 public partial class BattleLogic : MonoBehaviourPunCallbacks
 {
-    [SerializeField] public List<GameObject> playerForwardUnits = new List<GameObject>();
-    [SerializeField] public List<GameObject> playerBackwardUnits = new List<GameObject>();
-    [SerializeField] public List<GameObject> enemyForwardUnits = new List<GameObject>();
-    [SerializeField] public List<GameObject> enemyBackwardUnits = new List<GameObject>();
+    public GameObject[] playerForwardUnits = null; // player ï¿½ï¿½ï¿½ï¿½
+    public GameObject[] playerBackwardUnits = null; // player ï¿½Ä¿ï¿½
+    public GameObject[] enemyForwardUnits = null; // enemy ï¿½ï¿½ï¿½ï¿½
+    public GameObject[] enemyBackwardUnits = null; // enemy ï¿½Ä¿ï¿½
 
-    [SerializeField] public GameObject[] _playerForwardUnits = new GameObject[3];
-    [SerializeField] public GameObject[] _playerBackwardUnits = new GameObject[3];
-    [SerializeField] public GameObject[] _enemyForwardUnits = new GameObject[3];
-    [SerializeField] public GameObject[] _enemyBackwardUnits = new GameObject[3];
+    public GameObject[] playerAttackArray = new GameObject[6]; // player attack unit
+    public GameObject[] enemyAttackArray = new GameObject[6]; // enemy atack unit
 
-    [SerializeField] private List<GameObject> playerAttackList = new List<GameObject>();
-    [SerializeField] private List<GameObject> enemyAttackList = new List<GameObject>();
-
-    private bool isPlayerPreemptiveAlive = true; // player Àü¿­ »ýÁ¸ ¿©ºÎ
-    private bool isEnemyPreemptiveAlive = true; // enemy Àü¿­ »ýÁ¸ ¿©ºÎ
-    private bool isFirstAttack = true; // ¼±°ø ÈÄ°ø¿¡ µû¸¥ bool º¯¼ö => true : Player ¼±°ø
-    private bool isResurrection = true; // ¼ÒÈ¯ Æ¯¼º¿¡ µû¸¥ bool º¯¼ö
+    private bool isPlayerPreemptiveAlive = true; // player ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    private bool isEnemyPreemptiveAlive = true; // enemy ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public bool isFirstAttack = false; // ï¿½ï¿½ï¿½ï¿½ ï¿½Ä°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ bool ï¿½ï¿½ï¿½ï¿½ => true : Player ï¿½ï¿½ï¿½ï¿½
+    private bool isResurrection = true; // ï¿½ï¿½È¯ Æ¯ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ bool ï¿½ï¿½ï¿½ï¿½
 
     private int playerTurnCount = 0; // Player Turn Count
     private int enemyTurnCount = 0; // Enemy Turn Count
+
     private int randomArrayNum = 0;
     private int isPlayerAliveCount = 0;
     private int isEnemyAliveCount = 0;
 
-    // ÃßÈÄ master client°¡ gamemananger¿¡¼­ »ý¼ºÇÑ ·£´ý ¹è¿­·Î ´ëÃ¼ ¿¹Á¤ (¸Å ¶ó¿îµå »ý¼º ¹× ¹èÆ÷)
+
+    // ï¿½ï¿½ï¿½ï¿½ master clientï¿½ï¿½ gamemanangerï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½è¿­ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
     private int[] exArray = new int[100];
 
     private int playerCurRound = 0;
     private int enemyCurRound = 0;
 
-    #region PlayerList ÃÊ±âÈ­
+    private void Start()
+    {
+        Init();
+    }
+
+    private void Init()
+    {
+        playerForwardUnits = new GameObject[3];
+        playerBackwardUnits = new GameObject[3];
+        enemyForwardUnits = new GameObject[3];
+        enemyBackwardUnits = new GameObject[3];
+    }
+
+    #region PlayerList ï¿½Ê±ï¿½È­
     public void InitPlayerList()
     {
-        Debug.Log("PlayerList ÃÊ±âÈ­");
-        // Master Clinet°¡ ¸Å ¶ó¿îµå¸¶´Ù »ý¼ºÇÏ´Â Random Array
-
-        // player °ø°Ý¸®½ºÆ® Ãß°¡
-        if (playerForwardUnits.Count != 0)
-        {
-            for (int i = 0; i < playerForwardUnits.Count; i++)
-            {
-                playerAttackList.Add(playerForwardUnits[i]);
-            }
-        }
-
-        else
-        {
-            Debug.Log("°ø°Ý °¡´ÉÇÑ Player Àü¿­ÀÌ ¾øÀ½");
-        }
-
-        if (playerBackwardUnits.Count != 0)
-        {
-            for (int i = 0; i < playerBackwardUnits.Count; i++)
-            {
-                playerAttackList.Add(playerBackwardUnits[i]);
-            }
-        }
-
-        else
-        {
-            Debug.Log("°ø°Ý °¡´ÉÇÑ Player ÈÄ¿­ÀÌ ¾øÀ½");
-        }
+        // player ï¿½ï¿½ï¿½Ý¸ï¿½ï¿½ï¿½Æ® ï¿½ß°ï¿½
+        for (int i = 0; i < playerForwardUnits.Length; i++) { playerAttackArray[i] = playerForwardUnits[i]; }
+        for (int i = 0; i < playerBackwardUnits.Length; i++) { playerAttackArray[i + 3] = playerBackwardUnits[i]; }
     }
     #endregion
 
-    #region EnemyList ÃÊ±âÈ­
+    #region EnemyList ï¿½Ê±ï¿½È­
     public void InitEnemyList()
     {
-        // enemy °ø°Ý¸®½ºÆ® Ãß°¡
-        if (enemyForwardUnits.Count != 0)
-        {
-            for (int i = 0; i < enemyForwardUnits.Count; i++)
-            {
-                enemyAttackList.Add(enemyForwardUnits[i]);
-            }
-        }
-
-        else
-        {
-            Debug.Log("°ø°Ý°¡´ÉÇÑ Enemy Àü¿­ÀÌ ¾øÀ½");
-        }
-
-        if (enemyBackwardUnits.Count != 0)
-        {
-            for (int i = 0; i < enemyBackwardUnits.Count; i++)
-            {
-                enemyAttackList.Add(enemyBackwardUnits[i]);
-            }
-        }
-
-        else
-        {
-            Debug.Log("°ø°Ý °¡´ÉÇÑ Enemy ÈÄ¿­ÀÌ ¾øÀ½");
-        }
+        // enemy ï¿½ï¿½ï¿½Ý¸ï¿½ï¿½ï¿½Æ® ï¿½ß°ï¿½
+        for (int i = 0; i < enemyForwardUnits.Length; i++) { enemyAttackArray[i] = enemyForwardUnits[i]; }
+        for (int i = 0; i < enemyBackwardUnits.Length; i++) { enemyAttackArray[i + 3] = enemyBackwardUnits[i]; }
     }
     #endregion
 
-    #region ÀüÅõ ·ÎÁ÷ 
-    // ÀÎ°ÔÀÓ ÀüÅõ ·ÎÁ÷
+    #region ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 
+    // ï¿½Î°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public void AttackLogic()
     {
-        // ³»°¡ ¼±°øÀÏ °æ¿ì
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
         if (isFirstAttack) { PreemptiveAttack(); }
 
-        // »ó´ë¹æÀÌ ¼±°øÀÏ °æ¿ì
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
         else if (!isFirstAttack) { SubordinatedAttack(); }
-
-        else { Debug.Log("¼±°ø ÈÄ°øÀÌ Á¤ÇØÁöÁö ¾ÊÀ½"); }
+        else { Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½Ä°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½"); }
     }
     #endregion
 
     public void AliveUnit()
     {
-        if (playerForwardUnits.Count == 0)
+        // player forward unitï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+        for (int i = 0; i < playerForwardUnits.Length; i++)
         {
-            isPlayerPreemptiveAlive = false;
+            if (playerForwardUnits[i] == null) { isPlayerAliveCount++; }
         }
 
-        if (enemyForwardUnits.Count == 0)
+        if (isPlayerAliveCount == playerForwardUnits.Length) { isPlayerPreemptiveAlive = false; }
+
+        // enemy forward unitï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+        for (int i = 0; i < enemyForwardUnits.Length; i++)
         {
-            isEnemyPreemptiveAlive = false;
+            if (enemyForwardUnits[i] == null) { isEnemyAliveCount++; }
         }
+
+        if (isEnemyAliveCount == enemyForwardUnits.Length) { isEnemyPreemptiveAlive = false; }
+
+        isPlayerAliveCount = 0;
+        isEnemyAliveCount = 0;
     }
 
-    #region Player ¼±Á¦ °ø°Ý
-    // Player ¼±Á¦ °ø°Ý
+
+    #region Player PreemptiveAttack
+    // Player Attack
     public void PreemptiveAttack()
     {
-        // Àü¿­ ¹èÄ¡¿©ºÎ È®ÀÎ
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½
         AliveUnit();
 
         for (int i = 0; i < GameMGR.Instance.randomValue.Length; i++) exArray[i] = GameMGR.Instance.randomValue[i];
-        Debug.Log("player ¼±°ø");
+        Debug.Log("player PreemptiveAttack");
 
-        while (playerAttackList.Count != 0 || enemyAttackList.Count != 0)
+        while (true)
         {
-            Debug.Log("Player°¡ °ø°Ý ½ÃÀÛ");
-
-            // ·£´ý ¼ö¸¦ °¡Áö°í ÀÖ´Â ¹è¿­ 1¹ÙÄû µ¹¾ÒÀ» ¶§ 0¹øÂ°·Î ÃÊ±âÈ­
+            Debug.Log("Playerï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½è¿­ 1ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ 0ï¿½ï¿½Â°ï¿½ï¿½ ï¿½Ê±ï¿½È­
             if (randomArrayNum == exArray.Length) { randomArrayNum = 0; }
-
-            // [Player -> Enemy Attack] ÀûÀÇ Àü¿­ÀÌ »ì¾ÆÀÖ´Â °æ¿ì
+            // [Player -> Enemy Attack] ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½
             if (isEnemyPreemptiveAlive)
             {
-                // ÇÇ°Ý °¡´ÉÇÑ ÀûÀÌ ³ª¿Ã¶§±îÁö randomArray ¼øÈ¸
+                isPlayerAliveCount = 0;
+                isEnemyAliveCount = 0;
+
+                // ï¿½Ç°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ã¶ï¿½ï¿½ï¿½ï¿½ï¿½ randomArray ï¿½ï¿½È¸
                 while (enemyForwardUnits[exArray[randomArrayNum]] == null)
                 {
                     randomArrayNum++;
                     isEnemyAliveCount = 0;
 
-                    for (int i = 0; i < enemyForwardUnits.Count; i++)
+                    for (int i = 0; i < enemyForwardUnits.Length; i++)
                     {
                         if (enemyForwardUnits[i] == null) { isEnemyAliveCount++; }
-
-                        if (isEnemyAliveCount == enemyForwardUnits.Count)
-                        {
-                            isEnemyPreemptiveAlive = false;
-                            break;
-                        }
-                    }
-
-                    if (isEnemyPreemptiveAlive == false)
-                    {
-                        break;
-                    }
-                }
-
-                if (playerAttackList.Count - 1 < playerTurnCount)
-                {
-                    playerTurnCount = 0;
-                }
-
-                // °ø°Ý °¡´ÉÇÑ ÇÃ·¹ÀÌ¾î°¡ ³ª¿Ã¶§ ±îÁö playerturnCount Áõ°¡
-                while (playerAttackList[playerTurnCount] == null)
-                {
-                    playerTurnCount++;
-                    isPlayerAliveCount = 0;
-
-                    if (playerTurnCount > playerAttackList.Count - 1) { playerTurnCount = 0; }
-
-                    for (int i = 0; i < playerAttackList.Count; i++)
-                    {
-                        if (playerAttackList[i] == null) { isPlayerAliveCount++; }
-                    }
-
-                    if (isPlayerAliveCount == playerAttackList.Count) { break; }
-                }
-
-                Debug.Log("Player Attack Unit name : " + playerAttackList[playerTurnCount].name);
-                Debug.Log("Enemy forward hit unit : " + enemyForwardUnits[exArray[randomArrayNum]].name);
-                // ÇÃ·¹ÀÌ¾î À¯´ÖÀÌ Àû Àü¿­ À¯´Ö ·£´ý °ø°Ý
-                playerAttackList[playerTurnCount].GetComponent<AttackLogic>().UnitAttack(enemyForwardUnits[exArray[randomArrayNum]]);
-
-                // ÇÇ°Ý ¹ÞÀº À¯´ÖÀ» ¸®½ºÆ®¿¡¼­ »èÁ¦
-                for (int i = 0; i < enemyAttackList.Count; i++)
-                {
-                    if (enemyAttackList[i] == enemyForwardUnits[exArray[randomArrayNum]])
-                    {
-                        enemyAttackList[i] = null;
-                        enemyForwardUnits[exArray[randomArrayNum]] = null;
-                        Debug.Log("Delet Enemy list");
-                        break;
-                    }
-                    else { Debug.Log("enemyAttackList Å½»öÁß"); }
-                }
-
-                // »õ·Î¿î random num ºÎ¿©
-                // ex) ÇÃ·¹ÀÌ¾î°¡ ÀûÀÇ 2¹øÂ°¸¦ °ø°ÝÇßÀ» ¶§ Àûµµ ÇÃ·¹ÀÌ¾îÀÇ 2¹øÂ°¸¦ °ø°ÝÇÏ±â ¶§¹®¿¡ ´Ù¸¥ random num ºÎ¿©
-                randomArrayNum++;
-
-                // ÀûÀÌ Àü¸êÇÑ °æ¿ì
-                for (int i = 0; i < enemyAttackList.Count; i++)
-                {
-                    if (enemyAttackList[i] == null)
-                    {
-                        isPlayerAliveCount++;
-                        if (isPlayerAliveCount == enemyAttackList.Count)
+                        if (isEnemyAliveCount == enemyForwardUnits.Length) 
                         {
                             isEnemyAliveCount = 0;
-                            BattleWin();
-                            break;
+                            isEnemyPreemptiveAlive = false; 
                         }
                     }
-                }
-                isEnemyAliveCount = 0;
-
-                // 1ÅÏ Á¾·á¿¡ µû¸¥ ÅÏ º¯¼ö Áõ°¡ 
-                playerTurnCount++;
-            }
-
-            // ÀûÀÇ Àü¿­ÀÌ Àü¸êÇÑ °æ¿ì
-            // ÈÄ¿­À» °ø°Ý °¡´ÉÇÑ »óÅÂ·Î º¯°æ
-            else if (!isEnemyPreemptiveAlive)
-            {
-                while (enemyBackwardUnits[exArray[randomArrayNum]] == null)
-                {
-                    randomArrayNum++;
-                }
-
-                if (playerAttackList.Count - 1 > playerTurnCount)
-                {
-                    playerTurnCount = 0;
-                }
-
-                // °ø°Ý °¡´ÉÇÑ ÇÃ·¹ÀÌ¾î°¡ ³ª¿Ã¶§ ±îÁö playerTurnCount Áõ°¡
-                while (playerAttackList[playerTurnCount] == null)
-                {
-                    playerTurnCount++;
-
-                    if (playerTurnCount > playerAttackList.Count - 1)
-                    {
-                        playerTurnCount = 0;
-                    }
-
-                    for (int i = 0; i < playerAttackList.Count; i++)
-                    {
-                        if (playerAttackList[i] == null)
-                        {
-                            isPlayerAliveCount++;
-                        }
-                    }
-
-                    if (isPlayerAliveCount == playerAttackList.Count)
-                    {
-                        break;
-                    }
-                }
-
-                Debug.Log("player attack unit : " + playerAttackList[playerTurnCount].name);
-                Debug.Log("enemy backward hit unit : " + enemyBackwardUnits[exArray[randomArrayNum]].name);
-
-                // ÇÃ·¹ÀÌ¾î À¯´ÖÀÌ Àû ÈÄ¿­ À¯´Ö ·£´ý °ø°Ý
-                playerAttackList[playerTurnCount].GetComponent<AttackLogic>().UnitAttack(enemyBackwardUnits[exArray[randomArrayNum]]);
-
-                // ÇÇ°Ý ¹ÞÀº À¯´ÖÀ» ¸®½ºÆ®¿¡¼­ »èÁ¦
-                for (int i = 0; i < enemyAttackList.Count; i++)
-                {
-                    if (enemyAttackList[i] == enemyBackwardUnits[exArray[randomArrayNum]])
-                    {
-                        enemyAttackList[i] = null;
-                        enemyBackwardUnits[exArray[randomArrayNum]] = null;
-                        Debug.Log("Delet enemy unit");
-                        break;
-                    }
-
-                    else
-                    {
-                        Debug.Log("enemyAttackList Å½»öÁß");
-                    }
-                }
-
-                // »õ·Î¿î random num ºÎ¿©
-                // ex) ÇÃ·¹ÀÌ¾î°¡ ÀûÀÇ 2¹øÂ°¸¦ °ø°ÝÇßÀ» ¶§ Àûµµ ÇÃ·¹ÀÌ¾îÀÇ 2¹øÂ°¸¦ °ø°ÝÇÏ±â ¶§¹®¿¡ ´Ù¸¥ random num ºÎ¿©
-                randomArrayNum++;
-
-                // ÀûÀÌ Àü¸êÇÑ °æ¿ì
-                for (int i = 0; i < enemyAttackList.Count; i++)
-                {
-                    if (enemyAttackList[i] == null)
-                    {
-                        isPlayerAliveCount++;
-                        if (isPlayerAliveCount == enemyAttackList.Count)
-                        {
-                            isEnemyAliveCount = 0;
-                            BattleWin();
-                            break;
-                        }
-                    }
-                }
-
-                isEnemyAliveCount = 0;
-
-                // 1ÅÏ Á¾·á¿¡ µû¸¥ ÅÏ º¯¼ö Áõ°¡ 
-                playerTurnCount++;
-            }
-
-            // [Enemy -> Player Attack] ÇÃ·¹ÀÌ¾îÀÇ Àü¿­ÀÌ »ì¾ÆÀÖ´Â °æ¿ì
-            if (isPlayerPreemptiveAlive)
-            {
-                // ÇÇ°Ý °¡´ÉÇÑ Player°¡ ³ª¿Ã¶§±îÁö ·£´ý ¼ö ¸¦ ¹ÞÀ½
-                while (playerForwardUnits[exArray[randomArrayNum]] == null)
-                {
-                    randomArrayNum++;
-
-                    isPlayerAliveCount = 0;
-
-                    for (int i = 0; i < playerForwardUnits.Count; i++)
-                    {
-                        if (playerForwardUnits[i] == null) { isPlayerAliveCount++; }
-
-                        if (isPlayerAliveCount == playerForwardUnits.Count)
-                        {
-                            isPlayerPreemptiveAlive = false;
-                            break;
-                        }
-                    }
-
-                    if (isEnemyPreemptiveAlive == false)
-                    {
-                        break;
-                    }
-                }
-
-                if (enemyAttackList.Count - 1 < enemyTurnCount)
-                {
-                    enemyTurnCount = 0;
-                }
-
-                while (enemyAttackList[enemyTurnCount] == null)
-                {
-                    enemyTurnCount++;
                     isEnemyAliveCount = 0;
-
-                    if (enemyTurnCount > enemyAttackList.Count - 1)
-                    {
-                        enemyTurnCount = 0;
-                    }
-
-                    for (int i = 0; i < enemyAttackList.Count; i++)
-                    {
-                        if (enemyAttackList[i] == null)
-                        {
-                            isEnemyAliveCount++;
-                        }
-                    }
-
-                    if (isEnemyAliveCount == enemyAttackList.Count)
-                    {
-                        break;
-                    }
+                    if (isEnemyPreemptiveAlive == false) { break; }
                 }
 
-                Debug.Log("enemy attack unit : " + enemyAttackList[enemyTurnCount].name);
-                Debug.Log("player forward hit Unit : " + playerForwardUnits[exArray[randomArrayNum]].name);
-                // Àû À¯´ÖÀÌ ÇÃ·¹ÀÌ¾î À¯´Ö Áß ·£´ýÇÑ ÇÃ·¹ÀÌ¾î °ø°Ý
-                enemyAttackList[enemyTurnCount].GetComponent<AttackLogic>().UnitAttack(playerForwardUnits[exArray[randomArrayNum]]);
+                if (playerAttackArray.Length <= playerTurnCount) { playerTurnCount = 0; }
 
-                // ÇÇ°Ý ¹ÞÀº À¯´ÖÀ» °ø°Ý ¸®½ºÆ®¿¡¼­ »èÁ¦
-                for (int i = 0; i < playerAttackList.Count; i++)
-                {
-                    if (playerAttackList[i] == playerForwardUnits[exArray[randomArrayNum]])
-                    {
-                        playerAttackList[i] = null;
-                        playerForwardUnits[exArray[randomArrayNum]] = null;
-                        Debug.Log("Delet player unit");
-                        break;
-                    }
-
-                    else
-                    {
-                        Debug.Log("playerForwardUnits Å½»öÁß");
-                    }
-                }
-
-                // »õ·Î¿î random num ºÎ¿©
-                // ex) ÀûÀÌ ÇÃ·¹ÀÌ¾îÀÇ 2¹øÂ°¸¦ °ø°ÝÇßÀ» ¶§ Àûµµ ÇÃ·¹ÀÌ¾îÀÇ 2¹øÂ°¸¦ °ø°ÝÇÏ±â ¶§¹®¿¡ ´Ù¸¥ random num ºÎ¿©
-                randomArrayNum++;
-
-                // ÇÃ·¹ÀÌ¾î À¯´ÖÀÌ Àü¸êÇÑ °æ¿ì
-                for (int i = 0; i < playerAttackList.Count; i++)
-                {
-                    if (playerAttackList[i] == null)
-                    {
-                        isPlayerAliveCount++;
-                        if (isPlayerAliveCount == playerAttackList.Count)
-                        {
-                            isPlayerAliveCount = 0;
-                            BattleLose();
-                            break;
-                        }
-                    }
-                }
-                isPlayerAliveCount = 0;
-
-                // 1ÅÏ Á¾·á¿¡ µû¸¥ ÅÏ º¯¼ö Áõ°¡
-                enemyTurnCount++;
-            }
-
-            // ÇÃ·¹ÀÌ¾îÀÇ Àü¿­ÀÌ Àü¸êÇÑ °æ¿ì
-            else if (!isPlayerPreemptiveAlive)
-            {
-                // ÈÄ¿­À» °ø°Ý °¡´ÉÇÑ »óÅÂ·Î º¯°æ
-
-                while (playerBackwardUnits[exArray[randomArrayNum]] == null)
-                {
-                    randomArrayNum++;
-                }
-
-                if (enemyTurnCount > enemyAttackList.Count - 1)
-                {
-                    enemyTurnCount = 0;
-                }
-
-                Debug.Log("***enemyTurnCount : " + enemyTurnCount);
-                while (enemyAttackList[enemyTurnCount] == null)
-                {
-                    enemyTurnCount++;
-                    if (enemyTurnCount > enemyAttackList.Count - 1)
-                    {
-                        enemyTurnCount = 0;
-                    }
-                }
-
-                Debug.Log("enemy attack unit : " + enemyAttackList[enemyTurnCount].name);
-                Debug.Log("player backward hit unit : " + playerBackwardUnits[exArray[randomArrayNum]].name);
-
-                // Àû À¯´ÖÀÌ ÇÃ·¹ÀÌ¾î ÈÄ¿­ À¯´Ö ·£´ý °ø°Ý
-                enemyAttackList[enemyTurnCount].GetComponent<AttackLogic>().UnitAttack(playerBackwardUnits[exArray[randomArrayNum]]);
-
-                // ÇÇ°Ý ¹ÞÀº ÇÃ·¹ÀÌ¾î À¯´ÖÀ» °ø°Ý ¸®½ºÆ®¿¡¼­ »èÁ¦
-                for (int i = 0; i < playerAttackList.Count; i++)
-                {
-                    if (playerAttackList[i] == playerBackwardUnits[exArray[randomArrayNum]])
-                    {
-                        playerAttackList[i] = null;
-                        playerBackwardUnits[exArray[randomArrayNum]] = null;
-                        break;
-                    }
-
-                    else
-                    {
-                        Debug.Log("playerAttackList Å½»öÁß");
-                    }
-                }
-
-
-                // »õ·Î¿î random num ºÎ¿©
-                // ex) ÇÃ·¹ÀÌ¾î°¡ ÀûÀÇ 2¹øÂ°¸¦ °ø°ÝÇßÀ» ¶§ Àûµµ ÇÃ·¹ÀÌ¾îÀÇ 2¹øÂ°¸¦ °ø°ÝÇÏ±â ¶§¹®¿¡ ´Ù¸¥ random num ºÎ¿©
-                randomArrayNum++;
-
-
-                // ÇÃ·¹ÀÌ¾î À¯´ÖÀÌ Àü¸êÇÑ °æ¿ì
-                for (int i = 0; i < playerAttackList.Count; i++)
-                {
-                    if (playerAttackList[i] == null)
-                    {
-                        isPlayerAliveCount++;
-                        if (isPlayerAliveCount == playerAttackList.Count)
-                        {
-                            isPlayerAliveCount = 0;
-                            BattleLose();
-                            break;
-                        }
-                    }
-                }
-                isPlayerAliveCount = 0;
-
-                // 1ÅÏ Á¾·á¿¡ µû¸¥ ÅÏ º¯¼ö Áõ°¡ 
-                enemyTurnCount++;
-                // player °ø°Ý ¼ø¼­ ÃÊ±âÈ­
-                enemyTurnCount = 0;
-            }
-
-            else
-            {
-                Debug.Log("Àü¿­/ÈÄ¿­ »ýÁ¸¿©ºÎ È®ÀÎ ÇÊ¿ä rq_SSH");
-            }
-        }
-    }
-    #endregion
-
-    #region Enemy ¼±Á¦ °ø°Ý
-    // Enemy ¼±Á¦ °ø°Ý
-    public void SubordinatedAttack()
-    {
-        // Àü¿­ ¹èÄ¡¿©ºÎ È®ÀÎ
-        AliveUnit();
-
-        Debug.Log("Enemy ¼±°ø");
-
-        while (playerAttackList.Count != 0 || enemyAttackList.Count != 0)
-        {
-            Debug.Log("°ø°Ý ½ÃÀÛ");
-
-            // ·£´ý ¼ö¸¦ °¡Áö°í ÀÖ´Â ¹è¿­ 1¹ÙÄû µ¹¾ÒÀ» ¶§ 0¹øÂ°·Î ÃÊ±âÈ­
-            if (randomArrayNum == exArray.Length)
-            {
-                randomArrayNum = 0;
-            }
-
-            // [Enemy -> Player Attack] ÇÃ·¹ÀÌ¾îÀÇ Àü¿­ÀÌ »ì¾ÆÀÖ´Â °æ¿ì
-            if (isPlayerPreemptiveAlive)
-            {
-                while (playerForwardUnits[exArray[randomArrayNum]] == null)
-                {
-                    randomArrayNum++;
-                }
-
-                if (enemyAttackList.Count == enemyTurnCount)
-                {
-                    enemyTurnCount = 0;
-                }
-
-                else if (enemyAttackList.Count != enemyTurnCount)
-                {
-                    while (enemyAttackList[enemyTurnCount] == null)
-                    {
-                        enemyTurnCount++;
-                    }
-                }
-
-                else
-                {
-                    Debug.Log("enemyTurnCount È®ÀÎ ÇÊ¿ä");
-                }
-
-                // Àû À¯´ÖÀÌ ÇÃ·¹ÀÌ¾î À¯´Ö Áß ·£´ýÇÑ ÇÃ·¹ÀÌ¾î °ø°Ý
-                enemyAttackList[enemyTurnCount].GetComponent<AttackLogic>().UnitAttack(playerForwardUnits[exArray[randomArrayNum]]);
-
-                // ÇÇ°Ý ¹ÞÀº À¯´ÖÀ» °ø°Ý ¸®½ºÆ®¿¡¼­ »èÁ¦
-                for (int i = 0; i < playerAttackList.Count; i++)
-                {
-                    if (playerAttackList[i] == playerForwardUnits[exArray[randomArrayNum]])
-                    {
-                        playerAttackList[i] = null;
-                        break;
-                    }
-
-                    else
-                    {
-                        Debug.Log("playerForwardUnits Å½»öÁß");
-                    }
-                }
-
-                playerForwardUnits[exArray[randomArrayNum]] = null;
-
-                // »õ·Î¿î random num ºÎ¿©
-                // ex) ÀûÀÌ ÇÃ·¹ÀÌ¾îÀÇ 2¹øÂ°¸¦ °ø°ÝÇßÀ» ¶§ Àûµµ ÇÃ·¹ÀÌ¾îÀÇ 2¹øÂ°¸¦ °ø°ÝÇÏ±â ¶§¹®¿¡ ´Ù¸¥ random num ºÎ¿©
-                randomArrayNum++;
-
-                // ÇÃ·¹ÀÌ¾îÀÇ Àü¿­ÀÌ Àü¸êÇÑ °æ¿ì
-                if (playerForwardUnits[0] == null && playerForwardUnits[1] == null && playerForwardUnits[2] == null)
-                {
-                    isPlayerPreemptiveAlive = false;
-                }
-
-                // 1ÅÏ Á¾·á¿¡ µû¸¥ ÅÏ º¯¼ö Áõ°¡
-                enemyTurnCount++;
-            }
-
-            // ÇÃ·¹ÀÌ¾îÀÇ Àü¿­ÀÌ Àü¸êÇÑ °æ¿ì
-            else if (!isPlayerPreemptiveAlive)
-            {
-                // ÈÄ¿­À» °ø°Ý °¡´ÉÇÑ »óÅÂ·Î º¯°æ
-
-                while (playerBackwardUnits[exArray[randomArrayNum]] == null)
-                {
-                    randomArrayNum++;
-                }
-
-                if (enemyTurnCount > enemyAttackList.Count - 1)
-                {
-                    enemyTurnCount = 0;
-                }
-
-                Debug.Log("***enemyTurnCount : " + enemyTurnCount);
-                while (enemyAttackList[enemyTurnCount] == null)
-                {
-                    enemyTurnCount++;
-                    if (enemyTurnCount > enemyAttackList.Count - 1)
-                    {
-                        enemyTurnCount = 0;
-                    }
-                    Debug.Log("***enemyTurnCount : " + enemyTurnCount);
-                }
-
-                // Àû À¯´ÖÀÌ ÇÃ·¹ÀÌ¾î ÈÄ¿­ À¯´Ö ·£´ý °ø°Ý
-                enemyAttackList[enemyTurnCount].GetComponent<AttackLogic>().UnitAttack(playerBackwardUnits[exArray[randomArrayNum]]);
-
-                // ÇÇ°Ý ¹ÞÀº ÇÃ·¹ÀÌ¾î À¯´ÖÀ» °ø°Ý ¸®½ºÆ®¿¡¼­ »èÁ¦
-                for (int i = 0; i < playerAttackList.Count; i++)
-                {
-                    if (playerAttackList[i] == playerBackwardUnits[exArray[randomArrayNum]])
-                    {
-                        playerAttackList[i] = null;
-                        Debug.Log(playerBackwardUnits[exArray[randomArrayNum]] + " : null");
-                        break;
-                    }
-
-                    else
-                    {
-                        Debug.Log("playerAttackList Å½»öÁß");
-                    }
-                }
-
-                playerBackwardUnits[exArray[randomArrayNum]] = null;
-
-                // »õ·Î¿î random num ºÎ¿©
-                // ex) ÇÃ·¹ÀÌ¾î°¡ ÀûÀÇ 2¹øÂ°¸¦ °ø°ÝÇßÀ» ¶§ Àûµµ ÇÃ·¹ÀÌ¾îÀÇ 2¹øÂ°¸¦ °ø°ÝÇÏ±â ¶§¹®¿¡ ´Ù¸¥ random num ºÎ¿©
-                randomArrayNum++;
-
-                // ÇÃ·¹ÀÌ¾îÀÇ ÈÄ¿­ÀÌ Àü¸êÇÑ °æ¿ì
-                if (playerBackwardUnits[0] == null && playerBackwardUnits[1] == null && playerBackwardUnits[2] == null)
-                {
-                    // ÇÃ·¹ÀÌ¾î ÆÐ¹è
-                    BattleLose();
-                    break;
-                }
-
-                // 1ÅÏ Á¾·á¿¡ µû¸¥ ÅÏ º¯¼ö Áõ°¡ 
-                enemyTurnCount++;
-                // player °ø°Ý ¼ø¼­ ÃÊ±âÈ­
-                enemyTurnCount = 0;
-            }
-
-            else
-            {
-                Debug.Log("Àü¿­/ÈÄ¿­ »ýÁ¸¿©ºÎ È®ÀÎ ÇÊ¿ä rq_SSH");
-            }
-
-            // [Player -> Enemy Attack] ÀûÀÇ Àü¿­ÀÌ »ì¾ÆÀÖ´Â °æ¿ì
-            if (isEnemyPreemptiveAlive)
-            {
-                // ÇÇ°Ý °¡´ÉÇÑ ÀûÀÌ ³ª¿Ã¶§±îÁö randomArray ¼øÈ¸
-                while (enemyForwardUnits[exArray[randomArrayNum]] == null)
-                {
-                    randomArrayNum++;
-                }
-
-                // °ø°Ý °¡´ÉÇÑ ÇÃ·¹ÀÌ¾î°¡ ³ª¿Ã¶§ ±îÁö playerturnCount Áõ°¡
-                while (playerAttackList[playerTurnCount] == null)
+                // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ï¿½Ã¶ï¿½ ï¿½ï¿½ï¿½ï¿½ playerturnCount ï¿½ï¿½ï¿½ï¿½
+                while (playerAttackArray[playerTurnCount] == null)
                 {
                     playerTurnCount++;
-                }
+                    isPlayerAliveCount = 0;
 
-                // ÇÃ·¹ÀÌ¾î À¯´ÖÀÌ Àû Àü¿­ À¯´Ö ·£´ý °ø°Ý
-                playerAttackList[playerTurnCount].GetComponent<AttackLogic>().UnitAttack(enemyForwardUnits[exArray[randomArrayNum]]);
+                    if (playerAttackArray.Length <= playerTurnCount) { playerTurnCount = 0; }
 
-                // ÇÇ°Ý ¹ÞÀº À¯´ÖÀ» °ø°Ý ¸®½ºÆ®¿¡¼­ »èÁ¦
-                for (int i = 0; i < enemyAttackList.Count; i++)
-                {
-                    if (enemyAttackList[i] == enemyForwardUnits[exArray[randomArrayNum]])
+                    for (int i = 0; i < playerAttackArray.Length; i++)
                     {
-                        enemyAttackList[i] = null;
+                        if (playerAttackArray[i] == null) { isPlayerAliveCount++; }
+                    }
+
+                    if (isPlayerAliveCount == playerAttackArray.Length)
+                    {
+                        Debug.Log("ï¿½ï¿½ï¿½Ý°ï¿½ï¿½ï¿½ï¿½ï¿½ player unitï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
                         break;
                     }
-                    else
-                    {
-                        Debug.Log("enemyAttackList Å½»öÁß");
-                    }
                 }
 
-                // ÇÇ°Ý ¹ÞÀº À¯´ÖÀ» Àü¿­ ¸®½ºÆ®¿¡¼­ »èÁ¦
-                enemyForwardUnits[exArray[randomArrayNum]] = null;
+                Debug.Log("Player Attack Unit name : " + playerAttackArray[playerTurnCount].name);
+                Debug.Log("Enemy forward hit unit : " + enemyForwardUnits[exArray[randomArrayNum]].name);
+                // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+                playerAttackArray[playerTurnCount].GetComponent<AttackLogic>().UnitAttack(enemyForwardUnits[exArray[randomArrayNum]]);
 
-                // »õ·Î¿î random num ºÎ¿©
-                // ex) ÇÃ·¹ÀÌ¾î°¡ ÀûÀÇ 2¹øÂ°¸¦ °ø°ÝÇßÀ» ¶§ Àûµµ ÇÃ·¹ÀÌ¾îÀÇ 2¹øÂ°¸¦ °ø°ÝÇÏ±â ¶§¹®¿¡ ´Ù¸¥ random num ºÎ¿©
-                randomArrayNum++;
-
-                // ÀûÀÇ Àü¿­ÀÌ Àü¸êÇÑ °æ¿ì
-                if (enemyForwardUnits[0] == null && enemyForwardUnits[1] == null && enemyForwardUnits[2] == null)
+                // ï¿½Ç°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½è¿­ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+                for (int i = 0; i < enemyAttackArray.Length; i++)
                 {
+                    if (enemyAttackArray[i] == enemyForwardUnits[exArray[randomArrayNum]])
+                    {
+                        Debug.Log("Hit enemy unit (attackArray) : " + enemyAttackArray[i].name);
+                        Debug.Log("Hit enemy unit (forwardUnit) : " + enemyForwardUnits[exArray[randomArrayNum]].name);
+
+                        enemyAttackArray[i] = null;
+                        enemyForwardUnits[exArray[randomArrayNum]] = null;
+
+                        break;
+                    }
+                    else { Debug.Log("enemyAttackArray Å½ï¿½ï¿½ï¿½ï¿½"); }
+                }
+
+                // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ç´ï¿½
+                for (int i = 0; i < enemyForwardUnits.Length; i++)
+                {
+                    if (enemyForwardUnits[i] == null) { isEnemyAliveCount++; }
+                }
+
+                if (enemyForwardUnits.Length == isEnemyAliveCount)
+                {
+                    isEnemyAliveCount = 0;
                     isEnemyPreemptiveAlive = false;
                 }
 
-                // 1ÅÏ Á¾·á¿¡ µû¸¥ ÅÏ º¯¼ö Áõ°¡ 
+                isEnemyAliveCount = 0;
+
+                // ï¿½ï¿½ï¿½Î¿ï¿½ random num ï¿½Î¿ï¿½
+                // ex) ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ï¿½ï¿½ 2ï¿½ï¿½Â°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ 2ï¿½ï¿½Â°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¸ï¿½ random num ï¿½Î¿ï¿½
+                randomArrayNum++;
+
+                // 1ï¿½ï¿½ ï¿½ï¿½ï¿½á¿¡ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 
                 playerTurnCount++;
             }
 
-            // ÀûÀÇ Àü¿­ÀÌ Àü¸êÇÑ °æ¿ì
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+            // ï¿½Ä¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â·ï¿½ ï¿½ï¿½ï¿½ï¿½
             else if (!isEnemyPreemptiveAlive)
             {
-                // ÈÄ¿­À» °ø°Ý °¡´ÉÇÑ »óÅÂ·Î º¯°æ
-                while (enemyBackwardUnits[exArray[randomArrayNum]] == null)
-                {
-                    randomArrayNum++;
-                }
+                isPlayerAliveCount = 0;
+                isEnemyAliveCount = 0;
 
-                if (playerAttackList.Count - 1 > playerTurnCount)
-                {
-                    playerTurnCount = 0;
-                }
+                while (enemyBackwardUnits[exArray[randomArrayNum]] == null) { randomArrayNum++; }
 
-                Debug.Log("***playerTurnCount : " + playerTurnCount);
-                // °ø°Ý °¡´ÉÇÑ ÇÃ·¹ÀÌ¾î°¡ ³ª¿Ã¶§ ±îÁö playerTurnCount Áõ°¡
-                while (playerAttackList[playerTurnCount] == null)
+                if (playerAttackArray.Length <= playerTurnCount) { playerTurnCount = 0; }
+
+                // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ï¿½Ã¶ï¿½ ï¿½ï¿½ï¿½ï¿½ playerTurnCount ï¿½ï¿½ï¿½ï¿½
+                while (playerAttackArray[playerTurnCount] == null)
                 {
                     playerTurnCount++;
-                    if (playerTurnCount > playerAttackList.Count - 1)
+                    isPlayerAliveCount = 0;
+
+                    if (playerAttackArray.Length <= playerTurnCount) { playerTurnCount = 0; }
+
+                    for (int i = 0; i < playerAttackArray.Length; i++)
                     {
-                        playerTurnCount = 0;
+                        if (playerAttackArray[i] == null) { isPlayerAliveCount++; }
                     }
-                    Debug.Log("***playerTurnCount : " + playerTurnCount);
-                }
 
-                // ÇÃ·¹ÀÌ¾î À¯´ÖÀÌ Àû ÈÄ¿­ À¯´Ö ·£´ý °ø°Ý
-                playerAttackList[playerTurnCount].GetComponent<AttackLogic>().UnitAttack(enemyBackwardUnits[exArray[randomArrayNum]]);
-
-                // ÇÇ°Ý ¹ÞÀº À¯´ÖÀ» °ø°Ý ¸®½ºÆ®¿¡¼­ »èÁ¦
-                for (int i = 0; i < enemyAttackList.Count; i++)
-                {
-                    if (enemyAttackList[i] == enemyBackwardUnits[exArray[randomArrayNum]])
+                    if (isPlayerAliveCount == playerAttackArray.Length)
                     {
-                        enemyAttackList[i] = null;
+                        isPlayerAliveCount = 0;
+                        Debug.Log("ï¿½ï¿½ï¿½Ý°ï¿½ï¿½ï¿½ï¿½ï¿½ player unitï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
                         break;
                     }
+                }
 
-                    else
+                Debug.Log("playerTurnCount : " + playerTurnCount);
+                Debug.Log("player attack unit : " + playerAttackArray[playerTurnCount].name);
+                Debug.Log("enemy backward hit unit : " + enemyBackwardUnits[exArray[randomArrayNum]].name);
+
+                // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ä¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+                playerAttackArray[playerTurnCount].GetComponent<AttackLogic>().UnitAttack(enemyBackwardUnits[exArray[randomArrayNum]]);
+
+                // ï¿½Ç°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½è¿­ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+                for (int i = 0; i < enemyAttackArray.Length; i++)
+                {
+                    if (enemyAttackArray[i] == enemyBackwardUnits[exArray[randomArrayNum]])
                     {
-                        Debug.Log("enemyAttackList Å½»öÁß");
+                        Debug.Log("Hit enemy unit (attackArray) : " + enemyAttackArray[i].name);
+                        Debug.Log("Hit enemy unit (forwardUnit) : " + enemyBackwardUnits[exArray[randomArrayNum]].name);
+
+                        enemyAttackArray[i] = null;
+                        enemyBackwardUnits[exArray[randomArrayNum]] = null;
+                        break;
+                    }
+                    else { Debug.Log("enemyAttackArray Å½ï¿½ï¿½ï¿½ï¿½"); }
+                }
+
+                // ï¿½ï¿½ï¿½Î¿ï¿½ random num ï¿½Î¿ï¿½
+                // ex) ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ï¿½ï¿½ 2ï¿½ï¿½Â°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ 2ï¿½ï¿½Â°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¸ï¿½ random num ï¿½Î¿ï¿½
+                randomArrayNum++;
+
+                // 1ï¿½ï¿½ ï¿½ï¿½ï¿½á¿¡ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 
+                playerTurnCount++;
+            }
+
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+            for (int i = 0; i < enemyAttackArray.Length; i++)
+            {
+                if (enemyAttackArray[i] == null) { isEnemyAliveCount++; }
+            }
+            if (isEnemyAliveCount == enemyAttackArray.Length)
+            {
+                Debug.Log("2. isEnemyAliveCount : " + isEnemyAliveCount);
+                isEnemyAliveCount = 0;
+                PlayerBattleWin();
+                break;
+            }
+
+            isEnemyAliveCount = 0;
+
+            // [Enemy -> Player Attack] ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½
+            if (isPlayerPreemptiveAlive)
+            {
+                isPlayerAliveCount = 0;
+                isEnemyAliveCount = 0;
+
+                // ï¿½Ç°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Playerï¿½ï¿½ ï¿½ï¿½ï¿½Ã¶ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+                while (playerForwardUnits[exArray[randomArrayNum]] == null)
+                {
+                    randomArrayNum++;
+                    isPlayerAliveCount = 0;
+
+                    for (int i = 0; i < playerForwardUnits.Length; i++)
+                    {
+                        if (playerForwardUnits[i] == null) { isPlayerAliveCount++; }
+                    }
+
+                    if (isPlayerAliveCount == playerForwardUnits.Length)
+                    {
+                        isPlayerAliveCount = 0;
+                        isPlayerPreemptiveAlive = false;
+                    }
+
+                    if (isPlayerPreemptiveAlive == false) { break; }
+                }
+
+                isPlayerAliveCount = 0;
+
+                if (enemyAttackArray.Length <= enemyTurnCount) { enemyTurnCount = 0; }
+
+                while (enemyAttackArray[enemyTurnCount] == null)
+                {
+                    enemyTurnCount++;
+                    isEnemyAliveCount = 0;
+
+                    if (enemyAttackArray.Length <= enemyTurnCount) { enemyTurnCount = 0; }
+
+                    for (int i = 0; i < enemyAttackArray.Length; i++)
+                    {
+                        if (enemyAttackArray[i] == null) { isEnemyAliveCount++; }
+                    }
+
+                    if (isEnemyAliveCount == enemyAttackArray.Length)
+                    {
+                        isEnemyAliveCount = 0;
+                        Debug.Log("ï¿½ï¿½ï¿½Ý°ï¿½ï¿½ï¿½ï¿½ï¿½ Enemy uintï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
+                        break;
                     }
                 }
 
-                //ÇÇ°Ý ¹ÞÀº À¯´ÖÀ» ÈÄ¿­ ¸®½ºÆ®¿¡¼­ »èÁ¦
-                enemyBackwardUnits[exArray[randomArrayNum]] = null;
+                Debug.Log("enemy attack unit : " + enemyAttackArray[enemyTurnCount].name);
+                Debug.Log("player forward hit Unit : " + playerForwardUnits[exArray[randomArrayNum]].name);
 
-                // »õ·Î¿î random num ºÎ¿©
-                // ex) ÇÃ·¹ÀÌ¾î°¡ ÀûÀÇ 2¹øÂ°¸¦ °ø°ÝÇßÀ» ¶§ Àûµµ ÇÃ·¹ÀÌ¾îÀÇ 2¹øÂ°¸¦ °ø°ÝÇÏ±â ¶§¹®¿¡ ´Ù¸¥ random num ºÎ¿©
-                randomArrayNum++;
+                // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½
+                enemyAttackArray[enemyTurnCount].GetComponent<AttackLogic>().UnitAttack(playerForwardUnits[exArray[randomArrayNum]]);
 
-                // ÀûÀÇ ÈÄ¿­ÀÌ Àü¸êÇÑ °æ¿ì
-                if (enemyBackwardUnits[0] == null && enemyBackwardUnits[1] == null && enemyBackwardUnits[2] == null)
+                // ï¿½Ç°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+                for (int i = 0; i < playerAttackArray.Length; i++)
                 {
-                    // ÇÃ·¹ÀÌ¾î ½Â¸®
-                    BattleWin();
-                    break;
+                    if (playerAttackArray[i] == playerForwardUnits[exArray[randomArrayNum]])
+                    {
+                        Debug.Log("Hit player unit (attackArray) : " + playerAttackArray[i].name);
+                        Debug.Log("Hit player unit (forwardUnit) : " + playerForwardUnits[exArray[randomArrayNum]].name);
+
+                        playerAttackArray[i] = null;
+                        playerForwardUnits[exArray[randomArrayNum]] = null;
+                        break;
+                    }
+                    else { Debug.Log("playerForwardUnits Å½ï¿½ï¿½ï¿½ï¿½"); }
                 }
 
-                // 1ÅÏ Á¾·á¿¡ µû¸¥ ÅÏ º¯¼ö Áõ°¡ 
-                playerTurnCount++;
+                // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ç´ï¿½
+                for (int i = 0; i < playerForwardUnits.Length; i++)
+                {
+                    if (playerForwardUnits[i] == null) { isPlayerAliveCount++; }
+                }
+
+                if (playerForwardUnits.Length == isPlayerAliveCount)
+                {
+                    isPlayerAliveCount = 0;
+                    isPlayerPreemptiveAlive = false;
+                }
+
+                isPlayerAliveCount = 0;
+                
+                // ï¿½ï¿½ï¿½Î¿ï¿½ random num ï¿½Î¿ï¿½
+                // ex) ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ 2ï¿½ï¿½Â°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ 2ï¿½ï¿½Â°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¸ï¿½ random num ï¿½Î¿ï¿½
+                randomArrayNum++;
+
+                // 1ï¿½ï¿½ ï¿½ï¿½ï¿½á¿¡ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+                enemyTurnCount++;
+            }
+
+            // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+            // ï¿½Ä¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â·ï¿½ ï¿½ï¿½ï¿½ï¿½
+            else if (!isPlayerPreemptiveAlive)
+            {
+                isPlayerAliveCount = 0;
+                isEnemyAliveCount = 0;
+
+                while (playerBackwardUnits[exArray[randomArrayNum]] == null) { randomArrayNum++; }
+
+                if (enemyAttackArray.Length <= enemyTurnCount) { enemyTurnCount = 0; }
+
+                while (enemyAttackArray[enemyTurnCount] == null)
+                {
+                    enemyTurnCount++;
+
+                    if (enemyAttackArray.Length <= enemyTurnCount) { enemyTurnCount = 0; }
+                }
+
+                Debug.Log("enemy attack unit : " + enemyAttackArray[enemyTurnCount].name);
+                Debug.Log("player backward hit unit : " + playerBackwardUnits[exArray[randomArrayNum]].name);
+
+                // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½Ä¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+                enemyAttackArray[enemyTurnCount].GetComponent<AttackLogic>().UnitAttack(playerBackwardUnits[exArray[randomArrayNum]]);
+
+                // ï¿½Ç°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½è¿­ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+                for (int i = 0; i < playerAttackArray.Length; i++)
+                {
+                    if (playerAttackArray[i] == playerBackwardUnits[exArray[randomArrayNum]])
+                    {
+                        Debug.Log("Hit player unit (attackArray) : " + playerAttackArray[i].name);
+                        Debug.Log("Hit player unit (forwardUnit) : " + playerBackwardUnits[exArray[randomArrayNum]].name);
+
+                        playerAttackArray[i] = null;
+                        playerBackwardUnits[exArray[randomArrayNum]] = null;
+                        break;
+                    }
+                    else { Debug.Log("playerAttackArray Å½ï¿½ï¿½ï¿½ï¿½"); }
+                }
+
+
+                // ï¿½ï¿½ï¿½Î¿ï¿½ random num ï¿½Î¿ï¿½
+                // ex) ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ï¿½ï¿½ 2ï¿½ï¿½Â°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ 2ï¿½ï¿½Â°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¸ï¿½ random num ï¿½Î¿ï¿½
+                randomArrayNum++;
+
+                isPlayerAliveCount = 0;
+
+                // 1ï¿½ï¿½ ï¿½ï¿½ï¿½á¿¡ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 
+                enemyTurnCount++;
+                // enemy ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
+                enemyTurnCount = 0;
+            }
+            isPlayerAliveCount = 0;
+
+            // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+            for (int i = 0; i < playerAttackArray.Length; i++)
+            {
+                if (playerAttackArray[i] == null) { isPlayerAliveCount++; }
+                if (isPlayerAliveCount == playerAttackArray.Length)
+                {
+                    isPlayerAliveCount = 0;
+                    PlayerBattleLose();
+                    break;
+                }
             }
         }
     }
     #endregion
 
-    // ½Â¸® ½Ã
-    private void BattleWin()
+    #region Enemy PreemptiveAttack
+    // Enemy Attack
+    public void SubordinatedAttack()
+    {
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½
+        AliveUnit();
+
+        for (int i = 0; i < GameMGR.Instance.randomValue.Length; i++) exArray[i] = GameMGR.Instance.randomValue[i];
+
+        while (true)
+        {
+            Debug.Log("Enemyï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
+
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½è¿­ 1ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ 0ï¿½ï¿½Â°ï¿½ï¿½ ï¿½Ê±ï¿½È­
+            if (randomArrayNum == exArray.Length) { randomArrayNum = 0; }
+
+            // [Enemy -> Player Attack] ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½
+            if (isPlayerPreemptiveAlive)
+            {
+                isPlayerAliveCount = 0;
+                isEnemyAliveCount = 0;
+
+                // ï¿½Ç°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Playerï¿½ï¿½ ï¿½ï¿½ï¿½Ã¶ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+                while (playerForwardUnits[exArray[randomArrayNum]] == null)
+                {
+                    randomArrayNum++;
+                    isPlayerAliveCount = 0;
+
+                    for (int i = 0; i < playerForwardUnits.Length; i++)
+                    {
+                        if (playerForwardUnits[i] == null) { isPlayerAliveCount++; }
+                    }
+
+                    if (isPlayerAliveCount == playerForwardUnits.Length)
+                    {
+                        isPlayerAliveCount = 0;
+                        isPlayerPreemptiveAlive = false;
+                    }
+
+                    if (isPlayerPreemptiveAlive == false) { break; }
+                }
+
+                isPlayerAliveCount = 0;
+
+                if (enemyAttackArray.Length <= enemyTurnCount) { enemyTurnCount = 0; }
+
+                while (enemyAttackArray[enemyTurnCount] == null)
+                {
+                    enemyTurnCount++;
+                    isEnemyAliveCount = 0;
+
+                    if (enemyAttackArray.Length <= enemyTurnCount) { enemyTurnCount = 0; }
+
+                    for (int i = 0; i < enemyAttackArray.Length; i++)
+                    {
+                        if (enemyAttackArray[i] == null) { isEnemyAliveCount++; }
+                    }
+
+                    if (isEnemyAliveCount == enemyAttackArray.Length)
+                    {
+                        isEnemyAliveCount = 0;
+                        Debug.Log("ï¿½ï¿½ï¿½Ý°ï¿½ï¿½ï¿½ï¿½ï¿½ Enemy uintï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
+                        break;
+                    }
+                }
+
+                Debug.Log("enemy attack unit : " + enemyAttackArray[enemyTurnCount].name);
+                Debug.Log("player forward hit Unit : " + playerForwardUnits[exArray[randomArrayNum]].name);
+
+                // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½
+                enemyAttackArray[enemyTurnCount].GetComponent<AttackLogic>().UnitAttack(playerForwardUnits[exArray[randomArrayNum]]);
+
+                // ï¿½Ç°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+                for (int i = 0; i < playerAttackArray.Length; i++)
+                {
+                    if (playerAttackArray[i] == playerForwardUnits[exArray[randomArrayNum]])
+                    {
+                        Debug.Log("Hit player unit (attackArray) : " + playerAttackArray[i].name);
+                        Debug.Log("Hit player unit (forwardUnit) : " + playerForwardUnits[exArray[randomArrayNum]].name);
+
+                        playerAttackArray[i] = null;
+                        playerForwardUnits[exArray[randomArrayNum]] = null;
+                        break;
+                    }
+                    else { Debug.Log("playerForwardUnits Å½ï¿½ï¿½ï¿½ï¿½"); }
+                }
+
+                // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ç´ï¿½
+                for (int i = 0; i < playerForwardUnits.Length; i++)
+                {
+                    if (playerForwardUnits[i] == null) { isPlayerAliveCount++; }
+                }
+
+                if (playerForwardUnits.Length == isPlayerAliveCount)
+                {
+                    isPlayerAliveCount = 0;
+                    isPlayerPreemptiveAlive = false;
+                }
+
+                isPlayerAliveCount = 0;
+
+                // ï¿½ï¿½ï¿½Î¿ï¿½ random num ï¿½Î¿ï¿½
+                // ex) ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ 2ï¿½ï¿½Â°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ 2ï¿½ï¿½Â°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¸ï¿½ random num ï¿½Î¿ï¿½
+                randomArrayNum++;
+
+                // 1ï¿½ï¿½ ï¿½ï¿½ï¿½á¿¡ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+                enemyTurnCount++;
+            }
+
+            // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+            // ï¿½Ä¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â·ï¿½ ï¿½ï¿½ï¿½ï¿½
+            else if (!isPlayerPreemptiveAlive)
+            {
+                isPlayerAliveCount = 0;
+                isEnemyAliveCount = 0;
+
+                while (playerBackwardUnits[exArray[randomArrayNum]] == null) { randomArrayNum++; }
+
+                if (enemyAttackArray.Length <= enemyTurnCount) { enemyTurnCount = 0; }
+
+                while (enemyAttackArray[enemyTurnCount] == null)
+                {
+                    enemyTurnCount++;
+
+                    if (enemyAttackArray.Length <= enemyTurnCount) { enemyTurnCount = 0; }
+                }
+
+                Debug.Log("enemy attack unit : " + enemyAttackArray[enemyTurnCount].name);
+                Debug.Log("player backward hit unit : " + playerBackwardUnits[exArray[randomArrayNum]].name);
+
+                // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½Ä¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+                enemyAttackArray[enemyTurnCount].GetComponent<AttackLogic>().UnitAttack(playerBackwardUnits[exArray[randomArrayNum]]);
+
+                // ï¿½Ç°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½è¿­ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+                for (int i = 0; i < playerAttackArray.Length; i++)
+                {
+                    if (playerAttackArray[i] == playerBackwardUnits[exArray[randomArrayNum]])
+                    {
+                        Debug.Log("Hit player unit (attackArray) : " + playerAttackArray[i].name);
+                        Debug.Log("Hit player unit (forwardUnit) : " + playerBackwardUnits[exArray[randomArrayNum]].name);
+
+                        playerAttackArray[i] = null;
+                        playerBackwardUnits[exArray[randomArrayNum]] = null;
+                        break;
+                    }
+                    else { Debug.Log("playerAttackArray Å½ï¿½ï¿½ï¿½ï¿½"); }
+                }
+
+
+                // ï¿½ï¿½ï¿½Î¿ï¿½ random num ï¿½Î¿ï¿½
+                // ex) ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ï¿½ï¿½ 2ï¿½ï¿½Â°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ 2ï¿½ï¿½Â°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¸ï¿½ random num ï¿½Î¿ï¿½
+                randomArrayNum++;
+
+                isPlayerAliveCount = 0;
+
+                // 1ï¿½ï¿½ ï¿½ï¿½ï¿½á¿¡ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 
+                enemyTurnCount++;
+                // enemy ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
+                enemyTurnCount = 0;
+            }
+            isPlayerAliveCount = 0;
+
+            // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+            for (int i = 0; i < playerAttackArray.Length; i++)
+            {
+                if (playerAttackArray[i] == null) { isPlayerAliveCount++; }
+                if (isPlayerAliveCount == playerAttackArray.Length)
+                {
+                    isPlayerAliveCount = 0;
+                    PlayerBattleLose();
+                    break;
+                }
+            }
+
+            isPlayerAliveCount = 0;
+
+            // [Player -> Enemy Attack] ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½
+            if (isEnemyPreemptiveAlive)
+            {
+                isPlayerAliveCount = 0;
+                isEnemyAliveCount = 0;
+
+                // ï¿½Ç°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ã¶ï¿½ï¿½ï¿½ï¿½ï¿½ randomArray ï¿½ï¿½È¸
+                while (enemyForwardUnits[exArray[randomArrayNum]] == null)
+                {
+                    randomArrayNum++;
+                    isEnemyAliveCount = 0;
+
+                    for (int i = 0; i < enemyForwardUnits.Length; i++)
+                    {
+                        if (enemyForwardUnits[i] == null) { isEnemyAliveCount++; }
+                        if (isEnemyAliveCount == enemyForwardUnits.Length)
+                        {
+                            isEnemyAliveCount = 0;
+                            isEnemyPreemptiveAlive = false;
+                        }
+                    }
+                    isEnemyAliveCount = 0;
+                    if (isEnemyPreemptiveAlive == false) { break; }
+                }
+
+                if (playerAttackArray.Length <= playerTurnCount) { playerTurnCount = 0; }
+
+                // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ï¿½Ã¶ï¿½ ï¿½ï¿½ï¿½ï¿½ playerturnCount ï¿½ï¿½ï¿½ï¿½
+                while (playerAttackArray[playerTurnCount] == null)
+                {
+                    playerTurnCount++;
+                    isPlayerAliveCount = 0;
+
+                    if (playerAttackArray.Length <= playerTurnCount) { playerTurnCount = 0; }
+
+                    for (int i = 0; i < playerAttackArray.Length; i++)
+                    {
+                        if (playerAttackArray[i] == null) { isPlayerAliveCount++; }
+                    }
+
+                    if (isPlayerAliveCount == playerAttackArray.Length)
+                    {
+                        Debug.Log("ï¿½ï¿½ï¿½Ý°ï¿½ï¿½ï¿½ï¿½ï¿½ player unitï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
+                        break;
+                    }
+                }
+
+                Debug.Log("Player Attack Unit name : " + playerAttackArray[playerTurnCount].name);
+                Debug.Log("Enemy forward hit unit : " + enemyForwardUnits[exArray[randomArrayNum]].name);
+                // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+                playerAttackArray[playerTurnCount].GetComponent<AttackLogic>().UnitAttack(enemyForwardUnits[exArray[randomArrayNum]]);
+
+                // ï¿½Ç°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½è¿­ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+                for (int i = 0; i < enemyAttackArray.Length; i++)
+                {
+                    if (enemyAttackArray[i] == enemyForwardUnits[exArray[randomArrayNum]])
+                    {
+                        Debug.Log("Hit enemy unit (attackArray) : " + enemyAttackArray[i].name);
+                        Debug.Log("Hit enemy unit (forwardUnit) : " + enemyForwardUnits[exArray[randomArrayNum]].name);
+
+                        enemyAttackArray[i] = null;
+                        enemyForwardUnits[exArray[randomArrayNum]] = null;
+
+                        break;
+                    }
+                    else { Debug.Log("enemyAttackArray Å½ï¿½ï¿½ï¿½ï¿½"); }
+                }
+
+                // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ç´ï¿½
+                for (int i = 0; i < enemyForwardUnits.Length; i++)
+                {
+                    if (enemyForwardUnits[i] == null) { isEnemyAliveCount++; }
+                }
+
+                if (enemyForwardUnits.Length == isEnemyAliveCount)
+                {
+                    isEnemyAliveCount = 0;
+                    isEnemyPreemptiveAlive = false;
+                }
+
+                isEnemyAliveCount = 0;
+
+                // ï¿½ï¿½ï¿½Î¿ï¿½ random num ï¿½Î¿ï¿½
+                // ex) ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ï¿½ï¿½ 2ï¿½ï¿½Â°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ 2ï¿½ï¿½Â°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¸ï¿½ random num ï¿½Î¿ï¿½
+                randomArrayNum++;
+
+                // 1ï¿½ï¿½ ï¿½ï¿½ï¿½á¿¡ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 
+                playerTurnCount++;
+            }
+
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+            // ï¿½Ä¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â·ï¿½ ï¿½ï¿½ï¿½ï¿½
+            else if (!isEnemyPreemptiveAlive)
+            {
+                isPlayerAliveCount = 0;
+                isEnemyAliveCount = 0;
+
+                while (enemyBackwardUnits[exArray[randomArrayNum]] == null) { randomArrayNum++; }
+
+                if (playerAttackArray.Length <= playerTurnCount) { playerTurnCount = 0; }
+
+                // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ï¿½Ã¶ï¿½ ï¿½ï¿½ï¿½ï¿½ playerTurnCount ï¿½ï¿½ï¿½ï¿½
+                while (playerAttackArray[playerTurnCount] == null)
+                {
+                    playerTurnCount++;
+                    isPlayerAliveCount = 0;
+
+                    if (playerAttackArray.Length <= playerTurnCount) { playerTurnCount = 0; }
+
+                    for (int i = 0; i < playerAttackArray.Length; i++)
+                    {
+                        if (playerAttackArray[i] == null) { isPlayerAliveCount++; }
+                    }
+
+                    if (isPlayerAliveCount == playerAttackArray.Length)
+                    {
+                        isPlayerAliveCount = 0;
+                        Debug.Log("ï¿½ï¿½ï¿½Ý°ï¿½ï¿½ï¿½ï¿½ï¿½ player unitï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
+                        break;
+                    }
+                }
+
+                Debug.Log("playerTurnCount : " + playerTurnCount);
+                Debug.Log("player attack unit : " + playerAttackArray[playerTurnCount].name);
+                Debug.Log("enemy backward hit unit : " + enemyBackwardUnits[exArray[randomArrayNum]].name);
+
+                // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ä¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+                playerAttackArray[playerTurnCount].GetComponent<AttackLogic>().UnitAttack(enemyBackwardUnits[exArray[randomArrayNum]]);
+
+                // ï¿½Ç°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½è¿­ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+                for (int i = 0; i < enemyAttackArray.Length; i++)
+                {
+                    if (enemyAttackArray[i] == enemyBackwardUnits[exArray[randomArrayNum]])
+                    {
+                        Debug.Log("Hit enemy unit (attackArray) : " + enemyAttackArray[i].name);
+                        Debug.Log("Hit enemy unit (forwardUnit) : " + enemyBackwardUnits[exArray[randomArrayNum]].name);
+
+                        enemyAttackArray[i] = null;
+                        enemyBackwardUnits[exArray[randomArrayNum]] = null;
+                        break;
+                    }
+                    else { Debug.Log("enemyAttackArray Å½ï¿½ï¿½ï¿½ï¿½"); }
+                }
+
+                // ï¿½ï¿½ï¿½Î¿ï¿½ random num ï¿½Î¿ï¿½
+                // ex) ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ï¿½ï¿½ 2ï¿½ï¿½Â°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ 2ï¿½ï¿½Â°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¸ï¿½ random num ï¿½Î¿ï¿½
+                randomArrayNum++;
+
+                // 1ï¿½ï¿½ ï¿½ï¿½ï¿½á¿¡ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 
+                playerTurnCount++;
+            }
+
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+            for (int i = 0; i < enemyAttackArray.Length; i++)
+            {
+                if (enemyAttackArray[i] == null) { isEnemyAliveCount++; }
+            }
+            if (isEnemyAliveCount == enemyAttackArray.Length)
+            {
+                Debug.Log("2. isEnemyAliveCount : " + isEnemyAliveCount);
+                isEnemyAliveCount = 0;
+                PlayerBattleWin();
+                break;
+            }
+            isEnemyAliveCount = 0;
+        }
+    }
+    #endregion
+
+    // ï¿½Â¸ï¿½ ï¿½ï¿½
+    private void PlayerBattleWin()
     {
         Debug.Log("Player Win");
-        // ½Â¸® ·ÎÁ÷ Ãß°¡
+        // ï¿½Â¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
     }
 
-    // ÆÐ¹è ½Ã
-    private void BattleLose()
+    // ï¿½Ð¹ï¿½ ï¿½ï¿½
+    private void PlayerBattleLose()
     {
         Debug.Log("Player Lose");
-        // ÆÐ¹è ·ÎÁ÷ Ãß°¡
+        // ï¿½Ð¹ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
     }
 }

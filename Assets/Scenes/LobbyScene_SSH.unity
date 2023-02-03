@@ -13108,18 +13108,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillExplantion2: {fileID: 0}
   skillExplantionText: []
-  timerSlider: {fileID: 0}
+  storePannel: {fileID: 0}
+  sell: {fileID: 0}
+  sellTXT: {fileID: 0}
   reFreshButton: {fileID: 0}
   levelUpButton: {fileID: 0}
-  infoButton: {fileID: 0}
   optionButton: {fileID: 0}
+  timerSlider: {fileID: 0}
   NowShopLevelTXT: {fileID: 0}
   goldTXT: {fileID: 0}
   shopLevelTXT: {fileID: 0}
-  sellTXT: {fileID: 0}
   timerTXT: {fileID: 0}
-  sell: {fileID: 0}
-  storePannel: {fileID: 0}
   shopMoney: 0
   goldCount: 10
   shopLevel: 1
