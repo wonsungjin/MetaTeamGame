@@ -6,11 +6,14 @@ using UnityEngine;
 public partial class Card : MonoBehaviour
 {
     //[SerializeField] public CardInfo cardInfo;
-    [SerializeField] List<Card> skillTarget;
+    [SerializeField] List<Card> skillTarget;    // 스킬 적용 대상을 담는 리스트
+    public bool isEmptyTarget = false;          // 스킬 적용 대상이 빈칸인 경우에는 따로 처리한다.
     [SerializeField] Vector2 batchPos;
-    [SerializeField] Vector2 targetPos;
+    [SerializeField] Vector2[] targetPos = new Vector2[6];
 
     [SerializeField] GameObject curPos;
+
+    public bool[] posNull = new bool[6];
 
     //스킬 효과 관련 변수
     public int giveDamage = 0;
@@ -18,7 +21,8 @@ public partial class Card : MonoBehaviour
 
     public void Start()
     {
-        GameObject[] shopBatchInfoo = GameMGR.Instance.spawner.cardBatch;
+        GameObject[] shopBatchInfo = GameMGR.Instance.spawner.cardBatch;
+        SetSkillTiming(); // 스킬 타이밍에 따라 콜백 이벤트에 추가해주는 부분
     }
     
 
@@ -26,9 +30,9 @@ public partial class Card : MonoBehaviour
 
     public void Attack(int damage, Card Target, bool isDirect, bool isFirst) // 자신이 공격시 호출하는 함수 // 주는 데미지, 때릴 대상 // 직접 공격이냐 아니냐 (공격 차례때 때리는 것 / 스킬데미지로 때리는 것) // 첫타 구분(무한루프 방지)
     {
-        if (cardInfo.skillTiming == SkillTiming.attackBefore) SkillActive(); // 공격 전 효과 발동
+        if (cardInfo.skillTiming == SkillTiming.attackBefore) ActiveSkill(); // 공격 전 효과 발동
         Target.Hit(damage, this, isDirect, isFirst); // 지금부터 내가 너를 때리겠다는 말이야
-        if (cardInfo.skillTiming == SkillTiming.attackAfter) SkillActive(); // 공격 후 효과 발동
+        if (cardInfo.skillTiming == SkillTiming.attackAfter) ActiveSkill(); // 공격 후 효과 발동
     }
 
     public void Hit(int damage, Card Attacker, bool isDirect, bool isFirst) // 자신이 피격시 호출되는 함수 // 받은 데미지, 날 때린 사람
@@ -39,18 +43,17 @@ public partial class Card : MonoBehaviour
         this.curHP -= damage;
         if (this.curHP <= 0)
         {
-            if(Attacker.cardInfo.skillTiming == SkillTiming.kill)   Attacker.SkillActive(); // 내가 죽었는데 적이 처치시 효과가 있다면 적 효과 먼저 발동시켜준다.
-            if (cardInfo.skillTiming == SkillTiming.death) SkillActive(); // 사망시 효과 발동
+            if(Attacker.cardInfo.skillTiming == SkillTiming.kill)   Attacker.ActiveSkill(); // 내가 죽었는데 적이 처치시 효과가 있다면 적 효과 먼저 발동시켜준다.
+            if (cardInfo.skillTiming == SkillTiming.death) ActiveSkill(); // 사망시 효과 발동
             Destroy(this.gameObject);
         }
 
         if (cardInfo.skillTiming == SkillTiming.hit) // 피격시 효과 발동. 죽으면 피격시 효과가 발동하지 않는다.
         {
             GameMGR.Instance.Event_HitEnemy();
-            SkillActive();
+            ActiveSkill();
         } 
     }
-
 
     #endregion
 
@@ -59,50 +62,52 @@ public partial class Card : MonoBehaviour
         switch (cardInfo.skillTiming)
         {
             case SkillTiming.turnStart:
-                GameMGR.Instance.callbackEvent_TurnStart += SkillActive;
+                GameMGR.Instance.callbackEvent_TurnStart += ActiveSkill;
                 break;
             case SkillTiming.turnEnd:
-                GameMGR.Instance.callbackEvent_TurnEnd += SkillActive;
+                GameMGR.Instance.callbackEvent_TurnEnd += ActiveSkill;
                 break;
             case SkillTiming.buy:
-                GameMGR.Instance.callbackEvent_Buy += SkillActive;
+                GameMGR.Instance.callbackEvent_Buy += ActiveSkill;
                 break;
             case SkillTiming.sell:
-                GameMGR.Instance.callbackEvent_Sell += SkillActive;
+                GameMGR.Instance.callbackEvent_Sell += ActiveSkill;
                 break;
             case SkillTiming.reroll:
-                GameMGR.Instance.callbackEvent_Reroll += SkillActive;
+                GameMGR.Instance.callbackEvent_Reroll += ActiveSkill;
                 break;
             case SkillTiming.attackBefore:
-                GameMGR.Instance.callbackEvent_BeforeAttack += SkillActive;
+                GameMGR.Instance.callbackEvent_BeforeAttack += ActiveSkill;
                 break;
             case SkillTiming.attackAfter:
-                GameMGR.Instance.callbackEvent_AfterAttack += SkillActive;
+                GameMGR.Instance.callbackEvent_AfterAttack += ActiveSkill;
                 break;
             case SkillTiming.kill:
-                GameMGR.Instance.callbackEvent_Kill += SkillActive;
+                GameMGR.Instance.callbackEvent_Kill += ActiveSkill;
                 break;
             case SkillTiming.hit:
-                GameMGR.Instance.callbackEvent_Hit += SkillActive;
+                GameMGR.Instance.callbackEvent_Hit += ActiveSkill;
                 break;
             case SkillTiming.hitEnemy:
-                GameMGR.Instance.callbackEvent_HitEnemy += SkillActive;
+                GameMGR.Instance.callbackEvent_HitEnemy += ActiveSkill;
                 break;
             case SkillTiming.death:
-                GameMGR.Instance.callbackEvent_Death += SkillActive;
+                GameMGR.Instance.callbackEvent_Death += ActiveSkill;
                 break;
             case SkillTiming.battleStart:
-                GameMGR.Instance.callbackEvent_BattleStart += SkillActive;
+                GameMGR.Instance.callbackEvent_BattleStart += ActiveSkill;
                 break;
             case SkillTiming.summon:
-                GameMGR.Instance.callbackEvent_Summon += SkillActive;
+                GameMGR.Instance.callbackEvent_Summon += ActiveSkill;
                 break;
 
         }
     }
 
-    public void SkillActive() // 스킬 효과 발동 // FindTargetType 함수를 통해 구체적인 스킬 적용 대상이 정해지고 난 이후에 발동하는 게 맞다고 볼 수 있는 부분적인 부분
+    public void ActiveSkill() // 스킬 효과 발동 // FindTargetType 함수를 통해 구체적인 스킬 적용 대상이 정해지고 난 이후에 발동하는 게 맞다고 볼 수 있는 부분적인 부분
     {
+        FindTargetType();
+
         switch (cardInfo.effectType)
         {
             case EffectType.getGold:
@@ -148,8 +153,18 @@ public partial class Card : MonoBehaviour
                 break;
             case EffectType.summon:
                 Card summonCard = Resources.Load<Card>($"Prefabs/{cardInfo.summonName}");
+                int summonCount = cardInfo.triggerCount;
                 //GameMGR.Instance.battleLogic.playerForwardUnits.Add(summonCard.gameObject);
-                summonCard.transform.position = targetPos;
+                for(int i = 0; i < 6; i++)
+                {
+                    if (posNull[i])
+                    {
+                        if (summonCount <= 0) break;
+                        GameMGR.Instance.battleLogic.playerAttackArray[i] = summonCard.gameObject;
+                        summonCard.transform.position = targetPos[i];
+                        summonCount--; 
+                    }
+                }
                 break;
             case EffectType.reduceShopLevelUpCost:
                 // 상점 레벨업 비용 감소
@@ -166,10 +181,9 @@ public partial class Card : MonoBehaviour
     {
         GameObject[] searchArea = new GameObject[6]; // 대상 범위가 아군인지 적군인지에 따라 구분하여 담는 게임오브젝트 변수
 
-        
-        switch (cardInfo.effectTarget) // 스킬 효과 적용 대상에 따른 탐색 범위 지정
+        // 스킬 효과 적용 대상에 따른 탐색 범위 지정
+        switch (cardInfo.effectTarget) 
         {
-            
             case EffectTarget.ally:
                 searchArea = GameMGR.Instance.battleLogic.playerAttackArray;
                 break;
@@ -204,38 +218,38 @@ public partial class Card : MonoBehaviour
                 break;
         }
 
-
-        switch (cardInfo.targetType) // 구체적인 공격 대상 지정 ( 체력이 낮은, 공격력이 높은, 전열 등등)
+        // 구체적인 공격 대상 지정 ( 체력이 낮은, 공격력이 높은, 전열 등등)
+        switch (cardInfo.targetType) 
         {
             case TargetType.self:
                 skillTarget.Add(this);
                 break;
 
             case TargetType.empty: // 빈 공간을 찾는다 = 소환시
-                bool isFind = false;
                 for (int i = 0; i < 3; i++) // 앞열 검사
                 {
                     if (GameMGR.Instance.battleLogic.playerForwardUnits[i] == null)
                     {
-                        targetPos = GameMGR.Instance.battleLogic.playerForwardUnits[i].transform.position;
-                        isFind = true;
-                        break;
+                        targetPos[i] = GameMGR.Instance.battleLogic.playerForwardUnits[i].transform.position;
+                        posNull[i] = true;
+                        skillTarget.Add(this);
+                        isEmptyTarget = true;
                     }
                 }
-                if (!isFind)
+                for (int i = 0; i < 3; i++) // 뒷열 검사
                 {
-                    for (int i = 0; i < 3; i++) // 뒷열 검사
+                    if (GameMGR.Instance.battleLogic.playerBackwardUnits[i] == null)
                     {
-                        if (GameMGR.Instance.battleLogic.playerBackwardUnits[i] == null)
-                        {
-                            targetPos = GameMGR.Instance.battleLogic.playerForwardUnits[i].transform.position;
-                            break;
-                        }
+                        targetPos[i] = GameMGR.Instance.battleLogic.playerForwardUnits[i].transform.position;
+                        posNull[i + 3] = true;
+                        skillTarget.Add(this);
+                        isEmptyTarget = false;
                     }
                 }
                 break;
 
             case TargetType.random:
+                if (searchArea.Length == 0) break; // 탐색 범위가 0이면 랜덤 불가
                 int random = Random.Range(0, 6);
                 while (searchArea[random].GetComponent<Card>().curHP <= 0) // 죽은 아군이 아닐 때까지 랜덤값을 돌려
                 {
@@ -244,7 +258,9 @@ public partial class Card : MonoBehaviour
                 //skillTarget.Add(GameMGR.Instance.battleLogic.)
                 skillTarget.Add(transform.parent.transform.GetChild(random).gameObject.GetComponent<Card>());
                 break;
+
             case TargetType.randomExceptMe:
+                if (GameMGR.Instance.battleLogic.playerAttackArray.Length <= 1 && GameMGR.Instance.battleLogic.enemyAttackArray.Length == 0) break; // 나밖에 없으면 랜덤나제외 불가
                 random = Random.Range(0, 6);
                 while (searchArea[random].GetComponent<Card>().curHP <= 0 && searchArea[random] == this) // 죽은 아군이 아닐 때까지 랜덤값을 돌려
                 {
@@ -411,7 +427,6 @@ public partial class Card : MonoBehaviour
 
             default:
                 break;
-
         }
     }
 }
