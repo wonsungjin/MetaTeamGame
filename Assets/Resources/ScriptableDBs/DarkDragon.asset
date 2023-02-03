@@ -19,16 +19,16 @@ MonoBehaviour:
   hp: 5
   atk: 8
   description: Reduces the attack power of all enemy units by -4. Reduces the attack power of all enemy units by -8. Reduces the attack power of all enemy units by -12.
-  trigger_Timing: 1
-  target_Type: 1
-  target: 2
-  min_Target: 0
-  max_Target: 6
-  trigger_Condition: 0
-  effect_Type: 3
-  value_1:  -4.-8.-12
-  value_2: 
-  value_3: 
+  skillTiming: 1
+  targetType: 1
+  effectTarget: 2
+  minTarget: 0
+  maxTarget: 6
+  triggerCondition: 0
+  effectType: 3
+  value1:  -4.-8.-12
+  value2: 
+  value3: 
   sumom_Unit: 
   num_Triggers: 1
   duration: 1

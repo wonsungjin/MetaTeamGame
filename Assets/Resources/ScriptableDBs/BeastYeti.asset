@@ -19,16 +19,16 @@ MonoBehaviour:
   hp: 4
   atk: 4
   description: Summons a level 1 Yeti. Summons a level 2 Yeti. Summons a level 3 Yeti.
-  trigger_Timing: 10
-  target_Type: 0
-  target: 0
-  min_Target: 0
-  max_Target: 0
-  trigger_Condition: 0
-  effect_Type: 5
-  value_1: 1
-  value_2: 1.2.3
-  value_3: 
+  skillTiming: 10
+  targetType: 0
+  effectTarget: 0
+  minTarget: 0
+  maxTarget: 0
+  triggerCondition: 0
+  effectType: 5
+  value1: 1
+  value2: 1.2.3
+  value3: 
   sumom_Unit: Yeti
   num_Triggers: 1
   duration: 1

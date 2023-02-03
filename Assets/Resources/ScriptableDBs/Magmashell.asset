@@ -19,16 +19,16 @@ MonoBehaviour:
   hp: 4
   atk: 8
   description: Deal damage to a random enemy unit equal to the amount of excess damage. Deal damage to 2 random enemy units equal to the amount of excess damage. Deal damage to three random enemy units equal to the amount of excess damage.
-  trigger_Timing: 7
-  target_Type: 3
-  target: 2
-  min_Target: 0
-  max_Target: 1
-  trigger_Condition: 2
-  effect_Type: 0
-  value_1: 
-  value_2: 
-  value_3: 
+  skillTiming: 7
+  targetType: 3
+  effectTarget: 2
+  minTarget: 0
+  maxTarget: 1
+  triggerCondition: 2
+  effectType: 0
+  value1: 
+  value2: 
+  value3: 
   sumom_Unit: 
   num_Triggers: 1
   duration: 1

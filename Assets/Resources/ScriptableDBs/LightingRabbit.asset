@@ -19,16 +19,16 @@ MonoBehaviour:
   hp: 4
   atk: 3
   description: Gain +1 Health +1 Attack Damage until the end of the battle. Gain +2 Health +2 Attack Damage until end of battle. Gains +3 HP and +3 ATK until the battle is over.
-  trigger_Timing: 11
-  target_Type: 15
-  target: 3
-  min_Target: 1
-  max_Target: 1
-  trigger_Condition: 0
-  effect_Type: 4
-  value_1: 1.2.3
-  value_2: 1.2.3
-  value_3: 
+  skillTiming: 11
+  targetType: 15
+  effectTarget: 3
+  minTarget: 1
+  maxTarget: 1
+  triggerCondition: 0
+  effectType: 4
+  value1: 1.2.3
+  value2: 1.2.3
+  value3: 
   sumom_Unit: 
   num_Triggers: 1
   duration: 1

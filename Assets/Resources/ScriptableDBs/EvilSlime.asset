@@ -19,16 +19,16 @@ MonoBehaviour:
   hp: 1
   atk: 1
   description: Summons a Slime. Summon two slimes. Summons three slimes.
-  trigger_Timing: 3
-  target_Type: 16
-  target: 0
-  min_Target: 0
-  max_Target: 0
-  trigger_Condition: 0
-  effect_Type: 3
-  value_1: 1.2.3
-  value_2: 
-  value_3: 
+  skillTiming: 3
+  targetType: 16
+  effectTarget: 0
+  minTarget: 0
+  maxTarget: 0
+  triggerCondition: 0
+  effectType: 3
+  value1: 1.2.3
+  value2: 
+  value3: 
   sumom_Unit: Slime
   num_Triggers: 1
   duration: 0

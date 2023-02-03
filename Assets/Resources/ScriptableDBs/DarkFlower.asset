@@ -19,16 +19,16 @@ MonoBehaviour:
   hp: 3
   atk: 4
   description: Gold +1 Can be used twice per turn. Gold +1 Can be used 4 times per turn. Gold +1 Can be used 6 times per turn.
-  trigger_Timing: 4
-  target_Type: 0
-  target: 0
-  min_Target: 0
-  max_Target: 0
-  trigger_Condition: 0
-  effect_Type: 1
-  value_1: 1
-  value_2: 2.4.6
-  value_3: 
+  skillTiming: 4
+  targetType: 0
+  effectTarget: 0
+  minTarget: 0
+  maxTarget: 0
+  triggerCondition: 0
+  effectType: 1
+  value1: 1
+  value2: 2.4.6
+  value3: 
   sumom_Unit: 
   num_Triggers: 1
   duration: 0

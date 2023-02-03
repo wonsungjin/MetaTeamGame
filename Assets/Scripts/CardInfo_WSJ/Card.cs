@@ -10,7 +10,7 @@ public enum CardStatus
     Exp,
     Level,
 }
-public class Card : MonoBehaviour
+public partial  class Card : MonoBehaviour
 {
     [SerializeField] public CardInfo cardInfo;
     public TextMeshPro hpText;
@@ -71,6 +71,7 @@ public class Card : MonoBehaviour
                     if (curEXP >= 2)
                     {
                         ChangeValue(CardStatus.Level);
+                        gameObject.tag = "BattleMonster2";
                     }
                     else expSlider.value = curEXP * 0.5f;
 
@@ -81,6 +82,7 @@ public class Card : MonoBehaviour
                     if (curEXP >= 3)
                     {
                         ChangeValue(CardStatus.Level);
+                        gameObject.tag = "BattleMonster3";
                     }
                     else expSlider.value = curEXP * 0.33f;
                 }

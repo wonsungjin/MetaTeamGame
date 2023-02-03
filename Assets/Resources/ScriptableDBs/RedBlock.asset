@@ -19,16 +19,16 @@ MonoBehaviour:
   hp: 1
   atk: 3
   description: Grants +1 HP and +1 ATK to friendly backline units. Grants +2 HP and +2 ATK to allied backline units. Grants HP +3 and ATK +3 to allied backline units.
-  trigger_Timing: 10
-  target_Type: 13
-  target: 3
-  min_Target: 0
-  max_Target: 3
-  trigger_Condition: 0
-  effect_Type: 4
-  value_1: 1.2.3
-  value_2: 1.2.3
-  value_3: 
+  skillTiming: 10
+  targetType: 13
+  effectTarget: 3
+  minTarget: 0
+  maxTarget: 3
+  triggerCondition: 0
+  effectType: 4
+  value1: 1.2.3
+  value2: 1.2.3
+  value3: 
   sumom_Unit: 
   num_Triggers: 1
   duration: 0

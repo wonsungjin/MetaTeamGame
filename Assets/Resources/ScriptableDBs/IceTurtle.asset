@@ -19,16 +19,16 @@ MonoBehaviour:
   hp: 5
   atk: 1
   description: Gives a unit on a random row +2 Health +2 Attack Damage. Give 2 units on a random row +2 Health +2 Attack Damage. Give three units on a random row +2 Health +2 Attack Damage.
-  trigger_Timing: 0
-  target_Type: 14
-  target: 3
-  min_Target: 0
-  max_Target: 1.2.3
-  trigger_Condition: 0
-  effect_Type: 4
-  value_1: 2
-  value_2: 2
-  value_3: 
+  skillTiming: 0
+  targetType: 14
+  effectTarget: 3
+  minTarget: 0
+  maxTarget: 1.2.3
+  triggerCondition: 0
+  effectType: 4
+  value1: 2
+  value2: 2
+  value3: 
   sumom_Unit: 
   num_Triggers: 1
   duration: 0

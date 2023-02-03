@@ -19,16 +19,16 @@ MonoBehaviour:
   hp: 4
   atk: 1
   description: Increase own HP +1. Increase own HP +2. Increase own HP +3.
-  trigger_Timing: 8
-  target_Type: 0
-  target: 1
-  min_Target: 1
-  max_Target: 1
-  trigger_Condition: 0
-  effect_Type: 2
-  value_1: 1.2.3
-  value_2: 
-  value_3: 
+  skillTiming: 8
+  targetType: 0
+  effectTarget: 1
+  minTarget: 1
+  maxTarget: 1
+  triggerCondition: 0
+  effectType: 2
+  value1: 1.2.3
+  value2: 
+  value3: 
   sumom_Unit: 
   num_Triggers: 1
   duration: 1

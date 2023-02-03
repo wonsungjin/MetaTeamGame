@@ -19,16 +19,16 @@ MonoBehaviour:
   hp: 1
   atk: 2
   description:  +1 Attack for two random friendly units. +2 Attack for two random friendly units. +3 Attack for two random friendly units.
-  trigger_Timing: 2
-  target_Type: 4
-  target: 3
-  min_Target: 0
-  max_Target: 2
-  trigger_Condition: 0
-  effect_Type: 3
-  value_1: 1.2.3
-  value_2: 
-  value_3: 
+  skillTiming: 2
+  targetType: 4
+  effectTarget: 3
+  minTarget: 0
+  maxTarget: 2
+  triggerCondition: 0
+  effectType: 3
+  value1: 1.2.3
+  value2: 
+  value3: 
   sumom_Unit: 
   num_Triggers: 1
   duration: 0

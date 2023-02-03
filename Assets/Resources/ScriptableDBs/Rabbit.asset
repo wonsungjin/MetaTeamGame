@@ -19,16 +19,16 @@ MonoBehaviour:
   hp: 2
   atk: 2
   description: Reduce Unit Hire Level Up Cost by (1)
-  trigger_Timing: 3
-  target_Type: 0
-  target: 0
-  min_Target: 0
-  max_Target: 0
-  trigger_Condition: 0
-  effect_Type: 7
-  value_1: 1.2.3
-  value_2: 
-  value_3: 
+  skillTiming: 3
+  targetType: 0
+  effectTarget: 0
+  minTarget: 0
+  maxTarget: 0
+  triggerCondition: 0
+  effectType: 7
+  value1: 1.2.3
+  value2: 
+  value3: 
   sumom_Unit: 
   num_Triggers: 1
   duration: 0

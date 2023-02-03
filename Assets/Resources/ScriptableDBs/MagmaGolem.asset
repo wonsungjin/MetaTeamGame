@@ -19,16 +19,16 @@ MonoBehaviour:
   hp: 12
   atk: 4
   description: Deal 2 damage to all enemy units.  Deal 4 damage to all enemy units. Deal 6 damage to all enemy units.
-  trigger_Timing: 8
-  target_Type: 2
-  target: 2
-  min_Target: 0
-  max_Target: 6
-  trigger_Condition: 0
-  effect_Type: 0
-  value_1: 2.4.6
-  value_2: 
-  value_3: 
+  skillTiming: 8
+  targetType: 2
+  effectTarget: 2
+  minTarget: 0
+  maxTarget: 6
+  triggerCondition: 0
+  effectType: 0
+  value1: 2.4.6
+  value2: 
+  value3: 
   sumom_Unit: 
   num_Triggers: 1
   duration: 1

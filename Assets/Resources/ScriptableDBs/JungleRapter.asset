@@ -19,16 +19,16 @@ MonoBehaviour:
   hp: 2
   atk: 5
   description: Give +1 experience to one friendly unit in front of you. Give +2 experience to one friendly unit in front of you. Give +3 experience to one friendly unit in front of you.
-  trigger_Timing: 1
-  target_Type: 9
-  target: 3
-  min_Target: 0
-  max_Target: 1
-  trigger_Condition: 0
-  effect_Type: 8
-  value_1: 1.2.3
-  value_2: 
-  value_3: 
+  skillTiming: 1
+  targetType: 9
+  effectTarget: 3
+  minTarget: 0
+  maxTarget: 1
+  triggerCondition: 0
+  effectType: 8
+  value1: 1.2.3
+  value2: 
+  value3: 
   sumom_Unit: 
   num_Triggers: 1
   duration: 1

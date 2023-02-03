@@ -147,7 +147,7 @@ public partial class Card : MonoBehaviour
                 }
                 break;
             case EffectType.summon:
-                Card summonCard = Resources.Load<Card>($"Prefabs/{cardInfo.summonName}");
+                Card summonCard = Resources.Load<Card>($"Prefabs/{cardInfo.sumom_Unit}");
                 //GameMGR.Instance.battleLogic.playerForwardUnits.Add(summonCard.gameObject);
                 summonCard.transform.position = targetPos;
                 break;
