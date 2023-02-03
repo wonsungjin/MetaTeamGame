@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Rendering;
 //using Hashtable = ExitGames.Client.Photon.Hashtable; // 이게 구버전 한정인지 필수인지는 나도 모른다는 것이 학계의 점심
 
 
@@ -166,6 +167,11 @@ public class TurnSystem : MonoBehaviourPunCallbacks
             isFirst[me] = true;
             isFirst[you] = false;
         }
+        else if(myDeckCount < youDeckCount)
+        {
+            isFirst[me] = false;
+            isFirst[you] = true;
+        }
 
         // 서로 덱 수가 같다면
         else
@@ -174,7 +180,26 @@ public class TurnSystem : MonoBehaviourPunCallbacks
             int randomPoint2 = UnityEngine.Random.Range(0, 10);
             firstPoint[me] += randomPoint;
             firstPoint[you] += randomPoint2;
+
+            if (firstPoint[me] > firstPoint[you])
+            {
+                isFirst[me] = true;
+                isFirst[you] = false;
+            }
+
+            else if(firstPoint[me] < firstPoint[you])
+            {
+                isFirst[me] = false;
+                isFirst[you] = true;
+            }
+
+            else
+            {
+                // 같을 때
+            }
         }
+
+        GameMGR.Instance.battleLogic.isFirstAttack = isFirst[me];
     }
     //=========================================================================================================================
 
@@ -477,7 +502,6 @@ public class TurnSystem : MonoBehaviourPunCallbacks
 
         }
         StartCoroutine(COR_DelayMove());
-
     }
     IEnumerator COR_DelayMove()
     {
