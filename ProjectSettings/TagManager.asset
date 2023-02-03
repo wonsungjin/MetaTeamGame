@@ -16,6 +16,9 @@ TagManager:
   - Rect
   - FullZone
   - SpecialZone
+  - Enemy
+  - BattleMonster2
+  - BattleMonster3
   layers:
   - Default
   - TransparentFX
@@ -52,4 +55,16 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Monster
+    uniqueID: 2771736023
+    locked: 0
+  - name: Sell
+    uniqueID: 1457141671
+    locked: 0
+  - name: SellTXT
+    uniqueID: 3902934427
+    locked: 0
+  - name: Info
+    uniqueID: 1128271825
     locked: 0

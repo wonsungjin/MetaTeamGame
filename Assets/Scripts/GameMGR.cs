@@ -30,8 +30,7 @@ public partial class GameMGR : Singleton<GameMGR>
     {
         metaTrendAPI.GetUserProfile();
         metaTrendAPI.GetSessionID();
-        StartCoroutine(COR_GetCoin());
-        DontDestroyOnLoad(Instance);
+        StartCoroutine(COR_GetCoin());        DontDestroyOnLoad(Instance);
 
     }
     CustomDeck lookCustomDeck;//
@@ -85,6 +84,7 @@ public partial class GameMGR : Singleton<GameMGR>
             objectPool = GetComponent<ObjectPool>();
             photonLauncher = FindObjectOfType<PhotonLauncher>();
             uiManager.Init_Scene1();
+           
         }
         else if (num==2)
         {

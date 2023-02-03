@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Batch : MonoBehaviourPun
+public partial class Batch : MonoBehaviourPun
 {
 
     Transform[] myCardPosition = null;
@@ -117,4 +117,5 @@ public class Batch : MonoBehaviourPun
         if (myCard) GameMGR.Instance.battleLogic.InitPlayerList();
         else GameMGR.Instance.battleLogic.InitEnemyList();
     }
+
 }

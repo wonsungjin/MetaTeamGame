@@ -2,15 +2,42 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum When
+{
+    BattleStart,
+    AttackBefore,
+    AttackAfter,
+    Kill,
+    Hit,
+    EnemyHit,
+    Death,
+    Summon,
+    SummonAlly,
+    SummonEnemy,
+    TurnStart,
+    Buy,
+    Sell,
+    Reroll,
+    TurnEnd,
+}
+
 public class Skill : MonoBehaviour
 {
     public string skillType;
 
+    public delegate void BattleStart();
+    public event BattleStart battleStart;
+
+    public void TriggerTiming(When when)
+    {
+
+    }
 
     // ================  스킬 발동 타이밍  ==================
     // 전투 씬에서 발동되는 경우
     public virtual void When_BattleStart() //전투 시작시 
     {
+        //BattleStart callbackreciever_battleStart = When_BattleStart;
 
     }
     public virtual void When_AttackBefore() // 공격전

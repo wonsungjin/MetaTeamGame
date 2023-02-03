@@ -11,7 +11,7 @@ public enum CardStatus
     Exp,
     Level,
 }
-public class Card : MonoBehaviour
+public partial class Card : MonoBehaviour
 {
     [SerializeField] public CardInfo cardInfo;
     public TextMeshPro hpText;
@@ -23,9 +23,9 @@ public class Card : MonoBehaviour
     public int curEXP;
     SkeletonAnimation skeletonAnimation;
 
-
     /*자신의 오브젝트 이름과 같은 스크립터블 데이터를 읽어와서 설정한다
     스프라이트 랜더러도 같은 원리로 설정*/
+
     public void SetMyInfo(string myname)
     {
         name = myname;
@@ -38,6 +38,7 @@ public class Card : MonoBehaviour
         hpText.text = curHP.ToString();
         curAttackValue = cardInfo.attackValue;
         atkText.text = curAttackValue.ToString();
+        curEXP = 0;
         level = 1;
         levelText.text = level.ToString();
         skeletonAnimation = GetComponent<SkeletonAnimation>();
@@ -52,6 +53,8 @@ public class Card : MonoBehaviour
     }
     public void ChangeValue(CardStatus key, int value = 0)
     {
+        Debug.Log(curEXP);
+
         if (key == CardStatus.Hp)
         {
             curHP = value;
@@ -72,6 +75,7 @@ public class Card : MonoBehaviour
                 if (curEXP >= 2)
                 {
                     ChangeValue(CardStatus.Level);
+                    gameObject.tag = "BattleMonster2";
                 }
 
             }
@@ -81,14 +85,16 @@ public class Card : MonoBehaviour
                 if (curEXP >= 3)
                 {
                     ChangeValue(CardStatus.Level);
+                    gameObject.tag = "BattleMonster3";
                 }
             }
-            else if (key == CardStatus.Level)
-            {
-                level++;
-                levelText.text = level.ToString();
-                GameMGR.Instance.spawner.SpecialMonster();
-            }
+        }
+        else if (key == CardStatus.Level)
+        {
+            curEXP = 0;
+            level++;
+            levelText.text = level.ToString();
+            GameMGR.Instance.spawner.SpecialMonster();
         }
     }
     private void Awake()
