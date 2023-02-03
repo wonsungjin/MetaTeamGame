@@ -32,6 +32,5 @@ public partial class Drag2D : MonoBehaviour
     private void OnMouseExit()
     {
         GameMGR.Instance.uiManager.OnEnter_Set_SkillExplantion(false,Vector3.zero);
-
     }
 }
