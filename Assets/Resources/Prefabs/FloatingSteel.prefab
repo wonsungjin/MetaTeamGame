@@ -130,7 +130,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -162,19 +162,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.7172842, y: 4.35962}
   m_EdgeRadius: 0
---- !u!114 &4569873824840791742
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4571032608145207873}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e05b8c94d5fb69948b8dd34210bf692f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skillType: 
 --- !u!114 &4569873824840791740
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -217,6 +204,19 @@ MonoBehaviour:
   isFreezen: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   outlineSize: 5
+--- !u!114 &4569873824840791742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4571032608145207873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e05b8c94d5fb69948b8dd34210bf692f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillType: 
 --- !u!4 &4574442592297529385 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4744689340253842, guid: 314d1aeee6d26cd4ca565a22a479cebe, type: 3}
