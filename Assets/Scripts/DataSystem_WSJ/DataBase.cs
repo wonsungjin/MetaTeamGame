@@ -99,6 +99,7 @@ public class DataBase : MonoBehaviour
         nullFillter = collection.Find(fillter).FirstOrDefault();//if null 이면 찾지 못함
         BsonValue value = null;
         BsonValue value2 = null;
+        BsonValue value3 = null;
         string number = null;
         for (int i = 0; i < 10; i++)
         {
@@ -117,7 +118,7 @@ public class DataBase : MonoBehaviour
             else if (i == 9) number = "ten";
             value.ToBsonDocument().TryGetValue(number, out value);
             if (value.ToString() == "BsonNull") continue;// 해당 칸에 덱이 없다면 다음으로 이동
-            Debug.Log(number);
+
             CustomDeck customDeck = new CustomDeck();
             for (int num = 1; num < 7; num++)
             {
@@ -126,6 +127,9 @@ public class DataBase : MonoBehaviour
                 //value3[1];
                 Debug.Log(value);
                 value.ToBsonDocument().TryGetValue($"tier_{num}", out value2);
+                value.ToBsonDocument().TryGetValue("DeckName", out value3);
+                Debug.Log(value3);
+                customDeck.DeckName = value3.ToString();
                 string[] valueSplit = value2.ToString().Replace("[", "").Replace("]", "").Replace(" ", "").Split(',');
                 for (int j = 0; j < valueSplit.Length; j++)
                 {

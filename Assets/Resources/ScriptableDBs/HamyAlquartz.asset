@@ -32,3 +32,4 @@ MonoBehaviour:
   sumom_Unit: 
   num_Triggers: 1
   duration: 1
+  appear: TRUE
