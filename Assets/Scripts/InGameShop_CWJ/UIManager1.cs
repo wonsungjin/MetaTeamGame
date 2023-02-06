@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public partial class UIManager : MonoBehaviour
 {
-
     public GameObject storePannel = null;
     public GameObject sell = null;
     public GameObject sellTXT = null;
@@ -25,6 +24,8 @@ public partial class UIManager : MonoBehaviour
     public int hireUnitCost = 3; // 유닛 고용 비용
     public float timer = 60f;
     private bool isScene = false;
+
+    public bool isTimeOver = false;
 
     public void Init_Scene2()
     {
@@ -50,7 +51,6 @@ public partial class UIManager : MonoBehaviour
         Debug.Log(timerTXT);
     }
 
-
     private void Update()
     {
         if (!isScene) return;
@@ -59,6 +59,14 @@ public partial class UIManager : MonoBehaviour
         timer -= Time.deltaTime;
         timerSlider.fillAmount = timer / 100 * 1.667f;
         timerTXT.text = string.Format("Time : {0:N0}sec", timer);
+
+        if (timerSlider.fillAmount <= 0.2f) timerSound();
+
+    }
+
+    void timerSound()
+    {
+        GameMGR.Instance.timerSound.TimeSound();
     }
 
     void InitUI()
