@@ -1,3 +1,4 @@
+using MongoDB.Driver;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -160,6 +161,8 @@ public partial class Drag2D : MonoBehaviour
                     {
                         if (GameMGR.Instance.uiManager.goldCount >= 3)
                         {
+                            GameMGR.Instance.Event_Buy(collision.gameObject.GetComponent<Card>()); //구매한 카드가 구매시 효과가 있다면 스킬 발동
+
                             spriteRenderer.sortingLayerName = "SellTXT";
                             gameObject.tag = "BattleMonster";
                             GameMGR.Instance.uiManager.goldCount -= 3;
@@ -170,8 +173,11 @@ public partial class Drag2D : MonoBehaviour
                         }
                     }
 
+                    // 상점에서 바로 레벨업하는 경우
                     if (GameMGR.Instance.uiManager.goldCount >= 3)
                     {
+                        GameMGR.Instance.Event_Buy(collision.gameObject.GetComponent<Card>()); //구매한 카드가 구매시 효과가 있다면 스킬 발동
+
                         GameMGR.Instance.uiManager.goldCount -= 3;
                         GameMGR.Instance.uiManager.goldTXT.text = "" + GameMGR.Instance.uiManager.goldCount.ToString();
                         ShopCardLevelUp(collision);
@@ -317,5 +323,7 @@ public partial class Drag2D : MonoBehaviour
         spriteRenderer.sortingOrder = 3;
         GameMGR.Instance.uiManager.goldCount -= 3;
         GameMGR.Instance.uiManager.goldTXT.text = "" + GameMGR.Instance.uiManager.goldCount.ToString();
+
+        GameMGR.Instance.Event_Buy(this.gameObject.GetComponent<Card>());
     }
 }
