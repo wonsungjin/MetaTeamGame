@@ -22,7 +22,7 @@ public partial  class Card : MonoBehaviour
     public int curEXP;
     public Slider expSlider;
     SkeletonAnimation skeletonAnimation;
-
+    AudioSource audioSource;
 
     /*자신의 오브젝트 이름과 같은 스크립터블 데이터를 읽어와서 설정한다
     스프라이트 랜더러도 같은 원리로 설정*/
@@ -67,11 +67,15 @@ public partial  class Card : MonoBehaviour
             case CardStatus.Exp:
                 if (level == 1)
                 {
+                    audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.Unit, "Unit Merge");
+                    audioSource.Play();
                     curEXP++;
                     if (curEXP >= 2)
                     {
                         ChangeValue(CardStatus.Level);
                         gameObject.tag = "BattleMonster2";
+                        audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.Unit, "LevelUp");
+                        audioSource.Play();
                     }
                     else expSlider.value = curEXP * 0.5f;
 
@@ -79,10 +83,14 @@ public partial  class Card : MonoBehaviour
                 else if (level == 2)
                 {
                     curEXP++;
+                    audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.Unit, "Unit Merge");
+                    audioSource.Play();
                     if (curEXP >= 3)
                     {
                         ChangeValue(CardStatus.Level);
                         gameObject.tag = "BattleMonster3";
+                        audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.Unit, "LevelUp");
+                        audioSource.Play();
                     }
                     else expSlider.value = curEXP * 0.33f;
                 }
@@ -100,6 +108,7 @@ public partial  class Card : MonoBehaviour
     private void Awake()
     {
         SetMyInfo(name);
+        audioSource.GetComponent<AudioSource>();
     }
 }
 
