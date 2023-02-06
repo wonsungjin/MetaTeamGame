@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 #region enum 정보
 public enum SkillTiming     // 스킬이 발동되는 때
 {
@@ -56,6 +57,8 @@ public enum TargetType // 스킬이 어떤 타입을 노리는지(ex - 공격력 높은 유닛)
 public enum TriggerCondition // 발동되기 위한 조건 - ex ) 빈 자리가 있어야한다
 {
     allyEmpty,
+    damageEcess,
+    losePlayerHP,
 }
 
 
@@ -77,6 +80,8 @@ public enum EffectType // 스킬 효과
 
 }
 #endregion
+
+
 [CreateAssetMenu(fileName = "new CardData", menuName = "ScriptableObjects/CardData")]
 public class CardInfo : ScriptableObject
 {
