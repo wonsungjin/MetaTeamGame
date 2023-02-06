@@ -16,9 +16,11 @@ public partial class Card : MonoBehaviour
     public int giveDamage = 0;
     public int takeDamage = 0;
 
+
+
     public void Start()
     {
-        GameObject[] shopBatchInfoo = GameMGR.Instance.spawner.cardBatch;
+        SetSkillTiming(); // 나의 스킬타이밍에 따라 이벤트에 추가해야한다면 추가한다.
     }
     
 
@@ -51,10 +53,9 @@ public partial class Card : MonoBehaviour
         } 
     }
 
-
     #endregion
 
-    public void SetSkillTiming() // 스킬을 언제 발동시키느냐에 따라서 각 델리게이트 이벤트에 추가시켜준다.
+    public void SetSkillTiming() // 스킬을 언제 발동시키느냐에 따라서 각 델리게이트 이벤트에 추가시켜준다. 이벤트는 보따리의 개념으로써 이벤트를 실행하면 안에 추가한 모든 함수들이 실행되기 때문에 공통적으로 사용되는 부분에서만 사용하는 것이 응당 정당 타당 합당 마땅하다고 보는 부분적인 부분이라고 할 수 있는 부분이다.
     {
         switch (cardInfo.skillTiming)
         {
@@ -65,26 +66,26 @@ public partial class Card : MonoBehaviour
                 GameMGR.Instance.callbackEvent_TurnEnd += SkillActive;
                 break;
             case SkillTiming.buy:
-                GameMGR.Instance.callbackEvent_Buy += SkillActive;
+                GameMGR.Instance.callbackEvent_Buy += SkillActive2;
                 break;
             case SkillTiming.sell:
-                GameMGR.Instance.callbackEvent_Sell += SkillActive;
+                GameMGR.Instance.callbackEvent_Sell += SkillActive2;
                 break;
             case SkillTiming.reroll:
                 GameMGR.Instance.callbackEvent_Reroll += SkillActive;
                 break;
-            case SkillTiming.attackBefore:
+            /*case SkillTiming.attackBefore:
                 GameMGR.Instance.callbackEvent_BeforeAttack += SkillActive;
                 break;
             case SkillTiming.attackAfter:
                 GameMGR.Instance.callbackEvent_AfterAttack += SkillActive;
-                break;
+                break;*/
             case SkillTiming.kill:
                 GameMGR.Instance.callbackEvent_Kill += SkillActive;
                 break;
-            case SkillTiming.hit:
+            /*case SkillTiming.hit:
                 GameMGR.Instance.callbackEvent_Hit += SkillActive;
-                break;
+                break;*/
             case SkillTiming.hitEnemy:
                 GameMGR.Instance.callbackEvent_HitEnemy += SkillActive;
                 break;
@@ -94,14 +95,28 @@ public partial class Card : MonoBehaviour
             case SkillTiming.battleStart:
                 GameMGR.Instance.callbackEvent_BattleStart += SkillActive;
                 break;
-            case SkillTiming.summon:
+            /*case SkillTiming.summon:
                 GameMGR.Instance.callbackEvent_Summon += SkillActive;
-                break;
+                break;*/
 
         }
     }
 
     public void SkillActive() // 스킬 효과 발동 // FindTargetType 함수를 통해 구체적인 스킬 적용 대상이 정해지고 난 이후에 발동하는 게 맞다고 볼 수 있는 부분적인 부분
+    {
+        FindTargetType();
+        SkillEffect();
+    }
+
+    public void SkillActive2(Card card)
+    {
+        if (card != this) return;
+        FindTargetType();
+        SkillEffect();
+    }
+
+
+    public void SkillEffect() // 스킬 발동시 적용되는 효과
     {
         switch (cardInfo.effectType)
         {
@@ -153,7 +168,7 @@ public partial class Card : MonoBehaviour
                 break;
             case EffectType.reduceShopLevelUpCost:
                 // 상점 레벨업 비용 감소
-                if(GameMGR.Instance.uiManager.shopMoney > 0)
+                if (GameMGR.Instance.uiManager.shopMoney > 0)
                     GameMGR.Instance.uiManager.shopMoney -= cardInfo.value1;
                 break;
             case EffectType.addHireUnit:
@@ -162,48 +177,70 @@ public partial class Card : MonoBehaviour
                 break;
         }
     }
+
     public void FindTargetType() // 어떤 유형의 대상을 찾는지에 따라 실행하는 경우가 다르다는 말이란 말이란 말이란 말이란 말이란 말
     {
         GameObject[] searchArea = new GameObject[6]; // 대상 범위가 아군인지 적군인지에 따라 구분하여 담는 게임오브젝트 변수
 
-        
-        switch (cardInfo.effectTarget) // 스킬 효과 적용 대상에 따른 탐색 범위 지정
+        if(GameMGR.Instance.isBattleNow)
         {
-            
-            case EffectTarget.ally:
-                searchArea = GameMGR.Instance.battleLogic.playerAttackArray;
-                break;
-            case EffectTarget.allyForward:
-                searchArea = GameMGR.Instance.battleLogic.playerForwardUnits;
-                break;
-            case EffectTarget.allyBackward:
-                searchArea = GameMGR.Instance.battleLogic.playerBackwardUnits;
-                break;
-            case EffectTarget.enemy:
-                searchArea = GameMGR.Instance.battleLogic.enemyAttackArray;
-                break;
-            case EffectTarget.enemyForward:
-                searchArea = GameMGR.Instance.battleLogic.enemyForwardUnits;
-                break;
-            case EffectTarget.enemyBackward:
-                searchArea = GameMGR.Instance.battleLogic.enemyBackwardUnits;
-                break;
-            case EffectTarget.both:
-                //Array.Resize<GameObject>(ref searchArea, 12);
-                searchArea = new GameObject[12];
-                for (int i = 0; i < GameMGR.Instance.battleLogic.playerAttackArray.Length; i++)
-                {
-                    searchArea[i] = (GameMGR.Instance.battleLogic.playerAttackArray[i]);
-                }
-                for (int i = 0; i < GameMGR.Instance.battleLogic.enemyAttackArray.Length; i++)
-                {
-                    searchArea[i+6] = (GameMGR.Instance.battleLogic.enemyAttackArray[i+6]);
-                }
-                break;
-            case EffectTarget.none:
-                break;
+            switch (cardInfo.effectTarget) // 스킬 효과 적용 대상에 따른 탐색 범위 지정
+            {
+                case EffectTarget.ally:
+                    searchArea = GameMGR.Instance.battleLogic.playerAttackArray;
+                    break;
+                case EffectTarget.allyForward:
+                    searchArea = GameMGR.Instance.battleLogic.playerForwardUnits;
+                    break;
+                case EffectTarget.allyBackward:
+                    searchArea = GameMGR.Instance.battleLogic.playerBackwardUnits;
+                    break;
+                case EffectTarget.enemy:
+                    searchArea = GameMGR.Instance.battleLogic.enemyAttackArray;
+                    break;
+                case EffectTarget.enemyForward:
+                    searchArea = GameMGR.Instance.battleLogic.enemyForwardUnits;
+                    break;
+                case EffectTarget.enemyBackward:
+                    searchArea = GameMGR.Instance.battleLogic.enemyBackwardUnits;
+                    break;
+                case EffectTarget.both:
+                    //Array.Resize<GameObject>(ref searchArea, 12);
+                    searchArea = new GameObject[12];
+                    for (int i = 0; i < GameMGR.Instance.battleLogic.playerAttackArray.Length; i++)
+                    {
+                        searchArea[i] = (GameMGR.Instance.battleLogic.playerAttackArray[i]);
+                    }
+                    for (int i = 0; i < GameMGR.Instance.battleLogic.enemyAttackArray.Length; i++)
+                    {
+                        searchArea[i + 6] = (GameMGR.Instance.battleLogic.enemyAttackArray[i + 6]);
+                    }
+                    break;
+                case EffectTarget.none:
+                    break;
+            }
         }
-
+        else // 전투씬이 아니라면 상점씬 기준으로
+        {
+            switch (cardInfo.effectTarget) // 스킬 효과 적용 대상에 따른 탐색 범위 지정
+            {
+                case EffectTarget.ally:
+                case EffectTarget.allyForward:
+                case EffectTarget.allyBackward:
+                    searchArea = GameMGR.Instance.spawner.cardBatch;
+                    break;
+                case EffectTarget.both:
+                    //Array.Resize<GameObject>(ref searchArea, 12);
+                    searchArea = new GameObject[6];
+                    for (int i = 0; i < GameMGR.Instance.spawner.cardBatch.Length; i++)
+                    {
+                        searchArea[i] = (GameMGR.Instance.spawner.cardBatch[i]);
+                    }
+                    break;
+                case EffectTarget.none:
+                    break;
+            }
+        }
 
         switch (cardInfo.targetType) // 구체적인 공격 대상 지정 ( 체력이 낮은, 공격력이 높은, 전열 등등)
         {
