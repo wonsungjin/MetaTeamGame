@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class CardUI : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
-    [SerializeField] CardInfo cardInfo;
+    public CardInfo cardInfo;
     private Image image;
     bool isWhiteLine;
 

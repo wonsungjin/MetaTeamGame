@@ -101,6 +101,7 @@ public class CardInfo : ScriptableObject
     [SerializeField] internal string sumom_Unit;
     [SerializeField] internal int num_Triggers;
     [SerializeField] internal int duration;
+    [SerializeField] internal string appear;
 
     public string GetSkillExplantion(int num)
     {

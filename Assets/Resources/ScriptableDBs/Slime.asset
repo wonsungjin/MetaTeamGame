@@ -18,17 +18,18 @@ MonoBehaviour:
   tier: 1
   hp: 2
   atk: 2
-  description: 0
-  skillTiming: 0
-  targetType: 0
-  effectTarget: 0
-  minTarget: 0
-  maxTarget: 0
-  triggerCondition: 0
-  effectType: 0
-  value1: 0
-  value2: 0
-  value3: 0
-  sumom_Unit: 0
-  num_Triggers: 0
-  duration: 0
+  description: 
+  skillTiming: 
+  targetType: 
+  effectTarget: 
+  minTarget: 
+  maxTarget: 
+  triggerCondition: 
+  effectType: 
+  value1: 
+  value2: 
+  value3: 
+  sumom_Unit: 
+  num_Triggers: 
+  duration: 
+  appear: FALSE

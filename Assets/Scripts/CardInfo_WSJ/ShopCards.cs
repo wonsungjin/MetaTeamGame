@@ -21,6 +21,7 @@ public class ShopCards : MonoBehaviour
             if (list==null) continue;
             for (int i = 0; i < list.Count; i++)
             {
+                if (list[i].appear == "FALSE") continue;
                 obj = GameObject.Instantiate<CardUI>(card);
                 obj.transform.SetParent(GameMGR.Instance.uiManager.tier1[tierNum-1].transform);
                 obj.transform.localScale = Vector3.one;
