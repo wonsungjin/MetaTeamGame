@@ -246,9 +246,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1099764357386595762}
-  - component: {fileID: 1096059566342008816}
-  - component: {fileID: 1087912669221408844}
-  - component: {fileID: 1070541212469496870}
+  - component: {fileID: 700971133725084720}
+  - component: {fileID: 4116527081169318358}
+  - component: {fileID: 3923202539380802590}
   m_Layer: 0
   m_Name: BeastYeti
   m_TagString: Monster
@@ -271,7 +271,7 @@ Transform:
   m_Father: {fileID: 710072227352792733}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &1096059566342008816
+--- !u!33 &700971133725084720
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -279,7 +279,7 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1102098178683434530}
   m_Mesh: {fileID: 0}
---- !u!23 &1087912669221408844
+--- !u!23 &4116527081169318358
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -321,7 +321,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &1070541212469496870
+--- !u!114 &3923202539380802590
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
