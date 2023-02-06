@@ -60,7 +60,7 @@ public partial class UIManager : MonoBehaviour
         timerSlider.fillAmount = timer / 100 * 1.667f;
         timerTXT.text = string.Format("Time : {0:N0}sec", timer);
 
-        if (timerSlider.fillAmount <= 0.3f) timerSound();
+        if (timerSlider.fillAmount <= 0.2f) timerSound();
 
     }
 
