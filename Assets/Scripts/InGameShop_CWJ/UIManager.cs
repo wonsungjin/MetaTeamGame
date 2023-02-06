@@ -12,7 +12,6 @@ public partial class UIManager : MonoBehaviour
         skillExplantion2.SetActive(set);
         if (set)
         {
-
             skillExplantion2.transform.position = pos;
             Camera.main.ScreenToWorldPoint(skillExplantion2.transform.position);
             if (cardInfo.objName != skillExplantionText[0].text)
