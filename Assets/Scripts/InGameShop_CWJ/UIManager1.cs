@@ -66,8 +66,7 @@ public partial class UIManager : MonoBehaviour
 
     void timerSound()
     {
-        isTimeOver = true;
-        GameMGR.Instance.spawner.TimeSound();
+        GameMGR.Instance.timerSound.TimeSound();
     }
 
     void InitUI()

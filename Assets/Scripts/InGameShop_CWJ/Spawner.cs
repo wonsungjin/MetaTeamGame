@@ -498,11 +498,4 @@ public class Spawner : MonoBehaviourPun
             }
         }
     }
-
-    public void TimeSound()
-    {
-        audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.Effect, "TimeSet");
-        audioSource.Play();
-        audioSource.loop = true;
-    }
 }

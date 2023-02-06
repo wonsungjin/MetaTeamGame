@@ -19,7 +19,7 @@ public partial class GameMGR : Singleton<GameMGR>
     public BattleLogic battleLogic;
 
     public Batch batch;
-
+    public TimerSound timerSound;
 
     private void Awake()
     {
@@ -87,6 +87,7 @@ public partial class GameMGR : Singleton<GameMGR>
             spawner.gameObject.GetPhotonView().RPC("StartSetting", RpcTarget.MasterClient);
             batch = FindObjectOfType<Batch>();
             battleLogic = FindObjectOfType<BattleLogic>();
+            timerSound = FindObjectOfType<TimerSound>();
         }
     }
 }
