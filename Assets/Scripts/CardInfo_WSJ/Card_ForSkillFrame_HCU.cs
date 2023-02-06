@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+
 public partial class Card : MonoBehaviour
 {
     //[SerializeField] public CardInfo cardInfo;
@@ -16,11 +17,6 @@ public partial class Card : MonoBehaviour
     public int giveDamage = 0;
     public int takeDamage = 0;
 
-    public void Start()
-    {
-        GameObject[] shopBatchInfoo = GameMGR.Instance.spawner.cardBatch;
-    }
-    
 
     #region 스킬 효과 적용 관련 변수 모음
 
