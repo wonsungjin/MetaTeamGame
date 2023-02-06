@@ -25,6 +25,7 @@ public partial class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI hpValue;
     [SerializeField] private TextMeshProUGUI myDeckName;
     [SerializeField] private TextMeshProUGUI[] skillExplantion;
+    [SerializeField] private GameObject[] star;
 
     [Header("Tier")]
     [SerializeField] public Transform myContent;
@@ -46,6 +47,7 @@ public partial class UIManager : MonoBehaviour
         hpValue = GameObject.Find("UNITHPValue").GetComponent<TextMeshProUGUI>();
         skillExplantion = new TextMeshProUGUI[3];
         tier1 = new Transform[6];
+        star = new GameObject[6];
         skillExplantion[0] = GameObject.Find("Skillexplanation1").GetComponent<TextMeshProUGUI>();
         skillExplantion[1] = GameObject.Find("Skillexplanation2").GetComponent<TextMeshProUGUI>();
         skillExplantion[2] = GameObject.Find("Skillexplanation3").GetComponent<TextMeshProUGUI>();
@@ -56,12 +58,27 @@ public partial class UIManager : MonoBehaviour
         tier1[3] = GameObject.Find("ContentTier4").transform;
         tier1[4] = GameObject.Find("ContentTier5").transform;
         tier1[5] = GameObject.Find("ContentTier6").transform;
+        star[0] = GameObject.Find("oneStar");
+        star[1] = GameObject.Find("twoStar");
+        star[2] = GameObject.Find("threeStar");
+        star[3] = GameObject.Find("fourStar");
+        star[4] = GameObject.Find("fiveStar");
+        star[5] = GameObject.Find("sixStar");
         toggleGroup = FindObjectOfType<ToggleGroup>();
         customPannel.SetActive(false);
         packChoicePannel.SetActive(false);
         cardPannel.SetActive(false);
         myDeckPannel.SetActive(false);
         nameMakeUI.SetActive(false);
+        SetFalseStar(0);
+    }
+    public void SetFalseStar(int set)
+    {
+        for(int i = 0; i < star.Length; i++)
+        {
+            if(set == i) star[i].SetActive(true);
+            else star[i].SetActive(false);
+        }
     }
     public void SetNameMakeUI(bool set)
     {
@@ -133,7 +150,8 @@ public partial class UIManager : MonoBehaviour
     }
     public void OnPointerEnter_CardInfo(CardInfo cardInfo)
     {
-        cardPannel.SetActive(true);        
+        cardPannel.SetActive(true);
+        SetFalseStar(cardInfo.tier - 1);
         attackValue.text = $"{cardInfo.atk}";
         hpValue.text = $"{cardInfo.hp}";
         cardName.text = $"{cardInfo.objName}";
