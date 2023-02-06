@@ -12,12 +12,16 @@ public partial class GameMGR : Singleton<GameMGR>
     public int[] randomValue = new int[100];
     public Dictionary<int, List<Card>> playerList = new Dictionary<int, List<Card>>();
 
+    public bool isBattleNow = false; // 현재 전투씬인지 비전투씬인지를 구분하는 불값.
+
+
     // 델리게이트 이벤트들의 총집합이라고 보면 되는 것입니다.
     public delegate void _callback_SkillTiming();
+    public delegate void _callback_SkillTiming2(Card card);
     public event _callback_SkillTiming callbackEvent_TurnStart;
     public event _callback_SkillTiming callbackEvent_TurnEnd;
-    public event _callback_SkillTiming callbackEvent_Buy;
-    public event _callback_SkillTiming callbackEvent_Sell;
+    public event _callback_SkillTiming2 callbackEvent_Buy;
+    public event _callback_SkillTiming2 callbackEvent_Sell;
     public event _callback_SkillTiming callbackEvent_Reroll;
     public event _callback_SkillTiming callbackEvent_BattleStart;
     public event _callback_SkillTiming callbackEvent_BeforeAttack;
@@ -39,6 +43,14 @@ public partial class GameMGR : Singleton<GameMGR>
     {
         callbackEvent_TurnEnd();
     }
+    public void Event_Buy(Card card)
+    {
+        callbackEvent_Buy(card);
+    }
+    public void Event_Sell(Card card)
+    {
+        callbackEvent_Sell(card);
+    }
     public void Event_Reroll()
     {
         callbackEvent_Reroll();
@@ -47,7 +59,10 @@ public partial class GameMGR : Singleton<GameMGR>
     {
         callbackEvent_BattleStart();
     }
-
+    public void Event_Summon()
+    {
+        callbackEvent_Summon();
+    }
     public void Event_HitEnemy()
     {
         callbackEvent_HitEnemy();

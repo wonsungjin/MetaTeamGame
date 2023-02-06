@@ -212,6 +212,8 @@ public class Spawner : MonoBehaviourPun
                 GameMGR.Instance.objectPool.DestroyPrefab(monster[i]);
             }
             ChooseRandomCard();
+
+            GameMGR.Instance.Event_Reroll();    // 리롤시 능력가진 카드들 효과 발동
         }
         else
         {
