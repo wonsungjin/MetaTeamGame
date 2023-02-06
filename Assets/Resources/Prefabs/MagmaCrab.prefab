@@ -126,6 +126,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MagmaCrab
       objectReference: {fileID: 0}
+    - target: {fileID: 1018407660699382, guid: da3c444575063364c9c1bc0200686da4, type: 3}
+      propertyPath: m_TagString
+      value: Monster
+      objectReference: {fileID: 0}
     - target: {fileID: 4718272538966056, guid: da3c444575063364c9c1bc0200686da4, type: 3}
       propertyPath: m_RootOrder
       value: 0

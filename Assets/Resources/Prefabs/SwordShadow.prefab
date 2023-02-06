@@ -126,6 +126,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SwordShadow
       objectReference: {fileID: 0}
+    - target: {fileID: 1625639469555934, guid: 31d7392d738c40546b71acebf59df247, type: 3}
+      propertyPath: m_TagString
+      value: Monster
+      objectReference: {fileID: 0}
     - target: {fileID: 4494098879187682, guid: 31d7392d738c40546b71acebf59df247, type: 3}
       propertyPath: m_RootOrder
       value: 0

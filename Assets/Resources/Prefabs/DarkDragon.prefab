@@ -126,6 +126,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DarkDragon
       objectReference: {fileID: 0}
+    - target: {fileID: 1460673237210808, guid: 9c73deb5d1fedfd4cab051ef94cf1cda, type: 3}
+      propertyPath: m_TagString
+      value: Monster
+      objectReference: {fileID: 0}
     - target: {fileID: 4006997067669674, guid: 9c73deb5d1fedfd4cab051ef94cf1cda, type: 3}
       propertyPath: m_RootOrder
       value: 0

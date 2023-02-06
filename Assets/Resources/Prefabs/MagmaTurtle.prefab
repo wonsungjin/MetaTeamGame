@@ -126,6 +126,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MagmaTurtle
       objectReference: {fileID: 0}
+    - target: {fileID: 1064137032449416, guid: e2b4bedb01b39fc489a557f32e83226d, type: 3}
+      propertyPath: m_TagString
+      value: Monster
+      objectReference: {fileID: 0}
     - target: {fileID: 4979825374605632, guid: e2b4bedb01b39fc489a557f32e83226d, type: 3}
       propertyPath: m_RootOrder
       value: 0

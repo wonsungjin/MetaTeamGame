@@ -126,6 +126,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EvilSlime
       objectReference: {fileID: 0}
+    - target: {fileID: 1721514242485638, guid: bf9070cc71aa742448b0cb9c177aace0, type: 3}
+      propertyPath: m_TagString
+      value: Monster
+      objectReference: {fileID: 0}
     - target: {fileID: 4769834825843916, guid: bf9070cc71aa742448b0cb9c177aace0, type: 3}
       propertyPath: m_RootOrder
       value: 0

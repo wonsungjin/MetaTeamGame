@@ -186,6 +186,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Normal Book
       objectReference: {fileID: 0}
+    - target: {fileID: 3474754154244533033, guid: eb3a2bf385d0dcd45ad7c6d24ef0db31, type: 3}
+      propertyPath: m_TagString
+      value: Monster
+      objectReference: {fileID: 0}
     - target: {fileID: 4358649459242466194, guid: eb3a2bf385d0dcd45ad7c6d24ef0db31, type: 3}
       propertyPath: m_Mesh
       value: 

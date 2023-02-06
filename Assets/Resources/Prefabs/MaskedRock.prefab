@@ -44,6 +44,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MaskedRock
       objectReference: {fileID: 0}
+    - target: {fileID: 892754086126469498, guid: 96fad73a226098e4988dcd8e256c6b46, type: 3}
+      propertyPath: m_TagString
+      value: Monster
+      objectReference: {fileID: 0}
     - target: {fileID: 2297916888225253035, guid: 96fad73a226098e4988dcd8e256c6b46, type: 3}
       propertyPath: m_Mesh
       value: 

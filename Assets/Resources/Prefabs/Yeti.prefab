@@ -126,6 +126,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Yeti
       objectReference: {fileID: 0}
+    - target: {fileID: 1057701989084014, guid: e306e19206531d247b708261851c2d8a, type: 3}
+      propertyPath: m_TagString
+      value: Monster
+      objectReference: {fileID: 0}
     - target: {fileID: 4437756559162656, guid: e306e19206531d247b708261851c2d8a, type: 3}
       propertyPath: m_RootOrder
       value: 0

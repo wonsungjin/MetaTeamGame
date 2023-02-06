@@ -126,6 +126,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: HamyAlquartz
       objectReference: {fileID: 0}
+    - target: {fileID: 126260312368800225, guid: 124817e6820364541ad57cc5f2780456, type: 3}
+      propertyPath: m_TagString
+      value: Monster
+      objectReference: {fileID: 0}
     - target: {fileID: 832105997292753806, guid: 124817e6820364541ad57cc5f2780456, type: 3}
       propertyPath: m_RootOrder
       value: 0

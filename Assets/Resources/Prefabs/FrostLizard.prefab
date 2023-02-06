@@ -44,6 +44,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FrostLizard
       objectReference: {fileID: 0}
+    - target: {fileID: 1475031818057463424, guid: 3923fce8e72215f4199b5abcc2918537, type: 3}
+      propertyPath: m_TagString
+      value: Monster
+      objectReference: {fileID: 0}
     - target: {fileID: 1585952784928131409, guid: 3923fce8e72215f4199b5abcc2918537, type: 3}
       propertyPath: m_Mesh
       value: 

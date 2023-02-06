@@ -44,6 +44,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RockTurtle
       objectReference: {fileID: 0}
+    - target: {fileID: 1094135730007002, guid: 210b8896cb20f4249a3170845a7abf10, type: 3}
+      propertyPath: m_TagString
+      value: Monster
+      objectReference: {fileID: 0}
     - target: {fileID: 4377355363113770, guid: 210b8896cb20f4249a3170845a7abf10, type: 3}
       propertyPath: m_RootOrder
       value: 0

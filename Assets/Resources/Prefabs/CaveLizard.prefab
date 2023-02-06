@@ -126,6 +126,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CaveLizard
       objectReference: {fileID: 0}
+    - target: {fileID: 7008904895217257991, guid: 0a6908fe499061748bcb63555abff837, type: 3}
+      propertyPath: m_TagString
+      value: Monster
+      objectReference: {fileID: 0}
     - target: {fileID: 7464684168989896499, guid: 0a6908fe499061748bcb63555abff837, type: 3}
       propertyPath: m_RootOrder
       value: 0

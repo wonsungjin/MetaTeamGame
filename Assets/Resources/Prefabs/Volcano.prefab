@@ -126,6 +126,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Volcano
       objectReference: {fileID: 0}
+    - target: {fileID: 1027414184257350, guid: 38095b6b270154d4eb62423e9a03e49b, type: 3}
+      propertyPath: m_TagString
+      value: Monster
+      objectReference: {fileID: 0}
     - target: {fileID: 4662528304601586, guid: 38095b6b270154d4eb62423e9a03e49b, type: 3}
       propertyPath: m_RootOrder
       value: 0

@@ -126,6 +126,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: JungleRaptor
       objectReference: {fileID: 0}
+    - target: {fileID: 6961983325489523299, guid: ef7df97d6f34ee84eaf028b871f640c1, type: 3}
+      propertyPath: m_TagString
+      value: Monster
+      objectReference: {fileID: 0}
     - target: {fileID: 7426722425093083403, guid: ef7df97d6f34ee84eaf028b871f640c1, type: 3}
       propertyPath: m_RootOrder
       value: 0

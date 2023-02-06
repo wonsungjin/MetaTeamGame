@@ -190,6 +190,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MadOx
       objectReference: {fileID: 0}
+    - target: {fileID: 8462639753691669572, guid: 5b6a0d80b164b3d489d1efa55cce5ee9, type: 3}
+      propertyPath: m_TagString
+      value: Monster
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5b6a0d80b164b3d489d1efa55cce5ee9, type: 3}
 --- !u!4 &3248981527652843282 stripped

@@ -44,6 +44,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MaskedIron
       objectReference: {fileID: 0}
+    - target: {fileID: 883892633529250747, guid: ad30ca5c1e95f2c40b476ff2a4202cd2, type: 3}
+      propertyPath: m_TagString
+      value: Monster
+      objectReference: {fileID: 0}
     - target: {fileID: 2277779205776437757, guid: ad30ca5c1e95f2c40b476ff2a4202cd2, type: 3}
       propertyPath: m_Mesh
       value: 

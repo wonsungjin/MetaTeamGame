@@ -130,6 +130,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1113633393750708, guid: 6bf15c32cf527a64e8aafb169cb4f3e4, type: 3}
+      propertyPath: m_TagString
+      value: Monster
+      objectReference: {fileID: 0}
     - target: {fileID: 4419109239862634, guid: 6bf15c32cf527a64e8aafb169cb4f3e4, type: 3}
       propertyPath: m_RootOrder
       value: 0

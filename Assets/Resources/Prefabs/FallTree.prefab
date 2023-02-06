@@ -126,6 +126,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FallTree
       objectReference: {fileID: 0}
+    - target: {fileID: 1416671020753048, guid: 84d91ccde0cfde94d82f6355e23e9368, type: 3}
+      propertyPath: m_TagString
+      value: Monster
+      objectReference: {fileID: 0}
     - target: {fileID: 4274513048829486, guid: 84d91ccde0cfde94d82f6355e23e9368, type: 3}
       propertyPath: m_RootOrder
       value: 0

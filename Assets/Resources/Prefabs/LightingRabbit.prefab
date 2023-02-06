@@ -44,6 +44,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LightingRabbit
       objectReference: {fileID: 0}
+    - target: {fileID: 1697371382139360, guid: af8565159303f6f4ebe41790de2ce73c, type: 3}
+      propertyPath: m_TagString
+      value: Monster
+      objectReference: {fileID: 0}
     - target: {fileID: 4626811525343018, guid: af8565159303f6f4ebe41790de2ce73c, type: 3}
       propertyPath: m_RootOrder
       value: 0

@@ -44,6 +44,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ArmoredBook
       objectReference: {fileID: 0}
+    - target: {fileID: 853637995862491489, guid: 503d524f284a10341b2d7ca9ff8ab278, type: 3}
+      propertyPath: m_TagString
+      value: Monster
+      objectReference: {fileID: 0}
     - target: {fileID: 2848316158072549356, guid: 503d524f284a10341b2d7ca9ff8ab278, type: 3}
       propertyPath: m_Mesh
       value: 

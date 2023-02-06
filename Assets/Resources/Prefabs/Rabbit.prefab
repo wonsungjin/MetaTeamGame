@@ -126,6 +126,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rabbit
       objectReference: {fileID: 0}
+    - target: {fileID: 1595851436696456, guid: d27fe788be431e0468ccd3f49ee0eaa2, type: 3}
+      propertyPath: m_TagString
+      value: Monster
+      objectReference: {fileID: 0}
     - target: {fileID: 4714360554891416, guid: d27fe788be431e0468ccd3f49ee0eaa2, type: 3}
       propertyPath: m_RootOrder
       value: 0

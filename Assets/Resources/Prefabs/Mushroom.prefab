@@ -126,6 +126,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mushroom
       objectReference: {fileID: 0}
+    - target: {fileID: 8177687174557151578, guid: 8f94fd65fa27da5429b6d185e8c3d59e, type: 3}
+      propertyPath: m_TagString
+      value: Monster
+      objectReference: {fileID: 0}
     - target: {fileID: 8177687174557151582, guid: 8f94fd65fa27da5429b6d185e8c3d59e, type: 3}
       propertyPath: m_RootOrder
       value: 0

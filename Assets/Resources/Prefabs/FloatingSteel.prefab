@@ -44,6 +44,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FloatingSteel
       objectReference: {fileID: 0}
+    - target: {fileID: 1378754777924858, guid: 314d1aeee6d26cd4ca565a22a479cebe, type: 3}
+      propertyPath: m_TagString
+      value: Monster
+      objectReference: {fileID: 0}
     - target: {fileID: 4744689340253842, guid: 314d1aeee6d26cd4ca565a22a479cebe, type: 3}
       propertyPath: m_RootOrder
       value: 0

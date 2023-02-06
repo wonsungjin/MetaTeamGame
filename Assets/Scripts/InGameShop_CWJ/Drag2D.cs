@@ -294,16 +294,16 @@ public partial class Drag2D : MonoBehaviour
         yield return wait;
 
         if (CompareTag("BattleMonster") || CompareTag("BattleMonster2") || CompareTag("BattleMonster3"))
-           this.transform.position = pos + Vector2.down;
+           this.transform.parent.position = pos + Vector2.down;
 
         else if (CompareTag("Monster"))
         {
-           this.transform.position = selectZonePos;
+            this.transform.parent.position = selectZonePos;
         }
 
         else if (CompareTag("FreezeCard"))
         {
-            this.transform.position = selectZonePos;
+            this.transform.parent.position = selectZonePos;
         }
     }
 
