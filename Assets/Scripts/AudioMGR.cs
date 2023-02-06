@@ -24,7 +24,7 @@ public class AudioMGR : MonoBehaviour
 
     private void Awake()
     {
-        Init();
+       // Init();
     }
 
     //  AudioClip Name을 키, AudioClip을 값으로 Dictionary에 추가 
