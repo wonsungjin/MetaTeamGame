@@ -43,8 +43,8 @@ public partial class Drag2D : MonoBehaviour
 
         RaycastHit2D hit = Physics2D.Raycast(objPosition, Vector2.zero);
 
-        if (CompareTag("BattleMonster")|| CompareTag("BattleMonster2")|| CompareTag("BattleMonster3")) transform.position = objPosition + Vector3.down;
-        else transform.position = objPosition + monsterPos;
+        if (CompareTag("BattleMonster")|| CompareTag("BattleMonster2")|| CompareTag("BattleMonster3")) transform.parent.position = objPosition + Vector3.down;
+        else transform.parent.position = objPosition + monsterPos;
 
         // 드래그 할때 마다 레이를 쏴서 밑에 닿은 배틀몬스터를 다른 위치로 보냄
         if (isClickBattleMonster == true)
