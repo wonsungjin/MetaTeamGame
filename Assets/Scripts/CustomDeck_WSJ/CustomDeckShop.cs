@@ -25,8 +25,17 @@ public class CustomDeckShop : MonoBehaviour
         // && customDeck.tier_5.Count < 8
         // && customDeck.tier_6.Count < 8) return;
         GameMGR.Instance.dataBase.inventoryData.AddCustomDeck(customDeck);
+        GameMGR.Instance.uiManager.SetNameMakeUI(false);
         customDeck = new CustomDeck();
         GameMGR.Instance.uiManager.OnClick_Move_Back();
+    }
+    public void OnClick_Join_NameMakeUI()
+    {
+        GameMGR.Instance.uiManager.SetNameMakeUI(true);
+    }
+    public void OnChageName(string st)
+    {
+        customDeck.DeckName = st;
     }
     public void OnClick_Join_CustomDeckShop()
     {

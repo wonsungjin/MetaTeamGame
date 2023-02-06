@@ -12,6 +12,7 @@ public partial class UIManager : MonoBehaviour
     [SerializeField] private GameObject packChoicePannel;
     [SerializeField] private GameObject customPannel;
     [SerializeField] public GameObject cardPannel;
+    [SerializeField] private GameObject nameMakeUI;
     [Header("PackList")]
     [SerializeField] private GameObject myPackList;
     [SerializeField] private MyDeck packButton;
@@ -37,6 +38,7 @@ public partial class UIManager : MonoBehaviour
         packAddButton = GameObject.Find("PackAddButton");
         packChoicePannel = GameObject.Find("PackChoicePannel");
         myPackList = GameObject.Find("PackList");
+        nameMakeUI = GameObject.Find("NameMakeUI");
         cardImage= GameObject.Find("CardImage").GetComponent<Image>();
         cardName = GameObject.Find("UNITNAME").GetComponent<TextMeshProUGUI>();
         attackValue = GameObject.Find("UNITATKValue").GetComponent<TextMeshProUGUI>();
@@ -59,6 +61,12 @@ public partial class UIManager : MonoBehaviour
         packChoicePannel.SetActive(false);
         cardPannel.SetActive(false);
         myDeckPannel.SetActive(false);
+        nameMakeUI.SetActive(false);
+    }
+    public void SetNameMakeUI(bool set)
+    {
+        nameMakeUI.SetActive(set);
+
     }
     public void SetMyDeckName(string name)
     {
