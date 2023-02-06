@@ -244,7 +244,7 @@ GameObject:
   - component: {fileID: 8170341867943424103}
   m_Layer: 0
   m_Name: RedBlock
-  m_TagString: Untagged
+  m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
