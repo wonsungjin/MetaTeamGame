@@ -23,6 +23,11 @@ public partial  class Card : MonoBehaviour
     public Slider expSlider;
     SkeletonAnimation skeletonAnimation;
     AudioSource audioSource;
+        private void Awake()
+    {
+        SetMyInfo(name);
+        audioSource = gameObject.GetComponent<AudioSource>();
+    }
 
     /*자신의 오브젝트 이름과 같은 스크립터블 데이터를 읽어와서 설정한다
     스프라이트 랜더러도 같은 원리로 설정*/
@@ -30,10 +35,10 @@ public partial  class Card : MonoBehaviour
     {
         name = myname;
         cardInfo = Resources.Load<CardInfo>($"ScriptableDBs/{name.Replace("(Clone)", "")}");
-        hpText = transform.GetChild(1).GetChild(1).GetComponent<TextMeshPro>();
-        atkText = transform.GetChild(1).GetChild(3).GetComponent<TextMeshPro>();
-        levelText = transform.GetChild(1).GetChild(5).GetComponent<TextMeshPro>();
-        expSlider = transform.GetChild(1).GetChild(8).GetChild(0).GetComponent<Slider>();
+        hpText = transform.parent.GetChild(1).GetChild(1).GetComponent<TextMeshPro>();
+        atkText = transform.parent.GetChild(1).GetChild(3).GetComponent<TextMeshPro>();
+        levelText = transform.parent.GetChild(1).GetChild(5).GetComponent<TextMeshPro>();
+        expSlider = transform.parent.GetChild(1).GetChild(8).GetChild(0).GetComponent<Slider>();
         curHP = cardInfo.hp;
         hpText.text = curHP.ToString();
         curAttackValue = cardInfo.atk;
@@ -104,11 +109,6 @@ public partial  class Card : MonoBehaviour
 
                 break;
         }
-    }
-    private void Awake()
-    {
-        SetMyInfo(name);
-        audioSource.GetComponent<AudioSource>();
     }
 }
 
