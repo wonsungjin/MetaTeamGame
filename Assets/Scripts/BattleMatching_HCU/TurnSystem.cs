@@ -157,47 +157,62 @@ public class TurnSystem : MonoBehaviourPunCallbacks
 
     //=========================================================================================================================
     // 선공을 선정하는 함수
-    public void SetFirstAttack(int me, int you)
+    public void SetFirstAttack()
     {
-        int myDeckCount = GameMGR.Instance.batch.GetBatch(me).Count;
-        int youDeckCount = GameMGR.Instance.batch.GetBatch(you).Count;
-        // 대진이 정해지면 각 상대의 덱 수를 우선 비교 후
-        if (myDeckCount > youDeckCount)
-        {
-            isFirst[me] = true;
-            isFirst[you] = false;
-        }
-        else if(myDeckCount < youDeckCount)
-        {
-            isFirst[me] = false;
-            isFirst[you] = true;
-        }
 
-        // 서로 덱 수가 같다면
-        else
+        for(int i = 0; i < matchNum.Length; i+=2) 
         {
-            int randomPoint = UnityEngine.Random.Range(0, 10);
-            int randomPoint2 = UnityEngine.Random.Range(0, 10);
-            firstPoint[me] += randomPoint;
-            firstPoint[you] += randomPoint2;
-
-            if (firstPoint[me] > firstPoint[you])
+            // 내 덱 수가 상대 덱 수보다 많을 때
+            if(GameMGR.Instance.batch.GetBatch(matchNum[i]).Count > GameMGR.Instance.batch.GetBatch(matchNum[i+1]).Count)
             {
-                isFirst[me] = true;
-                isFirst[you] = false;
+                isFirst[i] = true;
+                isFirst[i + 1] = false;
             }
 
-            else if(firstPoint[me] < firstPoint[you])
+            else if(GameMGR.Instance.batch.GetBatch(matchNum[i]).Count < GameMGR.Instance.batch.GetBatch(matchNum[i + 1]).Count)
             {
-                isFirst[me] = false;
-                isFirst[you] = true;
+                isFirst[i + 1] = true;
+                isFirst[i] = false;
             }
-
+            // 서로 덱 수가 같다면
             else
             {
-                // 같을 때
+                int randomPoint = UnityEngine.Random.Range(0, 10);
+                int randomPoint2 = UnityEngine.Random.Range(0, 10);
+                firstPoint[i] += randomPoint;
+                firstPoint[i+1] += randomPoint2;
+
+                if (firstPoint[i] > firstPoint[i+1])
+                {
+                    isFirst[i] = true;
+                    isFirst[i+1] = false;
+                }
+
+                else if (firstPoint[i] < firstPoint[i+1])
+                {
+                    isFirst[i] = false;
+                    isFirst[i+1] = true;
+                }
+
+                else
+                {
+                    // 같을 때
+                    int a = UnityEngine.Random.Range(0, 2);
+                    if(a == 0)
+                    {
+                        isFirst[i] = true;
+                        isFirst[i+1] = false;
+                    }
+                    else
+                    {
+                        isFirst[i + 1] = true;
+                        isFirst[i] = false;
+                    }
+                }
             }
         }
+
+        
 
         GameMGR.Instance.battleLogic.isFirstAttack = isFirst[me];
     }
@@ -300,6 +315,7 @@ public class TurnSystem : MonoBehaviourPunCallbacks
                                 matchNum[j] = matchingListReal[j];
                             }
 
+                            SetFirstAttack();   // 선제공격을 먼저 설정해줌으로써 isFirst 불 배열에 값들을 지정해버리는 부분적인 부분이라고 할 수 있다고 말하는대로 될 수 있다고
                             photonView.RPC("Matching", RpcTarget.All, setRandom, matchNum, false); // Null이 뜨는 이유?}
                             curRound++;
                             return;
@@ -336,6 +352,7 @@ public class TurnSystem : MonoBehaviourPunCallbacks
                         }
                         Debug.Log("matchList Cur Count :" + matchingList.Count);
 
+                        SetFirstAttack();
                         photonView.RPC("Matching", RpcTarget.All, setRandom, matchNum, true); // Null이 뜨는 이유?}
                         curRound++;
                         return;
@@ -378,8 +395,8 @@ public class TurnSystem : MonoBehaviourPunCallbacks
             matchNum[i] = matchingList[i];
         }
 
-        Debug.Log("prevOpponent 길이 : " + prevOpponent.Length);
-
+        //Debug.Log("prevOpponent 길이 : " + prevOpponent.Length);
+        SetFirstAttack();
         photonView.RPC("Matching", RpcTarget.All, setRandom, matchNum, isClone);
     }
 
