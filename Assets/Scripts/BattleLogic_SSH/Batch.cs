@@ -97,7 +97,7 @@ public partial class Batch : MonoBehaviourPun
         for (int i = 0; i < cardList.Count; i++)
         {
             if (cardList[i] == null) continue;
-            Debug.Log("����" + cardList[i].name);
+            Debug.Log("cardList name" + cardList[i].name);
             GameObject unitCard = GameObject.Instantiate<GameObject>(cardList[i].gameObject);
 
             // player Unit ��ġ ����

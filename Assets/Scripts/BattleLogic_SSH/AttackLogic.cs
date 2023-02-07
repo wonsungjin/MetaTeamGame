@@ -10,7 +10,7 @@ public partial class AttackLogic : Skill
 
     public void UnitAttack(GameObject targetUnit)
     {
-        playerTrans = gameObject.transform.position;
+        /*playerTrans = gameObject.transform.position;
         enemyTrans = targetUnit.transform.position;
         returnPosition = playerTrans;
 
@@ -21,6 +21,6 @@ public partial class AttackLogic : Skill
         if (gameObject.transform.position.x == enemyTrans.x)
         {
             gameObject.transform.position = Vector2.Lerp(enemyTrans, returnPosition, 0.5f);
-        }
+        }*/
     }
 }
