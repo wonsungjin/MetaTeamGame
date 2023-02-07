@@ -5,6 +5,7 @@ using Photon.Pun;
 using System.Linq;
 using Unity.VisualScripting;
 using System.Data;
+using TMPro;
 
 public partial class BattleLogic : MonoBehaviourPunCallbacks
 {
@@ -74,6 +75,8 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
         // enemy first attack
         else if (!isFirstAttack) { SubordinatedAttack(); }
         else { Debug.Log("none first attack"); }
+
+        GameObject.Find("firstAttack").GetComponent<TextMeshProUGUI>().text = isFirstAttack.ToString();
     }
     #endregion
 
@@ -789,6 +792,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
     // �¸� ��
     private void PlayerBattleWin()
     {
+        GameObject.Find("resultText").GetComponent<TextMeshProUGUI>().text = "win";
         Debug.Log("Player Win");
         // �¸� ���� �߰�
     }
@@ -796,6 +800,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
     // �й� ��
     private void PlayerBattleLose()
     {
+        GameObject.Find("resultText").GetComponent<TextMeshProUGUI>().text = "lose";
         Debug.Log("Player Lose");
         // �й� ���� �߰�
     }
