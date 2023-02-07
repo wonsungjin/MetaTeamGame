@@ -45,6 +45,7 @@ public partial class GameMGR : Singleton<GameMGR>
     }
     public void Event_Buy(Card card)
     {
+        Debug.Log(card.cardInfo.objName);
         callbackEvent_Buy(card);
     }
     public void Event_Sell(Card card)

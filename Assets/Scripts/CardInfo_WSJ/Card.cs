@@ -46,6 +46,7 @@ public partial  class Card : MonoBehaviour
         level = 1;
         levelText.text = level.ToString();
         skeletonAnimation = GetComponent<SkeletonAnimation>();
+        SetSkillTiming();
     }
     public void SetFlip(bool isSet)
     {

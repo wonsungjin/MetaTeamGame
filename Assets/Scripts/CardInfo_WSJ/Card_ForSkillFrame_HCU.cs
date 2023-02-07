@@ -20,7 +20,7 @@ public partial class Card : MonoBehaviour
 
     public void Start()
     {
-        SetSkillTiming(); // 나의 스킬타이밍에 따라 이벤트에 추가해야한다면 추가한다.
+       // SetSkillTiming(); // 나의 스킬타이밍에 따라 이벤트에 추가해야한다면 추가한다.
     }
     
 
@@ -110,7 +110,7 @@ public partial class Card : MonoBehaviour
 
     public void SkillActive2(Card card)
     {
-        if (card != this) return;
+        //if (card != this) return;
         FindTargetType();
         SkillEffect();
     }
@@ -118,6 +118,7 @@ public partial class Card : MonoBehaviour
 
     public void SkillEffect() // 스킬 발동시 적용되는 효과
     {
+        Debug.Log("스킬효과 발동");
         switch (cardInfo.effectType)
         {
             case EffectType.getGold:
@@ -180,6 +181,7 @@ public partial class Card : MonoBehaviour
 
     public void FindTargetType() // 어떤 유형의 대상을 찾는지에 따라 실행하는 경우가 다르다는 말이란 말이란 말이란 말이란 말이란 말
     {
+        Debug.Log("타겟을 찾는다");
         GameObject[] searchArea = new GameObject[6]; // 대상 범위가 아군인지 적군인지에 따라 구분하여 담는 게임오브젝트 변수
 
         if(GameMGR.Instance.isBattleNow)
