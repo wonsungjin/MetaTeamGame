@@ -33,7 +33,7 @@ public partial class Drag2D : MonoBehaviour
         card = GetComponent<Card>();
 
         this.pos = this.gameObject.transform.parent.position;
-        this.selectZonePos = this.transform.position;
+        this.selectZonePos = this.transform.parent.position;
     }
 
     Camera mainCam = null;
@@ -168,7 +168,6 @@ public partial class Drag2D : MonoBehaviour
                         GameMGR.Instance.uiManager.goldTXT.text = "" + GameMGR.Instance.uiManager.goldCount.ToString();
                         pos = collision.gameObject.transform.position;
                         Vector2 monTras = gameObject.transform.parent.localScale;
-                       // gameObject.transform.Find("InfoText").gameObject.transform.localScale = monTras * 2;
                         gameObject.transform.parent.localScale = monTras * 2;
                     }
                 }
@@ -320,7 +319,7 @@ public partial class Drag2D : MonoBehaviour
         yield return wait;
         gameObject.tag = "BattleMonster";
         pos = meltPos;
-        this.gameObject.transform.position = pos + Vector2.down;
+        this.gameObject.transform.parent.position = pos + Vector2.down;
         spriteRenderer.sortingOrder = 3;
         GameMGR.Instance.uiManager.goldCount -= 3;
         GameMGR.Instance.uiManager.goldTXT.text = "" + GameMGR.Instance.uiManager.goldCount.ToString();

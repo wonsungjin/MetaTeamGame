@@ -16,6 +16,7 @@ public class FreezeCard : MonoBehaviour
         if(collision.gameObject.CompareTag("FreezeCard"))
         {
             collision.gameObject.tag = "Monster";
+            collision.gameObject.layer = 0;
             audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.UI, "Ice");
             audioSource.Play();
         }
@@ -23,7 +24,7 @@ public class FreezeCard : MonoBehaviour
         else if (collision.gameObject.CompareTag("Monster"))
         {
             collision.gameObject.tag = "FreezeCard";
-
+            collision.gameObject.layer = 8;
             audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.UI, "Ice");
             audioSource.Play();
         }
