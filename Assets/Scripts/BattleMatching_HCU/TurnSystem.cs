@@ -433,6 +433,9 @@ public class TurnSystem : MonoBehaviourPunCallbacks
                         GameMGR.Instance.matching[0] = num[i];
                         GameMGR.Instance.matching[1] = num[i + 1];
                         GameMGR.Instance.randomValue = random;
+
+                        SetFirstAttack(num[i], num[i + 1]);
+
                         //SceneManager.LoadScene(1);
 
                         photonView.RPC("ShowDebug", RpcTarget.MasterClient, matchingDebug);
@@ -449,6 +452,9 @@ public class TurnSystem : MonoBehaviourPunCallbacks
                         GameMGR.Instance.matching[0] = num[i];
                         GameMGR.Instance.matching[1] = num[i - 1];
                         GameMGR.Instance.randomValue = random;
+
+                        SetFirstAttack(num[i], num[i - 1]);
+
                         //SceneManager.LoadScene(1);
 
                         photonView.RPC("ShowDebug", RpcTarget.MasterClient, matchingDebug);
@@ -476,6 +482,9 @@ public class TurnSystem : MonoBehaviourPunCallbacks
                         GameMGR.Instance.matching[0] = num[i];
                         GameMGR.Instance.matching[1] = num[i + 1];
                         GameMGR.Instance.randomValue = random;
+
+                        SetFirstAttack(num[i], num[i + 1]);
+
                         //SceneManager.LoadScene(1);
 
                         photonView.RPC("ShowDebug", RpcTarget.MasterClient, matchingDebug);
@@ -493,6 +502,9 @@ public class TurnSystem : MonoBehaviourPunCallbacks
                         GameMGR.Instance.matching[0] = num[i];
                         GameMGR.Instance.matching[1] = num[i - 1];
                         GameMGR.Instance.randomValue = random;
+
+                        SetFirstAttack(num[i], num[i - 1]);
+
                         //SceneManager.LoadScene(1); // 전투 씬으로 이동
 
                         photonView.RPC("ShowDebug", RpcTarget.MasterClient, matchingDebug);
