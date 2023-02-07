@@ -188,6 +188,7 @@ public partial class Card : MonoBehaviour
 
         if(GameMGR.Instance.isBattleNow)
         {
+            Debug.Log("현재는 전투씬 기준");
             switch (cardInfo.effectTarget) // 스킬 효과 적용 대상에 따른 탐색 범위 지정
             {
                 case EffectTarget.ally:
@@ -260,6 +261,7 @@ public partial class Card : MonoBehaviour
         }
         else // 전투씬이 아니라면 상점씬 기준으로
         {
+            Debug.Log("현재는 상점씬 기준");
             switch (cardInfo.effectTarget) // 스킬 효과 적용 대상에 따른 탐색 범위 지정
             {
                 case EffectTarget.ally:
@@ -272,8 +274,7 @@ public partial class Card : MonoBehaviour
                         {
                             searchArea.Add(GameMGR.Instance.spawner.cardBatch[i]);
                         }
-                    }
-                    
+                    }                    
                     break;
                 case EffectTarget.none:
                     break;
@@ -311,19 +312,19 @@ public partial class Card : MonoBehaviour
                 break;
 
             case TargetType.random:
-                int random = Random.Range(0, 6);
-                while (searchArea[random].GetComponentInChildren<Card>().curHP <= 0) // 죽은 아군이 아닐 때까지 랜덤값을 돌려
+                int random = Random.Range(0, searchArea.Count);
+                while (searchArea[random].GetComponent<Card>().curHP <= 0) // 죽은 아군이 아닐 때까지 랜덤값을 돌려
                 {
-                    random = Random.Range(0, 6);
+                    random = Random.Range(0, searchArea.Count);
                 }
                 //skillTarget.Add(GameMGR.Instance.battleLogic.)
                 skillTarget.Add(transform.parent.transform.GetChild(random).gameObject.GetComponent<Card>());
                 break;
             case TargetType.randomExceptMe:
-                random = Random.Range(0, 6);
-                while (searchArea[random].GetComponentInChildren<Card>().curHP <= 0 && searchArea[random] == this) // 죽은 아군이 아닐 때까지 랜덤값을 돌려
+                random = Random.Range(0, searchArea.Count);
+                while (searchArea[random].GetComponent<Card>().curHP <= 0 && searchArea[random] == this) // 죽은 아군이 아닐 때까지 랜덤값을 돌려
                 {
-                    random = Random.Range(0, 6);
+                    random = Random.Range(0, searchArea.Count);
                 }
                 skillTarget.Add(transform.parent.transform.GetChild(random).gameObject.GetComponent<Card>());
                 break;
