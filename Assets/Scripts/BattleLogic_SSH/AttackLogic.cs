@@ -23,6 +23,6 @@ public partial class AttackLogic : Skill
             gameObject.transform.position = Vector2.Lerp(enemyTrans, returnPosition, 0.5f);
         }*/
 
-        Destroy(targetUnit);
+        //Destroy(targetUnit);
     }
 }
