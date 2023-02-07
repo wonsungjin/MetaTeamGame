@@ -165,33 +165,33 @@ public class TurnSystem : MonoBehaviourPunCallbacks
             // 내 덱 수가 상대 덱 수보다 많을 때
             if(GameMGR.Instance.batch.GetBatch(matchNum[i]).Count > GameMGR.Instance.batch.GetBatch(matchNum[i+1]).Count)
             {
-                isFirst[i] = true;
-                isFirst[i + 1] = false;
+                isFirst[matchNum[i]] = true;
+                isFirst[matchNum[i + 1]] = false;
             }
 
             else if(GameMGR.Instance.batch.GetBatch(matchNum[i]).Count < GameMGR.Instance.batch.GetBatch(matchNum[i + 1]).Count)
             {
-                isFirst[i + 1] = true;
-                isFirst[i] = false;
+                isFirst[matchNum[i + 1]] = true;
+                isFirst[matchNum[i]] = false;
             }
             // 서로 덱 수가 같다면
             else
             {
                 int randomPoint = UnityEngine.Random.Range(0, 10);
                 int randomPoint2 = UnityEngine.Random.Range(0, 10);
-                firstPoint[i] += randomPoint;
-                firstPoint[i+1] += randomPoint2;
+                firstPoint[matchNum[i]] += randomPoint;
+                firstPoint[matchNum[i+1]] += randomPoint2;
 
-                if (firstPoint[i] > firstPoint[i+1])
+                if (firstPoint[matchNum[i]] > firstPoint[matchNum[i + 1]])
                 {
-                    isFirst[i] = true;
-                    isFirst[i+1] = false;
+                    isFirst[matchNum[i]] = true;
+                    isFirst[matchNum[i + 1]] = false;
                 }
 
-                else if (firstPoint[i] < firstPoint[i+1])
+                else if (firstPoint[matchNum[i]] < firstPoint[matchNum[i + 1]])
                 {
-                    isFirst[i] = false;
-                    isFirst[i+1] = true;
+                    isFirst[matchNum[i]] = false;
+                    isFirst[matchNum[i + 1]] = true;
                 }
 
                 else
@@ -200,13 +200,13 @@ public class TurnSystem : MonoBehaviourPunCallbacks
                     int a = UnityEngine.Random.Range(0, 2);
                     if(a == 0)
                     {
-                        isFirst[i] = true;
-                        isFirst[i+1] = false;
+                        isFirst[matchNum[i]] = true;
+                        isFirst[matchNum[i + 1]] = false;
                     }
                     else
                     {
-                        isFirst[i + 1] = true;
-                        isFirst[i] = false;
+                        isFirst[matchNum[i + 1]] = true;
+                        isFirst[matchNum[i]] = false;
                     }
                 }
             }
