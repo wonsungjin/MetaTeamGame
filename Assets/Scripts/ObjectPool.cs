@@ -11,6 +11,7 @@ public class ObjectPool : Singleton<ObjectPool>
     {
         List<GameObject> list = null;
         GameObject instance = null;
+        Debug.Log(prefab.name.Replace("(Clone)", ""));
         bool listCheck = table.TryGetValue(prefab.name.Replace("(Clone)", ""), out list);
         if (listCheck == false)
         {

@@ -10,7 +10,7 @@ public partial class GameMGR : Singleton<GameMGR>
 
     // 서로가 동일한 랜덤값을 가지기 위한 것이다.
     public int[] randomValue = new int[100];
-    public Dictionary<int, List<Card>> playerList = new Dictionary<int, List<Card>>();
+    public Dictionary<int, List<GameObject>> playerList = new Dictionary<int, List<GameObject>>();
 
     public bool isBattleNow = false; // 현재 전투씬인지 비전투씬인지를 구분하는 불값.
 
@@ -46,16 +46,18 @@ public partial class GameMGR : Singleton<GameMGR>
     public void Event_Buy(Card card)
     {
         Debug.Log(card.cardInfo.objName);
-        callbackEvent_Buy(card);
+        if (callbackEvent_Buy != null)
+            callbackEvent_Buy(card);
     }
     public void Event_Sell(Card card)
     {
-        callbackEvent_Sell(card);
+        if (callbackEvent_Sell != null)
+            callbackEvent_Sell(card);
     }
-    //public void Event_Reroll()
-    //{
-    //    callbackEvent_Reroll();
-    //}
+    public void Event_Reroll()
+    {
+        if(callbackEvent_Reroll!=null) callbackEvent_Reroll();
+    }
     public void Event_BattleStart()
     {
         callbackEvent_BattleStart();

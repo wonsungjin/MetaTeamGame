@@ -228,7 +228,9 @@ public class MetaTrendAPI : MonoBehaviour
 		UnityWebRequest www = UnityWebRequest.Post(url, reqJsonData);
 		byte[] buff = System.Text.Encoding.UTF8.GetBytes(reqJsonData);
 		www.uploadHandler = new UploadHandlerRaw(buff);
-		www.SetRequestHeader("api-key", API_KEY);
+
+
+        www.SetRequestHeader("api-key", API_KEY);
 		www.SetRequestHeader("Content-Type", "application/json");
 		yield return www.SendWebRequest();
 
