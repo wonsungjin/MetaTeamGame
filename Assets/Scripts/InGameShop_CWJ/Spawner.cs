@@ -209,7 +209,7 @@ public class Spawner : MonoBehaviourPun
 
             for (int i = 0; i < monster.Length; i++)
             {
-                GameMGR.Instance.objectPool.DestroyPrefab(monster[i]);
+                GameMGR.Instance.objectPool.DestroyPrefab(monster[i].transform.parent.gameObject);
             }
             ChooseRandomCard();
 
