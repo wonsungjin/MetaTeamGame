@@ -10,7 +10,7 @@ public static class Builder
     public static void JenkinsBuilder()
     {
         BuildPlayerOptions buildPlayerOptions = new BuildPlayerOptions();
-        buildPlayerOptions.scenes = new[] { "Assets/Scenes/SampleScene.unity" };
+        buildPlayerOptions.scenes = new[] { "Assets/Scenes/LobbyScene.unity", "Assets/Scenes/StoreScene.unity" };
         buildPlayerOptions.locationPathName = "Build/MetaBuild.exe";
         buildPlayerOptions.target = BuildTarget.StandaloneWindows64;
         buildPlayerOptions.options = BuildOptions.None;
