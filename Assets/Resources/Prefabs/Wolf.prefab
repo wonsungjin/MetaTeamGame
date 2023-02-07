@@ -303,15 +303,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2435f21eb5008146b871a8c0fa54c9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardInfo: {fileID: 0}
-  hpText: {fileID: 0}
-  atkText: {fileID: 0}
-  levelText: {fileID: 0}
-  level: 0
-  curAttackValue: 0
-  curHP: 0
+  cardInfo: {fileID: 11400000, guid: 2fbfcb9c801a36f4cb4b2d1f41af34f7, type: 2}
+  hpText: {fileID: 8931242440671562443}
+  atkText: {fileID: 8931242442199043043}
+  levelText: {fileID: 8931242440455447205}
+  level: 1
+  curAttackValue: 2
+  curHP: 1
   curEXP: 0
-  expSlider: {fileID: 0}
+  expSlider: {fileID: 7086704749162298161}
   skillTarget: []
   batchPos: {x: 0, y: 0}
   targetPos: {x: 0, y: 0}
@@ -1545,7 +1545,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 1
+  m_text: 2
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 162f7f16c4bec41ff98f811bd90e7b6e, type: 2}
   m_sharedMaterial: {fileID: 6447333859754382329, guid: 162f7f16c4bec41ff98f811bd90e7b6e, type: 2}
