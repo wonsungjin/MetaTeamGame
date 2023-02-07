@@ -35,7 +35,8 @@ public partial class Batch : MonoBehaviourPun
     public void SetBatch(int playerNum, string cardName, int hp, int attackValue, int exp, int level)
     {
         List<Card> cardList = null;
-        Card instance = Resources.Load<Card>($"Prefabs/{cardName}");
+        Card card = null;
+        GameObject instance = Resources.Load<GameObject>($"Prefabs/{cardName}");
         Debug.Log(cardName);
         Debug.Log(cardName);
         bool listCheck = GameMGR.Instance.playerList.TryGetValue(playerNum, out cardList);
@@ -45,12 +46,15 @@ public partial class Batch : MonoBehaviourPun
         }
         if (cardName != "")
         {
-            instance.SetMyInfo(cardName);
-            instance.ChangeValue(CardStatus.Hp, hp);
-            instance.ChangeValue(CardStatus.Attack, attackValue);
-            instance.ChangeValue(CardStatus.Exp, exp);
-            instance.ChangeValue(CardStatus.Level, level);
-            cardList.Add(instance);
+            card = instance.GetComponentInChildren<Card>();
+            Debug.Log(instance);
+            if (instance == null) Debug.Log("sjf");
+            card.SetMyInfo(cardName);
+            card.curHP = hp;
+            card.curAttackValue = attackValue;
+            card.curEXP = exp;
+            card.level = level;
+            cardList.Add(card);
         }
         else cardList.Add(null);
 
@@ -94,7 +98,7 @@ public partial class Batch : MonoBehaviourPun
         {
             if (cardList[i] == null) continue;
             Debug.Log("����" + cardList[i].name);
-            Card unitCard = GameObject.Instantiate<Card>(cardList[i]);
+            GameObject unitCard = GameObject.Instantiate<GameObject>(cardList[i].gameObject);
 
             // player Unit ��ġ ����
             if (myCard == true)
@@ -108,7 +112,7 @@ public partial class Batch : MonoBehaviourPun
             else if (myCard == false)
             {
                 unitCard.transform.position = enemyCardPosition[i + 1].position;
-                unitCard.SetFlip(true);
+                unitCard.GetComponentInChildren<Card>().SetFlip(true);
                 if (i < 3) { GameMGR.Instance.battleLogic.enemyForwardUnits[i] = unitCard.gameObject; }
                 else { GameMGR.Instance.battleLogic.enemyBackwardUnits[i - 3] = unitCard.gameObject; }
             }
