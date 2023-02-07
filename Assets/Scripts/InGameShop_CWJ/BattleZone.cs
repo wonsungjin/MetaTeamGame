@@ -8,15 +8,14 @@ public class BattleZone : MonoBehaviour
 
     private void Start()
     {
-        audioSource = gameObject.GetComponent<AudioSource>();
+        this.audioSource = gameObject.GetComponent<AudioSource>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.CompareTag("Monster") || collision.gameObject.CompareTag("FreezeCard"))
+        if (collision.gameObject.CompareTag("Monster") || collision.gameObject.CompareTag("FreezeCard"))
         {
-            audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.UI, "Public_landing");
-            audioSource.Play();
+            SoundStart();
         }
 
         if (collision.gameObject.CompareTag("BattleMonster"))
@@ -27,11 +26,17 @@ public class BattleZone : MonoBehaviour
         }
     }
 
+    void SoundStart()
+    {
+        this.audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.UI, "Public_landing");
+        this.audioSource.Play();
+    }
+
     private void OnTriggerExit2D(Collider2D collision)
     {
         this.isHere = false;
 
-        if(collision.gameObject.CompareTag("BattleMonster"))
+        if (collision.gameObject.CompareTag("BattleMonster"))
         {
             this.gameObject.tag = "BattleZone";
             GameMGR.Instance.spawner.cardBatch[myNum] = null;

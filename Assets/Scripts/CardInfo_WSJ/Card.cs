@@ -73,8 +73,8 @@ public partial  class Card : MonoBehaviour
             case CardStatus.Exp:
                 if (level == 1)
                 {
-                    // audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.Unit, "Unit Merge");
-                    // audioSource.Play();
+                    audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.Unit, "Unit Merge");
+                    audioSource.Play();
                     curEXP++;
                     if (curEXP >= 2)
                     {
