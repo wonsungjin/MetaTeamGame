@@ -438,7 +438,7 @@ public class TurnSystem : MonoBehaviourPunCallbacks
             {
                 if ((int)PhotonNetwork.LocalPlayer.CustomProperties["Number"] == num[i]) // 내 번호랑 일치하는지와 배열 번호가 마지막(클론) 이 아닌 경우에만
                 {
-                    GameMGR.Instance.battleLogic.isFirstAttack = isFirst[num[i]]; // 내 선공 여부는 내가 정한다.
+                    GameMGR.Instance.battleLogic.isFirstAttack = first[num[i]]; // 내 선공 여부는 내가 정한다.
                     if (i == 0 || i % 2 == 0)
                     {
                         PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "Opponent", num[i + 1] } });
@@ -484,7 +484,7 @@ public class TurnSystem : MonoBehaviourPunCallbacks
             {
                 if ((int)PhotonNetwork.LocalPlayer.CustomProperties["Number"] == num[i])
                 {
-                    GameMGR.Instance.battleLogic.isFirstAttack = isFirst[num[i]];
+                    GameMGR.Instance.battleLogic.isFirstAttack = first[num[i]];
                     if (i == 0 || i % 2 == 0)
                     {
                         PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "Opponent", num[i + 1] } });
@@ -516,8 +516,6 @@ public class TurnSystem : MonoBehaviourPunCallbacks
                         GameMGR.Instance.matching[0] = num[i];
                         GameMGR.Instance.matching[1] = num[i - 1];
                         GameMGR.Instance.randomValue = random;
-
-
 
                         //SceneManager.LoadScene(1); // 전투 씬으로 이동
 
