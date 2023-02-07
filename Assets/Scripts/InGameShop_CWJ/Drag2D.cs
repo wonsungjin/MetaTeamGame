@@ -58,7 +58,7 @@ public partial class Drag2D : MonoBehaviour
                     if (hit.collider.name != this.gameObject.name)
                     {
                         GameObject vec = GameObject.FindGameObjectWithTag("BattleZone");
-                        hit.collider.gameObject.transform.position = vec.transform.position + Vector3.down;
+                        hit.collider.gameObject.transform.parent.position = vec.transform.position + Vector3.down;
                     }
 
                     else if (hit.collider.name == this.gameObject.name)
@@ -67,7 +67,7 @@ public partial class Drag2D : MonoBehaviour
                         if (timer > 1f)
                         {
                             GameObject vec = GameObject.FindGameObjectWithTag("BattleZone");
-                            hit.collider.gameObject.transform.position = vec.transform.position + Vector3.down;
+                            hit.collider.gameObject.transform.parent.position = vec.transform.position + Vector3.down;
                         }
                     }
                 }
@@ -141,12 +141,14 @@ public partial class Drag2D : MonoBehaviour
                     if (collision.gameObject.CompareTag("BattleZone"))
                     {
                         meltPos = collision.gameObject.transform.position;
-                        StartCoroutine(COR_BackMelt());
+                        Vector2 monTras = gameObject.transform.parent.localScale;
+                        gameObject.transform.parent.localScale = monTras * 2;
+                        BackMeltBuy();
                     }
                 }
             }
 
-            // 상점에서 구매 할때 배틀존에 용병에 넣으면 레벨업 된다.
+            // 상점에서 구매 할때 배틀존에 용병 넣으면 레벨업 된다.
             if (gameObject.CompareTag("Monster"))
             {
                 // 프리즈에 닿으면 프리즈카드로 태그를 바꾼 후 원래 위치로 돌린다.
@@ -276,14 +278,14 @@ public partial class Drag2D : MonoBehaviour
         collision.GetComponent<Card>().ChangeValue(CardStatus.Attack, plusAttack + 1);
         collision.GetComponent<Card>().ChangeValue(CardStatus.Hp, plusHp + 1);
         collision.GetComponent<Card>().ChangeValue(CardStatus.Exp, colExp + 1);
-        Destroy(this.gameObject);
+        Destroy(this.gameObject.transform.parent);
     }
 
     // 용병 조합
     void CombineCard(Collider2D collision)
     {
         this.transform.parent.position = collision.gameObject.transform.parent.position;
-        Destroy(collision.gameObject);
+        Destroy(collision.gameObject.transform.parent);
     }
 
     // 판매버튼 ON OFF
@@ -291,7 +293,6 @@ public partial class Drag2D : MonoBehaviour
     {
         yield return new WaitForSeconds(0.12f);
         GameMGR.Instance.uiManager.sell.gameObject.SetActive(false);
-        //  GameMGR.Instance.uiManager.cardPannel.gameObject.SetActive(false);
     }
 
     // 원래 위치로 돌리는 함수
@@ -313,10 +314,8 @@ public partial class Drag2D : MonoBehaviour
         }
     }
 
-    // 얼린카드를 구매시
-    IEnumerator COR_BackMelt()
+    void BackMeltBuy()
     {
-        yield return wait;
         gameObject.tag = "BattleMonster";
         pos = meltPos;
         this.gameObject.transform.parent.position = pos + Vector2.down;

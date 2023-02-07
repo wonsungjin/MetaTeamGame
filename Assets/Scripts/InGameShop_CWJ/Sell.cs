@@ -5,13 +5,11 @@ public class Sell : MonoBehaviour
 {
     AudioSource audioSource;
 
-
     private void Start()
     {
         transform.GetChild(0).GetComponent<MeshRenderer>().sortingLayerName = "SellTXT";
         transform.GetChild(1).GetComponent<MeshRenderer>().sortingLayerName = "SellTXT";
         audioSource = GetComponent<AudioSource>();
-
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -19,17 +17,17 @@ public class Sell : MonoBehaviour
         if (collision.CompareTag("BattleMonster") || collision.CompareTag("BattleMonster2") || collision.CompareTag("BattleMonster3")) 
         {
             Selld(collision);
-            Destroy(collision.gameObject);
+            Destroy(collision.gameObject.transform.parent);
             gameObject.SetActive(false);
         }
     }
 
     void Selld(Collider2D coll)
-    {  
+    {
         audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.UI, "Public_landing");
         audioSource.Play();
 
-        if(coll.CompareTag("BattleMonster"))
+        if (coll.CompareTag("BattleMonster"))
         {
             GameMGR.Instance.uiManager.goldCount += 1;
             GameMGR.Instance.uiManager.goldTXT.text = "" + GameMGR.Instance.uiManager.goldCount.ToString();
