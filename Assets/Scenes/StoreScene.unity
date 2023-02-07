@@ -4212,7 +4212,7 @@ GameObject:
   - component: {fileID: 605098784}
   - component: {fileID: 605098787}
   - component: {fileID: 605098788}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Store2
   m_TagString: SelectRing
   m_Icon: {fileID: 0}
@@ -4414,7 +4414,7 @@ GameObject:
   - component: {fileID: 717212065}
   - component: {fileID: 717212068}
   - component: {fileID: 717212069}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Store3
   m_TagString: SelectRing
   m_Icon: {fileID: 0}
@@ -6033,7 +6033,7 @@ GameObject:
   - component: {fileID: 899408582}
   - component: {fileID: 899408585}
   - component: {fileID: 899408586}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Store5
   m_TagString: SelectRing
   m_Icon: {fileID: 0}
@@ -7414,7 +7414,7 @@ GameObject:
   - component: {fileID: 1217976072}
   - component: {fileID: 1217976075}
   - component: {fileID: 1217976076}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Store6
   m_TagString: SelectRing
   m_Icon: {fileID: 0}
@@ -7895,7 +7895,7 @@ GameObject:
   - component: {fileID: 1324765331}
   - component: {fileID: 1324765334}
   - component: {fileID: 1324765335}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Store1
   m_TagString: SelectRing
   m_Icon: {fileID: 0}
@@ -9678,7 +9678,7 @@ GameObject:
   - component: {fileID: 1726932547}
   - component: {fileID: 1726932550}
   - component: {fileID: 1726932551}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Store4
   m_TagString: SelectRing
   m_Icon: {fileID: 0}
