@@ -57,6 +57,7 @@ public partial class Card : MonoBehaviour
 
     public void SetSkillTiming() // 스킬을 언제 발동시키느냐에 따라서 각 델리게이트 이벤트에 추가시켜준다. 이벤트는 보따리의 개념으로써 이벤트를 실행하면 안에 추가한 모든 함수들이 실행되기 때문에 공통적으로 사용되는 부분에서만 사용하는 것이 응당 정당 타당 합당 마땅하다고 보는 부분적인 부분이라고 할 수 있는 부분이다.
     {
+        Debug.Log("SetSkillTiming 설정하는 함수로 들어왔다");
         switch (cardInfo.skillTiming)
         {
             case SkillTiming.turnStart:
@@ -104,12 +105,14 @@ public partial class Card : MonoBehaviour
 
     public void SkillActive() // 스킬 효과 발동 // FindTargetType 함수를 통해 구체적인 스킬 적용 대상이 정해지고 난 이후에 발동하는 게 맞다고 볼 수 있는 부분적인 부분
     {
+        Debug.Log("Skill Active");
         FindTargetType();
         SkillEffect();
     }
 
     public void SkillActive2(Card card)
     {
+        Debug.Log("Skill Active 2");
         //if (card != this) return;
         FindTargetType();
         SkillEffect();
