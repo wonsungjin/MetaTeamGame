@@ -4370,7 +4370,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3016467040415082800, guid: 1761255f5fb998f4ebf4eb6915f40554, type: 3}
       propertyPath: m_Name
-      value: BattleScene (1)
+      value: BattleScene
       objectReference: {fileID: 0}
     - target: {fileID: 3652185231454181197, guid: 1761255f5fb998f4ebf4eb6915f40554, type: 3}
       propertyPath: sceneViewId
