@@ -211,10 +211,7 @@ public class TurnSystem : MonoBehaviourPunCallbacks
                 }
             }
         }
-
-        
-
-        GameMGR.Instance.battleLogic.isFirstAttack = isFirst[me];
+        //GameMGR.Instance.battleLogic.isFirstAttack = isFirst[me];
     }
     //=========================================================================================================================
 
@@ -316,7 +313,7 @@ public class TurnSystem : MonoBehaviourPunCallbacks
                             }
 
                             SetFirstAttack();   // 선제공격을 먼저 설정해줌으로써 isFirst 불 배열에 값들을 지정해버리는 부분적인 부분이라고 할 수 있다고 말하는대로 될 수 있다고
-                            photonView.RPC("Matching", RpcTarget.All, setRandom, matchNum, false); // Null이 뜨는 이유?}
+                            photonView.RPC("Matching", RpcTarget.All, setRandom, matchNum, false, isFirst); // Null이 뜨는 이유?}
                             curRound++;
                             return;
                         }
@@ -353,7 +350,7 @@ public class TurnSystem : MonoBehaviourPunCallbacks
                         Debug.Log("matchList Cur Count :" + matchingList.Count);
 
                         SetFirstAttack();
-                        photonView.RPC("Matching", RpcTarget.All, setRandom, matchNum, true); // Null이 뜨는 이유?}
+                        photonView.RPC("Matching", RpcTarget.All, setRandom, matchNum, true, isFirst); // Null이 뜨는 이유?}
                         curRound++;
                         return;
                     }
@@ -396,8 +393,8 @@ public class TurnSystem : MonoBehaviourPunCallbacks
         }
 
         //Debug.Log("prevOpponent 길이 : " + prevOpponent.Length);
-        SetFirstAttack();
-        photonView.RPC("Matching", RpcTarget.All, setRandom, matchNum, isClone);
+        SetFirstAttack();   // 선공 지정 함수
+        photonView.RPC("Matching", RpcTarget.All, setRandom, matchNum, isClone, isFirst);
     }
 
 
@@ -408,7 +405,7 @@ public class TurnSystem : MonoBehaviourPunCallbacks
     }
 
     [PunRPC] // 마스터 클라이언트가 지정한 대진표를 각 로컬들이 받아와서 대진 상 자신과 자신의 상대를 찾는 함수
-    public void Matching(int[] random, int[] num, bool clone)
+    public void Matching(int[] random, int[] num, bool clone, bool[] first)
     {
         if (PhotonNetwork.IsMasterClient)   // 마스터 클라이언트는 대진 정보를 기록
         {
@@ -441,6 +438,7 @@ public class TurnSystem : MonoBehaviourPunCallbacks
             {
                 if ((int)PhotonNetwork.LocalPlayer.CustomProperties["Number"] == num[i]) // 내 번호랑 일치하는지와 배열 번호가 마지막(클론) 이 아닌 경우에만
                 {
+                    GameMGR.Instance.battleLogic.isFirstAttack = isFirst[num[i]]; // 내 선공 여부는 내가 정한다.
                     if (i == 0 || i % 2 == 0)
                     {
                         PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "Opponent", num[i + 1] } });
@@ -452,7 +450,6 @@ public class TurnSystem : MonoBehaviourPunCallbacks
                         GameMGR.Instance.matching[1] = num[i + 1];
                         GameMGR.Instance.randomValue = random;
 
-                        SetFirstAttack(num[i], num[i + 1]);
 
                         //SceneManager.LoadScene(1);
 
@@ -471,7 +468,6 @@ public class TurnSystem : MonoBehaviourPunCallbacks
                         GameMGR.Instance.matching[1] = num[i - 1];
                         GameMGR.Instance.randomValue = random;
 
-                        SetFirstAttack(num[i], num[i - 1]);
 
                         //SceneManager.LoadScene(1);
 
@@ -488,6 +484,7 @@ public class TurnSystem : MonoBehaviourPunCallbacks
             {
                 if ((int)PhotonNetwork.LocalPlayer.CustomProperties["Number"] == num[i])
                 {
+                    GameMGR.Instance.battleLogic.isFirstAttack = isFirst[num[i]];
                     if (i == 0 || i % 2 == 0)
                     {
                         PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "Opponent", num[i + 1] } });
@@ -501,7 +498,6 @@ public class TurnSystem : MonoBehaviourPunCallbacks
                         GameMGR.Instance.matching[1] = num[i + 1];
                         GameMGR.Instance.randomValue = random;
 
-                        SetFirstAttack(num[i], num[i + 1]);
 
                         //SceneManager.LoadScene(1);
 
@@ -521,7 +517,7 @@ public class TurnSystem : MonoBehaviourPunCallbacks
                         GameMGR.Instance.matching[1] = num[i - 1];
                         GameMGR.Instance.randomValue = random;
 
-                        SetFirstAttack(num[i], num[i - 1]);
+
 
                         //SceneManager.LoadScene(1); // 전투 씬으로 이동
 
