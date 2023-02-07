@@ -79,7 +79,7 @@ public partial class Drag2D : MonoBehaviour
 
     private void OnMouseDown()
     {
-        
+
         UpdateOutline(true);
         isClickBool = false;
         pol.enabled = false;

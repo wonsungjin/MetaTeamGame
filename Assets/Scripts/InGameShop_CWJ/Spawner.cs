@@ -458,8 +458,11 @@ public class Spawner : MonoBehaviourPun
     void SummonMonster(int a, int b)
     {
         randomNum = Random.Range(a, b);
-        GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum]}"),
+        //GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum]}"),
+        //    monsterTrans[randomTrans].transform.position - vec, Quaternion.identity);
+        GameObject mons = Instantiate(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum]}"),
             monsterTrans[randomTrans].transform.position - vec, Quaternion.identity);
+
 
         randomTrans++;
     }
