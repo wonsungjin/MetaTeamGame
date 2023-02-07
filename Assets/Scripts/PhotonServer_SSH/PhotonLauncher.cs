@@ -140,11 +140,11 @@ public class PhotonLauncher : MonoBehaviourPunCallbacks
         Debug.Log(PhotonNetwork.NetworkClientState);
         if (PhotonNetwork.InRoom == true)
         {
-            playerCount.text = "Player Count : " + PhotonNetwork.CurrentRoom.PlayerCount + "/" + maxPlayer;
+            playerCount.text =  PhotonNetwork.CurrentRoom.PlayerCount + "/" + maxPlayer;
         }
         else
         {
-            playerCount.text = "Player Count : - ";
+            playerCount.text = "-";
         }
     }
 
@@ -196,12 +196,12 @@ public class PhotonLauncher : MonoBehaviourPunCallbacks
             else PhotonNetwork.CurrentRoom.IsOpen = true;
         if (roomState)
         {
-            playerCount.text = "Player Count : " + PhotonNetwork.CurrentRoom.PlayerCount.ToString()+"/"+maxPlayer;
+            playerCount.text = PhotonNetwork.CurrentRoom.PlayerCount.ToString()+"/"+maxPlayer;
         }
 
         else
         {
-            playerCount.text = "Player Count : " + (PhotonNetwork.CurrentRoom.PlayerCount - 1).ToString() + "/" + maxPlayer;
+            playerCount.text = (PhotonNetwork.CurrentRoom.PlayerCount - 1).ToString() + "/" + maxPlayer;
         }
 
         if (PhotonNetwork.CurrentRoom.PlayerCount == maxPlayer && PhotonNetwork.IsMasterClient == true)
