@@ -523,6 +523,7 @@ public class TurnSystem : MonoBehaviourPunCallbacks
         GameMGR.Instance.uiManager.storePannel.SetActive(false);
         GameMGR.Instance.batch.UnitPlacement();
         GameMGR.Instance.battleLogic.AttackLogic();
+        GameMGR.Instance.uiManager.OnBattleUI();
     }
     /*
     private void BattleOrder()
