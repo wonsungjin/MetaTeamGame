@@ -26,6 +26,7 @@ public partial class Drag2D : MonoBehaviour
     }
     private void Start()
     {
+        
         spriteRenderer = GetComponent<MeshRenderer>();
         pol = GetComponent<BoxCollider2D>();
         this.pos = this.gameObject.transform.position;
@@ -77,6 +78,7 @@ public partial class Drag2D : MonoBehaviour
 
     private void OnMouseDown()
     {
+        
         UpdateOutline(true);
         isClickBool = false;
         pol.enabled = false;
