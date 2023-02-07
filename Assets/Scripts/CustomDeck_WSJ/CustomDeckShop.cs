@@ -40,6 +40,8 @@ public class CustomDeckShop : MonoBehaviour
     public void OnClick_Join_CustomDeckShop()
     {
         isJoinShop = true;
+        for(int i = 0; i < 6; i++)
+        GameMGR.Instance.uiManager.tierCountText[i].text = "0/14";
     }
     public void OnClick_Exit_CustomDeckShop()
     {
@@ -58,12 +60,22 @@ public class CustomDeckShop : MonoBehaviour
         }
         if (list.Count < 8)
         {
-            if (list.Contains(name) == false) list.Add(name);
-            else { list.Remove(name); Debug.Log("삭제"); }
+            if (list.Contains(name) == false)
+            {
+                list.Add(name);
+                GameMGR.Instance.uiManager.tierCountText[tier-1].text = $"{list.Count}/14";
+            }
+            else
+            {
+                list.Remove(name);
+                GameMGR.Instance.uiManager.tierCountText[tier-1].text = $"{list.Count}/14"; 
+                Debug.Log("삭제");
+            }
         }
         else
         {
             list.Remove(name); Debug.Log("삭제");
+            GameMGR.Instance.uiManager.tierCountText[tier-1].text = $"{list.Count}/14";
             return list.Count+1;
         }
         return 0;
