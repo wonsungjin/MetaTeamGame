@@ -1,3 +1,4 @@
+using MongoDB.Driver;
 using UnityEngine;
 
 public class Sell : MonoBehaviour
@@ -45,5 +46,7 @@ public class Sell : MonoBehaviour
             GameMGR.Instance.uiManager.goldCount += 3;
             GameMGR.Instance.uiManager.goldTXT.text = "" + GameMGR.Instance.uiManager.goldCount.ToString();
         }
+
+        GameMGR.Instance.Event_Sell(coll.gameObject.GetComponent<Card>());
     }
 }

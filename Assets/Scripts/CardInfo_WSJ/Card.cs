@@ -35,10 +35,10 @@ public partial  class Card : MonoBehaviour
     {
         name = myname;
         cardInfo = Resources.Load<CardInfo>($"ScriptableDBs/{name.Replace("(Clone)", "")}");
-        hpText = transform.GetChild(1).GetChild(1).GetComponent<TextMeshPro>();
-        atkText = transform.GetChild(1).GetChild(3).GetComponent<TextMeshPro>();
-        levelText = transform.GetChild(1).GetChild(5).GetComponent<TextMeshPro>();
-        expSlider = transform.GetChild(1).GetChild(8).GetChild(0).GetComponent<Slider>();
+        hpText = transform.parent.GetChild(1).GetChild(1).GetComponent<TextMeshPro>();
+        atkText = transform.parent.GetChild(1).GetChild(3).GetComponent<TextMeshPro>();
+        levelText = transform.parent.GetChild(1).GetChild(5).GetComponent<TextMeshPro>();
+        expSlider = transform.parent.GetChild(1).GetChild(8).GetChild(0).GetComponent<Slider>();
         curHP = cardInfo.hp;
         hpText.text = curHP.ToString();
         curAttackValue = cardInfo.atk;
@@ -46,6 +46,7 @@ public partial  class Card : MonoBehaviour
         level = 1;
         levelText.text = level.ToString();
         skeletonAnimation = GetComponent<SkeletonAnimation>();
+        SetSkillTiming();
     }
     public void SetFlip(bool isSet)
     {
@@ -72,8 +73,8 @@ public partial  class Card : MonoBehaviour
             case CardStatus.Exp:
                 if (level == 1)
                 {
-                    audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.Unit, "Unit Merge");
-                    audioSource.Play();
+                    // audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.Unit, "Unit Merge");
+                    // audioSource.Play();
                     curEXP++;
                     if (curEXP >= 2)
                     {

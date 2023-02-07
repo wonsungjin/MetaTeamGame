@@ -10,14 +10,18 @@ public partial class GameMGR : Singleton<GameMGR>
 
     // 서로가 동일한 랜덤값을 가지기 위한 것이다.
     public int[] randomValue = new int[100];
-    public Dictionary<int, List<Card>> playerList = new Dictionary<int, List<Card>>();
+    public Dictionary<int, List<GameObject>> playerList = new Dictionary<int, List<GameObject>>();
+
+    public bool isBattleNow = false; // 현재 전투씬인지 비전투씬인지를 구분하는 불값.
+
 
     // 델리게이트 이벤트들의 총집합이라고 보면 되는 것입니다.
     public delegate void _callback_SkillTiming();
+    public delegate void _callback_SkillTiming2(Card card);
     public event _callback_SkillTiming callbackEvent_TurnStart;
     public event _callback_SkillTiming callbackEvent_TurnEnd;
-    public event _callback_SkillTiming callbackEvent_Buy;
-    public event _callback_SkillTiming callbackEvent_Sell;
+    public event _callback_SkillTiming2 callbackEvent_Buy;
+    public event _callback_SkillTiming2 callbackEvent_Sell;
     public event _callback_SkillTiming callbackEvent_Reroll;
     public event _callback_SkillTiming callbackEvent_BattleStart;
     public event _callback_SkillTiming callbackEvent_BeforeAttack;
@@ -39,6 +43,15 @@ public partial class GameMGR : Singleton<GameMGR>
     {
         callbackEvent_TurnEnd();
     }
+    public void Event_Buy(Card card)
+    {
+        Debug.Log(card.cardInfo.objName);
+        callbackEvent_Buy(card);
+    }
+    public void Event_Sell(Card card)
+    {
+        callbackEvent_Sell(card);
+    }
     public void Event_Reroll()
     {
         callbackEvent_Reroll();
@@ -47,7 +60,10 @@ public partial class GameMGR : Singleton<GameMGR>
     {
         callbackEvent_BattleStart();
     }
-
+    public void Event_Summon()
+    {
+        callbackEvent_Summon();
+    }
     public void Event_HitEnemy()
     {
         callbackEvent_HitEnemy();

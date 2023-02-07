@@ -18,7 +18,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
 
     private bool isPlayerPreemptiveAlive = true; // player ���� ���� ����
     private bool isEnemyPreemptiveAlive = true; // enemy ���� ���� ����
-    public bool isFirstAttack = false; // ���� �İ��� ���� bool ���� => true : Player ����
+    public bool isFirstAttack = true; // ���� �İ��� ���� bool ���� => true : Player ����
     private bool isResurrection = true; // ��ȯ Ư���� ���� bool ����
 
     private int playerTurnCount = 0; // Player Turn Count
@@ -515,7 +515,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                 Debug.Log("player forward hit Unit : " + playerForwardUnits[exArray[randomArrayNum]].name);
 
                 // �� ������ �÷��̾� ���� �� ������ �÷��̾� ����
-                enemyAttackArray[enemyTurnCount].GetComponent<AttackLogic>().UnitAttack(playerForwardUnits[exArray[randomArrayNum]]);
+                enemyAttackArray[enemyTurnCount].GetComponentInChildren<AttackLogic>().UnitAttack(playerForwardUnits[exArray[randomArrayNum]]);
 
                 // �ǰ� ���� ������ ���� ����Ʈ���� ����
                 for (int i = 0; i < playerAttackArray.Length; i++)
@@ -576,7 +576,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                 Debug.Log("player backward hit unit : " + playerBackwardUnits[exArray[randomArrayNum]].name);
 
                 // �� ������ �÷��̾� �Ŀ� ���� ���� ����
-                enemyAttackArray[enemyTurnCount].GetComponent<AttackLogic>().UnitAttack(playerBackwardUnits[exArray[randomArrayNum]]);
+                enemyAttackArray[enemyTurnCount].GetComponentInChildren<AttackLogic>().UnitAttack(playerBackwardUnits[exArray[randomArrayNum]]);
 
                 // �ǰ� ���� �÷��̾� ������ �迭���� ����
                 for (int i = 0; i < playerAttackArray.Length; i++)
@@ -671,7 +671,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                 Debug.Log("Player Attack Unit name : " + playerAttackArray[playerTurnCount].name);
                 Debug.Log("Enemy forward hit unit : " + enemyForwardUnits[exArray[randomArrayNum]].name);
                 // �÷��̾� ������ �� ���� ���� ���� ����
-                playerAttackArray[playerTurnCount].GetComponent<AttackLogic>().UnitAttack(enemyForwardUnits[exArray[randomArrayNum]]);
+                playerAttackArray[playerTurnCount].GetComponentInChildren<AttackLogic>().UnitAttack(enemyForwardUnits[exArray[randomArrayNum]]);
 
                 // �ǰ� ���� ������ �迭���� ����
                 for (int i = 0; i < enemyAttackArray.Length; i++)
@@ -748,7 +748,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                 Debug.Log("enemy backward hit unit : " + enemyBackwardUnits[exArray[randomArrayNum]].name);
 
                 // �÷��̾� ������ �� �Ŀ� ���� ���� ����
-                playerAttackArray[playerTurnCount].GetComponent<AttackLogic>().UnitAttack(enemyBackwardUnits[exArray[randomArrayNum]]);
+                playerAttackArray[playerTurnCount].GetComponentInChildren<AttackLogic>().UnitAttack(enemyBackwardUnits[exArray[randomArrayNum]]);
 
                 // �ǰ� ���� ������ �迭���� ����
                 for (int i = 0; i < enemyAttackArray.Length; i++)

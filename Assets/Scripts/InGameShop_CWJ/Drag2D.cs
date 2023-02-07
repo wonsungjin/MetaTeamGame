@@ -1,3 +1,4 @@
+using MongoDB.Driver;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -44,7 +45,7 @@ public partial class Drag2D : MonoBehaviour
 
         RaycastHit2D hit = Physics2D.Raycast(objPosition, Vector2.zero);
 
-        if (CompareTag("BattleMonster")|| CompareTag("BattleMonster2")|| CompareTag("BattleMonster3")) transform.parent.position = objPosition + Vector3.down;
+        if (CompareTag("BattleMonster") || CompareTag("BattleMonster2") || CompareTag("BattleMonster3")) transform.parent.position = objPosition + Vector3.down;
         else transform.parent.position = objPosition + monsterPos;
 
         // 드래그 할때 마다 레이를 쏴서 밑에 닿은 배틀몬스터를 다른 위치로 보냄
@@ -52,7 +53,7 @@ public partial class Drag2D : MonoBehaviour
         {
             if (hit.collider != null)
             {
-                if (hit.collider.CompareTag("BattleMonster")|| hit.collider.CompareTag("BattleMonster2")|| hit.collider.CompareTag("BattleMonster3"))
+                if (hit.collider.CompareTag("BattleMonster") || hit.collider.CompareTag("BattleMonster2") || hit.collider.CompareTag("BattleMonster3"))
                 {
                     if (hit.collider.name != this.gameObject.name)
                     {
@@ -108,7 +109,7 @@ public partial class Drag2D : MonoBehaviour
             StartCoroutine(COR_BackAgain());
         }
 
-        else if(this.gameObject.CompareTag("FreezeCard"))
+        else if (this.gameObject.CompareTag("FreezeCard"))
         {
             StartCoroutine(COR_BackAgain());
         }
@@ -148,32 +149,37 @@ public partial class Drag2D : MonoBehaviour
             // 상점에서 구매 할때 배틀존에 용병에 넣으면 레벨업 된다.
             if (gameObject.CompareTag("Monster"))
             {
-                if (gameObject.name == collision.gameObject.name && collision.gameObject.CompareTag("BattleMonster") || collision.gameObject.CompareTag("BattleMonster2"))
+                // 몬스터가 배틀 존에 닿으면 골드가 차감 되고 배틀몬스터 태그로 바뀐다
+                if (collision.gameObject.CompareTag("BattleZone"))
                 {
+                    if (GameMGR.Instance.uiManager.goldCount >= 3)
+                    {
+                        //GameMGR.Instance.Event_Buy(gameObject.GetComponent<Card>()); //구매한 카드가 구매시 효과가 있다면 스킬 발동
 
+                        spriteRenderer.sortingLayerName = "SellTXT";
+                        gameObject.tag = "BattleMonster";
+                        GameMGR.Instance.uiManager.goldCount -= 3;
+                        GameMGR.Instance.uiManager.goldTXT.text = "" + GameMGR.Instance.uiManager.goldCount.ToString();
+                        pos = collision.gameObject.transform.position;
+                        Vector2 monTras = gameObject.transform.parent.localScale;
+                       // gameObject.transform.Find("InfoText").gameObject.transform.localScale = monTras * 2;
+                        gameObject.transform.parent.localScale = monTras * 2;
+                    }
+                }
+
+                if (gameObject.name == collision.gameObject.name && collision.gameObject.CompareTag("BattleMonster") || gameObject.name == collision.gameObject.name && collision.gameObject.CompareTag("BattleMonster2"))
+                {
                     // 프리즈에 닿으면 프리즈카드로 태그를 바꾼 후 원래 위치로 돌린다.
                     if (collision.gameObject.CompareTag("Freeze"))
                     {
                         StartCoroutine(COR_BackAgain());
                     }
 
-                    // 몬스터가 배틀 존에 닿으면 골드가 차감 되고 배틀몬스터 태그로 바뀐다
-                    if (collision.gameObject.CompareTag("BattleZone"))
-                    {
-                        if (GameMGR.Instance.uiManager.goldCount >= 3)
-                        {
-                            spriteRenderer.sortingLayerName = "SellTXT";
-                            gameObject.tag = "BattleMonster";
-                            GameMGR.Instance.uiManager.goldCount -= 3;
-                            GameMGR.Instance.uiManager.goldTXT.text = "" + GameMGR.Instance.uiManager.goldCount.ToString();
-                            pos = collision.gameObject.transform.position;
-                            Vector2 monTras = gameObject.transform.localScale;
-                            gameObject.transform.localScale = monTras * 2;
-                        }
-                    }
-
+                    // 상점에서 바로 레벨업하는 경우
                     if (GameMGR.Instance.uiManager.goldCount >= 3)
                     {
+                        GameMGR.Instance.Event_Buy(gameObject.GetComponent<Card>()); //구매한 카드가 구매시 효과가 있다면 스킬 발동
+
                         GameMGR.Instance.uiManager.goldCount -= 3;
                         GameMGR.Instance.uiManager.goldTXT.text = "" + GameMGR.Instance.uiManager.goldCount.ToString();
                         ShopCardLevelUp(collision);
@@ -181,7 +187,6 @@ public partial class Drag2D : MonoBehaviour
                 }
             }
 
-            // 카드 레벨업
             if (gameObject.CompareTag("BattleMonster"))
             {
                 // 배틀 몬스터를 잡았을 때 위치 바꾼다
@@ -278,7 +283,7 @@ public partial class Drag2D : MonoBehaviour
     // 용병 조합
     void CombineCard(Collider2D collision)
     {
-      this.transform.position = collision.gameObject.transform.position;
+        this.transform.parent.position = collision.gameObject.transform.parent.position;
         Destroy(collision.gameObject);
     }
 
@@ -296,16 +301,16 @@ public partial class Drag2D : MonoBehaviour
         yield return wait;
 
         if (CompareTag("BattleMonster") || CompareTag("BattleMonster2") || CompareTag("BattleMonster3"))
-           this.transform.position = pos + Vector2.down;
+            this.transform.parent.position = pos + Vector2.down;
 
         else if (CompareTag("Monster"))
         {
-           this.transform.position = selectZonePos;
+            this.transform.parent.position = selectZonePos;
         }
 
         else if (CompareTag("FreezeCard"))
         {
-            this.transform.position = selectZonePos;
+            this.transform.parent.position = selectZonePos;
         }
     }
 
@@ -319,5 +324,7 @@ public partial class Drag2D : MonoBehaviour
         spriteRenderer.sortingOrder = 3;
         GameMGR.Instance.uiManager.goldCount -= 3;
         GameMGR.Instance.uiManager.goldTXT.text = "" + GameMGR.Instance.uiManager.goldCount.ToString();
+
+        GameMGR.Instance.Event_Buy(gameObject.GetComponent<Card>());
     }
 }
