@@ -241,6 +241,7 @@ public class TurnSystem : MonoBehaviourPunCallbacks
                 if (matchingList.Contains((int)PhotonNetwork.PlayerList[n].CustomProperties["Number"]) || matchingListReal.Contains((int)PhotonNetwork.PlayerList[n].CustomProperties["Number"])) { i--; continue; } // 중복 제외 처리
             }
             if (curRound != 0 && PhotonNetwork.PlayerList.Length > 2)
+
             {
                 if (matchingList.Count != 0)
                 {

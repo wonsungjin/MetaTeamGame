@@ -99,7 +99,6 @@ public partial class Card : MonoBehaviour
             /*case SkillTiming.summon:
                 GameMGR.Instance.callbackEvent_Summon += SkillActive;
                 break;*/
-
         }
     }
 
@@ -185,40 +184,74 @@ public partial class Card : MonoBehaviour
     public void FindTargetType() // 어떤 유형의 대상을 찾는지에 따라 실행하는 경우가 다르다는 말이란 말이란 말이란 말이란 말이란 말
     {
         Debug.Log("타겟을 찾는다");
-        GameObject[] searchArea = new GameObject[6]; // 대상 범위가 아군인지 적군인지에 따라 구분하여 담는 게임오브젝트 변수
+        List<GameObject> searchArea = new List<GameObject>(); // 대상 범위가 아군인지 적군인지에 따라 구분하여 담는 게임오브젝트 변수
 
         if(GameMGR.Instance.isBattleNow)
         {
             switch (cardInfo.effectTarget) // 스킬 효과 적용 대상에 따른 탐색 범위 지정
             {
                 case EffectTarget.ally:
-                    searchArea = GameMGR.Instance.battleLogic.playerAttackArray;
+                    for(int i = 0; i < GameMGR.Instance.battleLogic.playerAttackArray.Length; i++)
+                    {
+                        if (GameMGR.Instance.battleLogic.playerAttackArray[i] != null)
+                        {
+                            searchArea.Add(GameMGR.Instance.battleLogic.playerAttackArray[i]);
+                        }
+                    }
                     break;
                 case EffectTarget.allyForward:
-                    searchArea = GameMGR.Instance.battleLogic.playerForwardUnits;
+                    for (int i = 0; i < GameMGR.Instance.battleLogic.playerForwardUnits.Length; i++)
+                    {
+                        if (GameMGR.Instance.battleLogic.playerForwardUnits[i] != null)
+                        {
+                            searchArea.Add(GameMGR.Instance.battleLogic.playerForwardUnits[i]);
+                        }
+                    }
                     break;
                 case EffectTarget.allyBackward:
-                    searchArea = GameMGR.Instance.battleLogic.playerBackwardUnits;
+                    for (int i = 0; i < GameMGR.Instance.battleLogic.playerBackwardUnits.Length; i++)
+                    {
+                        if (GameMGR.Instance.battleLogic.playerBackwardUnits[i] != null)
+                        {
+                            searchArea.Add(GameMGR.Instance.battleLogic.playerBackwardUnits[i]);
+                        }
+                    }
                     break;
                 case EffectTarget.enemy:
-                    searchArea = GameMGR.Instance.battleLogic.enemyAttackArray;
+                    for (int i = 0; i < GameMGR.Instance.battleLogic.enemyAttackArray.Length; i++)
+                    {
+                        if (GameMGR.Instance.battleLogic.enemyAttackArray[i] != null)
+                        {
+                            searchArea.Add(GameMGR.Instance.battleLogic.enemyAttackArray[i]);
+                        }
+                    }
                     break;
                 case EffectTarget.enemyForward:
-                    searchArea = GameMGR.Instance.battleLogic.enemyForwardUnits;
+                    for (int i = 0; i < GameMGR.Instance.battleLogic.enemyForwardUnits.Length; i++)
+                    {
+                        if (GameMGR.Instance.battleLogic.enemyForwardUnits[i] != null)
+                        {
+                            searchArea.Add(GameMGR.Instance.battleLogic.enemyForwardUnits[i]);
+                        }
+                    }
                     break;
                 case EffectTarget.enemyBackward:
-                    searchArea = GameMGR.Instance.battleLogic.enemyBackwardUnits;
+                    for (int i = 0; i < GameMGR.Instance.battleLogic.enemyBackwardUnits.Length; i++)
+                    {
+                        if (GameMGR.Instance.battleLogic.enemyBackwardUnits[i] != null)
+                        {
+                            searchArea.Add(GameMGR.Instance.battleLogic.enemyBackwardUnits[i]);
+                        }
+                    }
                     break;
                 case EffectTarget.both:
-                    //Array.Resize<GameObject>(ref searchArea, 12);
-                    searchArea = new GameObject[12];
                     for (int i = 0; i < GameMGR.Instance.battleLogic.playerAttackArray.Length; i++)
                     {
-                        searchArea[i] = (GameMGR.Instance.battleLogic.playerAttackArray[i]);
+                        searchArea.Add(GameMGR.Instance.battleLogic.playerAttackArray[i]);
                     }
                     for (int i = 0; i < GameMGR.Instance.battleLogic.enemyAttackArray.Length; i++)
                     {
-                        searchArea[i + 6] = (GameMGR.Instance.battleLogic.enemyAttackArray[i + 6]);
+                        searchArea.Add(GameMGR.Instance.battleLogic.enemyAttackArray[i]);
                     }
                     break;
                 case EffectTarget.none:
@@ -232,15 +265,15 @@ public partial class Card : MonoBehaviour
                 case EffectTarget.ally:
                 case EffectTarget.allyForward:
                 case EffectTarget.allyBackward:
-                    searchArea = GameMGR.Instance.spawner.cardBatch;
-                    break;
                 case EffectTarget.both:
-                    //Array.Resize<GameObject>(ref searchArea, 12);
-                    searchArea = new GameObject[6];
                     for (int i = 0; i < GameMGR.Instance.spawner.cardBatch.Length; i++)
                     {
-                        searchArea[i] = (GameMGR.Instance.spawner.cardBatch[i]);
+                        if (GameMGR.Instance.spawner.cardBatch[i] != null)
+                        {
+                            searchArea.Add(GameMGR.Instance.spawner.cardBatch[i]);
+                        }
                     }
+                    
                     break;
                 case EffectTarget.none:
                     break;
@@ -279,7 +312,7 @@ public partial class Card : MonoBehaviour
 
             case TargetType.random:
                 int random = Random.Range(0, 6);
-                while (searchArea[random].GetComponent<Card>().curHP <= 0) // 죽은 아군이 아닐 때까지 랜덤값을 돌려
+                while (searchArea[random].GetComponentInChildren<Card>().curHP <= 0) // 죽은 아군이 아닐 때까지 랜덤값을 돌려
                 {
                     random = Random.Range(0, 6);
                 }
@@ -288,7 +321,7 @@ public partial class Card : MonoBehaviour
                 break;
             case TargetType.randomExceptMe:
                 random = Random.Range(0, 6);
-                while (searchArea[random].GetComponent<Card>().curHP <= 0 && searchArea[random] == this) // 죽은 아군이 아닐 때까지 랜덤값을 돌려
+                while (searchArea[random].GetComponentInChildren<Card>().curHP <= 0 && searchArea[random] == this) // 죽은 아군이 아닐 때까지 랜덤값을 돌려
                 {
                     random = Random.Range(0, 6);
                 }
@@ -311,7 +344,7 @@ public partial class Card : MonoBehaviour
                     //대상이 없으므로 스킬 무효 
                     skillTarget.Clear();
                 }
-                if (searchArea.Length == 0)
+                if (searchArea.Count == 0)
                 {
                     skillTarget.Clear();
                 }
@@ -344,7 +377,7 @@ public partial class Card : MonoBehaviour
                 }
                 else // 한명이라도 살아있다면
                 {
-                    random = Random.Range(0, 3);
+                    random = UnityEngine.Random.Range(0, 3);
                     while (searchArea[random].GetComponent<Card>().curHP <= 0 && searchArea[random] == this) // 죽은 아군이 아닐 때까지 랜덤값을 돌려
                     {
                         random = Random.Range(0, 3);
@@ -354,10 +387,11 @@ public partial class Card : MonoBehaviour
                 break;
 
             case TargetType.otherSide:
-                searchArea = GameMGR.Instance.battleLogic.playerAttackArray;
-                int myIndex = System.Array.IndexOf(searchArea, gameObject); // 나를 찾는 과정 나에게로 떠나는 여행 모놀로그 에필로그 프롤로그 사이보그 아이언호그
-                searchArea = GameMGR.Instance.battleLogic.enemyAttackArray;
-                skillTarget.Add(searchArea[myIndex].GetComponent<Card>());
+                int myPosNum = System.Array.IndexOf(GameMGR.Instance.battleLogic.playerAttackArray, this);
+                if (GameMGR.Instance.battleLogic.enemyAttackArray[myPosNum] != null)
+                {
+                    skillTarget.Add(searchArea[myPosNum].GetComponent<Card>());
+                }
                 break;
 
             case TargetType.leastATK:

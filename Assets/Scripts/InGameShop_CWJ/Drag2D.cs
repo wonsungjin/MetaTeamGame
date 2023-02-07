@@ -170,6 +170,9 @@ public partial class Drag2D : MonoBehaviour
                         Vector2 monTras = gameObject.transform.parent.localScale;
                        // gameObject.transform.Find("InfoText").gameObject.transform.localScale = monTras * 2;
                         gameObject.transform.parent.localScale = monTras * 2;
+
+                        GameMGR.Instance.Event_Buy(gameObject.GetComponent<Card>());
+
                     }
                 }
 
@@ -183,6 +186,8 @@ public partial class Drag2D : MonoBehaviour
                         GameMGR.Instance.uiManager.goldCount -= 3;
                         GameMGR.Instance.uiManager.goldTXT.text = "" + GameMGR.Instance.uiManager.goldCount.ToString();
                         ShopCardLevelUp(collision);
+
+                        GameMGR.Instance.Event_Buy(gameObject.GetComponent<Card>());
                     }
                 }
             }
