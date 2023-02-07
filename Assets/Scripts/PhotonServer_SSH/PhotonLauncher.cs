@@ -177,11 +177,6 @@ public class PhotonLauncher : MonoBehaviourPunCallbacks
         PhotonNetwork.LeaveRoom();   
     }
 
-    public void OnClick_Start_Room()
-    {
-        PhotonNetwork.LoadLevel("BattleMatchingScene");
-        photonView.RPC("StartSetting", RpcTarget.MasterClient);
-    }
 
     // 현재의 플레이어 수 동기화
     [PunRPC]
