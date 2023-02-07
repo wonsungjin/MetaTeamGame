@@ -8,18 +8,18 @@ using System.Data;
 
 public partial class BattleLogic : MonoBehaviourPunCallbacks
 {
-    public GameObject[] playerForwardUnits = null; // player ����
-    public GameObject[] playerBackwardUnits = null; // player �Ŀ�
-    public GameObject[] enemyForwardUnits = null; // enemy ����
-    public GameObject[] enemyBackwardUnits = null; // enemy �Ŀ�
+    public GameObject[] playerForwardUnits = null; 
+    public GameObject[] playerBackwardUnits = null;
+    public GameObject[] enemyForwardUnits = null;
+    public GameObject[] enemyBackwardUnits = null;
 
     public GameObject[] playerAttackArray = new GameObject[6]; // player attack unit
     public GameObject[] enemyAttackArray = new GameObject[6]; // enemy atack unit
 
-    private bool isPlayerPreemptiveAlive = true; // player ���� ���� ����
-    private bool isEnemyPreemptiveAlive = true; // enemy ���� ���� ����
-    public bool isFirstAttack = true; // ���� �İ��� ���� bool ���� => true : Player ����
-    private bool isResurrection = true; // ��ȯ Ư���� ���� bool ����
+    private bool isPlayerPreemptiveAlive = true; // playerForwardUnits alive 
+
+    private bool isEnemyPreemptiveAlive = true; // enemyForwardUnits alive
+    public bool isFirstAttack = true; // isFirstAttack = true => Player fisrt attack
 
     private int playerTurnCount = 0; // Player Turn Count
     private int enemyTurnCount = 0; // Enemy Turn Count
@@ -28,8 +28,6 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
     private int isPlayerAliveCount = 0;
     private int isEnemyAliveCount = 0;
 
-
-    // ���� master client�� gamemananger���� ������ ���� �迭�� ��ü ���� (�� ���� ���� �� ����)
     private int[] exArray = new int[100];
 
     private int playerCurRound = 0;
@@ -51,37 +49,37 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
     #region PlayerList �ʱ�ȭ
     public void InitPlayerList()
     {
-        // player ���ݸ���Ʈ �߰�
         for (int i = 0; i < playerForwardUnits.Length; i++) { playerAttackArray[i] = playerForwardUnits[i]; }
         for (int i = 0; i < playerBackwardUnits.Length; i++) { playerAttackArray[i + 3] = playerBackwardUnits[i]; }
     }
     #endregion
 
-    #region EnemyList �ʱ�ȭ
+    #region EnemyList
     public void InitEnemyList()
     {
-        // enemy ���ݸ���Ʈ �߰�
         for (int i = 0; i < enemyForwardUnits.Length; i++) { enemyAttackArray[i] = enemyForwardUnits[i]; }
         for (int i = 0; i < enemyBackwardUnits.Length; i++) { enemyAttackArray[i + 3] = enemyBackwardUnits[i]; }
     }
     #endregion
 
-    #region ���� ���� 
+    #region 
     // �ΰ��� ���� ����
     public void AttackLogic()
     {
-        // ���� ������ ���
+        Debug.Log("AttackLogic : " + isFirstAttack);
+
+        // player first attack
         if (isFirstAttack) { PreemptiveAttack(); }
 
-        // ������ ������ ���
+        // enemy first attack
         else if (!isFirstAttack) { SubordinatedAttack(); }
-        else { Debug.Log("���� �İ��� �������� ����"); }
+        else { Debug.Log("none first attack"); }
     }
     #endregion
 
     public void AliveUnit()
     {
-        // player forward unit�� ���� ���
+        // player forward unit alive
         for (int i = 0; i < playerForwardUnits.Length; i++)
         {
             if (playerForwardUnits[i] == null) { isPlayerAliveCount++; }
@@ -89,7 +87,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
 
         if (isPlayerAliveCount == playerForwardUnits.Length) { isPlayerPreemptiveAlive = false; }
 
-        // enemy forward unit�� ���� ���
+        // enemy forward unit alive
         for (int i = 0; i < enemyForwardUnits.Length; i++)
         {
             if (enemyForwardUnits[i] == null) { isEnemyAliveCount++; }
@@ -106,15 +104,14 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
     // Player Attack
     public void PreemptiveAttack()
     {
-        // ���� ��ġ���� Ȯ��
         AliveUnit();
-
-        for (int i = 0; i < GameMGR.Instance.randomValue.Length; i++) exArray[i] = GameMGR.Instance.randomValue[i];
         Debug.Log("player PreemptiveAttack");
+
+        for (int i = 0; i < GameMGR.Instance.randomValue.Length; i++) exArray[i] = GameMGR.Instance.randomValue[i];       
 
         while (true)
         {
-            Debug.Log("Player�� ���� ����");
+            Debug.Log("Player first attack");
             // ���� ���� ������ �ִ� �迭 1���� ������ �� 0��°�� �ʱ�ȭ
             if (randomArrayNum == exArray.Length) { randomArrayNum = 0; }
             // [Player -> Enemy Attack] ���� ������ ����ִ� ���
@@ -166,8 +163,8 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
 
                 Debug.Log("Player Attack Unit name : " + playerAttackArray[playerTurnCount].name);
                 Debug.Log("Enemy forward hit unit : " + enemyForwardUnits[exArray[randomArrayNum]].name);
-                // �÷��̾� ������ �� ���� ���� ���� ����
-                playerAttackArray[playerTurnCount].GetComponent<AttackLogic>().UnitAttack(enemyForwardUnits[exArray[randomArrayNum]]);
+
+                playerAttackArray[playerTurnCount].GetComponentInChildren<AttackLogic>().UnitAttack(enemyForwardUnits[exArray[randomArrayNum]]);
 
                 // �ǰ� ���� ������ �迭���� ����
                 for (int i = 0; i < enemyAttackArray.Length; i++)
@@ -244,7 +241,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                 Debug.Log("enemy backward hit unit : " + enemyBackwardUnits[exArray[randomArrayNum]].name);
 
                 // �÷��̾� ������ �� �Ŀ� ���� ���� ����
-                playerAttackArray[playerTurnCount].GetComponent<AttackLogic>().UnitAttack(enemyBackwardUnits[exArray[randomArrayNum]]);
+                playerAttackArray[playerTurnCount].GetComponentInChildren<AttackLogic>().UnitAttack(enemyBackwardUnits[exArray[randomArrayNum]]);
 
                 // �ǰ� ���� ������ �迭���� ����
                 for (int i = 0; i < enemyAttackArray.Length; i++)
@@ -338,7 +335,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                 Debug.Log("player forward hit Unit : " + playerForwardUnits[exArray[randomArrayNum]].name);
 
                 // �� ������ �÷��̾� ���� �� ������ �÷��̾� ����
-                enemyAttackArray[enemyTurnCount].GetComponent<AttackLogic>().UnitAttack(playerForwardUnits[exArray[randomArrayNum]]);
+                enemyAttackArray[enemyTurnCount].GetComponentInChildren<AttackLogic>().UnitAttack(playerForwardUnits[exArray[randomArrayNum]]);
 
                 // �ǰ� ���� ������ ���� ����Ʈ���� ����
                 for (int i = 0; i < playerAttackArray.Length; i++)
@@ -399,7 +396,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                 Debug.Log("player backward hit unit : " + playerBackwardUnits[exArray[randomArrayNum]].name);
 
                 // �� ������ �÷��̾� �Ŀ� ���� ���� ����
-                enemyAttackArray[enemyTurnCount].GetComponent<AttackLogic>().UnitAttack(playerBackwardUnits[exArray[randomArrayNum]]);
+                enemyAttackArray[enemyTurnCount].GetComponentInChildren<AttackLogic>().UnitAttack(playerBackwardUnits[exArray[randomArrayNum]]);
 
                 // �ǰ� ���� �÷��̾� ������ �迭���� ����
                 for (int i = 0; i < playerAttackArray.Length; i++)
@@ -449,14 +446,13 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
     // Enemy Attack
     public void SubordinatedAttack()
     {
-        // ���� ��ġ���� Ȯ��
         AliveUnit();
 
         for (int i = 0; i < GameMGR.Instance.randomValue.Length; i++) exArray[i] = GameMGR.Instance.randomValue[i];
 
         while (true)
         {
-            Debug.Log("Enemy�� ���� ����");
+            Debug.Log("Enemy first attack");
 
             // ���� ���� ������ �ִ� �迭 1���� ������ �� 0��°�� �ʱ�ȭ
             if (randomArrayNum == exArray.Length) { randomArrayNum = 0; }

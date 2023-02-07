@@ -30,10 +30,10 @@ public partial class Drag2D : MonoBehaviour
         
         spriteRenderer = GetComponent<MeshRenderer>();
         pol = GetComponent<BoxCollider2D>();
-        this.pos = this.gameObject.transform.position;
         card = GetComponent<Card>();
 
-        this.selectZonePos = this.transform.position;
+        this.pos = this.gameObject.transform.parent.position;
+        this.selectZonePos = this.transform.parent.position;
     }
 
     Camera mainCam = null;
@@ -149,6 +149,12 @@ public partial class Drag2D : MonoBehaviour
             // 상점에서 구매 할때 배틀존에 용병에 넣으면 레벨업 된다.
             if (gameObject.CompareTag("Monster"))
             {
+                // 프리즈에 닿으면 프리즈카드로 태그를 바꾼 후 원래 위치로 돌린다.
+                if (collision.gameObject.CompareTag("Freeze"))
+                {
+                    StartCoroutine(COR_BackAgain());
+                }
+
                 // 몬스터가 배틀 존에 닿으면 골드가 차감 되고 배틀몬스터 태그로 바뀐다
                 if (collision.gameObject.CompareTag("BattleZone"))
                 {
@@ -162,19 +168,12 @@ public partial class Drag2D : MonoBehaviour
                         GameMGR.Instance.uiManager.goldTXT.text = "" + GameMGR.Instance.uiManager.goldCount.ToString();
                         pos = collision.gameObject.transform.position;
                         Vector2 monTras = gameObject.transform.parent.localScale;
-                       // gameObject.transform.Find("InfoText").gameObject.transform.localScale = monTras * 2;
                         gameObject.transform.parent.localScale = monTras * 2;
                     }
                 }
 
                 if (gameObject.name == collision.gameObject.name && collision.gameObject.CompareTag("BattleMonster") || gameObject.name == collision.gameObject.name && collision.gameObject.CompareTag("BattleMonster2"))
                 {
-                    // 프리즈에 닿으면 프리즈카드로 태그를 바꾼 후 원래 위치로 돌린다.
-                    if (collision.gameObject.CompareTag("Freeze"))
-                    {
-                        StartCoroutine(COR_BackAgain());
-                    }
-
                     // 상점에서 바로 레벨업하는 경우
                     if (GameMGR.Instance.uiManager.goldCount >= 3)
                     {
@@ -320,7 +319,7 @@ public partial class Drag2D : MonoBehaviour
         yield return wait;
         gameObject.tag = "BattleMonster";
         pos = meltPos;
-        this.gameObject.transform.position = pos + Vector2.down;
+        this.gameObject.transform.parent.position = pos + Vector2.down;
         spriteRenderer.sortingOrder = 3;
         GameMGR.Instance.uiManager.goldCount -= 3;
         GameMGR.Instance.uiManager.goldTXT.text = "" + GameMGR.Instance.uiManager.goldCount.ToString();

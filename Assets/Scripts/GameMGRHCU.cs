@@ -46,15 +46,17 @@ public partial class GameMGR : Singleton<GameMGR>
     public void Event_Buy(Card card)
     {
         Debug.Log(card.cardInfo.objName);
-        callbackEvent_Buy(card);
+        if (callbackEvent_Buy != null)
+            callbackEvent_Buy(card);
     }
     public void Event_Sell(Card card)
     {
-        callbackEvent_Sell(card);
+        if (callbackEvent_Sell != null)
+            callbackEvent_Sell(card);
     }
     public void Event_Reroll()
     {
-        callbackEvent_Reroll();
+        if(callbackEvent_Reroll!=null) callbackEvent_Reroll();
     }
     public void Event_BattleStart()
     {

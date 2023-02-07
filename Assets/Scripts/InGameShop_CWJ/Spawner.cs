@@ -71,11 +71,11 @@ public class Spawner : MonoBehaviourPun
         // 처음에 카드 생성
         if (isFirstStart == false)
         {
-            GameMGR.Instance.uiManager.shopLevelTXT.text = "" + GameMGR.Instance.uiManager.shopMoney.ToString();
+            GameMGR.Instance.uiManager.shopLevelTXT.text = GameMGR.Instance.uiManager.shopMoney.ToString();
             GameMGR.Instance.uiManager.goldCount = 10;
-            GameMGR.Instance.uiManager.goldTXT.text = "" + GameMGR.Instance.uiManager.goldCount.ToString();
+            GameMGR.Instance.uiManager.goldTXT.text = GameMGR.Instance.uiManager.goldCount.ToString();
             GameMGR.Instance.uiManager.shopLevel = 1;
-            GameMGR.Instance.uiManager.NowShopLevelTXT.text = "" + GameMGR.Instance.uiManager.shopLevel.ToString();
+            GameMGR.Instance.uiManager.NowShopLevelTXT.text = GameMGR.Instance.uiManager.shopLevel.ToString();
 
             for (int i = 0; i < createdPlace; i++)
             {
@@ -135,7 +135,7 @@ public class Spawner : MonoBehaviourPun
         GameObject[] monster = GameObject.FindGameObjectsWithTag("Monster");
         for (int i = 0; i < monster.Length; i++)
         {
-            GameMGR.Instance.objectPool.DestroyPrefab(monster[i]);
+            GameMGR.Instance.objectPool.DestroyPrefab(monster[i].transform.parent.gameObject);
         }
         ChooseRandomCard();
         Reset_NotMoney();
@@ -155,10 +155,10 @@ public class Spawner : MonoBehaviourPun
             // 함수 호출 레벨 업 후 돈?
             ShopLevelUp();
         }
-        else
+        else if(GameMGR.Instance.uiManager.shopMoney > GameMGR.Instance.uiManager.goldCount)
         {
-            GameMGR.Instance.uiManager.shopLevelTXT.text = "" + GameMGR.Instance.uiManager.shopMoney.ToString();
             audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.UI, "PublicLevelupFail");
+            audioSource.Play();
         }
     }
 
@@ -168,7 +168,6 @@ public class Spawner : MonoBehaviourPun
         switch (GameMGR.Instance.uiManager.shopLevel)
         {
             case 2:
-                Debug.Log("샵레벨2");
                 GameMGR.Instance.uiManager.shopMoney = 8;
                 GameMGR.Instance.uiManager.shopLevelTXT.text = "" + GameMGR.Instance.uiManager.shopMoney.ToString();
                 audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.UI, "Store_LevelUp");
@@ -213,7 +212,7 @@ public class Spawner : MonoBehaviourPun
             }
             ChooseRandomCard();
 
-            GameMGR.Instance.Event_Reroll();    // 리롤시 능력가진 카드들 효과 발동
+           // GameMGR.Instance.Event_Reroll();    // 리롤시 능력가진 카드들 효과 발동
         }
         else
         {
