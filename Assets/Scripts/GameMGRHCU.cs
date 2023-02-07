@@ -52,10 +52,10 @@ public partial class GameMGR : Singleton<GameMGR>
     {
         callbackEvent_Sell(card);
     }
-    public void Event_Reroll()
-    {
-        callbackEvent_Reroll();
-    }
+    //public void Event_Reroll()
+    //{
+    //    callbackEvent_Reroll();
+    //}
     public void Event_BattleStart()
     {
         callbackEvent_BattleStart();

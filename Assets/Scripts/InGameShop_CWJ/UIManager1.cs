@@ -20,12 +20,13 @@ public partial class UIManager : MonoBehaviour
 
     public int shopMoney = 0;
     public int goldCount = 0;
-    public int shopLevel = 1;
+    public int shopLevel = 0;
     public int hireUnitCost = 3; // 유닛 고용 비용
     public float timer = 60f;
     private bool isScene = false;
 
     public bool isTimeOver = false;
+    bool isTimerOut = false;
 
     public void Init_Scene2()
     {
@@ -46,9 +47,6 @@ public partial class UIManager : MonoBehaviour
         sell = GameObject.Find("Sell");
 
         InitUI();
-
-        Debug.Log(timerSlider);
-        Debug.Log(timerTXT);
     }
 
     private void Update()
@@ -60,12 +58,14 @@ public partial class UIManager : MonoBehaviour
         timerSlider.fillAmount = timer / 100 * 1.667f;
         timerTXT.text = string.Format("Time : {0:N0}sec", timer);
 
+        if(isTimerOut == false)
         if (timerSlider.fillAmount <= 0.2f) timerSound();
 
     }
 
     void timerSound()
     {
+        isTimerOut = true;
         GameMGR.Instance.timerSound.TimeSound();
     }
 
