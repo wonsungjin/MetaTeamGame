@@ -159,8 +159,9 @@ public partial class Drag2D : MonoBehaviour
                         GameMGR.Instance.uiManager.goldCount -= 3;
                         GameMGR.Instance.uiManager.goldTXT.text = "" + GameMGR.Instance.uiManager.goldCount.ToString();
                         pos = collision.gameObject.transform.position;
-                        Vector2 monTras = gameObject.transform.localScale;
-                        gameObject.transform.localScale = monTras * 2;
+                        Vector2 monTras = gameObject.transform.parent.localScale;
+                       // gameObject.transform.Find("InfoText").gameObject.transform.localScale = monTras * 2;
+                        gameObject.transform.parent.localScale = monTras * 2;
                     }
                 }
 
@@ -184,7 +185,6 @@ public partial class Drag2D : MonoBehaviour
                 }
             }
 
-            // 카드 레벨업
             if (gameObject.CompareTag("BattleMonster"))
             {
                 // 배틀 몬스터를 잡았을 때 위치 바꾼다
@@ -281,7 +281,7 @@ public partial class Drag2D : MonoBehaviour
     // 용병 조합
     void CombineCard(Collider2D collision)
     {
-        this.transform.position = collision.gameObject.transform.position;
+        this.transform.parent.position = collision.gameObject.transform.parent.position;
         Destroy(collision.gameObject);
     }
 
