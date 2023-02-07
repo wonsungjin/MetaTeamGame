@@ -283,14 +283,14 @@ public partial class Drag2D : MonoBehaviour
         collision.GetComponent<Card>().ChangeValue(CardStatus.Attack, plusAttack + 1);
         collision.GetComponent<Card>().ChangeValue(CardStatus.Hp, plusHp + 1);
         collision.GetComponent<Card>().ChangeValue(CardStatus.Exp, colExp + 1);
-        Destroy(this.gameObject.transform.parent);
+        Destroy(this.gameObject.transform.parent.gameObject);
     }
 
     // 용병 조합
     void CombineCard(Collider2D collision)
     {
         this.transform.parent.position = collision.gameObject.transform.parent.position;
-        Destroy(collision.gameObject.transform.parent);
+        Destroy(collision.gameObject.transform.parent.gameObject);
     }
 
     // 판매버튼 ON OFF
