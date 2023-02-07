@@ -4372,6 +4372,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BattleScene
       objectReference: {fileID: 0}
+    - target: {fileID: 3016467040415082800, guid: 1761255f5fb998f4ebf4eb6915f40554, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3652185231454181197, guid: 1761255f5fb998f4ebf4eb6915f40554, type: 3}
       propertyPath: sceneViewId
       value: 3
@@ -4388,6 +4392,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: d3a5a9700333c054abddc7807a7cc89c, type: 3}
+    - target: {fileID: 6074143813310576998, guid: 1761255f5fb998f4ebf4eb6915f40554, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6074143813821076309, guid: 1761255f5fb998f4ebf4eb6915f40554, type: 3}
       propertyPath: m_Sprite
       value: 
