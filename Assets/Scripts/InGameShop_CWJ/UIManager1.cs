@@ -74,7 +74,7 @@ public partial class UIManager : MonoBehaviour
     {
         skillExplantion2.SetActive(false);
         sell.gameObject.SetActive(false);
-        battleSceneUI.SetActive(false);
+        //battleSceneUI.SetActive(false);
         isScene = true;
     }
 }

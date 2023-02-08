@@ -157,49 +157,61 @@ public class TurnSystem : MonoBehaviourPunCallbacks
 
     //=========================================================================================================================
     // 선공을 선정하는 함수
-    public void SetFirstAttack(int me, int you)
+    public void SetFirstAttack()
     {
-        int myDeckCount = GameMGR.Instance.batch.GetBatch(me).Count;
-        int youDeckCount = GameMGR.Instance.batch.GetBatch(you).Count;
-        // 대진이 정해지면 각 상대의 덱 수를 우선 비교 후
-        if (myDeckCount > youDeckCount)
-        {
-            isFirst[me] = true;
-            isFirst[you] = false;
-        }
-        else if(myDeckCount < youDeckCount)
-        {
-            isFirst[me] = false;
-            isFirst[you] = true;
-        }
 
-        // 서로 덱 수가 같다면
-        else
+        for(int i = 0; i < matchNum.Length; i+=2) 
         {
-            int randomPoint = UnityEngine.Random.Range(0, 10);
-            int randomPoint2 = UnityEngine.Random.Range(0, 10);
-            firstPoint[me] += randomPoint;
-            firstPoint[you] += randomPoint2;
-
-            if (firstPoint[me] > firstPoint[you])
+            // 내 덱 수가 상대 덱 수보다 많을 때
+            if(GameMGR.Instance.batch.GetBatch(matchNum[i]).Count > GameMGR.Instance.batch.GetBatch(matchNum[i+1]).Count)
             {
-                isFirst[me] = true;
-                isFirst[you] = false;
+                isFirst[matchNum[i]] = true;
+                isFirst[matchNum[i + 1]] = false;
             }
 
-            else if(firstPoint[me] < firstPoint[you])
+            else if(GameMGR.Instance.batch.GetBatch(matchNum[i]).Count < GameMGR.Instance.batch.GetBatch(matchNum[i + 1]).Count)
             {
-                isFirst[me] = false;
-                isFirst[you] = true;
+                isFirst[matchNum[i + 1]] = true;
+                isFirst[matchNum[i]] = false;
             }
-
+            // 서로 덱 수가 같다면
             else
             {
-                // 같을 때
+                int randomPoint = UnityEngine.Random.Range(0, 10);
+                int randomPoint2 = UnityEngine.Random.Range(0, 10);
+                firstPoint[matchNum[i]] += randomPoint;
+                firstPoint[matchNum[i+1]] += randomPoint2;
+
+                if (firstPoint[matchNum[i]] > firstPoint[matchNum[i + 1]])
+                {
+                    isFirst[matchNum[i]] = true;
+                    isFirst[matchNum[i + 1]] = false;
+                }
+
+                else if (firstPoint[matchNum[i]] < firstPoint[matchNum[i + 1]])
+                {
+                    isFirst[matchNum[i]] = false;
+                    isFirst[matchNum[i + 1]] = true;
+                }
+
+                else
+                {
+                    // 같을 때
+                    int a = UnityEngine.Random.Range(0, 2);
+                    if(a == 0)
+                    {
+                        isFirst[matchNum[i]] = true;
+                        isFirst[matchNum[i + 1]] = false;
+                    }
+                    else
+                    {
+                        isFirst[matchNum[i + 1]] = true;
+                        isFirst[matchNum[i]] = false;
+                    }
+                }
             }
         }
-
-        GameMGR.Instance.battleLogic.isFirstAttack = isFirst[me];
+        //GameMGR.Instance.battleLogic.isFirstAttack = isFirst[me];
     }
     //=========================================================================================================================
 
@@ -241,6 +253,7 @@ public class TurnSystem : MonoBehaviourPunCallbacks
                 if (matchingList.Contains((int)PhotonNetwork.PlayerList[n].CustomProperties["Number"]) || matchingListReal.Contains((int)PhotonNetwork.PlayerList[n].CustomProperties["Number"])) { i--; continue; } // 중복 제외 처리
             }
             if (curRound != 0 && PhotonNetwork.PlayerList.Length > 2)
+
             {
                 if (matchingList.Count != 0)
                 {
@@ -299,7 +312,8 @@ public class TurnSystem : MonoBehaviourPunCallbacks
                                 matchNum[j] = matchingListReal[j];
                             }
 
-                            photonView.RPC("Matching", RpcTarget.All, setRandom, matchNum, false); // Null이 뜨는 이유?}
+                            SetFirstAttack();   // 선제공격을 먼저 설정해줌으로써 isFirst 불 배열에 값들을 지정해버리는 부분적인 부분이라고 할 수 있다고 말하는대로 될 수 있다고
+                            photonView.RPC("Matching", RpcTarget.All, setRandom, matchNum, false, isFirst); // Null이 뜨는 이유?}
                             curRound++;
                             return;
                         }
@@ -335,7 +349,8 @@ public class TurnSystem : MonoBehaviourPunCallbacks
                         }
                         Debug.Log("matchList Cur Count :" + matchingList.Count);
 
-                        photonView.RPC("Matching", RpcTarget.All, setRandom, matchNum, true); // Null이 뜨는 이유?}
+                        SetFirstAttack();
+                        photonView.RPC("Matching", RpcTarget.All, setRandom, matchNum, true, isFirst); // Null이 뜨는 이유?}
                         curRound++;
                         return;
                     }
@@ -377,9 +392,9 @@ public class TurnSystem : MonoBehaviourPunCallbacks
             matchNum[i] = matchingList[i];
         }
 
-        Debug.Log("prevOpponent 길이 : " + prevOpponent.Length);
-
-        photonView.RPC("Matching", RpcTarget.All, setRandom, matchNum, isClone);
+        //Debug.Log("prevOpponent 길이 : " + prevOpponent.Length);
+        SetFirstAttack();   // 선공 지정 함수
+        photonView.RPC("Matching", RpcTarget.All, setRandom, matchNum, isClone, isFirst);
     }
 
 
@@ -390,7 +405,7 @@ public class TurnSystem : MonoBehaviourPunCallbacks
     }
 
     [PunRPC] // 마스터 클라이언트가 지정한 대진표를 각 로컬들이 받아와서 대진 상 자신과 자신의 상대를 찾는 함수
-    public void Matching(int[] random, int[] num, bool clone)
+    public void Matching(int[] random, int[] num, bool clone, bool[] first)
     {
         if (PhotonNetwork.IsMasterClient)   // 마스터 클라이언트는 대진 정보를 기록
         {
@@ -423,6 +438,7 @@ public class TurnSystem : MonoBehaviourPunCallbacks
             {
                 if ((int)PhotonNetwork.LocalPlayer.CustomProperties["Number"] == num[i]) // 내 번호랑 일치하는지와 배열 번호가 마지막(클론) 이 아닌 경우에만
                 {
+                    GameMGR.Instance.battleLogic.isFirstAttack = first[num[i]]; // 내 선공 여부는 내가 정한다.
                     if (i == 0 || i % 2 == 0)
                     {
                         PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "Opponent", num[i + 1] } });
@@ -434,7 +450,6 @@ public class TurnSystem : MonoBehaviourPunCallbacks
                         GameMGR.Instance.matching[1] = num[i + 1];
                         GameMGR.Instance.randomValue = random;
 
-                        SetFirstAttack(num[i], num[i + 1]);
 
                         //SceneManager.LoadScene(1);
 
@@ -453,7 +468,6 @@ public class TurnSystem : MonoBehaviourPunCallbacks
                         GameMGR.Instance.matching[1] = num[i - 1];
                         GameMGR.Instance.randomValue = random;
 
-                        SetFirstAttack(num[i], num[i - 1]);
 
                         //SceneManager.LoadScene(1);
 
@@ -470,6 +484,7 @@ public class TurnSystem : MonoBehaviourPunCallbacks
             {
                 if ((int)PhotonNetwork.LocalPlayer.CustomProperties["Number"] == num[i])
                 {
+                    GameMGR.Instance.battleLogic.isFirstAttack = first[num[i]];
                     if (i == 0 || i % 2 == 0)
                     {
                         PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "Opponent", num[i + 1] } });
@@ -483,7 +498,6 @@ public class TurnSystem : MonoBehaviourPunCallbacks
                         GameMGR.Instance.matching[1] = num[i + 1];
                         GameMGR.Instance.randomValue = random;
 
-                        SetFirstAttack(num[i], num[i + 1]);
 
                         //SceneManager.LoadScene(1);
 
@@ -502,8 +516,6 @@ public class TurnSystem : MonoBehaviourPunCallbacks
                         GameMGR.Instance.matching[0] = num[i];
                         GameMGR.Instance.matching[1] = num[i - 1];
                         GameMGR.Instance.randomValue = random;
-
-                        SetFirstAttack(num[i], num[i - 1]);
 
                         //SceneManager.LoadScene(1); // 전투 씬으로 이동
 
