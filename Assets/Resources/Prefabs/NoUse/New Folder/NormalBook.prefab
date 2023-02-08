@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 453418558747514785}
   m_Layer: 0
-  m_Name: NomalBook
+  m_Name: NormalBook
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

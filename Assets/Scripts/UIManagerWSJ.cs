@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
 public partial class UIManager : MonoBehaviour
@@ -12,7 +10,9 @@ public partial class UIManager : MonoBehaviour
     private GameObject packChoicePannel;
     private GameObject customPannel;
     public GameObject cardPannel;
+    private GameObject menuPannel;
     private GameObject nameMakeUI;
+    private GameObject deleteWarringUI;
     [Header("PackList")]
     [SerializeField] private MyDeck packButton;
     private GameObject myPackList;
@@ -37,11 +37,13 @@ public partial class UIManager : MonoBehaviour
         myDeckPannel = GameObject.Find("MyDeckPannel");
         customPannel = GameObject.Find("CustomPannel");
         cardPannel = GameObject.Find("CardPannel");
+        menuPannel = GameObject.Find("MenuPannel");
+        deleteWarringUI = GameObject.Find("DeleteWarringUI");
         packAddButton = GameObject.Find("PackAddButton");
         packChoicePannel = GameObject.Find("PackChoicePannel");
         myPackList = GameObject.Find("PackList");
         nameMakeUI = GameObject.Find("NameMakeUI");
-        cardImage= GameObject.Find("CardImage").GetComponent<Image>();
+        cardImage = GameObject.Find("CardImage").GetComponent<Image>();
         cardName = GameObject.Find("UNITNAME").GetComponent<TextMeshProUGUI>();
         attackValue = GameObject.Find("UNITATKValue").GetComponent<TextMeshProUGUI>();
         myDeckName = GameObject.Find("MyDeckName").GetComponent<TextMeshProUGUI>();
@@ -73,18 +75,20 @@ public partial class UIManager : MonoBehaviour
         tierCountText[4] = GameObject.Find("5").transform.GetChild(2).GetComponent<TextMeshProUGUI>();
         tierCountText[5] = GameObject.Find("6").transform.GetChild(2).GetComponent<TextMeshProUGUI>();
         toggleGroup = FindObjectOfType<ToggleGroup>();
+        deleteWarringUI.SetActive(false);
         customPannel.SetActive(false);
         packChoicePannel.SetActive(false);
         cardPannel.SetActive(false);
         myDeckPannel.SetActive(false);
         nameMakeUI.SetActive(false);
+        menuPannel.SetActive(false);
         SetFalseStar(0);
     }
     public void SetFalseStar(int set)
     {
-        for(int i = 0; i < star.Length; i++)
+        for (int i = 0; i < star.Length; i++)
         {
-            if(set == i) star[i].SetActive(true);
+            if (set == i) star[i].SetActive(true);
             else star[i].SetActive(false);
         }
     }
@@ -164,10 +168,34 @@ public partial class UIManager : MonoBehaviour
         attackValue.text = $"{cardInfo.atk}";
         hpValue.text = $"{cardInfo.hp}";
         cardName.text = $"{cardInfo.objName}";
-        cardImage.sprite = Resources.Load<Sprite>($"Sprites/Nomal/{cardInfo.objName.Replace(" ","")}");
+        cardImage.sprite = Resources.Load<Sprite>($"Sprites/Nomal/{cardInfo.objName.Replace(" ", "")}");
         skillExplantion[0].text = cardInfo.GetSkillExplantion(1);
         skillExplantion[1].text = cardInfo.GetSkillExplantion(2);
         skillExplantion[2].text = cardInfo.GetSkillExplantion(3);
 
+    }
+    public void OnClick_Join_Menu()
+    {
+        lobbyPannel.SetActive(false);
+        menuPannel.SetActive(true);
+    }
+    GameObject myDeck;
+    int myDeckNum;
+    public void OnClick_Set_DeleteUI(GameObject deck,int deckNum)
+    {
+        myDeck = deck;
+        myDeckNum= deckNum;
+        deleteWarringUI.SetActive(true);
+    }
+    public void OnClick_Set_DeleteUIFalse()
+    {
+        deleteWarringUI.SetActive(false);
+
+    }
+    public void OnClick_Delete_MyDeck()
+    {
+        deleteWarringUI.SetActive(false);
+        GameMGR.Instance.dataBase.inventoryData.DeleteCustomDeck(myDeckNum);
+        Destroy(myDeck);
     }
 }
