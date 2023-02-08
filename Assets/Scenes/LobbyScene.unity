@@ -26957,6 +26957,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFreezen: 0
+  isBattleMonsterCom: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   outlineSize: 5
 --- !u!114 &1291620875117074756
@@ -26985,6 +26986,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFreezen: 0
+  isBattleMonsterCom: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   outlineSize: 5
 --- !u!114 &1515495743952482376
@@ -27236,6 +27238,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFreezen: 0
+  isBattleMonsterCom: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   outlineSize: 5
 --- !u!61 &2005038988803654192
@@ -27693,6 +27696,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFreezen: 0
+  isBattleMonsterCom: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   outlineSize: 5
 --- !u!114 &2906178929051865309
@@ -28254,6 +28258,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFreezen: 0
+  isBattleMonsterCom: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   outlineSize: 5
 --- !u!4 &4233808528980680444
@@ -28441,6 +28446,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFreezen: 0
+  isBattleMonsterCom: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   outlineSize: 5
 --- !u!114 &4868000019058711343
@@ -28456,6 +28462,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFreezen: 0
+  isBattleMonsterCom: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   outlineSize: 5
 --- !u!114 &4934653738793044118
@@ -28549,6 +28556,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFreezen: 0
+  isBattleMonsterCom: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   outlineSize: 5
 --- !u!23 &5369682703593627813
@@ -28732,6 +28740,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFreezen: 0
+  isBattleMonsterCom: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   outlineSize: 5
 --- !u!114 &5631299769597118456
@@ -29618,6 +29627,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFreezen: 0
+  isBattleMonsterCom: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   outlineSize: 5
 --- !u!114 &7974875336583478582
@@ -29981,6 +29991,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFreezen: 0
+  isBattleMonsterCom: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   outlineSize: 5
 --- !u!4 &8791788864277599032

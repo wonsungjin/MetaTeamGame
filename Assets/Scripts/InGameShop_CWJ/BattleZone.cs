@@ -18,7 +18,7 @@ public class BattleZone : MonoBehaviour
             SoundStart();
         }
 
-        if (collision.gameObject.CompareTag("BattleMonster"))
+        if (collision.gameObject.CompareTag("BattleMonster") || collision.gameObject.CompareTag("BattleMonster2") || collision.gameObject.CompareTag("BattleMonster3"))
         {
             this.isHere = true;
             this.gameObject.tag = "FullZone";
@@ -36,7 +36,7 @@ public class BattleZone : MonoBehaviour
     {
         this.isHere = false;
 
-        if (collision.gameObject.CompareTag("BattleMonster"))
+        if (collision.gameObject.CompareTag("BattleMonster") || collision.gameObject.CompareTag("BattleMonster2") || collision.gameObject.CompareTag("BattleMonster3"))
         {
             this.gameObject.tag = "BattleZone";
             GameMGR.Instance.spawner.cardBatch[myNum] = null;
