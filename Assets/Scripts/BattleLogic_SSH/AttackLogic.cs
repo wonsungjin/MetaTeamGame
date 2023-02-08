@@ -8,21 +8,36 @@ public partial class AttackLogic : Skill
     Vector2 enemyTrans = Vector2.zero;
     Vector2 returnPosition = Vector2.zero;
 
+    bool isArrive = false;
+
+    float curTime = 0f;
+
+    float goalTime = 3f;
+
     public void UnitAttack(GameObject targetUnit)
     {
-        /*playerTrans = gameObject.transform.position;
+        playerTrans = gameObject.transform.position;
         enemyTrans = targetUnit.transform.position;
         returnPosition = playerTrans;
 
-        // Attack
-        gameObject.transform.position = Vector2.Lerp(playerTrans, enemyTrans, 0.5f);
-
-        // return position
-        if (gameObject.transform.position.x == enemyTrans.x)
+        while (curTime < goalTime)
         {
-            gameObject.transform.position = Vector2.Lerp(enemyTrans, returnPosition, 0.5f);
-        }*/
+            curTime += Time.deltaTime;
+
+            // Attack
+            gameObject.transform.position = Vector2.Lerp(playerTrans, enemyTrans, curTime / goalTime);
+        }
+
+        curTime = 0f;
 
         Destroy(targetUnit);
+
+        while (curTime < goalTime)
+        {
+            curTime += Time.deltaTime;
+
+            // return position
+            gameObject.transform.position = Vector2.Lerp(enemyTrans, returnPosition, curTime / goalTime);
+        }
     }
 }
