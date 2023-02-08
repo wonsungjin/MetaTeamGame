@@ -1,6 +1,7 @@
 using Spine.Unity;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Animations;
 using UnityEngine.UI;
 
 public enum CardStatus
@@ -10,7 +11,7 @@ public enum CardStatus
     Exp,
     Level,
 }
-public partial  class Card : MonoBehaviour
+public partial class Card : MonoBehaviour
 {
     [SerializeField] public CardInfo cardInfo;
     public TextMeshPro hpText;
@@ -19,11 +20,11 @@ public partial  class Card : MonoBehaviour
     public int level;
     public int curAttackValue;
     public int curHP;
-    public int curEXP;
+    public int curEXP = 0;
     public Slider expSlider;
     SkeletonAnimation skeletonAnimation;
     AudioSource audioSource;
-        private void Awake()
+    private void Awake()
     {
         SetMyInfo(name);
         audioSource = gameObject.GetComponent<AudioSource>();
@@ -34,11 +35,15 @@ public partial  class Card : MonoBehaviour
     public void SetMyInfo(string myname)
     {
         name = myname;
+        Debug.Log(name);
+        curEXP = 0;
         cardInfo = Resources.Load<CardInfo>($"ScriptableDBs/{name.Replace("(Clone)", "")}");
         hpText = transform.parent.GetChild(1).GetChild(1).GetComponent<TextMeshPro>();
         atkText = transform.parent.GetChild(1).GetChild(3).GetComponent<TextMeshPro>();
         levelText = transform.parent.GetChild(1).GetChild(5).GetComponent<TextMeshPro>();
         expSlider = transform.parent.GetChild(1).GetChild(8).GetChild(0).GetComponent<Slider>();
+        expSlider.value = 0;
+        gameObject.tag = "Monster";
         curHP = cardInfo.hp;
         hpText.text = curHP.ToString();
         curAttackValue = cardInfo.atk;
@@ -46,7 +51,8 @@ public partial  class Card : MonoBehaviour
         level = 1;
         levelText.text = level.ToString();
         skeletonAnimation = GetComponent<SkeletonAnimation>();
-        SetSkillTiming();
+        //SetSkillTiming();
+        transform.parent.gameObject.transform.localScale = Vector3.one;
     }
     public void SetFlip(bool isSet)
     {
@@ -61,48 +67,52 @@ public partial  class Card : MonoBehaviour
         switch (key)
         {
             case CardStatus.Hp:
-                curHP = value;
+                curHP += value;
                 hpText.text = curHP.ToString();
                 break;
 
             case CardStatus.Attack:
-                curAttackValue = value;
+                curAttackValue += value;
                 atkText.text = curAttackValue.ToString();
                 break;
 
             case CardStatus.Exp:
                 if (level == 1)
                 {
-                   // audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.Unit, "Unit Merge");
-                   // audioSource.Play();
-                    curEXP++;
+                    Debug.Log("1레벨에서 렙업");
+                    audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.Unit, "Unit Merge");
+                    audioSource.Play();
+
+                    curEXP += value;
                     if (curEXP >= 2)
                     {
                         ChangeValue(CardStatus.Level);
                         gameObject.tag = "BattleMonster2";
-                       // audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.Unit, "LevelUp");
-                      //  audioSource.Play();
+                        audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.Unit, "LevelUp");
+                        audioSource.Play();
                     }
                     else expSlider.value = curEXP * 0.5f;
 
                 }
                 else if (level == 2)
                 {
-                    curEXP++;
-                   // audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.Unit, "Unit Merge");
-                   // audioSource.Play();
+                    Debug.Log("2레벨에서 렙업");
+                    curEXP += value;
+                    audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.Unit, "Unit Merge");
+                    audioSource.Play();
                     if (curEXP >= 3)
                     {
                         ChangeValue(CardStatus.Level);
                         gameObject.tag = "BattleMonster3";
-                      //  audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.Unit, "LevelUp");
-                      //  audioSource.Play();
+                        audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.Unit, "LevelUp");
+                        audioSource.Play();
                     }
                     else expSlider.value = curEXP * 0.33f;
                 }
                 break;
 
             case CardStatus.Level:
+                curEXP = 0;
                 expSlider.value = 0;
                 level++;
                 levelText.text = level.ToString();

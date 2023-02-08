@@ -1,5 +1,7 @@
 using MongoDB.Driver;
 using System.Collections;
+using System.Data.Common;
+using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -21,13 +23,9 @@ public partial class Drag2D : MonoBehaviour
     public bool isFreezen = false;
     bool isClickBattleMonster = false;
 
-    private void Awake()
+    private void OnEnable()
     {
         mainCam = Camera.main;
-    }
-    private void Start()
-    {
-        
         spriteRenderer = GetComponent<MeshRenderer>();
         pol = GetComponent<BoxCollider2D>();
         card = GetComponent<Card>();
@@ -79,7 +77,6 @@ public partial class Drag2D : MonoBehaviour
 
     private void OnMouseDown()
     {
-
         UpdateOutline(true);
         isClickBool = false;
         pol.enabled = false;
@@ -162,8 +159,7 @@ public partial class Drag2D : MonoBehaviour
                 {
                     if (GameMGR.Instance.uiManager.goldCount >= 3)
                     {
-                        //GameMGR.Instance.Event_Buy(gameObject.GetComponent<Card>()); //구매한 카드가 구매시 효과가 있다면 스킬 발동
-
+                        
                         spriteRenderer.sortingLayerName = "SellTXT";
                         gameObject.tag = "BattleMonster";
                         GameMGR.Instance.uiManager.goldCount -= 3;
@@ -172,7 +168,7 @@ public partial class Drag2D : MonoBehaviour
                         Vector2 monTras = gameObject.transform.parent.localScale;
                         gameObject.transform.parent.localScale = monTras * 2;
 
-                        GameMGR.Instance.Event_Buy(gameObject.GetComponent<Card>());
+                        GameMGR.Instance.Event_Buy(gameObject.GetComponent<Card>()); //구매한 카드가 구매시 효과가 있다면 스킬 발동
 
                     }
                 }
@@ -186,43 +182,37 @@ public partial class Drag2D : MonoBehaviour
 
                         GameMGR.Instance.uiManager.goldCount -= 3;
                         GameMGR.Instance.uiManager.goldTXT.text = "" + GameMGR.Instance.uiManager.goldCount.ToString();
-                        ShopCardLevelUp(collision);
-
-                        GameMGR.Instance.Event_Buy(gameObject.GetComponent<Card>());
+                        ShopCardLevelUp(collision.gameObject);
                     }
                 }
             }
 
-            if (gameObject.CompareTag("BattleMonster"))
+            if (gameObject.CompareTag("BattleMonster") || gameObject.CompareTag("BattleMonster2") || gameObject.CompareTag("BattleMonster3"))
             {
-                // 배틀 몬스터를 잡았을 때 위치 바꾼다
-                if (gameObject.CompareTag("BattleMonster") || gameObject.CompareTag("BattleMonster2") || gameObject.CompareTag("BattleMonster3"))
+                // 잡고 있는 오브젝트가 배틀존에 닿으면 오브젝트 위치값 저장
+                if (collision.gameObject.CompareTag("BattleZone"))
                 {
-                    // 잡고 있는 오브젝트가 배틀존에 닿으면 오브젝트 위치값 저장
-                    if (collision.gameObject.CompareTag("BattleZone"))
-                    {
-                        pos = collision.gameObject.transform.position;
-                    }
+                    pos = collision.gameObject.transform.position;
                 }
 
                 if (gameObject.name == collision.gameObject.name && collision.gameObject.CompareTag("BattleMonster") || collision.gameObject.CompareTag("BattleMonster2"))
                 {
-                    CardLevelUp(collision);
+                    ShopCardLevelUp(collision.gameObject);
                 }
             }
         }
     }
 
-
-    // 카드 레벨업 
-    void CardLevelUp(Collider2D collision)
+    void ShopCardLevelUp(GameObject collision)
     {
-        int colAttack = collision.GetComponent<Card>().curAttackValue;
-        int colHP = collision.GetComponent<Card>().curHP;
+        int colAttack = collision.gameObject.GetComponentInChildren<Card>().curAttackValue;
+        int colHP = collision.gameObject.GetComponentInChildren<Card>().curHP;
         int attack = card.curAttackValue;
         int hP = card.curHP;
         int plusAttack = 0;
         int plusHp = 0;
+        int thisExp =gameObject.GetComponent<Card>().curEXP;
+        int thisLevel =gameObject.GetComponent<Card>().level;
 
         if (colAttack > attack)
         {
@@ -242,55 +232,23 @@ public partial class Drag2D : MonoBehaviour
             plusHp = hP;
         }
 
-        collision.GetComponent<Card>().ChangeValue(CardStatus.Attack, plusAttack + 1);
-        collision.GetComponent<Card>().ChangeValue(CardStatus.Hp, plusHp + 1);
-        collision.GetComponent<Card>().ChangeValue(CardStatus.Exp, 1);
+        collision.gameObject.GetComponentInChildren<Card>().ChangeValue(CardStatus.Attack, plusAttack + 1);
+        collision.gameObject.GetComponentInChildren<Card>().ChangeValue(CardStatus.Hp, plusHp + 1);
 
-        if (collision.gameObject.transform.position.y > gameObject.transform.position.y)
+        if (thisLevel == 1)
         {
-            CombineCard(collision);
-        }
-    }
-
-    void ShopCardLevelUp(Collider2D collision)
-    {
-        int colAttack = collision.GetComponent<Card>().curAttackValue;
-        int colHP = collision.GetComponent<Card>().curHP;
-        int attack = card.curAttackValue;
-        int hP = card.curHP;
-        int plusAttack = 0;
-        int plusHp = 0;
-        int colExp = collision.GetComponent<Card>().curEXP;
-
-        if (colAttack > attack)
-        {
-            plusAttack = colAttack;
-        }
-        else if (colAttack <= attack)
-        {
-            plusAttack = attack;
+            thisExp += 1;
+            collision.gameObject.GetComponentInChildren<Card>().ChangeValue(CardStatus.Exp, thisExp);
         }
 
-        if (colHP > hP)
+        else if (thisLevel == 2)
         {
-            plusHp = colHP;
+            thisExp += 2;
+            collision.gameObject.GetComponentInChildren<Card>().ChangeValue(CardStatus.Exp, thisExp);
         }
-        else if (colHP <= hP)
-        {
-            plusHp = hP;
-        }
-
-        collision.GetComponent<Card>().ChangeValue(CardStatus.Attack, plusAttack + 1);
-        collision.GetComponent<Card>().ChangeValue(CardStatus.Hp, plusHp + 1);
-        collision.GetComponent<Card>().ChangeValue(CardStatus.Exp, colExp + 1);
-        Destroy(this.gameObject.transform.parent.gameObject);
-    }
-
-    // 용병 조합
-    void CombineCard(Collider2D collision)
-    {
-        this.transform.parent.position = collision.gameObject.transform.parent.position;
-        Destroy(collision.gameObject.transform.parent.gameObject);
+        
+        GameMGR.Instance.objectPool.DestroyPrefab(this.gameObject.transform.parent.gameObject);
+        GameMGR.Instance.uiManager.sell.gameObject.SetActive(false);
     }
 
     // 판매버튼 ON OFF

@@ -18,7 +18,7 @@ public class Sell : MonoBehaviour
         {
             Selld(collision);
             SoundStarts();
-            Destroy(collision.gameObject.transform.parent.gameObject);
+            GameMGR.Instance.objectPool.DestroyPrefab(collision.gameObject.transform.parent.gameObject);
             GameMGR.Instance.uiManager.OnEnter_Set_SkillExplantion(false, Vector3.zero);
             gameObject.SetActive(false);
 
