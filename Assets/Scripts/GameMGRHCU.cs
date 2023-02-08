@@ -45,7 +45,7 @@ public partial class GameMGR : Singleton<GameMGR>
     }
     public void Event_Buy(Card card)
     {
-        Debug.Log(card.cardInfo.objName);
+        Debug.Log(card.cardInfo.objName + "게임매니저에서 함수 실행");
         if (callbackEvent_Buy != null)
             callbackEvent_Buy(card);
     }

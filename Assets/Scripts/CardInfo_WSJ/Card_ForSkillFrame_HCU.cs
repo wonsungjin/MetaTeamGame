@@ -1,6 +1,4 @@
-//using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public partial class Card : MonoBehaviour
@@ -20,9 +18,9 @@ public partial class Card : MonoBehaviour
 
     public void Start()
     {
-       // SetSkillTiming(); // 나의 스킬타이밍에 따라 이벤트에 추가해야한다면 추가한다.
+        // SetSkillTiming(); // 나의 스킬타이밍에 따라 이벤트에 추가해야한다면 추가한다.
     }
-    
+
 
     #region 스킬 효과 적용 관련 변수 모음
 
@@ -41,7 +39,7 @@ public partial class Card : MonoBehaviour
         this.curHP -= damage;
         if (this.curHP <= 0)
         {
-            if(Attacker.cardInfo.skillTiming == SkillTiming.kill)   Attacker.SkillActive(); // 내가 죽었는데 적이 처치시 효과가 있다면 적 효과 먼저 발동시켜준다.
+            if (Attacker.cardInfo.skillTiming == SkillTiming.kill) Attacker.SkillActive(); // 내가 죽었는데 적이 처치시 효과가 있다면 적 효과 먼저 발동시켜준다.
             if (cardInfo.skillTiming == SkillTiming.death) SkillActive(); // 사망시 효과 발동
             Destroy(this.gameObject);
         }
@@ -50,7 +48,7 @@ public partial class Card : MonoBehaviour
         {
             GameMGR.Instance.Event_HitEnemy();
             SkillActive();
-        } 
+        }
     }
 
     #endregion
@@ -68,6 +66,7 @@ public partial class Card : MonoBehaviour
                 break;
             case SkillTiming.buy:
                 GameMGR.Instance.callbackEvent_Buy += SkillActive2;
+                Debug.Log("구매시효과니까 이벤트에 추가");
                 break;
             case SkillTiming.sell:
                 GameMGR.Instance.callbackEvent_Sell += SkillActive2;
@@ -96,9 +95,9 @@ public partial class Card : MonoBehaviour
             case SkillTiming.battleStart:
                 GameMGR.Instance.callbackEvent_BattleStart += SkillActive;
                 break;
-            /*case SkillTiming.summon:
-                GameMGR.Instance.callbackEvent_Summon += SkillActive;
-                break;*/
+                /*case SkillTiming.summon:
+                    GameMGR.Instance.callbackEvent_Summon += SkillActive;
+                    break;*/
         }
     }
 
@@ -142,7 +141,8 @@ public partial class Card : MonoBehaviour
             case EffectType.changeATK:
                 for (int i = 0; i < skillTarget.Count; i++)
                 {
-                    skillTarget[i].curAttackValue += cardInfo.value1;
+                    skillTarget[i].GetComponentInChildren<Card>().ChangeValue(CardStatus.Attack, cardInfo.value1);
+                    //skillTarget[i].curAttackValue += cardInfo.value1;
                 }
                 break;
             case EffectType.changeHP:
@@ -181,18 +181,18 @@ public partial class Card : MonoBehaviour
         }
     }
 
+       public List<GameObject> searchArea = new List<GameObject>(); // 대상 범위가 아군인지 적군인지에 따라 구분하여 담는 게임오브젝트 변수
     public void FindTargetType() // 어떤 유형의 대상을 찾는지에 따라 실행하는 경우가 다르다는 말이란 말이란 말이란 말이란 말이란 말
     {
         Debug.Log("타겟을 찾는다");
-        List<GameObject> searchArea = new List<GameObject>(); // 대상 범위가 아군인지 적군인지에 따라 구분하여 담는 게임오브젝트 변수
 
-        if(GameMGR.Instance.isBattleNow)
+        if (GameMGR.Instance.isBattleNow)
         {
             Debug.Log("현재는 전투씬 기준");
             switch (cardInfo.effectTarget) // 스킬 효과 적용 대상에 따른 탐색 범위 지정
             {
                 case EffectTarget.ally:
-                    for(int i = 0; i < GameMGR.Instance.battleLogic.playerAttackArray.Length; i++)
+                    for (int i = 0; i < GameMGR.Instance.battleLogic.playerAttackArray.Length; i++)
                     {
                         if (GameMGR.Instance.battleLogic.playerAttackArray[i] != null)
                         {
@@ -268,18 +268,23 @@ public partial class Card : MonoBehaviour
                 case EffectTarget.allyForward:
                 case EffectTarget.allyBackward:
                 case EffectTarget.both:
+                    Debug.Log("상점씬 기준으로 searchArea에 추가");
                     for (int i = 0; i < GameMGR.Instance.spawner.cardBatch.Length; i++)
                     {
                         if (GameMGR.Instance.spawner.cardBatch[i] != null)
                         {
+                            Debug.Log(i + "번째 카드배치에 녀석을 searchArea에 추가");
                             searchArea.Add(GameMGR.Instance.spawner.cardBatch[i]);
-                        }
-                    }                    
+                        } 
+                    }
+                    Debug.Log("카드배치 몹들 전부 추가 후 현재 searchArea 개수 :" + searchArea.Count);
                     break;
                 case EffectTarget.none:
                     break;
             }
         }
+
+        //=============================================================================================================================================================
 
         switch (cardInfo.targetType) // 구체적인 공격 대상 지정 ( 체력이 낮은, 공격력이 높은, 전열 등등)
         {
@@ -321,15 +326,27 @@ public partial class Card : MonoBehaviour
                 skillTarget.Add(transform.parent.transform.GetChild(random).gameObject.GetComponent<Card>());
                 break;
             case TargetType.randomExceptMe:
-                random = Random.Range(0, searchArea.Count);
-                while (searchArea[random].GetComponent<Card>().curHP <= 0 && searchArea[random] == this) // 죽은 아군이 아닐 때까지 랜덤값을 돌려
+                
+                List<Card> targetArray = new List<Card>();
+                Debug.Log(searchArea.Count);
+                for(int i = 0; i < searchArea.Count; i++)
                 {
-                    random = Random.Range(0, searchArea.Count);
+                    if (searchArea[i] != null)
+                    {
+                        targetArray.Add(searchArea[i].transform.GetComponentInChildren<Card>());
+                    }
                 }
-                skillTarget.Add(transform.parent.transform.GetChild(random).gameObject.GetComponent<Card>());
+
+                random = Random.Range(0, targetArray.Count);
+
+                while (targetArray[random].GetComponent<Card>().curHP <= 0 && targetArray[random].GetComponent<Card>() == this) // 죽은 아군이 아닐 때까지 랜덤값을 돌려
+                {
+                    random = Random.Range(0, targetArray.Count);
+                }
+                skillTarget.Add(targetArray[random].GetComponent<Card>());
                 break;
 
-            case TargetType.front:      // 전열ㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇ
+            case TargetType.front:       // 전열ㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇ
                 random = Random.Range(0, 3);
                 bool isAllDead = true;
                 for (int i = 0; i < 3; i++)

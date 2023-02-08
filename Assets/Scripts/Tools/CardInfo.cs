@@ -23,12 +23,12 @@ public enum EffectTarget // 타겟 유형 - 적, 나, 아군 등
 {
     none,
     both,
-    ally,
     enemy,
-    allyForward,
-    allyBackward,
-    enemyForward,
+    ally,
     enemyBackward,
+    enemyForward,
+    allyBackward,
+    allyForward,
 
 }
 
