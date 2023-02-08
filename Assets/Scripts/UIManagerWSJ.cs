@@ -1,46 +1,49 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
 public partial class UIManager : MonoBehaviour
 {
     [Header("Pannel")]
-    [SerializeField] private GameObject lobbyPannel;
-    [SerializeField] private GameObject myDeckPannel;
-    [SerializeField] private GameObject packChoicePannel;
-    [SerializeField] private GameObject customPannel;
-    [SerializeField] public GameObject cardPannel;
-    [SerializeField] private GameObject nameMakeUI;
+    private GameObject lobbyPannel;
+    private GameObject myDeckPannel;
+    private GameObject packChoicePannel;
+    private GameObject customPannel;
+    public GameObject cardPannel;
+    private GameObject menuPannel;
+    private GameObject nameMakeUI;
+    private GameObject deleteWarringUI;
     [Header("PackList")]
-    [SerializeField] private GameObject myPackList;
     [SerializeField] private MyDeck packButton;
-    [SerializeField] private GameObject packAddButton;
-    [SerializeField] private ToggleGroup toggleGroup;
+    private GameObject myPackList;
+    private GameObject packAddButton;
+    private ToggleGroup toggleGroup;
     [Header("CardInfo")]
-    [SerializeField] private Image cardImage;
-    [SerializeField] private TextMeshProUGUI cardName;
-    [SerializeField] private TextMeshProUGUI attackValue;
-    [SerializeField] private TextMeshProUGUI hpValue;
-    [SerializeField] private TextMeshProUGUI myDeckName;
-    [SerializeField] private TextMeshProUGUI[] skillExplantion;
-    [SerializeField] private GameObject[] star;
+    private Image cardImage;
+    private TextMeshProUGUI cardName;
+    private TextMeshProUGUI attackValue;
+    private TextMeshProUGUI hpValue;
+    private TextMeshProUGUI myDeckName;
+    private TextMeshProUGUI[] skillExplantion;
+    private GameObject[] star;
 
     [Header("Tier")]
-    [SerializeField] public Transform myContent;
-    [SerializeField] public Transform[] tier1;
+    public Transform myContent;
+    public Transform[] tier1;
+    public TextMeshProUGUI[] tierCountText;
     public void Init_Scene1()
     {
         lobbyPannel = GameObject.Find("LobbyPannel");
         myDeckPannel = GameObject.Find("MyDeckPannel");
         customPannel = GameObject.Find("CustomPannel");
         cardPannel = GameObject.Find("CardPannel");
+        menuPannel = GameObject.Find("MenuPannel");
+        deleteWarringUI = GameObject.Find("DeleteWarringUI");
         packAddButton = GameObject.Find("PackAddButton");
         packChoicePannel = GameObject.Find("PackChoicePannel");
         myPackList = GameObject.Find("PackList");
         nameMakeUI = GameObject.Find("NameMakeUI");
-        cardImage= GameObject.Find("CardImage").GetComponent<Image>();
+        cardImage = GameObject.Find("CardImage").GetComponent<Image>();
         cardName = GameObject.Find("UNITNAME").GetComponent<TextMeshProUGUI>();
         attackValue = GameObject.Find("UNITATKValue").GetComponent<TextMeshProUGUI>();
         myDeckName = GameObject.Find("MyDeckName").GetComponent<TextMeshProUGUI>();
@@ -48,6 +51,7 @@ public partial class UIManager : MonoBehaviour
         skillExplantion = new TextMeshProUGUI[3];
         tier1 = new Transform[6];
         star = new GameObject[6];
+        tierCountText = new TextMeshProUGUI[6];
         skillExplantion[0] = GameObject.Find("Skillexplanation1").GetComponent<TextMeshProUGUI>();
         skillExplantion[1] = GameObject.Find("Skillexplanation2").GetComponent<TextMeshProUGUI>();
         skillExplantion[2] = GameObject.Find("Skillexplanation3").GetComponent<TextMeshProUGUI>();
@@ -64,19 +68,27 @@ public partial class UIManager : MonoBehaviour
         star[3] = GameObject.Find("fourStar");
         star[4] = GameObject.Find("fiveStar");
         star[5] = GameObject.Find("sixStar");
+        tierCountText[0] = GameObject.Find("1").transform.GetChild(2).GetComponent<TextMeshProUGUI>();
+        tierCountText[1] = GameObject.Find("2").transform.GetChild(2).GetComponent<TextMeshProUGUI>();
+        tierCountText[2] = GameObject.Find("3").transform.GetChild(2).GetComponent<TextMeshProUGUI>();
+        tierCountText[3] = GameObject.Find("4").transform.GetChild(2).GetComponent<TextMeshProUGUI>();
+        tierCountText[4] = GameObject.Find("5").transform.GetChild(2).GetComponent<TextMeshProUGUI>();
+        tierCountText[5] = GameObject.Find("6").transform.GetChild(2).GetComponent<TextMeshProUGUI>();
         toggleGroup = FindObjectOfType<ToggleGroup>();
+        deleteWarringUI.SetActive(false);
         customPannel.SetActive(false);
         packChoicePannel.SetActive(false);
         cardPannel.SetActive(false);
         myDeckPannel.SetActive(false);
         nameMakeUI.SetActive(false);
+        menuPannel.SetActive(false);
         SetFalseStar(0);
     }
     public void SetFalseStar(int set)
     {
-        for(int i = 0; i < star.Length; i++)
+        for (int i = 0; i < star.Length; i++)
         {
-            if(set == i) star[i].SetActive(true);
+            if (set == i) star[i].SetActive(true);
             else star[i].SetActive(false);
         }
     }
@@ -136,6 +148,7 @@ public partial class UIManager : MonoBehaviour
     {
         GameMGR.Instance.customDeckShop.OnClick_Exit_CustomDeckShop();
         cardPannel.SetActive(false);
+        nameMakeUI.SetActive(false);
         if (myDeckPannel.activeSelf)
         {
             for (int i = 0; i < myDecks.Length; i++) myDecks[i].DelateMyDeckList();
@@ -155,10 +168,34 @@ public partial class UIManager : MonoBehaviour
         attackValue.text = $"{cardInfo.atk}";
         hpValue.text = $"{cardInfo.hp}";
         cardName.text = $"{cardInfo.objName}";
-        cardImage.sprite = Resources.Load<Sprite>($"Sprites/Nomal/{cardInfo.objName.Replace(" ","")}");
+        cardImage.sprite = Resources.Load<Sprite>($"Sprites/Nomal/{cardInfo.objName.Replace(" ", "")}");
         skillExplantion[0].text = cardInfo.GetSkillExplantion(1);
         skillExplantion[1].text = cardInfo.GetSkillExplantion(2);
         skillExplantion[2].text = cardInfo.GetSkillExplantion(3);
 
+    }
+    public void OnClick_Join_Menu()
+    {
+        lobbyPannel.SetActive(false);
+        menuPannel.SetActive(true);
+    }
+    GameObject myDeck;
+    int myDeckNum;
+    public void OnClick_Set_DeleteUI(GameObject deck,int deckNum)
+    {
+        myDeck = deck;
+        myDeckNum= deckNum;
+        deleteWarringUI.SetActive(true);
+    }
+    public void OnClick_Set_DeleteUIFalse()
+    {
+        deleteWarringUI.SetActive(false);
+
+    }
+    public void OnClick_Delete_MyDeck()
+    {
+        deleteWarringUI.SetActive(false);
+        GameMGR.Instance.dataBase.inventoryData.DeleteCustomDeck(myDeckNum);
+        Destroy(myDeck);
     }
 }

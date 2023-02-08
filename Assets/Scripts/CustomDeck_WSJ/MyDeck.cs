@@ -16,8 +16,7 @@ public class MyDeck : MonoBehaviour
     public void OnClick_Delete_MyDeck()
     {
         Debug.Log("ªË¡¶");
-        GameMGR.Instance.dataBase.inventoryData.DeleteCustomDeck(myDeck.Num);
-        Destroy(gameObject);
+        GameMGR.Instance.uiManager.OnClick_Set_DeleteUI(gameObject, myDeck.Num);
     }
     public void OnClick_Select_Deck()
     {

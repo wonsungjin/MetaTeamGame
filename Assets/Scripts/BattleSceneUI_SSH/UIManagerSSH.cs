@@ -8,6 +8,6 @@ public partial class  UIManager : MonoBehaviour
 
     public void OnBattleUI()
     {
-        battleSceneUI.SetActive(true);
+        //battleSceneUI.SetActive(true);
     }
 }
