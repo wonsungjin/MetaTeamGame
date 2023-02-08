@@ -174,7 +174,7 @@ public class CardInfo : ScriptableObject
         {
             value = value1.Split(".");
         }
-        else if (valueNum == 1)
+        else if (valueNum == 2)
         {
             value = value2.Split(".");
         }
