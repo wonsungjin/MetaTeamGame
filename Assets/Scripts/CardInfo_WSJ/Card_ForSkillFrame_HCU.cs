@@ -181,9 +181,10 @@ public partial class Card : MonoBehaviour
         }
     }
 
-       public List<GameObject> searchArea = new List<GameObject>(); // 대상 범위가 아군인지 적군인지에 따라 구분하여 담는 게임오브젝트 변수
+    public List<GameObject> searchArea = new List<GameObject>(); // 대상 범위가 아군인지 적군인지에 따라 구분하여 담는 게임오브젝트 변수
     public void FindTargetType() // 어떤 유형의 대상을 찾는지에 따라 실행하는 경우가 다르다는 말이란 말이란 말이란 말이란 말이란 말
     {
+        searchArea.Clear();
         Debug.Log("타겟을 찾는다");
 
         if (GameMGR.Instance.isBattleNow)
@@ -326,24 +327,42 @@ public partial class Card : MonoBehaviour
                 skillTarget.Add(transform.parent.transform.GetChild(random).gameObject.GetComponent<Card>());
                 break;
             case TargetType.randomExceptMe:
-                
+                if (searchArea.Count == 1) break;
                 List<Card> targetArray = new List<Card>();
                 Debug.Log(searchArea.Count);
                 for(int i = 0; i < searchArea.Count; i++)
                 {
                     if (searchArea[i] != null)
                     {
-                        targetArray.Add(searchArea[i].transform.GetComponentInChildren<Card>());
+                        targetArray.Add(searchArea[i].GetComponentInChildren<Card>());
+                        
                     }
                 }
-
-                random = Random.Range(0, targetArray.Count);
-
-                while (targetArray[random].GetComponent<Card>().curHP <= 0 && targetArray[random].GetComponent<Card>() == this) // 죽은 아군이 아닐 때까지 랜덤값을 돌려
+                Debug.Log(targetArray.Count);
+                int setMaxTarget = 0;
+                if(cardInfo.maxTarget == searchArea.Count)
+                {
+                    setMaxTarget = cardInfo.maxTarget - 1;
+                }
+                else
+                {
+                    setMaxTarget = cardInfo.maxTarget;
+                }
+                for(int i = 0; i < setMaxTarget; i++)
                 {
                     random = Random.Range(0, targetArray.Count);
+                    if(targetArray[random].curHP <= 0 && targetArray[random] == this && !skillTarget.Contains(targetArray[random])) // 죽은 아군이 아닐 때까지 랜덤값을 돌려
+                    {
+                        i--;
+                        continue;
+                    }
+                    skillTarget.Add(targetArray[random]);
+                    Debug.Log("skillTarget에 Add함");
+
                 }
-                skillTarget.Add(targetArray[random].GetComponent<Card>());
+
+                
+                
                 break;
 
             case TargetType.front:       // 전열ㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇ

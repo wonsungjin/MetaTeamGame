@@ -96,8 +96,8 @@ public class CardInfo : ScriptableObject
     [SerializeField] internal SkillTiming skillTiming;
     [SerializeField] internal TargetType targetType;
     [SerializeField] internal EffectTarget effectTarget;
-    [SerializeField] internal int min_Target;
-    [SerializeField] internal int max_Target;
+    [SerializeField] internal int minTarget;
+    [SerializeField] internal int maxTarget;
     [SerializeField] internal TriggerCondition triggerCondition;
     [SerializeField] internal EffectType effectType;
     [SerializeField] internal int value1;
