@@ -1,3 +1,4 @@
+using MongoDB.Driver.Builders;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,17 +13,22 @@ public partial class AttackLogic : Skill
 
     float curTime = 0f;
 
-    float goalTime = 3f;
+    float goalTime = 10f;
 
-    public void UnitAttack(GameObject targetUnit)
+
+    private void Update()
     {
-        playerTrans = gameObject.transform.position;
-        enemyTrans = targetUnit.transform.position;
-        returnPosition = playerTrans;
 
-        while (curTime < goalTime)
+    }
+
+    WaitForSeconds delayTime = new WaitForSeconds(0.15f);
+
+    IEnumerator COR_Delay(GameObject targetUint)
+    {
+
+        while (Vector2.Distance(gameObject.transform.position, targetUint.transform.position) > 1)
         {
-            curTime += Time.deltaTime;
+            yield return delayTime;
 
             // Attack
             gameObject.transform.position = Vector2.Lerp(playerTrans, enemyTrans, curTime / goalTime);
@@ -30,14 +36,25 @@ public partial class AttackLogic : Skill
 
         curTime = 0f;
 
-        Destroy(targetUnit);
+        Destroy(targetUint);
 
-        while (curTime < goalTime)
+        while (Vector2.Distance(gameObject.transform.position, targetUint.transform.position) > 1)
         {
-            curTime += Time.deltaTime;
+            yield return delayTime;
+
 
             // return position
             gameObject.transform.position = Vector2.Lerp(enemyTrans, returnPosition, curTime / goalTime);
         }
+        GameMGR.Instance.battleLogic.isWaitAttack = true;
+        yield return delayTime;
+    }
+    public void UnitAttack(GameObject targetUnit)
+    {
+        playerTrans = gameObject.transform.position;
+        enemyTrans = targetUnit.transform.position;
+        returnPosition = playerTrans;
+
+        StartCoroutine(COR_Delay(targetUnit));
     }
 }

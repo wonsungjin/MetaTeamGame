@@ -339,7 +339,7 @@ MonoBehaviour:
   level: 1
   curAttackValue: 1
   curHP: 1
-  curEXP: 1
+  curEXP: 3
   expSlider: {fileID: 7803170560863288597}
   skillTarget: []
   batchPos: {x: 0, y: 0}
