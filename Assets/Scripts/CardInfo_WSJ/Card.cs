@@ -67,12 +67,12 @@ public partial class Card : MonoBehaviour
         switch (key)
         {
             case CardStatus.Hp:
-                curHP = value;
+                curHP += value;
                 hpText.text = curHP.ToString();
                 break;
 
             case CardStatus.Attack:
-                curAttackValue = value;
+                curAttackValue += value;
                 atkText.text = curAttackValue.ToString();
                 break;
 
