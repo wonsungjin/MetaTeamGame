@@ -426,6 +426,7 @@ public class TurnSystem : MonoBehaviourPunCallbacks
             }
         }
 
+        GameMGR.Instance.isBattleNow = true; // 전투씬에 돌입했음을 의미한다고 볼 수 있는 부분
 
         Debug.Log((int)PhotonNetwork.LocalPlayer.CustomProperties["Number"]);
         Debug.Log(num.Length);

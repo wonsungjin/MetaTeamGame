@@ -159,8 +159,7 @@ public partial class Drag2D : MonoBehaviour
                 {
                     if (GameMGR.Instance.uiManager.goldCount >= 3)
                     {
-                        //GameMGR.Instance.Event_Buy(gameObject.GetComponent<Card>()); //구매한 카드가 구매시 효과가 있다면 스킬 발동
-
+                        
                         spriteRenderer.sortingLayerName = "SellTXT";
                         gameObject.tag = "BattleMonster";
                         GameMGR.Instance.uiManager.goldCount -= 3;
@@ -168,6 +167,9 @@ public partial class Drag2D : MonoBehaviour
                         pos = collision.gameObject.transform.position;
                         Vector2 monTras = gameObject.transform.parent.localScale;
                         gameObject.transform.parent.localScale = monTras * 2;
+
+                        GameMGR.Instance.Event_Buy(gameObject.GetComponent<Card>()); //구매한 카드가 구매시 효과가 있다면 스킬 발동
+
                     }
                 }
 
