@@ -4899,9 +4899,9 @@ RectTransform:
   m_Father: {fileID: 633511266}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 75, y: -960}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &309807493
@@ -12695,9 +12695,9 @@ RectTransform:
   m_Father: {fileID: 633511266}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 75, y: -750}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &972750910
@@ -12911,9 +12911,9 @@ RectTransform:
   m_Father: {fileID: 633511266}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 75, y: -330}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &985152486
@@ -21606,9 +21606,9 @@ RectTransform:
   m_Father: {fileID: 633511266}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 75, y: -1170}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1637606157
@@ -22795,9 +22795,9 @@ RectTransform:
   m_Father: {fileID: 633511266}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 75, y: -540}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1718477239
@@ -24098,7 +24098,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7456306286197777640, guid: fd637963bb3e60d4492804425d6a194b, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7456306286197777640, guid: fd637963bb3e60d4492804425d6a194b, type: 3}
       propertyPath: m_AnchorMin.x
@@ -24106,7 +24106,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7456306286197777640, guid: fd637963bb3e60d4492804425d6a194b, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7456306286197777640, guid: fd637963bb3e60d4492804425d6a194b, type: 3}
       propertyPath: m_SizeDelta.x
@@ -24146,11 +24146,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7456306286197777640, guid: fd637963bb3e60d4492804425d6a194b, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 325
       objectReference: {fileID: 0}
     - target: {fileID: 7456306286197777640, guid: fd637963bb3e60d4492804425d6a194b, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -521.5949
       objectReference: {fileID: 0}
     - target: {fileID: 7456306286197777640, guid: fd637963bb3e60d4492804425d6a194b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -25664,11 +25664,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2063491190, guid: a4f20f45cd3327f448bc2e26e4fe7e10, type: 3}
       propertyPath: UISFXClip.Array.size
-      value: 12
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 2063491190, guid: a4f20f45cd3327f448bc2e26e4fe7e10, type: 3}
       propertyPath: UnitSFXClip.Array.size
-      value: 8
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 2063491190, guid: a4f20f45cd3327f448bc2e26e4fe7e10, type: 3}
       propertyPath: UISFXClip.Array.data[0]
@@ -25712,7 +25712,7 @@ PrefabInstance:
       objectReference: {fileID: 8300000, guid: 7c78a263e2b78d541b10ec632d1c12cb, type: 3}
     - target: {fileID: 2063491190, guid: a4f20f45cd3327f448bc2e26e4fe7e10, type: 3}
       propertyPath: EffectSFXClip.Array.size
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 2063491190, guid: a4f20f45cd3327f448bc2e26e4fe7e10, type: 3}
       propertyPath: UISFXClip.Array.data[10]
@@ -25722,6 +25722,18 @@ PrefabInstance:
       propertyPath: UISFXClip.Array.data[11]
       value: 
       objectReference: {fileID: 8300000, guid: 1ba261a091bcc93498526527037c49fa, type: 3}
+    - target: {fileID: 2063491190, guid: a4f20f45cd3327f448bc2e26e4fe7e10, type: 3}
+      propertyPath: UISFXClip.Array.data[12]
+      value: 
+      objectReference: {fileID: 8300000, guid: 02c8db426dcf63e4492bb92abafd7e91, type: 3}
+    - target: {fileID: 2063491190, guid: a4f20f45cd3327f448bc2e26e4fe7e10, type: 3}
+      propertyPath: UISFXClip.Array.data[13]
+      value: 
+      objectReference: {fileID: 8300000, guid: 278dc47bffed78347ae33bf91a94f14b, type: 3}
+    - target: {fileID: 2063491190, guid: a4f20f45cd3327f448bc2e26e4fe7e10, type: 3}
+      propertyPath: UISFXClip.Array.data[14]
+      value: 
+      objectReference: {fileID: 8300000, guid: 38c354996d7002b46b17b9f543529c27, type: 3}
     - target: {fileID: 2063491190, guid: a4f20f45cd3327f448bc2e26e4fe7e10, type: 3}
       propertyPath: BackGroundClip.Array.size
       value: 3
@@ -25759,6 +25771,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8300000, guid: d976933622ab6d6478b454186dc1d7d7, type: 3}
     - target: {fileID: 2063491190, guid: a4f20f45cd3327f448bc2e26e4fe7e10, type: 3}
+      propertyPath: UnitSFXClip.Array.data[8]
+      value: 
+      objectReference: {fileID: 8300000, guid: 5a90871c01c7dbd4e934319584ba748b, type: 3}
+    - target: {fileID: 2063491190, guid: a4f20f45cd3327f448bc2e26e4fe7e10, type: 3}
       propertyPath: EffectSFXClip.Array.data[0]
       value: 
       objectReference: {fileID: 8300000, guid: e6f92a2c91e8b8a4d86600c9de4c9877, type: 3}
@@ -25783,6 +25799,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8300000, guid: 62ab815b858c08846b97617fa6d65e60, type: 3}
     - target: {fileID: 2063491190, guid: a4f20f45cd3327f448bc2e26e4fe7e10, type: 3}
+      propertyPath: EffectSFXClip.Array.data[6]
+      value: 
+      objectReference: {fileID: 8300000, guid: af7104a8539029f4e93eddf937abccae, type: 3}
+    - target: {fileID: 2063491190, guid: a4f20f45cd3327f448bc2e26e4fe7e10, type: 3}
       propertyPath: BackGroundClip.Array.data[0]
       value: 
       objectReference: {fileID: 8300000, guid: 016063fa21c30144985cc66d0fdb5433, type: 3}
@@ -25792,6 +25812,10 @@ PrefabInstance:
       objectReference: {fileID: 8300000, guid: 60b910bbd36b0ef41a48650be44e5ce9, type: 3}
     - target: {fileID: 2063491190, guid: a4f20f45cd3327f448bc2e26e4fe7e10, type: 3}
       propertyPath: BackGroundClip.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: ebb05f4a28a4b674791415359f4a24c2, type: 3}
+    - target: {fileID: 2063491190, guid: a4f20f45cd3327f448bc2e26e4fe7e10, type: 3}
+      propertyPath: BackGroundClip.Array.data[3]
       value: 
       objectReference: {fileID: 8300000, guid: ebb05f4a28a4b674791415359f4a24c2, type: 3}
     - target: {fileID: 6544229276892394786, guid: a4f20f45cd3327f448bc2e26e4fe7e10, type: 3}
@@ -27775,9 +27799,9 @@ RectTransform:
   m_Father: {fileID: 633511266}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 75, y: -120}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2061970428
@@ -29333,12 +29357,6 @@ MonoBehaviour:
   curHP: 0
   curEXP: 0
   expSlider: {fileID: 0}
-  skillTarget: []
-  batchPos: {x: 0, y: 0}
-  targetPos: {x: 0, y: 0}
-  curPos: {fileID: 0}
-  giveDamage: 0
-  takeDamage: 0
 --- !u!114 &1244862510948258122
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29352,7 +29370,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFreezen: 0
-  isBattleMonsterCom: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   outlineSize: 5
 --- !u!114 &1291620875117074756
@@ -29381,7 +29398,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFreezen: 0
-  isBattleMonsterCom: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   outlineSize: 5
 --- !u!114 &1515495743952482376
@@ -29442,12 +29458,6 @@ MonoBehaviour:
   curHP: 0
   curEXP: 0
   expSlider: {fileID: 0}
-  skillTarget: []
-  batchPos: {x: 0, y: 0}
-  targetPos: {x: 0, y: 0}
-  curPos: {fileID: 0}
-  giveDamage: 0
-  takeDamage: 0
 --- !u!50 &1683130933639958611
 Rigidbody2D:
   serializedVersion: 4
@@ -29566,12 +29576,6 @@ MonoBehaviour:
   curHP: 0
   curEXP: 0
   expSlider: {fileID: 0}
-  skillTarget: []
-  batchPos: {x: 0, y: 0}
-  targetPos: {x: 0, y: 0}
-  curPos: {fileID: 0}
-  giveDamage: 0
-  takeDamage: 0
 --- !u!50 &1891945566863584470
 Rigidbody2D:
   serializedVersion: 4
@@ -29614,12 +29618,6 @@ MonoBehaviour:
   curHP: 0
   curEXP: 0
   expSlider: {fileID: 0}
-  skillTarget: []
-  batchPos: {x: 0, y: 0}
-  targetPos: {x: 0, y: 0}
-  curPos: {fileID: 0}
-  giveDamage: 0
-  takeDamage: 0
 --- !u!114 &1926938376398959714
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29633,7 +29631,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFreezen: 0
-  isBattleMonsterCom: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   outlineSize: 5
 --- !u!61 &2005038988803654192
@@ -29704,12 +29701,6 @@ MonoBehaviour:
   curHP: 0
   curEXP: 0
   expSlider: {fileID: 0}
-  skillTarget: []
-  batchPos: {x: 0, y: 0}
-  targetPos: {x: 0, y: 0}
-  curPos: {fileID: 0}
-  giveDamage: 0
-  takeDamage: 0
 --- !u!50 &2221145007596496290
 Rigidbody2D:
   serializedVersion: 4
@@ -29752,12 +29743,6 @@ MonoBehaviour:
   curHP: 0
   curEXP: 0
   expSlider: {fileID: 0}
-  skillTarget: []
-  batchPos: {x: 0, y: 0}
-  targetPos: {x: 0, y: 0}
-  curPos: {fileID: 0}
-  giveDamage: 0
-  takeDamage: 0
 --- !u!61 &2382412561666352698
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -30091,7 +30076,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFreezen: 0
-  isBattleMonsterCom: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   outlineSize: 5
 --- !u!114 &2906178929051865309
@@ -30653,7 +30637,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFreezen: 0
-  isBattleMonsterCom: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   outlineSize: 5
 --- !u!4 &4233808528980680444
@@ -30822,12 +30805,6 @@ MonoBehaviour:
   curHP: 0
   curEXP: 0
   expSlider: {fileID: 0}
-  skillTarget: []
-  batchPos: {x: 0, y: 0}
-  targetPos: {x: 0, y: 0}
-  curPos: {fileID: 0}
-  giveDamage: 0
-  takeDamage: 0
 --- !u!114 &4790532487075826102
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30841,7 +30818,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFreezen: 0
-  isBattleMonsterCom: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   outlineSize: 5
 --- !u!114 &4868000019058711343
@@ -30857,7 +30833,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFreezen: 0
-  isBattleMonsterCom: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   outlineSize: 5
 --- !u!114 &4934653738793044118
@@ -30951,7 +30926,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFreezen: 0
-  isBattleMonsterCom: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   outlineSize: 5
 --- !u!23 &5369682703593627813
@@ -31135,7 +31109,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFreezen: 0
-  isBattleMonsterCom: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   outlineSize: 5
 --- !u!114 &5631299769597118456
@@ -31159,12 +31132,6 @@ MonoBehaviour:
   curHP: 1
   curEXP: 9
   expSlider: {fileID: 0}
-  skillTarget: []
-  batchPos: {x: 0, y: 0}
-  targetPos: {x: 0, y: 0}
-  curPos: {fileID: 0}
-  giveDamage: 0
-  takeDamage: 0
 --- !u!1 &6139308160527905803
 GameObject:
   m_ObjectHideFlags: 0
@@ -32009,7 +31976,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFreezen: 0
-  isBattleMonsterCom: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   outlineSize: 5
 --- !u!114 &7974875336583478582
@@ -32033,12 +31999,6 @@ MonoBehaviour:
   curHP: 0
   curEXP: 0
   expSlider: {fileID: 0}
-  skillTarget: []
-  batchPos: {x: 0, y: 0}
-  targetPos: {x: 0, y: 0}
-  curPos: {fileID: 0}
-  giveDamage: 0
-  takeDamage: 0
 --- !u!61 &7974875336583478583
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -32099,12 +32059,6 @@ MonoBehaviour:
   curHP: 0
   curEXP: 0
   expSlider: {fileID: 0}
-  skillTarget: []
-  batchPos: {x: 0, y: 0}
-  targetPos: {x: 0, y: 0}
-  curPos: {fileID: 0}
-  giveDamage: 0
-  takeDamage: 0
 --- !u!1 &7984887278620950173
 GameObject:
   m_ObjectHideFlags: 0
@@ -32373,7 +32327,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFreezen: 0
-  isBattleMonsterCom: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   outlineSize: 5
 --- !u!4 &8791788864277599032
@@ -32446,9 +32399,3 @@ MonoBehaviour:
   curHP: 0
   curEXP: 0
   expSlider: {fileID: 0}
-  skillTarget: []
-  batchPos: {x: 0, y: 0}
-  targetPos: {x: 0, y: 0}
-  curPos: {fileID: 0}
-  giveDamage: 0
-  takeDamage: 0
