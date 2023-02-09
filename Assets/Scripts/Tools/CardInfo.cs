@@ -22,6 +22,7 @@ public enum SkillTiming     // 스킬이 발동되는 때
 public enum EffectTarget // 타겟 유형 - 적, 나, 아군 등
 {
     none,
+
     both,
     enemy,
     ally,
