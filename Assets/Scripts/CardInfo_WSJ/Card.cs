@@ -62,16 +62,20 @@ public partial class Card : MonoBehaviour
     {
         skeletonAnimation.AnimationState.SetAnimation(0, ani, isSet);
     }
-    public void ChangeValue(CardStatus key, int value = 0)
+    public void ChangeValue(CardStatus key, int value = 0,bool plus = false)
     {
         switch (key)
         {
             case CardStatus.Hp:
-                curHP += value;
+                if (plus == false) curAttackValue = value;
+                else
+                    curHP += value;
                 hpText.text = curHP.ToString();
                 break;
 
             case CardStatus.Attack:
+                if(plus == false) curAttackValue = value;
+                else
                 curAttackValue += value;
                 atkText.text = curAttackValue.ToString();
                 break;
