@@ -168,8 +168,9 @@ public partial class Drag2D : MonoBehaviour
                         Vector2 monTras = gameObject.transform.parent.localScale;
                         gameObject.transform.parent.localScale = monTras * 2;
 
-                        GameMGR.Instance.Event_Buy(gameObject.GetComponent<Card>()); //구매한 카드가 구매시 효과가 있다면 스킬 발동
-
+                        //GameMGR.Instance.Event_Buy(gameObject.GetComponent<Card>()); //구매한 카드가 구매시 효과가 있다면 스킬 발동
+                        if (card.cardInfo.skillTiming == SkillTiming.buy)
+                            card.SkillActive2(card);
                     }
                 }
 
@@ -205,14 +206,14 @@ public partial class Drag2D : MonoBehaviour
 
     void ShopCardLevelUp(GameObject collision)
     {
-        int colAttack = collision.gameObject.GetComponentInChildren<Card>().curAttackValue;
-        int colHP = collision.gameObject.GetComponentInChildren<Card>().curHP;
+        int colAttack = collision.gameObject.GetComponent<Card>().curAttackValue;
+        int colHP = collision.gameObject.GetComponent<Card>().curHP;
         int attack = card.curAttackValue;
         int hP = card.curHP;
         int plusAttack = 0;
         int plusHp = 0;
-        int thisExp =gameObject.GetComponent<Card>().curEXP;
-        int thisLevel =gameObject.GetComponent<Card>().level;
+        int thisExp = card.curEXP;
+        int thisLevel = card.level;
 
         if (colAttack > attack)
         {
@@ -232,19 +233,19 @@ public partial class Drag2D : MonoBehaviour
             plusHp = hP;
         }
 
-        collision.gameObject.GetComponentInChildren<Card>().ChangeValue(CardStatus.Attack, plusAttack + 1);
-        collision.gameObject.GetComponentInChildren<Card>().ChangeValue(CardStatus.Hp, plusHp + 1);
+        collision.gameObject.GetComponent<Card>().ChangeValue(CardStatus.Attack, plusAttack + 1);
+        collision.gameObject.GetComponent<Card>().ChangeValue(CardStatus.Hp, plusHp + 1);
 
         if (thisLevel == 1)
         {
             thisExp += 1;
-            collision.gameObject.GetComponentInChildren<Card>().ChangeValue(CardStatus.Exp, thisExp);
+            collision.gameObject.GetComponent<Card>().ChangeValue(CardStatus.Exp, thisExp);
         }
 
         else if (thisLevel == 2)
         {
             thisExp += 2;
-            collision.gameObject.GetComponentInChildren<Card>().ChangeValue(CardStatus.Exp, thisExp);
+            collision.gameObject.GetComponent<Card>().ChangeValue(CardStatus.Exp, thisExp);
         }
         
         GameMGR.Instance.objectPool.DestroyPrefab(this.gameObject.transform.parent.gameObject);
@@ -286,6 +287,8 @@ public partial class Drag2D : MonoBehaviour
         GameMGR.Instance.uiManager.goldCount -= 3;
         GameMGR.Instance.uiManager.goldTXT.text = "" + GameMGR.Instance.uiManager.goldCount.ToString();
 
-        GameMGR.Instance.Event_Buy(gameObject.GetComponent<Card>());
+        //GameMGR.Instance.Event_Buy(gameObject.GetComponent<Card>());
+        if (card.cardInfo.skillTiming == SkillTiming.buy)
+            card.SkillActive2(card);
     }
 }
