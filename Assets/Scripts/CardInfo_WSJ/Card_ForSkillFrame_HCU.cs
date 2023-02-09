@@ -15,7 +15,6 @@ public partial class Card : MonoBehaviour
     public int takeDamage = 0;
 
 
-
     public void Start()
     {
         // SetSkillTiming(); // 나의 스킬타이밍에 따라 이벤트에 추가해야한다면 추가한다.
@@ -111,7 +110,7 @@ public partial class Card : MonoBehaviour
     public void SkillActive2(Card card)
     {
         Debug.Log("Skill Active 2");
-        //if (card != this) return;
+        if (card != this) return;
         FindTargetType();
         SkillEffect();
         GameMGR.Instance.callbackEvent_Buy -= SkillActive2;
@@ -143,6 +142,7 @@ public partial class Card : MonoBehaviour
                 for (int i = 0; i < skillTarget.Count; i++)
                 {
                     skillTarget[i].ChangeValue(CardStatus.Attack, cardInfo.GetValue(1, level));
+                    Debug.Log(cardInfo.GetValue(1,level));
                     //skillTarget[i].curAttackValue += cardInfo.value1;
                 }
                 break;
