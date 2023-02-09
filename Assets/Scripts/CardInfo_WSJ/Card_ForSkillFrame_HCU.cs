@@ -141,7 +141,7 @@ public partial class Card : MonoBehaviour
             case EffectType.changeATK:
                 for (int i = 0; i < skillTarget.Count; i++)
                 {
-                    skillTarget[i].ChangeValue(CardStatus.Attack, cardInfo.GetValue(1, level));
+                    skillTarget[i].ChangeValue(CardStatus.Attack, cardInfo.GetValue(1, level), true);
                     Debug.Log(cardInfo.GetValue(1,level));
                     //skillTarget[i].curAttackValue += cardInfo.value1;
                 }
@@ -155,6 +155,7 @@ public partial class Card : MonoBehaviour
             case EffectType.changeATKandHP:
                 for (int i = 0; i < skillTarget.Count; i++)
                 {
+                    
                     skillTarget[i].GetComponentInChildren<Card>().curAttackValue += cardInfo.GetValue(1, level);
                     skillTarget[i].GetComponentInChildren<Card>().curHP += cardInfo.GetValue(2, level);
                 }
@@ -330,7 +331,7 @@ public partial class Card : MonoBehaviour
                 skillTarget.Add(transform.parent.transform.GetChild(random).gameObject.GetComponent<Card>());
                 break;
             case TargetType.randomExceptMe:
-                if (searchArea.Count == 1) break;
+                //if (searchArea.Count == 1) break;
                 List<Card> targetArray = new List<Card>();
                 Debug.Log(searchArea.Count);
                 for (int i = 0; i < searchArea.Count; i++)
