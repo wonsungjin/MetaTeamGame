@@ -14,7 +14,7 @@ public class TimerSound : MonoBehaviour
 
     public void TimeSound()
     {
-        m_AudioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.Effect, "TimeSet");
+        m_AudioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.Effect, "MP_Ticking Clock");
         m_AudioSource.Play();
         m_AudioSource.loop = true;
     }

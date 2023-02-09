@@ -17,7 +17,7 @@ public class FreezeCard : MonoBehaviour
         {
             collision.gameObject.tag = "Monster";
             collision.gameObject.layer = 0;
-            audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.UI, "Ice");
+            audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.UI, "unfreezing_sound");
             audioSource.Play();
         }
 
@@ -25,7 +25,7 @@ public class FreezeCard : MonoBehaviour
         {
             collision.gameObject.tag = "FreezeCard";
             collision.gameObject.layer = 8;
-            audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.UI, "Ice");
+            audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.UI, "freezing_sound");
             audioSource.Play();
         }
     }
