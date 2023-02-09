@@ -142,7 +142,7 @@ public partial class Card : MonoBehaviour
             case EffectType.changeATK:
                 for (int i = 0; i < skillTarget.Count; i++)
                 {
-                    skillTarget[i].GetComponentInChildren<Card>().ChangeValue(CardStatus.Attack, cardInfo.GetValue(1, level));
+                    skillTarget[i].ChangeValue(CardStatus.Attack, cardInfo.GetValue(1, level));
                     //skillTarget[i].curAttackValue += cardInfo.value1;
                 }
                 break;
