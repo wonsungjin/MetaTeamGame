@@ -1,14 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class AudioMGR : MonoBehaviour
 {
-    // Clip Ä«Å×°í¸® ºÐ·ù¸¦ À§ÇÑ Enum
+    // Clip Ä«ï¿½×°ï¿½ï¿½ï¿½ ï¿½Ð·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Enum
     public enum Type { Background, Unit, UI, Effect };
 
-    // Type º° Audio Clip ºÐ·ù
+    // Type ï¿½ï¿½ Audio Clip ï¿½Ð·ï¿½
     [SerializeField] AudioClip[] BackGroundClip = null;
     [SerializeField] AudioClip[] UnitSFXClip = null;
     [SerializeField] AudioClip[] UISFXClip = null;
@@ -17,10 +18,11 @@ public class AudioMGR : MonoBehaviour
     AudioClip audioClip = null;
     AudioSource StoreAudioSource = null;
     AudioSource StoreBGM = null;
+
     AudioSource BattleBGM = null;
+    AudioSource BattleAudio = null;
 
-
-    // AudioClip Name, AudioClipÀ¸·Î Dictionary »ý¼º
+    // AudioClip Name, AudioClipï¿½ï¿½ï¿½ï¿½ Dictionary ï¿½ï¿½ï¿½ï¿½
     Dictionary<string, AudioClip> BackgroundDic = new Dictionary<string, AudioClip>();
     Dictionary<string, AudioClip> UnitSFXDic = new Dictionary<string, AudioClip>();
     Dictionary<string, AudioClip> UISFXDic = new Dictionary<string, AudioClip>();
@@ -31,34 +33,18 @@ public class AudioMGR : MonoBehaviour
         Init();
     }
 
-    //  AudioClip NameÀ» Å°, AudioClipÀ» °ªÀ¸·Î Dictionary¿¡ Ãß°¡ 
+    //  AudioClip Nameï¿½ï¿½ Å°, AudioClipï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Dictionaryï¿½ï¿½ ï¿½ß°ï¿½ 
     private void Init()
     {
-        for (int i = 0; i < BackGroundClip.Length; i++)
-        {
-            BackgroundDic.Add(BackGroundClip[i].name, BackGroundClip[i]);
-        }
-
-
-        for (int i = 0; i < UnitSFXClip.Length; i++)
-        {
-            UnitSFXDic.Add(UnitSFXClip[i].name, UnitSFXClip[i]);
-        }
-
-        for (int i = 0; i < UISFXClip.Length; i++)
-        {
-            UISFXDic.Add(UISFXClip[i].name, UISFXClip[i]);
-        }
-
-        for (int i = 0; i < EffectSFXClip.Length; i++)
-        {
-            EffectSFXDic.Add(EffectSFXClip[i].name, EffectSFXClip[i]);
-        }
-
         StoreAudioSource = GetComponent<AudioSource>();
+
+        for (int i = 0; i < BackGroundClip.Length; i++) { BackgroundDic.Add(BackGroundClip[i].name, BackGroundClip[i]); }
+        for (int i = 0; i < UnitSFXClip.Length; i++) { UnitSFXDic.Add(UnitSFXClip[i].name, UnitSFXClip[i]); }
+        for (int i = 0; i < UISFXClip.Length; i++) { UISFXDic.Add(UISFXClip[i].name, UISFXClip[i]); }
+        for (int i = 0; i < EffectSFXClip.Length; i++) { EffectSFXDic.Add(EffectSFXClip[i].name, EffectSFXClip[i]); }
     }
 
-    // Å¸ Å¬·¡½º¿¡¼­ ÇÔ¼ö È£Ãâ ½Ã Type, ClipName¿¡ ¸Â´Â AudioClip ¹ÝÈ¯
+    // Å¸ Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½ È£ï¿½ï¿½ ï¿½ï¿½ Type, ClipNameï¿½ï¿½ ï¿½Â´ï¿½ AudioClip ï¿½ï¿½È¯
     public AudioClip ReturnAudioClip(Type AudioType, string clipName)
     {
         switch (AudioType.ToString())
@@ -95,15 +81,18 @@ public class AudioMGR : MonoBehaviour
         StoreAudioSource.Play();
     }
 
-    public void SoundMouseClick()
-    {
-        StoreAudioSource.clip = ReturnAudioClip(Type.UI, "sweeping_sound");
-        StoreAudioSource.Play();
-    }
-
-    public void BattleSceneBGM(bool isBattleScene)
+    #region BattleScene Audio
+    public void BattleAudioInit()
     {
         BattleBGM = GameObject.Find("BackGround").GetComponent<AudioSource>();
+        BattleAudio = GameObject.Find("BattleAudio").GetComponent<AudioSource>();
+        BattleAudio.playOnAwake = false;
+        BattleAudio.loop = false;
+    }
+
+    // BGM
+    public void BattleSceneBGM(bool isBattleScene)
+    {
         BattleBGM.clip = ReturnAudioClip(Type.Background, "BattleBgm");
         BattleBGM.playOnAwake = isBattleScene;
         BattleBGM.loop = isBattleScene;
@@ -111,4 +100,49 @@ public class AudioMGR : MonoBehaviour
         if (isBattleScene) { BattleBGM.Play(); }
         else if (!isBattleScene) { BattleBGM.Pause(); }
     }
+
+    // Win, Lose
+    public void BattleRoundResult(bool isResult)
+    {
+        if (isResult)
+        {
+            BattleAudio.clip = ReturnAudioClip(Type.Effect, "GameWin");
+            BattleAudio.Play();
+        }
+
+        else if (!isResult)
+        {
+            BattleAudio.clip = ReturnAudioClip(Type.Effect, "GameLose");
+            BattleAudio.Play();
+        }
+    }
+
+    public void BattleAttackSound(int Damage)
+    {
+        if (Damage >= 15)
+        {
+            BattleAudio.clip = ReturnAudioClip(Type.Unit, "Big_Attack");
+            BattleAudio.Play();
+        }
+
+        else if (Damage < 15)
+        {
+            BattleAudio.clip = ReturnAudioClip(Type.Unit, "SmallAttack");
+            BattleAudio.Play();
+        }
+    }
+
+    public void BattleUnitDeath()
+    {
+        BattleAudio.clip = ReturnAudioClip(Type.Unit, "Dead");
+        BattleAudio.Play();
+    }
+
+    public void BattleUnitHit()
+    {
+        BattleAudio.clip = ReturnAudioClip(Type.Unit, "UnitSummoning");
+        BattleAudio.Play();
+    }
+
+    #endregion
 }
