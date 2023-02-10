@@ -80,7 +80,7 @@ public class AudioMGR : MonoBehaviour
 
     public void SoundMonsterClick()
     {
-        StoreAudioSource.clip = ReturnAudioClip(Type.UI, "pick_sound");
+        StoreAudioSource.clip = ReturnAudioClip(Type.Unit, "pick_sound");
         StoreAudioSource.Play();
     }
 
