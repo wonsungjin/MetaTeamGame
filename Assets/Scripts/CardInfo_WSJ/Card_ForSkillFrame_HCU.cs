@@ -123,7 +123,6 @@ public partial class Card : MonoBehaviour
         else if (cardInfo.skillTiming == SkillTiming.sell)
             GameMGR.Instance.callbackEvent_Sell -= SkillActive2;
 
-        
     }
 
 
