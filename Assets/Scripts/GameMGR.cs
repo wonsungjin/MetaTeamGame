@@ -9,7 +9,7 @@ public partial class GameMGR : Singleton<GameMGR>
     public DataBase dataBase;
     public ObjectPool objectPool;
     public AudioMGR audioMGR;
-    
+
     public CustomDeckShop customDeckShop;
     public ShopCards shopCards;
 
@@ -20,6 +20,7 @@ public partial class GameMGR : Singleton<GameMGR>
 
     public Batch batch;
     public TimerSound timerSound;
+
 
     private void Awake()
     {
@@ -49,7 +50,7 @@ public partial class GameMGR : Singleton<GameMGR>
         if (myCustomDeck != null)
         {
             photonLauncher.OnClick_Join_Room();
-           // SceneManager.LoadScene("StoreScene");
+            // SceneManager.LoadScene("StoreScene");
         }
         else Debug.Log("덱선택");
     }
@@ -66,6 +67,7 @@ public partial class GameMGR : Singleton<GameMGR>
     }
     public void Init(int num)
     {
+        // Lobby Scene
         if (num == 1)
         {
             audioMGR = GetComponent<AudioMGR>();
@@ -79,7 +81,9 @@ public partial class GameMGR : Singleton<GameMGR>
             uiManager.Init_Scene1();
             shopCards.Init();
         }
-        else if (num==2)
+
+        // Store Scene
+        else if (num == 2)
         {
             spawner = FindObjectOfType<Spawner>();
             uiManager = FindObjectOfType<UIManager>();
@@ -88,6 +92,8 @@ public partial class GameMGR : Singleton<GameMGR>
             batch = FindObjectOfType<Batch>();
             battleLogic = FindObjectOfType<BattleLogic>();
             timerSound = FindObjectOfType<TimerSound>();
+
+            audioMGR.StoreSceneBGM(true);
         }
     }
 }

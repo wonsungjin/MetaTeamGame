@@ -2,35 +2,22 @@ using UnityEngine;
 
 public class BattleZone : MonoBehaviour
 {
-    AudioSource audioSource;
     public bool isHere = false;
     [SerializeField] int myNum; // 상점 유닛 배치 순서 (0~5)
-
-    private void Start()
-    {
-        this.audioSource = gameObject.GetComponent<AudioSource>();
-    }
+    public GameObject myObj = null;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Monster") || collision.gameObject.CompareTag("FreezeCard"))
-        {
-            SoundStart();
-        }
-
         if (collision.gameObject.CompareTag("BattleMonster") || collision.gameObject.CompareTag("BattleMonster2") || collision.gameObject.CompareTag("BattleMonster3"))
         {
+            collision.gameObject.transform.parent.position=gameObject.transform.position + Vector3.down;
+            collision.gameObject.GetComponent<Drag2D>().pos = this;
             this.isHere = true;
             this.gameObject.tag = "FullZone";
             GameMGR.Instance.spawner.cardBatch[myNum] = collision.gameObject;
         }
     }
 
-    void SoundStart()
-    {
-        this.audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.UI, "Public_landing");
-        this.audioSource.Play();
-    }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
@@ -38,6 +25,7 @@ public class BattleZone : MonoBehaviour
 
         if (collision.gameObject.CompareTag("BattleMonster") || collision.gameObject.CompareTag("BattleMonster2") || collision.gameObject.CompareTag("BattleMonster3"))
         {
+            myObj = null;
             this.gameObject.tag = "BattleZone";
             GameMGR.Instance.spawner.cardBatch[myNum] = null;
         }
