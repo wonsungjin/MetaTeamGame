@@ -208,14 +208,8 @@ MonoBehaviour:
   level: 1
   curAttackValue: 2
   curHP: 2
-  curEXP: 9
+  curEXP: 0
   expSlider: {fileID: 6057858860043216486}
-  skillTarget: []
-  batchPos: {x: 0, y: 0}
-  targetPos: {x: 0, y: 0}
-  curPos: {fileID: 0}
-  giveDamage: 0
-  takeDamage: 0
 --- !u!114 &7470156499061917316
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -384,6 +378,10 @@ PrefabInstance:
     - target: {fileID: 2360689889277071081, guid: 306e3f38cec157842b453c50aac32a45, type: 3}
       propertyPath: m_text
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4137109519686450963, guid: 306e3f38cec157842b453c50aac32a45, type: 3}
+      propertyPath: m_Value
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8359877118856600461, guid: 306e3f38cec157842b453c50aac32a45, type: 3}
       propertyPath: m_RootOrder

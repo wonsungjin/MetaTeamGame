@@ -12,49 +12,46 @@ public partial class AttackLogic : Skill
     bool isArrive = false;
 
     float curTime = 0f;
+    float goalTime = 1f;
 
-    float goalTime = 10f;
+    WaitForFixedUpdate waitForFixedUpdate = new WaitForFixedUpdate();
 
 
-    private void Update()
+    private IEnumerator COR_Delay(GameObject targetUint)
     {
+        curTime = 0;
 
-    }
-
-    WaitForSeconds delayTime = new WaitForSeconds(0.15f);
-
-    IEnumerator COR_Delay(GameObject targetUint)
-    {
-
-        while (Vector2.Distance(gameObject.transform.position, targetUint.transform.position) > 1)
+        while (Vector2.Distance(gameObject.transform.parent.position, targetUint.transform.position) > 1)
         {
-            yield return delayTime;
+            curTime += Time.deltaTime;
 
             // Attack
-            gameObject.transform.position = Vector2.Lerp(playerTrans, enemyTrans, curTime / goalTime);
+            gameObject.transform.parent.position = Vector2.Lerp(playerTrans, enemyTrans, curTime / goalTime);
+
+            yield return waitForFixedUpdate;
         }
 
         curTime = 0f;
 
-        Destroy(targetUint);
+        targetUint.SetActive(false);
 
-        while (Vector2.Distance(gameObject.transform.position, targetUint.transform.position) > 1)
+        while (Vector2.Distance(gameObject.transform.parent.position, returnPosition) > 0)
         {
-            yield return delayTime;
-
+            curTime += Time.deltaTime;
 
             // return position
-            gameObject.transform.position = Vector2.Lerp(enemyTrans, returnPosition, curTime / goalTime);
+            gameObject.transform.parent.position = Vector2.Lerp(enemyTrans, returnPosition, curTime / goalTime);
+
+            yield return waitForFixedUpdate;
         }
         GameMGR.Instance.battleLogic.isWaitAttack = true;
-        yield return delayTime;
     }
     public void UnitAttack(GameObject targetUnit)
     {
-        playerTrans = gameObject.transform.position;
+        playerTrans = gameObject.transform.parent.position;
         enemyTrans = targetUnit.transform.position;
         returnPosition = playerTrans;
 
-        StartCoroutine(COR_Delay(targetUnit));
+        StartCoroutine(COR_Delay(targetUnit.transform.gameObject));
     }
 }

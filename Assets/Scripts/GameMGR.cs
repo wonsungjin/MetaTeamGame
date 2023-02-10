@@ -21,6 +21,7 @@ public partial class GameMGR : Singleton<GameMGR>
     public Batch batch;
     public TimerSound timerSound;
 
+
     private void Awake()
     {
         Init(1);

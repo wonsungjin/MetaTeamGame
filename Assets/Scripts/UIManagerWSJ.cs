@@ -141,7 +141,7 @@ public partial class UIManager : MonoBehaviour
         packChoicePannel.SetActive(false);
         myDeckPannel.SetActive(false);
         lobbyPannel.SetActive(true);
-        cardPannel.SetActive(false);
+        menuPannel.SetActive(false);
     }
     public MyDeck[] myDecks;
     public void OnClick_Move_Back()
