@@ -27,7 +27,7 @@ public partial class Card : MonoBehaviour
     private void Awake()
     {
         SetMyInfo(name);
-        audioSource = gameObject.GetComponent<AudioSource>();
+        audioSource = gameObject.GetComponent<AudioSource>();        
     }
 
     /*자신의 오브젝트 이름과 같은 스크립터블 데이터를 읽어와서 설정한다

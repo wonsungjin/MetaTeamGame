@@ -29333,12 +29333,6 @@ MonoBehaviour:
   curHP: 0
   curEXP: 0
   expSlider: {fileID: 0}
-  skillTarget: []
-  batchPos: {x: 0, y: 0}
-  targetPos: {x: 0, y: 0}
-  curPos: {fileID: 0}
-  giveDamage: 0
-  takeDamage: 0
 --- !u!114 &1244862510948258122
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29352,7 +29346,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFreezen: 0
-  isBattleMonsterCom: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   outlineSize: 5
 --- !u!114 &1291620875117074756
@@ -29381,7 +29374,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFreezen: 0
-  isBattleMonsterCom: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   outlineSize: 5
 --- !u!114 &1515495743952482376
@@ -29442,12 +29434,6 @@ MonoBehaviour:
   curHP: 0
   curEXP: 0
   expSlider: {fileID: 0}
-  skillTarget: []
-  batchPos: {x: 0, y: 0}
-  targetPos: {x: 0, y: 0}
-  curPos: {fileID: 0}
-  giveDamage: 0
-  takeDamage: 0
 --- !u!50 &1683130933639958611
 Rigidbody2D:
   serializedVersion: 4
@@ -29566,12 +29552,6 @@ MonoBehaviour:
   curHP: 0
   curEXP: 0
   expSlider: {fileID: 0}
-  skillTarget: []
-  batchPos: {x: 0, y: 0}
-  targetPos: {x: 0, y: 0}
-  curPos: {fileID: 0}
-  giveDamage: 0
-  takeDamage: 0
 --- !u!50 &1891945566863584470
 Rigidbody2D:
   serializedVersion: 4
@@ -29614,12 +29594,6 @@ MonoBehaviour:
   curHP: 0
   curEXP: 0
   expSlider: {fileID: 0}
-  skillTarget: []
-  batchPos: {x: 0, y: 0}
-  targetPos: {x: 0, y: 0}
-  curPos: {fileID: 0}
-  giveDamage: 0
-  takeDamage: 0
 --- !u!114 &1926938376398959714
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29633,7 +29607,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFreezen: 0
-  isBattleMonsterCom: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   outlineSize: 5
 --- !u!61 &2005038988803654192
@@ -29704,12 +29677,6 @@ MonoBehaviour:
   curHP: 0
   curEXP: 0
   expSlider: {fileID: 0}
-  skillTarget: []
-  batchPos: {x: 0, y: 0}
-  targetPos: {x: 0, y: 0}
-  curPos: {fileID: 0}
-  giveDamage: 0
-  takeDamage: 0
 --- !u!50 &2221145007596496290
 Rigidbody2D:
   serializedVersion: 4
@@ -29752,12 +29719,6 @@ MonoBehaviour:
   curHP: 0
   curEXP: 0
   expSlider: {fileID: 0}
-  skillTarget: []
-  batchPos: {x: 0, y: 0}
-  targetPos: {x: 0, y: 0}
-  curPos: {fileID: 0}
-  giveDamage: 0
-  takeDamage: 0
 --- !u!61 &2382412561666352698
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -30091,7 +30052,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFreezen: 0
-  isBattleMonsterCom: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   outlineSize: 5
 --- !u!114 &2906178929051865309
@@ -30653,7 +30613,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFreezen: 0
-  isBattleMonsterCom: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   outlineSize: 5
 --- !u!4 &4233808528980680444
@@ -30822,12 +30781,6 @@ MonoBehaviour:
   curHP: 0
   curEXP: 0
   expSlider: {fileID: 0}
-  skillTarget: []
-  batchPos: {x: 0, y: 0}
-  targetPos: {x: 0, y: 0}
-  curPos: {fileID: 0}
-  giveDamage: 0
-  takeDamage: 0
 --- !u!114 &4790532487075826102
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30841,7 +30794,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFreezen: 0
-  isBattleMonsterCom: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   outlineSize: 5
 --- !u!114 &4868000019058711343
@@ -30857,7 +30809,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFreezen: 0
-  isBattleMonsterCom: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   outlineSize: 5
 --- !u!114 &4934653738793044118
@@ -30951,7 +30902,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFreezen: 0
-  isBattleMonsterCom: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   outlineSize: 5
 --- !u!23 &5369682703593627813
@@ -31135,7 +31085,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFreezen: 0
-  isBattleMonsterCom: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   outlineSize: 5
 --- !u!114 &5631299769597118456
@@ -31159,12 +31108,6 @@ MonoBehaviour:
   curHP: 1
   curEXP: 9
   expSlider: {fileID: 0}
-  skillTarget: []
-  batchPos: {x: 0, y: 0}
-  targetPos: {x: 0, y: 0}
-  curPos: {fileID: 0}
-  giveDamage: 0
-  takeDamage: 0
 --- !u!1 &6139308160527905803
 GameObject:
   m_ObjectHideFlags: 0
@@ -32009,7 +31952,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFreezen: 0
-  isBattleMonsterCom: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   outlineSize: 5
 --- !u!114 &7974875336583478582
@@ -32033,12 +31975,6 @@ MonoBehaviour:
   curHP: 0
   curEXP: 0
   expSlider: {fileID: 0}
-  skillTarget: []
-  batchPos: {x: 0, y: 0}
-  targetPos: {x: 0, y: 0}
-  curPos: {fileID: 0}
-  giveDamage: 0
-  takeDamage: 0
 --- !u!61 &7974875336583478583
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -32099,12 +32035,6 @@ MonoBehaviour:
   curHP: 0
   curEXP: 0
   expSlider: {fileID: 0}
-  skillTarget: []
-  batchPos: {x: 0, y: 0}
-  targetPos: {x: 0, y: 0}
-  curPos: {fileID: 0}
-  giveDamage: 0
-  takeDamage: 0
 --- !u!1 &7984887278620950173
 GameObject:
   m_ObjectHideFlags: 0
@@ -32373,7 +32303,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFreezen: 0
-  isBattleMonsterCom: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   outlineSize: 5
 --- !u!4 &8791788864277599032
@@ -32446,9 +32375,3 @@ MonoBehaviour:
   curHP: 0
   curEXP: 0
   expSlider: {fileID: 0}
-  skillTarget: []
-  batchPos: {x: 0, y: 0}
-  targetPos: {x: 0, y: 0}
-  curPos: {fileID: 0}
-  giveDamage: 0
-  takeDamage: 0
