@@ -65,6 +65,13 @@ public class AudioMGR : MonoBehaviour
         return audioClip;
     }
 
+    #region storeScene Audio
+    public void SoundMouseClick()
+    {
+        StoreAudioSource.clip = ReturnAudioClip(Type.UI, "sweeping_sound");
+        StoreAudioSource.Play();
+    }
+
     public void StoreSceneBGM(bool isStoreScene)
     {
         StoreBGM = GameObject.Find("BackImage").GetComponent<AudioSource>();
@@ -80,6 +87,8 @@ public class AudioMGR : MonoBehaviour
         StoreAudioSource.clip = ReturnAudioClip(Type.UI, "Public_landing");
         StoreAudioSource.Play();
     }
+    #endregion
+
 
     #region BattleScene Audio
     public void BattleAudioInit()
