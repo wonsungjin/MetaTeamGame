@@ -461,7 +461,6 @@ public class Spawner : MonoBehaviourPun
         Debug.Log(monsterNames[randomNum]);
         GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum]}"),
             monsterTrans[randomTrans].transform.position - vec, Quaternion.identity);
-        monsterTrans[randomTrans].NullObj();
 
         randomTrans++;
     }
