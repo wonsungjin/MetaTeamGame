@@ -95,6 +95,8 @@ public class AudioMGR : MonoBehaviour
         StoreAudioSource.Play();
     }
 
+   
+
     public void BattleSceneBGM(bool isBattleScene)
     {
         BattleBGM = GameObject.Find("BackGround").GetComponent<AudioSource>();
