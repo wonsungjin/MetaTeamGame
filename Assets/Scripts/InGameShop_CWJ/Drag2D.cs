@@ -15,7 +15,6 @@ public partial class Drag2D : MonoBehaviour
     MeshRenderer spriteRenderer;
     public BattleZone pos;
     Vector2 selectZonePos;
-    Vector2 meltPos;
     Vector3 monsterPos = new Vector3(0, -0.6f, 0);
 
     float timer = 0f;
@@ -93,6 +92,14 @@ public partial class Drag2D : MonoBehaviour
         }
     }
 
+    void ClickMouseSound(Collider2D collider)
+    {
+        if(collider == null)
+        {
+
+        }
+    }
+
     private void OnMouseUp()
     {
         UpdateOutline(false);
@@ -139,7 +146,6 @@ public partial class Drag2D : MonoBehaviour
                     if (collision.gameObject.CompareTag("BattleZone"))
                     {
                         GameMGR.Instance.audioMGR.SoundSell();
-                        meltPos = collision.gameObject.transform.position;
                         Vector2 monTras = gameObject.transform.parent.localScale;
                         gameObject.transform.parent.localScale = monTras * 2;
                         BackMeltBuy(collision);
@@ -189,7 +195,7 @@ public partial class Drag2D : MonoBehaviour
             }
 
 
-            if(gameObject.name == collision.gameObject.name)
+            if (gameObject.name == collision.gameObject.name)
             {
                 if (gameObject.CompareTag("BattleMonster") || gameObject.CompareTag("BattleMonster2"))
                 {
@@ -208,7 +214,7 @@ public partial class Drag2D : MonoBehaviour
                 }
             }
 
-            if(collision.gameObject.CompareTag("BattleMonster3"))
+            if (collision.gameObject.CompareTag("BattleMonster3"))
             {
                 return;
             }
@@ -303,7 +309,7 @@ public partial class Drag2D : MonoBehaviour
     }
 
 
-void BackMeltBuy(Collider2D collision)
+    void BackMeltBuy(Collider2D collision)
     {
         gameObject.tag = "BattleMonster";
         GameMGR.Instance.audioMGR.SoundSell();

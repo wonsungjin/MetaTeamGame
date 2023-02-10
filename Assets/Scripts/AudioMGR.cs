@@ -5,10 +5,10 @@ using UnityEngine;
 
 public class AudioMGR : MonoBehaviour
 {
-    // Clip Ä«Å×°í¸® ºÐ·ù¸¦ À§ÇÑ Enum
+    // Clip Ä«ï¿½×°ï¿½ï¿½ï¿½ ï¿½Ð·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Enum
     public enum Type { Background, Unit, UI, Effect };
 
-    // Type º° Audio Clip ºÐ·ù
+    // Type ï¿½ï¿½ Audio Clip ï¿½Ð·ï¿½
     [SerializeField] AudioClip[] BackGroundClip = null;
     [SerializeField] AudioClip[] UnitSFXClip = null;
     [SerializeField] AudioClip[] UISFXClip = null;
@@ -21,7 +21,7 @@ public class AudioMGR : MonoBehaviour
     AudioSource BattleBGM = null;
     AudioSource BattleAudio = null;
 
-    // AudioClip Name, AudioClipÀ¸·Î Dictionary »ý¼º
+    // AudioClip Name, AudioClipï¿½ï¿½ï¿½ï¿½ Dictionary ï¿½ï¿½ï¿½ï¿½
     Dictionary<string, AudioClip> BackgroundDic = new Dictionary<string, AudioClip>();
     Dictionary<string, AudioClip> UnitSFXDic = new Dictionary<string, AudioClip>();
     Dictionary<string, AudioClip> UISFXDic = new Dictionary<string, AudioClip>();
@@ -32,7 +32,7 @@ public class AudioMGR : MonoBehaviour
         Init();
     }
 
-    //  AudioClip NameÀ» Å°, AudioClipÀ» °ªÀ¸·Î Dictionary¿¡ Ãß°¡ 
+    //  AudioClip Nameï¿½ï¿½ Å°, AudioClipï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Dictionaryï¿½ï¿½ ï¿½ß°ï¿½ 
     private void Init()
     {
         for (int i = 0; i < BackGroundClip.Length; i++)
@@ -59,7 +59,7 @@ public class AudioMGR : MonoBehaviour
         StoreAudioSource = GetComponent<AudioSource>();
     }
 
-    // Å¸ Å¬·¡½º¿¡¼­ ÇÔ¼ö È£Ãâ ½Ã Type, ClipName¿¡ ¸Â´Â AudioClip ¹ÝÈ¯
+    // Å¸ Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½ È£ï¿½ï¿½ ï¿½ï¿½ Type, ClipNameï¿½ï¿½ ï¿½Â´ï¿½ AudioClip ï¿½ï¿½È¯
     public AudioClip ReturnAudioClip(Type AudioType, string clipName)
     {
         switch (AudioType.ToString())
@@ -96,7 +96,9 @@ public class AudioMGR : MonoBehaviour
         StoreAudioSource.Play();
     }
 
-    public void BattleAudioInit()
+   
+
+    public void BattleSceneBGM(bool isBattleScene)
     {
         BattleBGM = GameObject.Find("BackGround").GetComponent<AudioSource>();
         BattleAudio = GameObject.Find("BattleAudio").GetComponent<AudioSource>();
