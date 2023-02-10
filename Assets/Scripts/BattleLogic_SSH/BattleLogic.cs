@@ -53,8 +53,17 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
     #region PlayerList �ʱ�ȭ
     public void InitPlayerList()
     {
-        for (int i = 0; i < playerForwardUnits.Length; i++) { playerAttackArray[i] = playerForwardUnits[i]; }
-        for (int i = 0; i < playerBackwardUnits.Length; i++) { playerAttackArray[i + 3] = playerBackwardUnits[i]; }
+        for (int i = 0; i < playerForwardUnits.Length; i++) 
+        { 
+            playerAttackArray[i] = playerForwardUnits[i];
+            GameMGR.Instance.resultSceneUI.playerArrangement[i] = playerForwardUnits[i];
+        }
+
+        for (int i = 0; i < playerBackwardUnits.Length; i++) 
+        {
+            playerAttackArray[i + 3] = playerBackwardUnits[i];
+            GameMGR.Instance.resultSceneUI.playerArrangement[i+3] = playerBackwardUnits[i];
+        }
     }
     #endregion
 
@@ -806,22 +815,18 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
     }
     #endregion
 
-    // �¸� ��
+    // Debug 용
     private void PlayerBattleWin()
     {
         GameObject.Find("firstAttack").GetComponent<TextMeshProUGUI>().text = isFirstAttack.ToString();
         GameObject.Find("resultText").GetComponent<TextMeshProUGUI>().text = "win";
         Debug.Log("Player Win");
-        // �¸� ���� �߰�
     }
 
-    // �й� ��
     private void PlayerBattleLose()
     {
         GameObject.Find("firstAttack").GetComponent<TextMeshProUGUI>().text = isFirstAttack.ToString();
         GameObject.Find("resultText").GetComponent<TextMeshProUGUI>().text = "lose";
         Debug.Log("Player Lose");
-        // �й� ���� �߰�
     }
-
 }

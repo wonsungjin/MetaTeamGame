@@ -121,7 +121,7 @@ public class Spawner : MonoBehaviourPun
         //}
     }
 
-    public void TestButton()
+    public void ReturnStoreScene()
     {
         ChooseRandomCard();
         if (GameMGR.Instance.uiManager.shopLevel < 6 && GameMGR.Instance.uiManager.shopMoney > 0)

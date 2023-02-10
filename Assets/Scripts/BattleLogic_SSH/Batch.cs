@@ -118,7 +118,10 @@ public partial class Batch : MonoBehaviourPun
             }
             else { Debug.Log("CreateBatch : myCard �� Ȯ���ʿ�"); }
         }
-        if (myCard) GameMGR.Instance.battleLogic.InitPlayerList();
+        if (myCard) 
+        {
+            GameMGR.Instance.battleLogic.InitPlayerList();
+        }
         else GameMGR.Instance.battleLogic.InitEnemyList();
     }
 

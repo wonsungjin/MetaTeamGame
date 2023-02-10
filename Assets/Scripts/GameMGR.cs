@@ -17,6 +17,7 @@ public partial class GameMGR : Singleton<GameMGR>
     public Spawner spawner;
     public PhotonLauncher photonLauncher;
     public BattleLogic battleLogic;
+    public ResultSceneUI resultSceneUI;
 
     public Batch batch;
     public TimerSound timerSound;
@@ -91,9 +92,22 @@ public partial class GameMGR : Singleton<GameMGR>
             spawner.gameObject.GetPhotonView().RPC("StartSetting", RpcTarget.MasterClient);
             batch = FindObjectOfType<Batch>();
             battleLogic = FindObjectOfType<BattleLogic>();
+            resultSceneUI = FindObjectOfType<ResultSceneUI>();
             timerSound = FindObjectOfType<TimerSound>();
 
             audioMGR.StoreSceneBGM(true);
+        }
+
+        // BattleScene
+        else if (num == 3)
+        {
+
+        }
+
+        // RoundScene
+        else if (num == 4)
+        {
+
         }
     }
 }
