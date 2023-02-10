@@ -45,9 +45,10 @@ public class MetaTrendAPI : MonoBehaviour
 				Debug.Log("## " + response.ToString());
 				res_UserProfile = response;
 				Debug.Log("" + res_UserProfile.userProfile.username);
-				wallet_address= res_UserProfile.userProfile.public_address; 
-			}
-		});
+                wallet_address = res_UserProfile.userProfile.public_address;
+                GameMGR.Instance.stayAPI[0] = true;
+            }
+        });
 	}
 	delegate void resCallback_GetUserInfo(Res_UserProfile response);
 	IEnumerator requestGetUserInfo(resCallback_GetUserInfo callback)
@@ -75,9 +76,10 @@ public class MetaTrendAPI : MonoBehaviour
 			if (response != null)
 			{
 				Debug.Log("## " + response.ToString());
-				res_UserSessionID = response;
+                res_UserSessionID = response;
+                GameMGR.Instance.stayAPI[1] = true;
 			}
-		});
+        });
 	}
 	delegate void resCallback_GetSessionID(Res_UserSessionID response);
 	IEnumerator requestGetSessionID(resCallback_GetSessionID callback)
