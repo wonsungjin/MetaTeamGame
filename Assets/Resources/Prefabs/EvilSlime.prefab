@@ -52,6 +52,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: InfoText
       objectReference: {fileID: 0}
+    - target: {fileID: 4137109519686450963, guid: 306e3f38cec157842b453c50aac32a45, type: 3}
+      propertyPath: m_Value
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8359877118856600461, guid: 306e3f38cec157842b453c50aac32a45, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -279,7 +283,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.27775693, y: 2.0732644}
+  m_Offset: {x: -0.12, y: 0.84}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -290,63 +294,8 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.7172842, y: 4.35962}
+  m_Size: {x: 2.7172842, y: 2.5}
   m_EdgeRadius: 0
---- !u!114 &6134915860036294425
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6135456084182809244}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e05b8c94d5fb69948b8dd34210bf692f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skillType: 
---- !u!114 &6134915860036294628
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6135456084182809244}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cda88de653f299840b5c51af7dbe0bd2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isFreezen: 0
-  color: {r: 1, g: 0, b: 0, a: 1}
-  outlineSize: 5
---- !u!114 &6134915860036294631
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6135456084182809244}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2435f21eb5008146b871a8c0fa54c9c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cardInfo: {fileID: 11400000, guid: af557b8271198664daec1278aabdc6a3, type: 2}
-  hpText: {fileID: 8494144632399187183}
-  atkText: {fileID: 8494144633956486599}
-  levelText: {fileID: 8494144632481096833}
-  level: 1
-  curAttackValue: 1
-  curHP: 1
-  curEXP: 0
-  expSlider: {fileID: 7803170560863288597}
-  skillTarget: []
-  batchPos: {x: 0, y: 0}
-  targetPos: {x: 0, y: 0}
-  curPos: {fileID: 0}
-  giveDamage: 0
-  takeDamage: 0
 --- !u!82 &2416133355778940477
 AudioSource:
   m_ObjectHideFlags: 0
@@ -443,6 +392,55 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &6134915860036294425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6135456084182809244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e05b8c94d5fb69948b8dd34210bf692f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillType: 
+--- !u!114 &6134915860036294628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6135456084182809244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cda88de653f299840b5c51af7dbe0bd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isFreezen: 0
+  color: {r: 1, g: 0, b: 0, a: 1}
+  outlineSize: 5
+--- !u!114 &6134915860036294631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6135456084182809244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2435f21eb5008146b871a8c0fa54c9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardInfo: {fileID: 11400000, guid: af557b8271198664daec1278aabdc6a3, type: 2}
+  hpText: {fileID: 8494144632399187183}
+  atkText: {fileID: 8494144633956486599}
+  levelText: {fileID: 8494144632481096833}
+  level: 1
+  curAttackValue: 1
+  curHP: 1
+  curEXP: 0
+  expSlider: {fileID: 7803170560863288597}
 --- !u!4 &6139368758880310230 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4769834825843916, guid: bf9070cc71aa742448b0cb9c177aace0, type: 3}

@@ -157,7 +157,7 @@ public class Spawner : MonoBehaviourPun
         }
         else if (GameMGR.Instance.uiManager.shopMoney > GameMGR.Instance.uiManager.goldCount)
         {
-            audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.UI, "PublicLevelupFail");
+            audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.UI, "fail_sound");
             audioSource.Play();
         }
     }
@@ -170,25 +170,25 @@ public class Spawner : MonoBehaviourPun
             case 2:
                 GameMGR.Instance.uiManager.shopMoney = 8;
                 GameMGR.Instance.uiManager.shopLevelTXT.text = "" + GameMGR.Instance.uiManager.shopMoney.ToString();
-                audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.UI, "Store_LevelUp");
+                audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.UI, "StoreLevelup_sound");
                 audioSource.Play();
                 break;
             case 3:
                 GameMGR.Instance.uiManager.shopMoney = 9;
                 GameMGR.Instance.uiManager.shopLevelTXT.text = "" + GameMGR.Instance.uiManager.shopMoney.ToString();
-                audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.UI, "Store_LevelUp");
+                audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.UI, "StoreLevelup_sound");
                 audioSource.Play();
                 break;
             case 4:
                 GameMGR.Instance.uiManager.shopMoney = 10;
                 GameMGR.Instance.uiManager.shopLevelTXT.text = "" + GameMGR.Instance.uiManager.shopMoney.ToString();
-                audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.UI, "Store_LevelUp");
+                audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.UI, "StoreLevelup_sound");
                 audioSource.Play();
                 break;
             case 5:
                 GameMGR.Instance.uiManager.shopMoney = 11;
                 GameMGR.Instance.uiManager.shopLevelTXT.text = "" + GameMGR.Instance.uiManager.shopMoney.ToString();
-                audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.UI, "Store_LevelUp");
+                audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.UI, "StoreLevelup_sound");
                 audioSource.Play();
                 break;
         }
@@ -217,7 +217,7 @@ public class Spawner : MonoBehaviourPun
         }
         else
         {
-            audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.UI, "PublicLevelupFail");
+            audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.UI, "fail_sound");
             audioSource.Play();
         }
     }

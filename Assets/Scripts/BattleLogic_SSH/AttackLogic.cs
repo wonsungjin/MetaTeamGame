@@ -1,3 +1,4 @@
+using MongoDB.Driver.Builders;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,21 +9,49 @@ public partial class AttackLogic : Skill
     Vector2 enemyTrans = Vector2.zero;
     Vector2 returnPosition = Vector2.zero;
 
+    bool isArrive = false;
+
+    float curTime = 0f;
+    float goalTime = 1f;
+
+    WaitForFixedUpdate waitForFixedUpdate = new WaitForFixedUpdate();
+
+
+    private IEnumerator COR_Delay(GameObject targetUint)
+    {
+        curTime = 0;
+
+        while (Vector2.Distance(gameObject.transform.parent.position, targetUint.transform.position) > 1)
+        {
+            curTime += Time.deltaTime;
+
+            // Attack
+            gameObject.transform.parent.position = Vector2.Lerp(playerTrans, enemyTrans, curTime / goalTime);
+
+            yield return waitForFixedUpdate;
+        }
+
+        curTime = 0f;
+
+        targetUint.SetActive(false);
+
+        while (Vector2.Distance(gameObject.transform.parent.position, returnPosition) > 0)
+        {
+            curTime += Time.deltaTime;
+
+            // return position
+            gameObject.transform.parent.position = Vector2.Lerp(enemyTrans, returnPosition, curTime / goalTime);
+
+            yield return waitForFixedUpdate;
+        }
+        GameMGR.Instance.battleLogic.isWaitAttack = true;
+    }
     public void UnitAttack(GameObject targetUnit)
     {
-        /*playerTrans = gameObject.transform.position;
+        playerTrans = gameObject.transform.parent.position;
         enemyTrans = targetUnit.transform.position;
         returnPosition = playerTrans;
 
-        // Attack
-        gameObject.transform.position = Vector2.Lerp(playerTrans, enemyTrans, 0.5f);
-
-        // return position
-        if (gameObject.transform.position.x == enemyTrans.x)
-        {
-            gameObject.transform.position = Vector2.Lerp(enemyTrans, returnPosition, 0.5f);
-        }*/
-
-        Destroy(targetUnit);
+        StartCoroutine(COR_Delay(targetUnit.transform.gameObject));
     }
 }

@@ -67,12 +67,12 @@ public partial class Card : MonoBehaviour
         switch (key)
         {
             case CardStatus.Hp:
-                curHP += value;
+                curHP = value;
                 hpText.text = curHP.ToString();
                 break;
 
             case CardStatus.Attack:
-                curAttackValue += value;
+                curAttackValue = value;
                 atkText.text = curAttackValue.ToString();
                 break;
 
@@ -80,7 +80,7 @@ public partial class Card : MonoBehaviour
                 if (level == 1)
                 {
                     Debug.Log("1레벨에서 렙업");
-                    audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.Unit, "Unit Merge");
+                    audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.Unit, "Mergesound");
                     audioSource.Play();
 
                     curEXP += value;
@@ -88,7 +88,7 @@ public partial class Card : MonoBehaviour
                     {
                         ChangeValue(CardStatus.Level);
                         gameObject.tag = "BattleMonster2";
-                        audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.Unit, "LevelUp");
+                        audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.Unit, "UnitLevelUP_sound");
                         audioSource.Play();
                     }
                     else expSlider.value = curEXP * 0.5f;
@@ -98,13 +98,13 @@ public partial class Card : MonoBehaviour
                 {
                     Debug.Log("2레벨에서 렙업");
                     curEXP += value;
-                    audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.Unit, "Unit Merge");
+                    audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.Unit, "Mergesound");
                     audioSource.Play();
                     if (curEXP >= 3)
                     {
                         ChangeValue(CardStatus.Level);
                         gameObject.tag = "BattleMonster3";
-                        audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.Unit, "LevelUp");
+                        audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.Unit, "UnitLevelUP_sound");
                         audioSource.Play();
                     }
                     else expSlider.value = curEXP * 0.33f;
