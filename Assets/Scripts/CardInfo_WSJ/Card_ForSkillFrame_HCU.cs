@@ -129,7 +129,7 @@ public partial class Card : MonoBehaviour
 
     public void SkillEffect() // 스킬 발동시 적용되는 효과
     {
-        skillTarget.Distinct().ToList();
+
         Debug.Log(skillTarget.Count + "스킬타겟 길이");
         Debug.Log("스킬효과 발동");
         switch (cardInfo.effectType)
@@ -210,8 +210,6 @@ public partial class Card : MonoBehaviour
         searchArea.Clear();
         skillTarget.Clear();
         Debug.Log("타겟을 찾는다");
-
-        
 
         if (GameMGR.Instance.isBattleNow)
         {
@@ -371,35 +369,30 @@ public partial class Card : MonoBehaviour
                 Debug.Log(searchArea.Count);
                 for (int i = 0; i < searchArea.Count; i++)
                 {
-                    if (searchArea[i] != null)
+                    if (searchArea[i] != null && searchArea[i] != this.transform.parent.gameObject)
                     {
                         targetArray.Add(searchArea[i].GetComponentInChildren<Card>());
                     }
                 }
                 Debug.Log(targetArray.Count);
-                int setMaxTarget = 0;
-                if (int.Parse(cardInfo.maxTarget) == searchArea.Count && targetArray.Contains(this))
-                {
-                    setMaxTarget = int.Parse(cardInfo.maxTarget) - 1;
-                }
-                else
-                {
-                    setMaxTarget = int.Parse(cardInfo.maxTarget);
-                }
-                for (int i = 0; i < setMaxTarget; i++)
+                
+                for (int i = 0; i < cardInfo.GetMaxTarget(cardInfo.level); i++)
                 {
                     random = Random.Range(0, targetArray.Count);
-                    if (targetArray[random].curHP <= 0 && targetArray[random] == this && !skillTarget.Contains(targetArray[random])) // 죽은 아군이 아닐 때까지 랜덤값을 돌려
+                    Debug.Log(random);
+                    Debug.Log(targetArray[random]);
+                    if (skillTarget.Contains(targetArray[random])) // 죽은 아군이 아닐 때까지 랜덤값을 돌려
                     {
                         i--;
                         continue;
                     }
                     skillTarget.Add(targetArray[random]);
+                    if (targetArray.Count < cardInfo.GetMaxTarget(cardInfo.level)) break;
                     Debug.Log("skillTarget에 Add함");
                 }
                 break;
 
-            case TargetType.front:       // 전열ㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇ
+            case TargetType.front:       // 전열ㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇ
                 Debug.Log("대상은 전열");
                 random = Random.Range(0, 3);
                 bool isAllDead = true;
