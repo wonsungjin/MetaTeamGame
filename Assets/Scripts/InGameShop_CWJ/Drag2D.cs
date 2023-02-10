@@ -92,14 +92,6 @@ public partial class Drag2D : MonoBehaviour
         }
     }
 
-    void ClickMouseSound(Collider2D collider)
-    {
-        if(collider == null)
-        {
-
-        }
-    }
-
     private void OnMouseUp()
     {
         UpdateOutline(false);

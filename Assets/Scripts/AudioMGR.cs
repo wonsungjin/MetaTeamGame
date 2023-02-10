@@ -95,7 +95,11 @@ public class AudioMGR : MonoBehaviour
         StoreAudioSource.Play();
     }
 
-   
+    public void SoundMouseClick()
+    {
+        StoreAudioSource.clip = ReturnAudioClip(Type.UI, "sweeping_sound");
+        StoreAudioSource.Play();
+    }
 
     public void BattleSceneBGM(bool isBattleScene)
     {
