@@ -27,6 +27,7 @@ public partial class Card : MonoBehaviour
     public void Attack(int damage, Card Target, bool isDirect, bool isFirst) // 자신이 공격시 호출하는 함수 // 주는 데미지, 때릴 대상 // 직접 공격이냐 아니냐 (공격 차례때 때리는 것 / 스킬데미지로 때리는 것) // 첫타 구분(무한루프 방지)
     {
         if (cardInfo.skillTiming == SkillTiming.attackBefore) SkillActive(); // 공격 전 효과 발동
+        GameMGR.Instance.audioMGR.BattleAttackSound(damage);
         Target.Hit(damage, this, isDirect, isFirst); // 지금부터 내가 너를 때리겠다는 말이야
         if (cardInfo.skillTiming == SkillTiming.attackAfter) SkillActive(); // 공격 후 효과 발동
     }
@@ -35,7 +36,6 @@ public partial class Card : MonoBehaviour
     {
         if (isDirect && isFirst == true) // 처음 직접 공격을 받았을 때만 응수를 하는 것이 응당 정당 타당 합당 마땅하다.
             Attacker.Hit(damage, this, true, false); // 니가 날 직접 때렸다면 나도 너를 때릴 것이다.
-
         this.curHP -= damage;
         if (this.curHP <= 0)
         {
