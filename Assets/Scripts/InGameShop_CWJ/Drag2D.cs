@@ -137,7 +137,7 @@ public partial class Drag2D : MonoBehaviour
                 {
                     if (collision.gameObject.CompareTag("BattleZone"))
                     {
-                        GameMGR.Instance.audioMGR.SoundSell();
+                        GameMGR.Instance.audioMGR.SoundBuy();
                         Vector2 monTras = gameObject.transform.parent.localScale;
                         gameObject.transform.parent.localScale = monTras * 2;
                         BackMeltBuy(collision);
@@ -159,7 +159,7 @@ public partial class Drag2D : MonoBehaviour
                 {
                     if (GameMGR.Instance.uiManager.goldCount >= 3)
                     {
-                        GameMGR.Instance.audioMGR.SoundSell();
+                        GameMGR.Instance.audioMGR.SoundBuy();
                         spriteRenderer.sortingLayerName = "SellTXT";
                         gameObject.tag = "BattleMonster";
                         GameMGR.Instance.uiManager.goldCount -= 3;

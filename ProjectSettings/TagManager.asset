@@ -20,6 +20,10 @@ TagManager:
   - BattleMonster2
   - BattleMonster3
   - BackImage
+  - ShopLevelUp
+  - Option
+  - AllButton
+  - RefreshButton
   layers:
   - Default
   - TransparentFX

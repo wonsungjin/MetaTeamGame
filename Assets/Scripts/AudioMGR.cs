@@ -72,10 +72,22 @@ public class AudioMGR : MonoBehaviour
         StoreAudioSource.Play();
     }
 
+    public void SoundButton()
+    {
+        StoreAudioSource.clip = ReturnAudioClip(Type.UI, "button_sound");
+        StoreAudioSource.Play();
+    }
+
+    public void SoundMonsterClick()
+    {
+        StoreAudioSource.clip = ReturnAudioClip(Type.UI, "pick_sound");
+        StoreAudioSource.Play();
+    }
+
     public void StoreSceneBGM(bool isStoreScene)
     {
         StoreBGM = GameObject.Find("BackImage").GetComponent<AudioSource>();
-        StoreBGM.clip = ReturnAudioClip(Type.Background, "Maintenance");
+        StoreBGM.clip = ReturnAudioClip(Type.Background, "MP_maintenanceBgm");
         StoreBGM.playOnAwake = isStoreScene;
         StoreBGM.loop = isStoreScene;
 
@@ -84,7 +96,13 @@ public class AudioMGR : MonoBehaviour
     }
     public void SoundSell()
     {
-        StoreAudioSource.clip = ReturnAudioClip(Type.UI, "Public_landing");
+        StoreAudioSource.clip = ReturnAudioClip(Type.UI, "gold +1");
+        StoreAudioSource.Play();
+    }
+
+    public void SoundBuy()
+    {
+        StoreAudioSource.clip = ReturnAudioClip(Type.UI, "gold -1");
         StoreAudioSource.Play();
     }
     #endregion
