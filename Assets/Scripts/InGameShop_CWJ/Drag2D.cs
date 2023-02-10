@@ -142,7 +142,7 @@ public partial class Drag2D : MonoBehaviour
                         meltPos = collision.gameObject.transform.position;
                         Vector2 monTras = gameObject.transform.parent.localScale;
                         gameObject.transform.parent.localScale = monTras * 2;
-                        BackMeltBuy();
+                        BackMeltBuy(collision);
                     }
                 }
             }
@@ -302,11 +302,14 @@ public partial class Drag2D : MonoBehaviour
         }
     }
 
-    void BackMeltBuy()
+
+void BackMeltBuy(Collider2D collision)
     {
         gameObject.tag = "BattleMonster";
-
-        this.gameObject.transform.parent.position = pos.gameObject.transform.position + Vector3.down;
+        GameMGR.Instance.audioMGR.SoundSell();
+        //Vector2 monTras = gameObject.transform.parent.localScale;
+        //gameObject.transform.parent.localScale = monTras;
+        pos = collision.GetComponent<BattleZone>();
         spriteRenderer.sortingOrder = 3;
         GameMGR.Instance.uiManager.goldCount -= 3;
         GameMGR.Instance.uiManager.goldTXT.text = "" + GameMGR.Instance.uiManager.goldCount.ToString();

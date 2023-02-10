@@ -18,4 +18,10 @@ public class TimerSound : MonoBehaviour
         m_AudioSource.Play();
         m_AudioSource.loop = true;
     }
+
+    public void TimeSoundEnd()
+    {
+        m_AudioSource.Stop();
+        m_AudioSource.loop = false;
+    }
 }
