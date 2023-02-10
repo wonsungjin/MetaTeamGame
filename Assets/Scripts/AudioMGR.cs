@@ -15,7 +15,10 @@ public class AudioMGR : MonoBehaviour
     [SerializeField] AudioClip[] EffectSFXClip = null;
 
     AudioClip audioClip = null;
-    AudioSource audioSource = null;
+    AudioSource StoreAudioSource = null;
+    AudioSource StoreBGM = null;
+    AudioSource BattleBGM = null;
+
 
     // AudioClip Name, AudioClip으로 Dictionary 생성
     Dictionary<string, AudioClip> BackgroundDic = new Dictionary<string, AudioClip>();
@@ -52,7 +55,7 @@ public class AudioMGR : MonoBehaviour
             EffectSFXDic.Add(EffectSFXClip[i].name, EffectSFXClip[i]);
         }
 
-        audioSource = GetComponent<AudioSource>();
+        StoreAudioSource = GetComponent<AudioSource>();
     }
 
     // 타 클래스에서 함수 호출 시 Type, ClipName에 맞는 AudioClip 반환
@@ -76,9 +79,30 @@ public class AudioMGR : MonoBehaviour
         return audioClip;
     }
 
+    public void StoreSceneBGM(bool isStoreScene)
+    {
+        StoreBGM = GameObject.Find("BackImage").GetComponent<AudioSource>();
+        StoreBGM.clip = ReturnAudioClip(Type.Background, "Maintenance");
+        StoreBGM.playOnAwake = isStoreScene;
+        StoreBGM.loop = isStoreScene;
+
+        if (isStoreScene) { StoreBGM.Play(); }
+        else if (!isStoreScene) { StoreBGM.Pause(); }
+    }
     public void SoundSell()
     {
-        audioSource.clip = ReturnAudioClip(Type.UI, "Public_landing");
-        audioSource.Play();
+        StoreAudioSource.clip = ReturnAudioClip(Type.UI, "Public_landing");
+        StoreAudioSource.Play();
+    }
+
+    public void BattleSceneBGM(bool isBattleScene)
+    {
+        BattleBGM = GameObject.Find("BackGround").GetComponent<AudioSource>();
+        BattleBGM.clip = ReturnAudioClip(Type.Background, "BattleBgm");
+        BattleBGM.playOnAwake = isBattleScene;
+        BattleBGM.loop = isBattleScene;
+
+        if (isBattleScene) { BattleBGM.Play(); }
+        else if (!isBattleScene) { BattleBGM.Pause(); }
     }
 }
