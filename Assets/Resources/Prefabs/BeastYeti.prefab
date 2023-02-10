@@ -243,6 +243,12 @@ MonoBehaviour:
   curHP: 0
   curEXP: 0
   expSlider: {fileID: 0}
+  skillTarget: []
+  batchPos: {x: 0, y: 0}
+  targetPos: {x: 0, y: 0}
+  curPos: {fileID: 0}
+  giveDamage: 0
+  takeDamage: 0
 --- !u!114 &5353236591561014367
 MonoBehaviour:
   m_ObjectHideFlags: 0

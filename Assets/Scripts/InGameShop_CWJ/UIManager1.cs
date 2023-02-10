@@ -26,7 +26,8 @@ public partial class UIManager : MonoBehaviour
     private bool isScene = false;
 
     public bool isTimeOver = false;
-    bool isTimeOEnd = false;
+    bool isTimerOut = false;
+
     public void Init_Scene2()
     {
         storePannel = GameObject.Find("StorePannel");
@@ -53,25 +54,19 @@ public partial class UIManager : MonoBehaviour
     {
         if (!isScene) return;
 
-        if(isTimeOEnd == false)
-        {
-            // 시간이 변경한 만큼 slider Value 변경을 합니다.
-            timer -= Time.deltaTime;
-            timerSlider.fillAmount = timer / 100 * 1.667f;
-            timerTXT.text = string.Format("Time : {0:N0}sec", timer);
-        }
-          
-        if (timerSlider.fillAmount <= 0.2f && timerSlider.fillAmount >= 0.2f) timerSound();
-        else if (timerSlider.fillAmount <= 0f)
-        {
-            GameMGR.Instance.timerSound.TimeSoundEnd();
-            isTimeOEnd = true;
-            timer = 0f;
-        }
+        // 시간이 변경한 만큼 slider Value 변경을 합니다.
+        timer -= Time.deltaTime;
+        timerSlider.fillAmount = timer / 100 * 1.667f;
+        timerTXT.text = string.Format("Time : {0:N0}sec", timer);
+
+        if(isTimerOut == false)
+        if (timerSlider.fillAmount <= 0.2f) timerSound();
+
     }
 
     void timerSound()
     {
+        isTimerOut = true;
         GameMGR.Instance.timerSound.TimeSound();
     }
 
