@@ -54,6 +54,7 @@ public partial class Card : MonoBehaviour
         //SetSkillTiming();
         transform.parent.gameObject.transform.localScale = Vector3.one;
     }
+
     public void SetFlip(bool isSet)
     {
         skeletonAnimation.SetFlip(isSet);
@@ -117,6 +118,7 @@ public partial class Card : MonoBehaviour
                 level++;
                 levelText.text = level.ToString();
                 GameMGR.Instance.spawner.SpecialMonster();
+
 
                 break;
         }
