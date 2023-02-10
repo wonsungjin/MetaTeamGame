@@ -24,6 +24,7 @@ public partial class GameMGR : Singleton<GameMGR>
 
     private void Awake()
     {
+        WaitForSeconds ww = new WaitForSeconds(1f);
         Init(1);
     }
     private void Start()
@@ -55,15 +56,15 @@ public partial class GameMGR : Singleton<GameMGR>
         else Debug.Log("덱선택");
     }
 
-
+    public bool[] stayAPI = new bool[2];
     IEnumerator COR_GetCoin()
     {
-        yield return new WaitForSeconds(0.5f);
-        //metaTrendAPI.GetCoin(100);
+     //   metaTrendAPI.GetCoin(100);
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitUntil(() => stayAPI[0]);
+        yield return new WaitUntil(() => stayAPI[1]);
         dataBase.Login();
-        //Debug.Log(metaTrendAPI.GetZera());
+        Debug.Log("???"+metaTrendAPI.GetZera());
     }
     public void Init(int num)
     {
