@@ -25664,7 +25664,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2063491190, guid: a4f20f45cd3327f448bc2e26e4fe7e10, type: 3}
       propertyPath: UISFXClip.Array.size
-      value: 16
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 2063491190, guid: a4f20f45cd3327f448bc2e26e4fe7e10, type: 3}
       propertyPath: UnitSFXClip.Array.size
@@ -25738,6 +25738,10 @@ PrefabInstance:
       propertyPath: UISFXClip.Array.data[15]
       value: 
       objectReference: {fileID: 8300000, guid: 0f3c4e38898270f45bb4747698550bb1, type: 3}
+    - target: {fileID: 2063491190, guid: a4f20f45cd3327f448bc2e26e4fe7e10, type: 3}
+      propertyPath: UISFXClip.Array.data[16]
+      value: 
+      objectReference: {fileID: 8300000, guid: 594391597c2cb8640b8504fad5f74499, type: 3}
     - target: {fileID: 2063491190, guid: a4f20f45cd3327f448bc2e26e4fe7e10, type: 3}
       propertyPath: BackGroundClip.Array.size
       value: 3
@@ -29381,6 +29385,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cda88de653f299840b5c51af7dbe0bd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pos: {fileID: 0}
   isFreezen: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   outlineSize: 5
@@ -29409,6 +29414,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cda88de653f299840b5c51af7dbe0bd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pos: {fileID: 0}
   isFreezen: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   outlineSize: 5
@@ -29642,6 +29648,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cda88de653f299840b5c51af7dbe0bd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pos: {fileID: 0}
   isFreezen: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   outlineSize: 5
@@ -30087,6 +30094,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cda88de653f299840b5c51af7dbe0bd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pos: {fileID: 0}
   isFreezen: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   outlineSize: 5
@@ -30648,6 +30656,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cda88de653f299840b5c51af7dbe0bd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pos: {fileID: 0}
   isFreezen: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   outlineSize: 5
@@ -30829,6 +30838,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cda88de653f299840b5c51af7dbe0bd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pos: {fileID: 0}
   isFreezen: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   outlineSize: 5
@@ -30844,6 +30854,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cda88de653f299840b5c51af7dbe0bd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pos: {fileID: 0}
   isFreezen: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   outlineSize: 5
@@ -30937,6 +30948,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cda88de653f299840b5c51af7dbe0bd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pos: {fileID: 0}
   isFreezen: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   outlineSize: 5
@@ -31120,6 +31132,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cda88de653f299840b5c51af7dbe0bd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pos: {fileID: 0}
   isFreezen: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   outlineSize: 5
@@ -31987,6 +32000,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cda88de653f299840b5c51af7dbe0bd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pos: {fileID: 0}
   isFreezen: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   outlineSize: 5
@@ -32338,6 +32352,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cda88de653f299840b5c51af7dbe0bd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pos: {fileID: 0}
   isFreezen: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   outlineSize: 5
