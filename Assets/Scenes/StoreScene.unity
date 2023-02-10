@@ -12700,6 +12700,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7295486280297039322, guid: 5932caa388b502043953641bebb9587d, type: 3}
+      propertyPath: sceneViewId
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 9101011557450202023, guid: 5932caa388b502043953641bebb9587d, type: 3}
       propertyPath: m_Name
       value: BattleScene

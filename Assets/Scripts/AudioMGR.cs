@@ -96,14 +96,11 @@ public class AudioMGR : MonoBehaviour
         StoreAudioSource.Play();
     }
 
-   
-
-    public void BattleSceneBGM(bool isBattleScene)
+    public void BattleAudioInit()
     {
         BattleBGM = GameObject.Find("BackGround").GetComponent<AudioSource>();
         BattleAudio = GameObject.Find("BattleAudio").GetComponent<AudioSource>();
     }
-
 
     public void BattleSceneBGM(bool isBattleScene)
     {
@@ -119,7 +116,6 @@ public class AudioMGR : MonoBehaviour
     {
         if (isResult)
         {
-
 
 
         }
