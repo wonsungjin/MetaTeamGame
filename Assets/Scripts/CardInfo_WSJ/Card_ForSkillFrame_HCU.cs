@@ -392,7 +392,7 @@ public partial class Card : MonoBehaviour
                 }
                 break;
 
-            case TargetType.front:       // 穿伸じしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじし
+            case TargetType.front:      // 穿伸じしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじし
                 Debug.Log("企雌精 穿伸");
                 random = Random.Range(0, 3);
                 bool isAllDead = true;
