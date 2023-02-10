@@ -182,6 +182,9 @@ public partial class Drag2D : MonoBehaviour
                         GameMGR.Instance.uiManager.goldCount -= 3;
                         GameMGR.Instance.uiManager.goldTXT.text = "" + GameMGR.Instance.uiManager.goldCount.ToString();
                         ShopCardLevelUp(collision.gameObject);
+
+                        if (card.cardInfo.skillTiming == SkillTiming.buy)
+                            card.SkillActive2(card);
                     }
                 }
             }
