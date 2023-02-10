@@ -6,7 +6,7 @@ using UnityEngine;
 public class AudioMGR : MonoBehaviour
 {
     // Clip 카테고리 분류를 위한 Enum
-    public enum Type { Background, Unit, UI, Effect };
+    public enum Type { Background, Unit, UI, Effect};
 
     // Type 별 Audio Clip 분류
     [SerializeField] AudioClip[] BackGroundClip = null;
@@ -15,10 +15,6 @@ public class AudioMGR : MonoBehaviour
     [SerializeField] AudioClip[] EffectSFXClip = null;
 
     AudioClip audioClip = null;
-    AudioSource StoreAudioSource = null;
-    AudioSource StoreBGM = null;
-    AudioSource BattleBGM = null;
-
 
     // AudioClip Name, AudioClip으로 Dictionary 생성
     Dictionary<string, AudioClip> BackgroundDic = new Dictionary<string, AudioClip>();
@@ -28,7 +24,7 @@ public class AudioMGR : MonoBehaviour
 
     private void Awake()
     {
-        Init();
+       Init();
     }
 
     //  AudioClip Name을 키, AudioClip을 값으로 Dictionary에 추가 
@@ -54,8 +50,6 @@ public class AudioMGR : MonoBehaviour
         {
             EffectSFXDic.Add(EffectSFXClip[i].name, EffectSFXClip[i]);
         }
-
-        StoreAudioSource = GetComponent<AudioSource>();
     }
 
     // 타 클래스에서 함수 호출 시 Type, ClipName에 맞는 AudioClip 반환
@@ -77,34 +71,5 @@ public class AudioMGR : MonoBehaviour
                 break;
         }
         return audioClip;
-    }
-
-    public void StoreSceneBGM(bool isStoreScene)
-    {
-        StoreBGM = GameObject.Find("BackImage").GetComponent<AudioSource>();
-        StoreBGM.clip = ReturnAudioClip(Type.Background, "Maintenance");
-        StoreBGM.playOnAwake = isStoreScene;
-        StoreBGM.loop = isStoreScene;
-
-        if (isStoreScene) { StoreBGM.Play(); }
-        else if (!isStoreScene) { StoreBGM.Pause(); }
-    }
-    public void SoundSell()
-    {
-        StoreAudioSource.clip = ReturnAudioClip(Type.UI, "Public_landing");
-        StoreAudioSource.Play();
-    }
-
-   
-
-    public void BattleSceneBGM(bool isBattleScene)
-    {
-        BattleBGM = GameObject.Find("BackGround").GetComponent<AudioSource>();
-        BattleBGM.clip = ReturnAudioClip(Type.Background, "BattleBgm");
-        BattleBGM.playOnAwake = isBattleScene;
-        BattleBGM.loop = isBattleScene;
-
-        if (isBattleScene) { BattleBGM.Play(); }
-        else if (!isBattleScene) { BattleBGM.Pause(); }
     }
 }
