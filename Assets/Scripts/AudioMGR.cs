@@ -17,8 +17,9 @@ public class AudioMGR : MonoBehaviour
     AudioClip audioClip = null;
     AudioSource StoreAudioSource = null;
     AudioSource StoreBGM = null;
+    
     AudioSource BattleBGM = null;
-
+    AudioSource BattleAudio = null;
 
     // AudioClip Name, AudioClip으로 Dictionary 생성
     Dictionary<string, AudioClip> BackgroundDic = new Dictionary<string, AudioClip>();
@@ -95,14 +96,30 @@ public class AudioMGR : MonoBehaviour
         StoreAudioSource.Play();
     }
 
-    public void BattleSceneBGM(bool isBattleScene)
+    public void BattleAudioInit()
     {
         BattleBGM = GameObject.Find("BackGround").GetComponent<AudioSource>();
+        BattleAudio = GameObject.Find("BattleAudio").GetComponent<AudioSource>();
+    }
+
+
+    public void BattleSceneBGM(bool isBattleScene)
+    {
         BattleBGM.clip = ReturnAudioClip(Type.Background, "BattleBgm");
         BattleBGM.playOnAwake = isBattleScene;
         BattleBGM.loop = isBattleScene;
 
         if (isBattleScene) { BattleBGM.Play(); }
         else if (!isBattleScene) { BattleBGM.Pause(); }
+    }
+
+    public void BattleRoundResult(bool isResult)
+    {
+        if (isResult)
+        {
+
+
+
+        }
     }
 }
