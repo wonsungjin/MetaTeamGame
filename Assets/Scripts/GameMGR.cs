@@ -9,7 +9,7 @@ public partial class GameMGR : Singleton<GameMGR>
     public DataBase dataBase;
     public ObjectPool objectPool;
     public AudioMGR audioMGR;
-
+    
     public CustomDeckShop customDeckShop;
     public ShopCards shopCards;
 
@@ -17,13 +17,14 @@ public partial class GameMGR : Singleton<GameMGR>
     public Spawner spawner;
     public PhotonLauncher photonLauncher;
     public BattleLogic battleLogic;
+    public ResultSceneUI resultSceneUI;
 
     public Batch batch;
     public TimerSound timerSound;
 
-
     private void Awake()
     {
+        WaitForSeconds ww = new WaitForSeconds(1f);
         Init(1);
     }
     private void Start()
@@ -50,24 +51,23 @@ public partial class GameMGR : Singleton<GameMGR>
         if (myCustomDeck != null)
         {
             photonLauncher.OnClick_Join_Room();
-            // SceneManager.LoadScene("StoreScene");
+           // SceneManager.LoadScene("StoreScene");
         }
         else Debug.Log("덱선택");
     }
 
-
+    public bool[] stayAPI = new bool[2];
     IEnumerator COR_GetCoin()
     {
-        yield return new WaitForSeconds(0.5f);
-        //metaTrendAPI.GetCoin(100);
+     //   metaTrendAPI.GetCoin(100);
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitUntil(() => stayAPI[0]);
+        yield return new WaitUntil(() => stayAPI[1]);
         dataBase.Login();
-        //Debug.Log(metaTrendAPI.GetZera());
+        Debug.Log("???"+metaTrendAPI.GetZera());
     }
     public void Init(int num)
     {
-        // Lobby Scene
         if (num == 1)
         {
             audioMGR = GetComponent<AudioMGR>();
@@ -81,9 +81,7 @@ public partial class GameMGR : Singleton<GameMGR>
             uiManager.Init_Scene1();
             shopCards.Init();
         }
-
-        // Store Scene
-        else if (num == 2)
+        else if (num==2)
         {
             spawner = FindObjectOfType<Spawner>();
             uiManager = FindObjectOfType<UIManager>();
@@ -91,9 +89,20 @@ public partial class GameMGR : Singleton<GameMGR>
             spawner.gameObject.GetPhotonView().RPC("StartSetting", RpcTarget.MasterClient);
             batch = FindObjectOfType<Batch>();
             battleLogic = FindObjectOfType<BattleLogic>();
+            resultSceneUI = FindObjectOfType<ResultSceneUI>();
             timerSound = FindObjectOfType<TimerSound>();
+        }
 
-            audioMGR.StoreSceneBGM(true);
+        // BattleScene
+        else if (num == 3)
+        {
+
+        }
+
+        // RoundScene
+        else if (num == 4)
+        {
+
         }
     }
 }

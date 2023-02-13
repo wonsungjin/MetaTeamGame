@@ -19,6 +19,7 @@ TagManager:
   - Enemy
   - BattleMonster2
   - BattleMonster3
+  - BackImage
   layers:
   - Default
   - TransparentFX

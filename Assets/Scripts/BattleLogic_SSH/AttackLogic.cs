@@ -32,7 +32,7 @@ public partial class AttackLogic : Skill
         }
 
         curTime = 0f;
-
+        //is delvoewafafcajff
         targetUint.SetActive(false);
 
         while (Vector2.Distance(gameObject.transform.parent.position, returnPosition) > 0)

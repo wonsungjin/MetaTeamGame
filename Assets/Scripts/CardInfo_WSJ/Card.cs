@@ -27,7 +27,7 @@ public partial class Card : MonoBehaviour
     private void Awake()
     {
         SetMyInfo(name);
-        audioSource = gameObject.GetComponent<AudioSource>();        
+        audioSource = gameObject.GetComponent<AudioSource>();
     }
 
     /*자신의 오브젝트 이름과 같은 스크립터블 데이터를 읽어와서 설정한다
@@ -51,10 +51,9 @@ public partial class Card : MonoBehaviour
         level = 1;
         levelText.text = level.ToString();
         skeletonAnimation = GetComponent<SkeletonAnimation>();
-        //SetSkillTiming();
+        SetSkillTiming();
         transform.parent.gameObject.transform.localScale = Vector3.one;
     }
-
     public void SetFlip(bool isSet)
     {
         skeletonAnimation.SetFlip(isSet);
@@ -63,17 +62,27 @@ public partial class Card : MonoBehaviour
     {
         skeletonAnimation.AnimationState.SetAnimation(0, ani, isSet);
     }
-    public void ChangeValue(CardStatus key, int value = 0)
+    public void ChangeValue(CardStatus key, int value = 0,bool plus = false)
     {
         switch (key)
         {
             case CardStatus.Hp:
-                curHP = value;
+                if (plus == false) curHP = value;
+                else
+                {
+                    curHP += value;
+                }
+                
                 hpText.text = curHP.ToString();
                 break;
 
             case CardStatus.Attack:
-                curAttackValue = value;
+                if(plus == false) curAttackValue = value;
+                else
+                {
+                    curAttackValue += value;
+                }
+                    
                 atkText.text = curAttackValue.ToString();
                 break;
 
@@ -118,7 +127,6 @@ public partial class Card : MonoBehaviour
                 level++;
                 levelText.text = level.ToString();
                 GameMGR.Instance.spawner.SpecialMonster();
-
 
                 break;
         }

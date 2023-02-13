@@ -22,6 +22,7 @@ public enum SkillTiming     // 스킬이 발동되는 때
 public enum EffectTarget // 타겟 유형 - 적, 나, 아군 등
 {
     none,
+
     both,
     enemy,
     ally,
@@ -174,7 +175,7 @@ public class CardInfo : ScriptableObject
         {
             value = value1.Split(".");
         }
-        else if (valueNum == 1)
+        else if (valueNum == 2)
         {
             value = value2.Split(".");
         }

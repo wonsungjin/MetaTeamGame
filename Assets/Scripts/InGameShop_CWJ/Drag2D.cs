@@ -1,7 +1,6 @@
 using MongoDB.Driver;
 using System.Collections;
 using System.Data.Common;
-using Unity.Burst.CompilerServices;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -13,8 +12,9 @@ public partial class Drag2D : MonoBehaviour
     Card card;
     BoxCollider2D pol;
     MeshRenderer spriteRenderer;
-    public BattleZone pos;
+    Vector2 pos;
     Vector2 selectZonePos;
+    Vector2 meltPos;
     Vector3 monsterPos = new Vector3(0, -0.6f, 0);
 
     float timer = 0f;
@@ -29,6 +29,8 @@ public partial class Drag2D : MonoBehaviour
         spriteRenderer = GetComponent<MeshRenderer>();
         pol = GetComponent<BoxCollider2D>();
         card = GetComponent<Card>();
+
+        this.pos = this.gameObject.transform.parent.position;
         this.selectZonePos = this.transform.parent.position;
     }
 
@@ -55,7 +57,6 @@ public partial class Drag2D : MonoBehaviour
                     {
                         GameObject vec = GameObject.FindGameObjectWithTag("BattleZone");
                         hit.collider.gameObject.transform.parent.position = vec.transform.position + Vector3.down;
-                        vec.GetComponent<BattleZone>().myObj = hit.collider.gameObject.transform.parent.gameObject;
                     }
 
                     else if (hit.collider.name == this.gameObject.name)
@@ -65,7 +66,6 @@ public partial class Drag2D : MonoBehaviour
                         {
                             GameObject vec = GameObject.FindGameObjectWithTag("BattleZone");
                             hit.collider.gameObject.transform.parent.position = vec.transform.position + Vector3.down;
-                            vec.GetComponent<BattleZone>().myObj = hit.collider.gameObject.transform.parent.gameObject;
                         }
                     }
                 }
@@ -89,14 +89,6 @@ public partial class Drag2D : MonoBehaviour
             GameMGR.Instance.uiManager.sell.gameObject.SetActive(true);
 
             isClickBattleMonster = true;
-        }
-    }
-
-    void ClickMouseSound(Collider2D collider)
-    {
-        if(collider == null)
-        {
-
         }
     }
 
@@ -145,10 +137,10 @@ public partial class Drag2D : MonoBehaviour
                 {
                     if (collision.gameObject.CompareTag("BattleZone"))
                     {
-                        GameMGR.Instance.audioMGR.SoundSell();
+                        meltPos = collision.gameObject.transform.position;
                         Vector2 monTras = gameObject.transform.parent.localScale;
                         gameObject.transform.parent.localScale = monTras * 2;
-                        BackMeltBuy(collision);
+                        BackMeltBuy();
                     }
                 }
             }
@@ -167,16 +159,18 @@ public partial class Drag2D : MonoBehaviour
                 {
                     if (GameMGR.Instance.uiManager.goldCount >= 3)
                     {
-                        GameMGR.Instance.audioMGR.SoundSell();
+                        
                         spriteRenderer.sortingLayerName = "SellTXT";
                         gameObject.tag = "BattleMonster";
                         GameMGR.Instance.uiManager.goldCount -= 3;
                         GameMGR.Instance.uiManager.goldTXT.text = "" + GameMGR.Instance.uiManager.goldCount.ToString();
+                        pos = collision.gameObject.transform.position;
                         Vector2 monTras = gameObject.transform.parent.localScale;
                         gameObject.transform.parent.localScale = monTras * 2;
-                        pos = collision.GetComponent<BattleZone>();
-                        GameMGR.Instance.Event_Buy(gameObject.GetComponent<Card>()); //구매한 카드가 구매시 효과가 있다면 스킬 발동
 
+                        //GameMGR.Instance.Event_Buy(gameObject.GetComponent<Card>()); //구매한 카드가 구매시 효과가 있다면 스킬 발동
+                        if (card.cardInfo.skillTiming == SkillTiming.buy)
+                            card.SkillActive2(card);
                     }
                 }
 
@@ -190,47 +184,39 @@ public partial class Drag2D : MonoBehaviour
                         GameMGR.Instance.uiManager.goldCount -= 3;
                         GameMGR.Instance.uiManager.goldTXT.text = "" + GameMGR.Instance.uiManager.goldCount.ToString();
                         ShopCardLevelUp(collision.gameObject);
+
+                        if (card.cardInfo.skillTiming == SkillTiming.buy)
+                            card.SkillActive2(card);
                     }
                 }
             }
 
-
-            if (gameObject.name == collision.gameObject.name)
+            if (gameObject.CompareTag("BattleMonster") || gameObject.CompareTag("BattleMonster2") || gameObject.CompareTag("BattleMonster3"))
             {
-                if (gameObject.CompareTag("BattleMonster") || gameObject.CompareTag("BattleMonster2"))
+                // 잡고 있는 오브젝트가 배틀존에 닿으면 오브젝트 위치값 저장
+                if (collision.gameObject.CompareTag("BattleZone"))
                 {
-                    if (gameObject.CompareTag("BattleMonster2") && collision.gameObject.CompareTag("BattleMonster2"))
-                    {
-                        if (collision.transform.position.y > transform.position.y)
-                        {
-                            ShopCardLevelUp(collision.gameObject);
-                        }
-                    }
-
-                    else if (gameObject.name == collision.gameObject.name && collision.gameObject.CompareTag("BattleMonster") || collision.gameObject.CompareTag("BattleMonster2"))
-                    {
-                        ShopCardLevelUp(collision.gameObject);
-                    }
+                    pos = collision.gameObject.transform.position;
                 }
-            }
 
-            if (collision.gameObject.CompareTag("BattleMonster3"))
-            {
-                return;
+                if (gameObject.name == collision.gameObject.name && collision.gameObject.CompareTag("BattleMonster") || collision.gameObject.CompareTag("BattleMonster2"))
+                {
+                    ShopCardLevelUp(collision.gameObject);
+                }
             }
         }
     }
 
     void ShopCardLevelUp(GameObject collision)
     {
-        int colAttack = collision.gameObject.GetComponentInChildren<Card>().curAttackValue;
-        int colHP = collision.gameObject.GetComponentInChildren<Card>().curHP;
+        int colAttack = collision.gameObject.GetComponent<Card>().curAttackValue;
+        int colHP = collision.gameObject.GetComponent<Card>().curHP;
         int attack = card.curAttackValue;
         int hP = card.curHP;
         int plusAttack = 0;
         int plusHp = 0;
-        int thisExp = gameObject.GetComponent<Card>().curEXP;
-        int thisLevel = gameObject.GetComponent<Card>().level;
+        int thisExp = card.curEXP;
+        int thisLevel = card.level;
 
         if (colAttack > attack)
         {
@@ -250,21 +236,21 @@ public partial class Drag2D : MonoBehaviour
             plusHp = hP;
         }
 
-        collision.gameObject.GetComponentInChildren<Card>().ChangeValue(CardStatus.Attack, plusAttack + 1);
-        collision.gameObject.GetComponentInChildren<Card>().ChangeValue(CardStatus.Hp, plusHp + 1);
+        collision.gameObject.GetComponent<Card>().ChangeValue(CardStatus.Attack, plusAttack + 1);
+        collision.gameObject.GetComponent<Card>().ChangeValue(CardStatus.Hp, plusHp + 1);
 
         if (thisLevel == 1)
         {
             thisExp += 1;
-            collision.gameObject.GetComponentInChildren<Card>().ChangeValue(CardStatus.Exp, thisExp);
+            collision.gameObject.GetComponent<Card>().ChangeValue(CardStatus.Exp, thisExp);
         }
 
         else if (thisLevel == 2)
         {
-            thisExp += 3;
-            collision.gameObject.GetComponentInChildren<Card>().ChangeValue(CardStatus.Exp, thisExp);
+            thisExp += 2;
+            collision.gameObject.GetComponent<Card>().ChangeValue(CardStatus.Exp, thisExp);
         }
-
+        
         GameMGR.Instance.objectPool.DestroyPrefab(this.gameObject.transform.parent.gameObject);
         GameMGR.Instance.uiManager.sell.gameObject.SetActive(false);
     }
@@ -282,20 +268,7 @@ public partial class Drag2D : MonoBehaviour
         yield return wait;
 
         if (CompareTag("BattleMonster") || CompareTag("BattleMonster2") || CompareTag("BattleMonster3"))
-        {
-            if (pos.myObj != null)
-            {
-                GameObject vec = GameObject.FindGameObjectWithTag("BattleZone");
-                if (vec != null)
-                    gameObject.transform.parent.position = vec.transform.position + Vector3.down;
-
-            }
-            else
-            {
-                this.transform.parent.position = pos.gameObject.transform.position + Vector3.down;
-                pos.myObj = gameObject.transform.parent.gameObject;
-            }
-        }
+            this.transform.parent.position = pos + Vector2.down;
 
         else if (CompareTag("Monster"))
         {
@@ -308,18 +281,17 @@ public partial class Drag2D : MonoBehaviour
         }
     }
 
-
-    void BackMeltBuy(Collider2D collision)
+    void BackMeltBuy()
     {
         gameObject.tag = "BattleMonster";
-        GameMGR.Instance.audioMGR.SoundSell();
-        //Vector2 monTras = gameObject.transform.parent.localScale;
-        //gameObject.transform.parent.localScale = monTras;
-        pos = collision.GetComponent<BattleZone>();
+        pos = meltPos;
+        this.gameObject.transform.parent.position = pos + Vector2.down;
         spriteRenderer.sortingOrder = 3;
         GameMGR.Instance.uiManager.goldCount -= 3;
         GameMGR.Instance.uiManager.goldTXT.text = "" + GameMGR.Instance.uiManager.goldCount.ToString();
 
-        GameMGR.Instance.Event_Buy(gameObject.GetComponent<Card>());
+        //GameMGR.Instance.Event_Buy(gameObject.GetComponent<Card>());
+        if (card.cardInfo.skillTiming == SkillTiming.buy)
+            card.SkillActive2(card);
     }
 }
