@@ -121,7 +121,7 @@ public class Spawner : MonoBehaviourPun
         //}
     }
 
-    public void TestButton()
+    public void ReturnStoreScene()
     {
         ChooseRandomCard();
         if (GameMGR.Instance.uiManager.shopLevel < 6 && GameMGR.Instance.uiManager.shopMoney > 0)
@@ -461,7 +461,6 @@ public class Spawner : MonoBehaviourPun
         Debug.Log(monsterNames[randomNum]);
         GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum]}"),
             monsterTrans[randomTrans].transform.position - vec, Quaternion.identity);
-        monsterTrans[randomTrans].NullObj();
 
         randomTrans++;
     }

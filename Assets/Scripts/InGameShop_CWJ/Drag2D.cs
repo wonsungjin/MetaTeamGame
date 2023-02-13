@@ -1,7 +1,6 @@
 using MongoDB.Driver;
 using System.Collections;
 using System.Data.Common;
-using Unity.Burst.CompilerServices;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -13,8 +12,9 @@ public partial class Drag2D : MonoBehaviour
     Card card;
     BoxCollider2D pol;
     MeshRenderer spriteRenderer;
-    public BattleZone pos;
+    Vector2 pos;
     Vector2 selectZonePos;
+    Vector2 meltPos;
     Vector3 monsterPos = new Vector3(0, -0.6f, 0);
 
     float timer = 0f;
@@ -29,6 +29,8 @@ public partial class Drag2D : MonoBehaviour
         spriteRenderer = GetComponent<MeshRenderer>();
         pol = GetComponent<BoxCollider2D>();
         card = GetComponent<Card>();
+
+        this.pos = this.gameObject.transform.parent.position;
         this.selectZonePos = this.transform.parent.position;
     }
 
@@ -44,7 +46,7 @@ public partial class Drag2D : MonoBehaviour
         if (CompareTag("BattleMonster") || CompareTag("BattleMonster2") || CompareTag("BattleMonster3")) transform.parent.position = objPosition + Vector3.down;
         else transform.parent.position = objPosition + monsterPos;
 
-        // µå·¡±× ÇÒ¶§ ¸¶´Ù ·¹ÀÌ¸¦ ½÷¼­ ¹Ø¿¡ ´êÀº ¹èÆ²¸ó½ºÅÍ¸¦ ´Ù¸¥ À§Ä¡·Î º¸³¿
+        // ï¿½å·¡ï¿½ï¿½ ï¿½Ò¶ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ø¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ²ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½Ù¸ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (isClickBattleMonster == true)
         {
             if (hit.collider != null)
@@ -55,7 +57,6 @@ public partial class Drag2D : MonoBehaviour
                     {
                         GameObject vec = GameObject.FindGameObjectWithTag("BattleZone");
                         hit.collider.gameObject.transform.parent.position = vec.transform.position + Vector3.down;
-                        vec.GetComponent<BattleZone>().myObj = hit.collider.gameObject.transform.parent.gameObject;
                     }
 
                     else if (hit.collider.name == this.gameObject.name)
@@ -65,7 +66,6 @@ public partial class Drag2D : MonoBehaviour
                         {
                             GameObject vec = GameObject.FindGameObjectWithTag("BattleZone");
                             hit.collider.gameObject.transform.parent.position = vec.transform.position + Vector3.down;
-                            vec.GetComponent<BattleZone>().myObj = hit.collider.gameObject.transform.parent.gameObject;
                         }
                     }
                 }
@@ -100,7 +100,7 @@ public partial class Drag2D : MonoBehaviour
         isClickBattleMonster = false;
         GameMGR.Instance.uiManager.SetisExplantionActive(false);
 
-        // ¿ëº´µé Àâ°í ³õ¾ÒÀ» ¶§ ¿ø·¡ À§Ä¡·Î µ¹¾Æ°£´Ù
+        // ï¿½ëº´ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½Æ°ï¿½ï¿½ï¿½
         if (this.gameObject.CompareTag("Monster"))
         {
             StartCoroutine(COR_BackAgain());
@@ -122,39 +122,39 @@ public partial class Drag2D : MonoBehaviour
     {
         if (isClickBool == true)
         {
-            // ÇÁ¸®Áî Ä«µå¸¦ Àâ¾ÒÀ» ¶§
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ä«ï¿½å¸¦ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
             if (gameObject.CompareTag("FreezeCard"))
             {
-                // ÇÁ¸®Áî Ä«µå¸¦ ÇÁ¸®Áî¿¡ ³ÖÀ¸¸é ³ìÀº ÈÄ ¿ø·¡ À§Ä¡·Î µ¹¾Æ°¡°í
-                // ¸áÆ®Ä«µå·Î ÅÂ±× º¯°æÀÌ µÇ°í ¿ø·¡ À§Ä¡·Î µ¹¾Æ°¡¸é ´Ù½Ã ¸ó½ºÅÍ »óÅÂ°¡ µÈ´Ù. 
+                // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ä«ï¿½å¸¦ ï¿½ï¿½ï¿½ï¿½ï¿½î¿¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½Æ°ï¿½ï¿½ï¿½
+                // ï¿½ï¿½Æ®Ä«ï¿½ï¿½ï¿½ ï¿½Â±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ç°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½Æ°ï¿½ï¿½ï¿½ ï¿½Ù½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â°ï¿½ ï¿½È´ï¿½. 
                 if (collision.gameObject.CompareTag("Freeze"))
                 {
                     StartCoroutine(COR_BackAgain());
                 }
 
-                // ¾ó·ÁÀÖÀ» ¶§ ¹èÆ²Á¸¿¡ °¡¸é ±¸¸Å °¡´ÉÇÏ°Ô ÇÏ´Â ¿¹¿ÜÃ³¸®
+                // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½Æ²ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½Ã³ï¿½ï¿½
                 if (GameMGR.Instance.uiManager.goldCount >= 3)
                 {
                     if (collision.gameObject.CompareTag("BattleZone"))
                     {
-                        GameMGR.Instance.audioMGR.SoundBuy();
+                        meltPos = collision.gameObject.transform.position;
                         Vector2 monTras = gameObject.transform.parent.localScale;
                         gameObject.transform.parent.localScale = monTras * 2;
-                        BackMeltBuy(collision);
+                        BackMeltBuy();
                     }
                 }
             }
 
-            // »óÁ¡¿¡¼­ ±¸¸Å ÇÒ¶§ ¹èÆ²Á¸¿¡ ¿ëº´ ³ÖÀ¸¸é ·¹º§¾÷ µÈ´Ù.
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ò¶ï¿½ ï¿½ï¿½Æ²ï¿½ï¿½ï¿½ï¿½ ï¿½ëº´ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½È´ï¿½.
             if (gameObject.CompareTag("Monster"))
             {
-                // ÇÁ¸®Áî¿¡ ´êÀ¸¸é ÇÁ¸®ÁîÄ«µå·Î ÅÂ±×¸¦ ¹Ù²Û ÈÄ ¿ø·¡ À§Ä¡·Î µ¹¸°´Ù.
+                // ï¿½ï¿½ï¿½ï¿½ï¿½î¿¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä«ï¿½ï¿½ï¿½ ï¿½Â±×¸ï¿½ ï¿½Ù²ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
                 if (collision.gameObject.CompareTag("Freeze"))
                 {
                     StartCoroutine(COR_BackAgain());
                 }
 
-                // ¸ó½ºÅÍ°¡ ¹èÆ² Á¸¿¡ ´êÀ¸¸é °ñµå°¡ Â÷°¨ µÇ°í ¹èÆ²¸ó½ºÅÍ ÅÂ±×·Î ¹Ù²ï´Ù
+                // ï¿½ï¿½ï¿½Í°ï¿½ ï¿½ï¿½Æ² ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½å°¡ ï¿½ï¿½ï¿½ï¿½ ï¿½Ç°ï¿½ ï¿½ï¿½Æ²ï¿½ï¿½ï¿½ï¿½ ï¿½Â±×·ï¿½ ï¿½Ù²ï¿½ï¿½
                 if (collision.gameObject.CompareTag("BattleZone"))
                 {
                     if (GameMGR.Instance.uiManager.goldCount >= 3)
@@ -164,65 +164,59 @@ public partial class Drag2D : MonoBehaviour
                         gameObject.tag = "BattleMonster";
                         GameMGR.Instance.uiManager.goldCount -= 3;
                         GameMGR.Instance.uiManager.goldTXT.text = "" + GameMGR.Instance.uiManager.goldCount.ToString();
+                        pos = collision.gameObject.transform.position;
                         Vector2 monTras = gameObject.transform.parent.localScale;
                         gameObject.transform.parent.localScale = monTras * 2;
-                        pos = collision.GetComponent<BattleZone>();
-                        GameMGR.Instance.Event_Buy(gameObject.GetComponent<Card>()); //±¸¸ÅÇÑ Ä«µå°¡ ±¸¸Å½Ã È¿°ú°¡ ÀÖ´Ù¸é ½ºÅ³ ¹ßµ¿
 
+                        //GameMGR.Instance.Event_Buy(gameObject.GetComponent<Card>()); //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ä«ï¿½å°¡ ï¿½ï¿½ï¿½Å½ï¿½ È¿ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ù¸ï¿½ ï¿½ï¿½Å³ ï¿½ßµï¿½
+                        if (card.cardInfo.skillTiming == SkillTiming.buy)
+                            card.SkillActive2(card);
                     }
                 }
 
                 if (gameObject.name == collision.gameObject.name && collision.gameObject.CompareTag("BattleMonster") || gameObject.name == collision.gameObject.name && collision.gameObject.CompareTag("BattleMonster2"))
                 {
-                    // »óÁ¡¿¡¼­ ¹Ù·Î ·¹º§¾÷ÇÏ´Â °æ¿ì
+                    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½
                     if (GameMGR.Instance.uiManager.goldCount >= 3)
                     {
-                        GameMGR.Instance.Event_Buy(gameObject.GetComponent<Card>()); //±¸¸ÅÇÑ Ä«µå°¡ ±¸¸Å½Ã È¿°ú°¡ ÀÖ´Ù¸é ½ºÅ³ ¹ßµ¿
+                        GameMGR.Instance.Event_Buy(gameObject.GetComponent<Card>()); //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ä«ï¿½å°¡ ï¿½ï¿½ï¿½Å½ï¿½ È¿ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ù¸ï¿½ ï¿½ï¿½Å³ ï¿½ßµï¿½
 
                         GameMGR.Instance.uiManager.goldCount -= 3;
                         GameMGR.Instance.uiManager.goldTXT.text = "" + GameMGR.Instance.uiManager.goldCount.ToString();
                         ShopCardLevelUp(collision.gameObject);
+
+                        if (card.cardInfo.skillTiming == SkillTiming.buy)
+                            card.SkillActive2(card);
                     }
                 }
             }
 
-
-            if (gameObject.name == collision.gameObject.name)
+            if (gameObject.CompareTag("BattleMonster") || gameObject.CompareTag("BattleMonster2") || gameObject.CompareTag("BattleMonster3"))
             {
-                if (gameObject.CompareTag("BattleMonster") || gameObject.CompareTag("BattleMonster2"))
+                // ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½Æ²ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+                if (collision.gameObject.CompareTag("BattleZone"))
                 {
-                    if (gameObject.CompareTag("BattleMonster2") && collision.gameObject.CompareTag("BattleMonster2"))
-                    {
-                        if (collision.transform.position.y > transform.position.y)
-                        {
-                            ShopCardLevelUp(collision.gameObject);
-                        }
-                    }
-
-                    else if (gameObject.name == collision.gameObject.name && collision.gameObject.CompareTag("BattleMonster") || collision.gameObject.CompareTag("BattleMonster2"))
-                    {
-                        ShopCardLevelUp(collision.gameObject);
-                    }
+                    pos = collision.gameObject.transform.position;
                 }
-            }
 
-            if (collision.gameObject.CompareTag("BattleMonster3"))
-            {
-                return;
+                if (gameObject.name == collision.gameObject.name && collision.gameObject.CompareTag("BattleMonster") || collision.gameObject.CompareTag("BattleMonster2"))
+                {
+                    ShopCardLevelUp(collision.gameObject);
+                }
             }
         }
     }
 
     void ShopCardLevelUp(GameObject collision)
     {
-        int colAttack = collision.gameObject.GetComponentInChildren<Card>().curAttackValue;
-        int colHP = collision.gameObject.GetComponentInChildren<Card>().curHP;
+        int colAttack = collision.gameObject.GetComponent<Card>().curAttackValue;
+        int colHP = collision.gameObject.GetComponent<Card>().curHP;
         int attack = card.curAttackValue;
         int hP = card.curHP;
         int plusAttack = 0;
         int plusHp = 0;
-        int thisExp = gameObject.GetComponent<Card>().curEXP;
-        int thisLevel = gameObject.GetComponent<Card>().level;
+        int thisExp = card.curEXP;
+        int thisLevel = card.level;
 
         if (colAttack > attack)
         {
@@ -242,52 +236,39 @@ public partial class Drag2D : MonoBehaviour
             plusHp = hP;
         }
 
-        collision.gameObject.GetComponentInChildren<Card>().ChangeValue(CardStatus.Attack, plusAttack + 1);
-        collision.gameObject.GetComponentInChildren<Card>().ChangeValue(CardStatus.Hp, plusHp + 1);
+        collision.gameObject.GetComponent<Card>().ChangeValue(CardStatus.Attack, plusAttack + 1);
+        collision.gameObject.GetComponent<Card>().ChangeValue(CardStatus.Hp, plusHp + 1);
 
         if (thisLevel == 1)
         {
             thisExp += 1;
-            collision.gameObject.GetComponentInChildren<Card>().ChangeValue(CardStatus.Exp, thisExp);
+            collision.gameObject.GetComponent<Card>().ChangeValue(CardStatus.Exp, thisExp);
         }
 
         else if (thisLevel == 2)
         {
-            thisExp += 3;
-            collision.gameObject.GetComponentInChildren<Card>().ChangeValue(CardStatus.Exp, thisExp);
+            thisExp += 2;
+            collision.gameObject.GetComponent<Card>().ChangeValue(CardStatus.Exp, thisExp);
         }
-
+        
         GameMGR.Instance.objectPool.DestroyPrefab(this.gameObject.transform.parent.gameObject);
         GameMGR.Instance.uiManager.sell.gameObject.SetActive(false);
     }
 
-    // ÆÇ¸Å¹öÆ° ON OFF
+    // ï¿½Ç¸Å¹ï¿½Æ° ON OFF
     IEnumerator COR_SellButton()
     {
         yield return new WaitForSeconds(0.12f);
         GameMGR.Instance.uiManager.sell.gameObject.SetActive(false);
     }
 
-    // ¿ø·¡ À§Ä¡·Î µ¹¸®´Â ÇÔ¼ö
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
     private IEnumerator COR_BackAgain()
     {
         yield return wait;
 
         if (CompareTag("BattleMonster") || CompareTag("BattleMonster2") || CompareTag("BattleMonster3"))
-        {
-            if (pos.myObj != null)
-            {
-                GameObject vec = GameObject.FindGameObjectWithTag("BattleZone");
-                if (vec != null)
-                    gameObject.transform.parent.position = vec.transform.position + Vector3.down;
-
-            }
-            else
-            {
-                this.transform.parent.position = pos.gameObject.transform.position + Vector3.down;
-                pos.myObj = gameObject.transform.parent.gameObject;
-            }
-        }
+            this.transform.parent.position = pos + Vector2.down;
 
         else if (CompareTag("Monster"))
         {
@@ -300,18 +281,17 @@ public partial class Drag2D : MonoBehaviour
         }
     }
 
-
-    void BackMeltBuy(Collider2D collision)
+    void BackMeltBuy()
     {
         gameObject.tag = "BattleMonster";
-        GameMGR.Instance.audioMGR.SoundSell();
-        //Vector2 monTras = gameObject.transform.parent.localScale;
-        //gameObject.transform.parent.localScale = monTras;
-        pos = collision.GetComponent<BattleZone>();
+        pos = meltPos;
+        this.gameObject.transform.parent.position = pos + Vector2.down;
         spriteRenderer.sortingOrder = 3;
         GameMGR.Instance.uiManager.goldCount -= 3;
         GameMGR.Instance.uiManager.goldTXT.text = "" + GameMGR.Instance.uiManager.goldCount.ToString();
 
-        GameMGR.Instance.Event_Buy(gameObject.GetComponent<Card>());
+        //GameMGR.Instance.Event_Buy(gameObject.GetComponent<Card>());
+        if (card.cardInfo.skillTiming == SkillTiming.buy)
+            card.SkillActive2(card);
     }
 }

@@ -536,8 +536,6 @@ public class TurnSystem : MonoBehaviourPunCallbacks
         GameMGR.Instance.batch.UnitPlacement();
         GameMGR.Instance.battleLogic.AttackLogic();
         GameMGR.Instance.uiManager.OnBattleUI();
-        GameMGR.Instance.audioMGR.StoreSceneBGM(false);
-        GameMGR.Instance.audioMGR.BattleSceneBGM(true);
     }
     /*
     private void BattleOrder()
