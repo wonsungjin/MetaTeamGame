@@ -7,7 +7,7 @@ public class Sell : MonoBehaviour
     private void Start()
     {
         transform.GetChild(0).GetComponent<MeshRenderer>().sortingLayerName = "SellTXT";
-        transform.GetChild(1).GetComponent<MeshRenderer>().sortingLayerName = "SellTXT
+        transform.GetChild(1).GetComponent<MeshRenderer>().sortingLayerName = "SellTXT";
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
