@@ -115,13 +115,22 @@ public partial class Card : MonoBehaviour
     public void SkillActive2(Card card)
     {
         if (card != this) return;
-        Debug.Log("Skill Active 2");
-        FindTargetType();
-        SkillEffect();
-        if (cardInfo.skillTiming == SkillTiming.buy)
-            GameMGR.Instance.callbackEvent_Buy -= SkillActive2;
-        else if (cardInfo.skillTiming == SkillTiming.sell)
-            GameMGR.Instance.callbackEvent_Sell -= SkillActive2;
+
+        if(cardInfo.effectType == EffectType.summon)
+        {
+            for(int i = 0; i < cardInfo.GetValue(1, level); i++)
+            {
+                FindTargetType();
+                SkillEffect();
+            }
+        }
+        else
+        {
+            Debug.Log("Skill Active 2");
+            FindTargetType();
+            SkillEffect();
+        }
+        
 
     }
 
@@ -184,10 +193,10 @@ public partial class Card : MonoBehaviour
                 }
                 break;
             case EffectType.summon:
-                Debug.Log("소환 효과 발동");
-                Card summonCard = Resources.Load<Card>($"Prefabs/{cardInfo.sumom_Unit}");
-                //GameMGR.Instance.battleLogic.playerForwardUnits.Add(summonCard.gameObject);
-                summonCard.transform.position = targetPos;
+                    Debug.Log("소환 효과 발동!");
+                    Card summonCard = Resources.Load<Card>($"Prefabs/{cardInfo.sumom_Unit}");
+                    //GameMGR.Instance.battleLogic.playerForwardUnits.Add(summonCard.gameObject);
+                    summonCard.transform.position = targetPos;
                 break;
             case EffectType.reduceShopLevelUpCost:
                 Debug.Log("상점 렙업 비용 감소 효과 발동");
@@ -329,23 +338,38 @@ public partial class Card : MonoBehaviour
             case TargetType.empty: // 빈 공간을 찾는다 = 소환시
                 bool isFind = false;
                 Debug.Log("대상은 빈칸");
-                for (int i = 0; i < 3; i++) // 앞열 검사
+                if(GameMGR.Instance.isBattleNow)    // 현재 상태가 전투씬인 경우
                 {
-                    if (GameMGR.Instance.battleLogic.playerForwardUnits[i] == null)
+                    for (int i = 0; i < 3; i++) // 앞열 검사
                     {
-                        targetPos = GameMGR.Instance.battleLogic.playerForwardUnits[i].transform.position;
-                        isFind = true;
-                        break;
-                    }
-                }
-                if (!isFind)
-                {
-                    for (int i = 0; i < 3; i++) // 뒷열 검사
-                    {
-                        if (GameMGR.Instance.battleLogic.playerBackwardUnits[i] == null)
+                        if (GameMGR.Instance.battleLogic.playerForwardUnits[i] == null)
                         {
                             targetPos = GameMGR.Instance.battleLogic.playerForwardUnits[i].transform.position;
+                            isFind = true;
                             break;
+                        }
+                    }
+                    if (!isFind)
+                    {
+                        for (int i = 0; i < 3; i++) // 뒷열 검사
+                        {
+                            if (GameMGR.Instance.battleLogic.playerBackwardUnits[i] == null)
+                            {
+                                targetPos = GameMGR.Instance.battleLogic.playerForwardUnits[i].transform.position;
+                                break;
+                            }
+                            
+                        }
+                    }
+                }
+                else    // 현재 상태가 상점씬인 경우
+                {
+                    for(int i = 0; i < 6; i++)
+                    {
+                        if (GameMGR.Instance.spawner.cardBatch[i] == null)
+                        {
+                            targetPos = GameMGR.Instance.spawner.cardBatch[i].transform.position;
+                            isFind = true;
                         }
                     }
                 }

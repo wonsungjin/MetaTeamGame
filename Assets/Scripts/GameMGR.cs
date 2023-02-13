@@ -58,10 +58,10 @@ public partial class GameMGR : Singleton<GameMGR>
     public bool[] stayAPI = new bool[2];
     IEnumerator COR_GetCoin()
     {
-     //   metaTrendAPI.GetCoin(100);
-
-        yield return new WaitUntil(() => stayAPI[0]);
-        yield return new WaitUntil(() => stayAPI[1]);
+        //   metaTrendAPI.GetCoin(100);
+        yield return null;
+        //yield return new WaitUntil(() => stayAPI[0]);
+        //yield return new WaitUntil(() => stayAPI[1]);
         dataBase.Login();
         Debug.Log("???"+metaTrendAPI.GetZera());
     }
