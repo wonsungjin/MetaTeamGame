@@ -6,7 +6,8 @@ using UnityEngine.UIElements;
 public partial class  UIManager : MonoBehaviour
 {
     GameObject battleSceneUI = null;
-
+    GameObject ResultSceneUI = null;
+    
     public GameObject[] playerArrangement = new GameObject[6];
     public Transform[] playerPosition = new Transform[6];
 
@@ -29,6 +30,7 @@ public partial class  UIManager : MonoBehaviour
     #region RoundResultScene
     private void ResultSceneInit()
     {
+        ResultSceneUI = GameObject.Find("ResultSceneCanvas");
         PlayerSetArrangement();
         PlayerSetPosition();
     }

@@ -318,6 +318,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65fe8111d5fe90f429cfa313264e83f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerArrangement:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  playerPosition:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   skillExplantion2: {fileID: 0}
   skillExplantionText:
   - {fileID: 596148834}
@@ -671,6 +685,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isHere: 0
   myNum: 5
+  myObj: {fileID: 0}
 --- !u!82 &41134537
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2111,6 +2126,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isHere: 0
   myNum: 2
+  myObj: {fileID: 0}
 --- !u!82 &195171385
 AudioSource:
   m_ObjectHideFlags: 0
@@ -4938,6 +4954,7 @@ MonoBehaviour:
   isNotSpawn: 0
   mySprite: {fileID: 0}
   isNotMonster: 0
+  collisionObj: {fileID: 0}
 --- !u!1 &717212064
 GameObject:
   m_ObjectHideFlags: 0
@@ -5055,6 +5072,7 @@ MonoBehaviour:
   isNotSpawn: 0
   mySprite: {fileID: 0}
   isNotMonster: 0
+  collisionObj: {fileID: 0}
 --- !u!1 &727721628
 GameObject:
   m_ObjectHideFlags: 0
@@ -6623,6 +6641,7 @@ MonoBehaviour:
   isNotSpawn: 0
   mySprite: {fileID: 0}
   isNotMonster: 0
+  collisionObj: {fileID: 0}
 --- !u!1 &909630952
 GameObject:
   m_ObjectHideFlags: 0
@@ -8082,6 +8101,7 @@ MonoBehaviour:
   isNotSpawn: 0
   mySprite: {fileID: 0}
   isNotMonster: 0
+  collisionObj: {fileID: 0}
 --- !u!1 &1232006531
 GameObject:
   m_ObjectHideFlags: 0
@@ -8784,6 +8804,7 @@ MonoBehaviour:
   isNotSpawn: 0
   mySprite: {fileID: 0}
   isNotMonster: 0
+  collisionObj: {fileID: 0}
 --- !u!1 &1336953169
 GameObject:
   m_ObjectHideFlags: 0
@@ -10359,6 +10380,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isHere: 0
   myNum: 0
+  myObj: {fileID: 0}
 --- !u!82 &1723697888
 AudioSource:
   m_ObjectHideFlags: 0
@@ -10572,6 +10594,7 @@ MonoBehaviour:
   isNotSpawn: 0
   mySprite: {fileID: 0}
   isNotMonster: 0
+  collisionObj: {fileID: 0}
 --- !u!1 &1737555474
 GameObject:
   m_ObjectHideFlags: 0
@@ -11167,6 +11190,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isHere: 0
   myNum: 1
+  myObj: {fileID: 0}
 --- !u!82 &1810743071
 AudioSource:
   m_ObjectHideFlags: 0
@@ -13022,6 +13046,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isHere: 0
   myNum: 3
+  myObj: {fileID: 0}
 --- !u!82 &2040472134
 AudioSource:
   m_ObjectHideFlags: 0
@@ -13532,6 +13557,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isHere: 0
   myNum: 4
+  myObj: {fileID: 0}
 --- !u!82 &2107974388
 AudioSource:
   m_ObjectHideFlags: 0

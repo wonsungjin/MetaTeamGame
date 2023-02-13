@@ -537,15 +537,18 @@ public class TurnSystem : MonoBehaviourPunCallbacks
         GameMGR.Instance.batch.UnitPlacement();
         GameMGR.Instance.battleLogic.AttackLogic();
         GameMGR.Instance.uiManager.OnBattleUI();
+
+        GameMGR.Instance.Init(3); // Move to Battle Scene
     }
 
-    IEnumerator COR_MoveToBattleScene()
+    IEnumerator COR_MoveToResultScene(bool Win)
     {
         yield return new WaitForSeconds(1f);
-
-        GameMGR.Instance.audioMGR.StoreSceneBGM(false);
-
-
+        Camera.main.gameObject.transform.position = new Vector3(40, 0, -10);
+        
+        GameMGR.Instance.audioMGR.BattleSceneBGM(false);
+        if (Win) { GameMGR.Instance.audioMGR.BattleRoundResult(Win); }
+        else if (!Win) { GameMGR.Instance.audioMGR.BattleRoundResult(Win); }
     }
 
 
