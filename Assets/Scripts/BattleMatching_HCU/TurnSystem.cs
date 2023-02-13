@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.Rendering;
+using TMPro;
 //using Hashtable = ExitGames.Client.Photon.Hashtable; // 이게 구버전 한정인지 필수인지는 나도 모른다는 것이 학계의 점심
 
 
@@ -536,7 +537,39 @@ public class TurnSystem : MonoBehaviourPunCallbacks
         GameMGR.Instance.batch.UnitPlacement();
         GameMGR.Instance.battleLogic.AttackLogic();
         GameMGR.Instance.uiManager.OnBattleUI();
+
+        GameMGR.Instance.Init(3); // Move to Battle Scene
     }
+
+    public IEnumerator COR_MoveToResultScene(bool Win)
+    {
+        yield return new WaitForSeconds(1f);
+        Camera.main.gameObject.transform.position = new Vector3(40, 0, -10);
+
+
+        GameMGR.Instance.uiManager.PlayerSetArrangement(); // save player unit array
+
+        GameMGR.Instance.audioMGR.BattleSceneBGM(false);
+        if (Win) 
+        {
+            GameMGR.Instance.audioMGR.BattleRoundResult(Win);
+            GameMGR.Instance.uiManager.PlayerBattleWin();
+        }
+        
+        else if (!Win) 
+        {
+            GameMGR.Instance.audioMGR.BattleRoundResult(Win);
+            GameMGR.Instance.uiManager.PlayerBattleLose();
+        }
+
+        // 무승부 로직 추가필요
+        yield return new WaitForSeconds(5f);
+
+        GameMGR.Instance.uiManager.ResetPlayerUnit(); // Unit Reset
+        GameMGR.Instance.spawner.TestButton(); 
+    }
+
+
     /*
     private void BattleOrder()
     {
