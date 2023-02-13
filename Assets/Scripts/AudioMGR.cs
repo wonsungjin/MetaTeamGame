@@ -37,6 +37,9 @@ public class AudioMGR : MonoBehaviour
     private void Init()
     {
         StoreAudioSource = gameObject.GetComponent<AudioSource>();
+        StoreBGM = gameObject.GetComponent<AudioSource>();
+        BattleBGM = gameObject.GetComponent<AudioSource>();
+        BattleAudio = gameObject.GetComponent<AudioSource>();
 
         for (int i = 0; i < BackGroundClip.Length; i++) { BackgroundDic.Add(BackGroundClip[i].name, BackGroundClip[i]); }
         for (int i = 0; i < UnitSFXClip.Length; i++) { UnitSFXDic.Add(UnitSFXClip[i].name, UnitSFXClip[i]); }
