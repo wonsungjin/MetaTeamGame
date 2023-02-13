@@ -19,6 +19,7 @@ public class Node : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (isEnter == false)
         {
             if (collisionObj == collision.gameObject && collision.gameObject.CompareTag("FreezeCard"))
             {
