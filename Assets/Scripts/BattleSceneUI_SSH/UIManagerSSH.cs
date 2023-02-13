@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public partial class  UIManager : MonoBehaviour
+public partial class UIManager : MonoBehaviour
 {
     GameObject battleSceneUI = null;
     GameObject ResultSceneUI = null;
     GameObject winUI = null;
     GameObject loseUI = null;
-    
+
     public GameObject[] playerArrangement = new GameObject[6];
     public Transform[] playerPosition = new Transform[6];
 
@@ -17,18 +17,13 @@ public partial class  UIManager : MonoBehaviour
     public void BattleUIInit()
     {
         battleSceneUI = GameObject.Find("BattleSceneCanvas");
-        winUI = GameObject.Find("ResultWin");
-        loseUI = GameObject.Find("ResultLose");
 
-        // winUI.SetActive(false);
-        // loseUI.SetActive(false);
         battleSceneUI.SetActive(false);
     }
 
-
     public void OnBattleUI()
     {
-        
+        battleSceneUI.SetActive(true);
     }
     #endregion
 
@@ -36,36 +31,43 @@ public partial class  UIManager : MonoBehaviour
     #region RoundResultScene
     public void ResultUnitPosition()
     {
-            playerPosition = GameObject.Find("ResultPlayerPosition").GetComponentsInChildren<Transform>();
+        playerPosition = GameObject.Find("ResultPlayerPosition").GetComponentsInChildren<Transform>();
     }
 
     public void ResultSceneInit()
     {
         ResultSceneUI = GameObject.Find("ResultSceneCanvas");
+        winUI = GameObject.Find("ResultWin");
+        loseUI = GameObject.Find("ResultLose");
         ResultSceneUI.SetActive(false);
+    }
+
+    public void OnResultUI()
+    {
+        ResultSceneUI.SetActive(true);
     }
 
     public void PlayerSetArrangement()
     {
         for (int i = 0; i < playerArrangement.Length; i++)
         {
-            playerArrangement[i].transform.position = playerPosition[i].position;
+            if (playerArrangement[i] != null) { playerArrangement[i].transform.position = playerPosition[i].position; }
         }
     }
 
     public void ResetPlayerUnit()
     {
-        for (int i = 0; i < playerArrangement.Length; i++) { Destroy(playerArrangement[i]); }        
+        for (int i = 0; i < playerArrangement.Length; i++) { Destroy(playerArrangement[i]); }
     }
 
-    public void PlayerBattleWin()
+    public void PlayerBattleWin(bool isWin)
     {
-        winUI.SetActive(true);
+        winUI.SetActive(isWin);
     }
 
-    public void PlayerBattleLose()
+    public void PlayerBattleLose(bool isWin)
     {
-        loseUI.SetActive(true);
+        loseUI.SetActive(isWin);
     }
     #endregion
 
@@ -74,20 +76,17 @@ public partial class  UIManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         Camera.main.gameObject.transform.position = new Vector3(40, 0, -10);
 
-
-        GameMGR.Instance.uiManager.PlayerSetArrangement(); // save player unit array
-
         GameMGR.Instance.audioMGR.BattleSceneBGM(false);
         if (Win)
         {
             GameMGR.Instance.audioMGR.BattleRoundResult(Win);
-            GameMGR.Instance.uiManager.PlayerBattleWin();
+            GameMGR.Instance.uiManager.PlayerBattleWin(Win);
         }
 
         else if (!Win)
         {
             GameMGR.Instance.audioMGR.BattleRoundResult(Win);
-            GameMGR.Instance.uiManager.PlayerBattleLose();
+            GameMGR.Instance.uiManager.PlayerBattleLose(!Win);
         }
 
         // 무승부 로직 추가필요

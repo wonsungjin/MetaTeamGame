@@ -93,14 +93,18 @@ public partial class GameMGR : Singleton<GameMGR>
             audioMGR.StoreSceneBGM(true);
 
             // battle Scene
+            uiManager.BattleUIInit();
+                        
             // result Scene
             uiManager.ResultSceneInit();
+            uiManager.PlayerBattleWin(false);
+            uiManager.PlayerBattleLose(false);
         }
 
         // BattleScene
         else if (num == 3)
         {
-            GameMGR.Instance.uiManager.BattleUIInit();
+            uiManager.OnBattleUI();
 
             uiManager.ResultUnitPosition();
             audioMGR.StoreSceneBGM(false);
@@ -110,7 +114,10 @@ public partial class GameMGR : Singleton<GameMGR>
         // RoundScene
         else if (num == 4)
         {
-            GameMGR.Instance.uiManager.PlayerSetArrangement();
+            // battle Scene
+            uiManager.BattleUIInit();
+            audioMGR.BattleSceneBGM(false);
+            uiManager.OnResultUI();
         }
     }
 }

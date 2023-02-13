@@ -284,7 +284,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                 Debug.Log("2. isEnemyAliveCount : " + isEnemyAliveCount);
                 isEnemyAliveCount = 0;
                 PlayerBattleWin();
-                break;
+                yield break;
             }
 
             isEnemyAliveCount = 0;
@@ -447,7 +447,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                 {
                     isPlayerAliveCount = 0;
                     PlayerBattleLose();
-                    break;
+                    yield break;
                 }
             }
         }
@@ -627,7 +627,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                 {
                     isPlayerAliveCount = 0;
                     PlayerBattleLose();
-                    break;
+                    yield break;
                 }
             }
 
@@ -799,7 +799,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                 Debug.Log("2. isEnemyAliveCount : " + isEnemyAliveCount);
                 isEnemyAliveCount = 0;
                 PlayerBattleWin();
-                break;
+                yield break;
             }
 
             isEnemyAliveCount = 0;
@@ -815,6 +815,8 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
         Debug.Log("Player Win");
 
         GameMGR.Instance.uiManager.PlayerSetArrangement();
+        GameMGR.Instance.Init(4);
+        GameMGR.Instance.uiManager.PlayerBattleWin(true);
         StartCoroutine(GameMGR.Instance.uiManager.COR_MoveToResultScene(true));
     }
 
@@ -826,6 +828,8 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
         Debug.Log("Player Lose");
         
         GameMGR.Instance.uiManager.PlayerSetArrangement();
+        GameMGR.Instance.Init(4);
+        GameMGR.Instance.uiManager.PlayerBattleLose(false);
         StartCoroutine(GameMGR.Instance.uiManager.COR_MoveToResultScene(false));
     }
 }
