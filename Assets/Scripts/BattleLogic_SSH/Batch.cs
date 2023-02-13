@@ -109,7 +109,6 @@ public partial class Batch : MonoBehaviourPun
 
                 // add result unit
                 GameMGR.Instance.uiManager.playerArrangement[i] = GameObject.Instantiate<GameObject>(cardList[i].gameObject);
-                //GameMGR.Instance.uiManager.playerArrangement[i] = unitCard.gameObject;
             }
 
             // enemy Unit ��ġ ����

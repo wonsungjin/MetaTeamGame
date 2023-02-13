@@ -59,13 +59,11 @@ public partial class UIManager : MonoBehaviour
     {
         for (int i = 0; i < playerArrangement.Length; i++)
         {
-            if (playerArrangement[i] != null)
+            if (playerArrangement[i] != null) 
             {
-                Debug.Log($"playerArrangement {i} : " + playerArrangement[i].gameObject.name);
-                Debug.Log($"playerPosition {i} : " + playerPosition[i].name);
+                playerArrangement[i].transform.localScale = new Vector3(2f, 2f, 2f);
+                playerArrangement[i].transform.GetChild(0).position = playerPosition[i+1].position; 
             }
-
-            if (playerArrangement[i] != null) { playerArrangement[i].transform.position = playerPosition[i].position; }
         }
     }
 
@@ -117,6 +115,7 @@ public partial class UIManager : MonoBehaviour
         if (winUI.activeSelf == true) { winUI.SetActive(false); }
         if (loseUI.activeSelf == true) { loseUI.SetActive(false); }
         if (ResultSceneUI.activeSelf == true) { ResultSceneUI.SetActive(false); }
+        GameMGR.Instance.uiManager.storePannel.SetActive(true);
         GameMGR.Instance.Init(2);
     }
 }
