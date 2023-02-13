@@ -110,7 +110,7 @@ public partial class GameMGR : Singleton<GameMGR>
         // RoundScene
         else if (num == 4)
         {
-            
+            GameMGR.Instance.uiManager.PlayerSetArrangement();
         }
     }
 }
