@@ -98,7 +98,10 @@ public partial class GameMGR : Singleton<GameMGR>
         // BattleScene
         else if (num == 3)
         {
+            GameMGR.Instance.uiManager.BattleUIInit();
 
+            audioMGR.StoreSceneBGM(false);
+            audioMGR.BattleSceneBGM(true);
         }
 
         // RoundScene
