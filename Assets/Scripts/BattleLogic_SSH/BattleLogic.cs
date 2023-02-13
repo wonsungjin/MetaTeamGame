@@ -814,6 +814,8 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
         GameObject.Find("resultText").GetComponent<TextMeshProUGUI>().text = "win";
         Debug.Log("Player Win");
 
+        GameMGR.Instance.uiManager.PlayerSetArrangement();
+        StartCoroutine(GameMGR.Instance.uiManager.COR_MoveToResultScene(true));
     }
 
     // �й� ��
@@ -822,7 +824,8 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
         GameObject.Find("firstAttack").GetComponent<TextMeshProUGUI>().text = isFirstAttack.ToString();
         GameObject.Find("resultText").GetComponent<TextMeshProUGUI>().text = "lose";
         Debug.Log("Player Lose");
-        // �й� ���� �߰�
+        
+        GameMGR.Instance.uiManager.PlayerSetArrangement();
+        StartCoroutine(GameMGR.Instance.uiManager.COR_MoveToResultScene(false));
     }
-
 }
