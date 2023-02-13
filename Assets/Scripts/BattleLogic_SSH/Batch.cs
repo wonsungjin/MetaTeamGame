@@ -106,6 +106,9 @@ public partial class Batch : MonoBehaviourPun
                 unitCard.transform.position = myCardPosition[i + 1].position;
                 if (i < 3) { GameMGR.Instance.battleLogic.playerForwardUnits[i] = unitCard.gameObject; }
                 else { GameMGR.Instance.battleLogic.playerBackwardUnits[i - 3] = unitCard.gameObject; }
+
+                // add result unit
+                GameMGR.Instance.uiManager.playerArrangement[i] = unitCard.gameObject;
             }
 
             // enemy Unit ��ġ ����
