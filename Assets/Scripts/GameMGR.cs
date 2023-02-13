@@ -91,6 +91,8 @@ public partial class GameMGR : Singleton<GameMGR>
             battleLogic = FindObjectOfType<BattleLogic>();
             resultSceneUI = FindObjectOfType<ResultSceneUI>();
             timerSound = FindObjectOfType<TimerSound>();
+
+            audioMGR.StoreSceneBGM(true);
         }
 
         // BattleScene
