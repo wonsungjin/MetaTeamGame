@@ -60,6 +60,10 @@ PrefabInstance:
       propertyPath: m_text
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 4137109519686450963, guid: 306e3f38cec157842b453c50aac32a45, type: 3}
+      propertyPath: m_Value
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8359877118856600461, guid: 306e3f38cec157842b453c50aac32a45, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -305,61 +309,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.7172842, y: 4.35962}
   m_EdgeRadius: 0
---- !u!114 &8475194507772272057
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8473623765046279732}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e05b8c94d5fb69948b8dd34210bf692f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skillType: 
---- !u!114 &8475194507772272058
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8473623765046279732}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cda88de653f299840b5c51af7dbe0bd2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isFreezen: 0
-  color: {r: 1, g: 0, b: 0, a: 1}
-  outlineSize: 5
---- !u!114 &8475194507772272059
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8473623765046279732}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2435f21eb5008146b871a8c0fa54c9c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cardInfo: {fileID: 11400000, guid: 8839efee4d2094948b35418dbb3a9a49, type: 2}
-  hpText: {fileID: 6151682286245244325}
-  atkText: {fileID: 6151682285788753037}
-  levelText: {fileID: 6151682286729790923}
-  level: 1
-  curAttackValue: 2
-  curHP: 2
-  curEXP: 0
-  expSlider: {fileID: 5545065495646870623}
-  skillTarget: []
-  batchPos: {x: 0, y: 0}
-  targetPos: {x: 0, y: 0}
-  curPos: {fileID: 0}
-  giveDamage: 0
-  takeDamage: 0
 --- !u!82 &3063089376297314008
 AudioSource:
   m_ObjectHideFlags: 0
@@ -456,3 +405,59 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &8475194507772272057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8473623765046279732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e05b8c94d5fb69948b8dd34210bf692f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillType: 
+--- !u!114 &8475194507772272058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8473623765046279732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cda88de653f299840b5c51af7dbe0bd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isFreezen: 0
+  color: {r: 1, g: 0, b: 0, a: 1}
+  outlineSize: 5
+--- !u!114 &8475194507772272059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8473623765046279732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2435f21eb5008146b871a8c0fa54c9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardInfo: {fileID: 11400000, guid: 8839efee4d2094948b35418dbb3a9a49, type: 2}
+  hpText: {fileID: 6151682286245244325}
+  atkText: {fileID: 6151682285788753037}
+  levelText: {fileID: 6151682286729790923}
+  level: 1
+  curAttackValue: 2
+  curHP: 2
+  curEXP: 0
+  expSlider: {fileID: 5545065495646870623}
+  skillTarget: []
+  batchPos: {x: 0, y: 0}
+  targetPos: {x: 0, y: 0}
+  curPos: {fileID: 0}
+  giveDamage: 0
+  takeDamage: 0
+  searchArea: []
