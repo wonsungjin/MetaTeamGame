@@ -20,8 +20,8 @@ public partial class  UIManager : MonoBehaviour
         winUI = GameObject.Find("ResultWin");
         loseUI = GameObject.Find("ResultLose");
 
-        winUI.SetActive(false);
-        loseUI.SetActive(false);
+        // winUI.SetActive(false);
+        // loseUI.SetActive(false);
         battleSceneUI.SetActive(false);
     }
 
@@ -42,7 +42,6 @@ public partial class  UIManager : MonoBehaviour
     public void ResultSceneInit()
     {
         ResultSceneUI = GameObject.Find("ResultSceneCanvas");
-        PlayerSetArrangement();
         ResultSceneUI.SetActive(false);
     }
 
