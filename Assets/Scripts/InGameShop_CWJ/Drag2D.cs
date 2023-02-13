@@ -46,7 +46,7 @@ public partial class Drag2D : MonoBehaviour
         if (CompareTag("BattleMonster") || CompareTag("BattleMonster2") || CompareTag("BattleMonster3")) transform.parent.position = objPosition + Vector3.down;
         else transform.parent.position = objPosition + monsterPos;
 
-        // µå·¡±× ÇÒ¶§ ¸¶´Ù ·¹ÀÌ¸¦ ½÷¼­ ¹Ø¿¡ ´êÀº ¹èÆ²¸ó½ºÅÍ¸¦ ´Ù¸¥ À§Ä¡·Î º¸³¿
+        // ï¿½å·¡ï¿½ï¿½ ï¿½Ò¶ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ø¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ²ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½Ù¸ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (isClickBattleMonster == true)
         {
             if (hit.collider != null)
@@ -100,7 +100,7 @@ public partial class Drag2D : MonoBehaviour
         isClickBattleMonster = false;
         GameMGR.Instance.uiManager.SetisExplantionActive(false);
 
-        // ¿ëº´µé Àâ°í ³õ¾ÒÀ» ¶§ ¿ø·¡ À§Ä¡·Î µ¹¾Æ°£´Ù
+        // ï¿½ëº´ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½Æ°ï¿½ï¿½ï¿½
         if (this.gameObject.CompareTag("Monster"))
         {
             StartCoroutine(COR_BackAgain());
@@ -122,17 +122,17 @@ public partial class Drag2D : MonoBehaviour
     {
         if (isClickBool == true)
         {
-            // ÇÁ¸®Áî Ä«µå¸¦ Àâ¾ÒÀ» ¶§
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ä«ï¿½å¸¦ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
             if (gameObject.CompareTag("FreezeCard"))
             {
-                // ÇÁ¸®Áî Ä«µå¸¦ ÇÁ¸®Áî¿¡ ³ÖÀ¸¸é ³ìÀº ÈÄ ¿ø·¡ À§Ä¡·Î µ¹¾Æ°¡°í
-                // ¸áÆ®Ä«µå·Î ÅÂ±× º¯°æÀÌ µÇ°í ¿ø·¡ À§Ä¡·Î µ¹¾Æ°¡¸é ´Ù½Ã ¸ó½ºÅÍ »óÅÂ°¡ µÈ´Ù. 
+                // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ä«ï¿½å¸¦ ï¿½ï¿½ï¿½ï¿½ï¿½î¿¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½Æ°ï¿½ï¿½ï¿½
+                // ï¿½ï¿½Æ®Ä«ï¿½ï¿½ï¿½ ï¿½Â±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ç°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½Æ°ï¿½ï¿½ï¿½ ï¿½Ù½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â°ï¿½ ï¿½È´ï¿½. 
                 if (collision.gameObject.CompareTag("Freeze"))
                 {
                     StartCoroutine(COR_BackAgain());
                 }
 
-                // ¾ó·ÁÀÖÀ» ¶§ ¹èÆ²Á¸¿¡ °¡¸é ±¸¸Å °¡´ÉÇÏ°Ô ÇÏ´Â ¿¹¿ÜÃ³¸®
+                // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½Æ²ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½Ã³ï¿½ï¿½
                 if (GameMGR.Instance.uiManager.goldCount >= 3)
                 {
                     if (collision.gameObject.CompareTag("BattleZone"))
@@ -145,21 +145,21 @@ public partial class Drag2D : MonoBehaviour
                 }
             }
 
-            // »óÁ¡¿¡¼­ ±¸¸Å ÇÒ¶§ ¹èÆ²Á¸¿¡ ¿ëº´ ³ÖÀ¸¸é ·¹º§¾÷ µÈ´Ù.
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ò¶ï¿½ ï¿½ï¿½Æ²ï¿½ï¿½ï¿½ï¿½ ï¿½ëº´ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½È´ï¿½.
             if (gameObject.CompareTag("Monster"))
             {
-                // ÇÁ¸®Áî¿¡ ´êÀ¸¸é ÇÁ¸®ÁîÄ«µå·Î ÅÂ±×¸¦ ¹Ù²Û ÈÄ ¿ø·¡ À§Ä¡·Î µ¹¸°´Ù.
+                // ï¿½ï¿½ï¿½ï¿½ï¿½î¿¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä«ï¿½ï¿½ï¿½ ï¿½Â±×¸ï¿½ ï¿½Ù²ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
                 if (collision.gameObject.CompareTag("Freeze"))
                 {
                     StartCoroutine(COR_BackAgain());
                 }
 
-                // ¸ó½ºÅÍ°¡ ¹èÆ² Á¸¿¡ ´êÀ¸¸é °ñµå°¡ Â÷°¨ µÇ°í ¹èÆ²¸ó½ºÅÍ ÅÂ±×·Î ¹Ù²ï´Ù
+                // ï¿½ï¿½ï¿½Í°ï¿½ ï¿½ï¿½Æ² ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½å°¡ ï¿½ï¿½ï¿½ï¿½ ï¿½Ç°ï¿½ ï¿½ï¿½Æ²ï¿½ï¿½ï¿½ï¿½ ï¿½Â±×·ï¿½ ï¿½Ù²ï¿½ï¿½
                 if (collision.gameObject.CompareTag("BattleZone"))
                 {
                     if (GameMGR.Instance.uiManager.goldCount >= 3)
                     {
-                        
+                        GameMGR.Instance.audioMGR.SoundBuy();
                         spriteRenderer.sortingLayerName = "SellTXT";
                         gameObject.tag = "BattleMonster";
                         GameMGR.Instance.uiManager.goldCount -= 3;
@@ -168,7 +168,7 @@ public partial class Drag2D : MonoBehaviour
                         Vector2 monTras = gameObject.transform.parent.localScale;
                         gameObject.transform.parent.localScale = monTras * 2;
 
-                        //GameMGR.Instance.Event_Buy(gameObject.GetComponent<Card>()); //±¸¸ÅÇÑ Ä«µå°¡ ±¸¸Å½Ã È¿°ú°¡ ÀÖ´Ù¸é ½ºÅ³ ¹ßµ¿
+                        //GameMGR.Instance.Event_Buy(gameObject.GetComponent<Card>()); //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ä«ï¿½å°¡ ï¿½ï¿½ï¿½Å½ï¿½ È¿ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ù¸ï¿½ ï¿½ï¿½Å³ ï¿½ßµï¿½
                         if (card.cardInfo.skillTiming == SkillTiming.buy)
                             card.SkillActive2(card);
                     }
@@ -176,10 +176,10 @@ public partial class Drag2D : MonoBehaviour
 
                 if (gameObject.name == collision.gameObject.name && collision.gameObject.CompareTag("BattleMonster") || gameObject.name == collision.gameObject.name && collision.gameObject.CompareTag("BattleMonster2"))
                 {
-                    // »óÁ¡¿¡¼­ ¹Ù·Î ·¹º§¾÷ÇÏ´Â °æ¿ì
+                    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½
                     if (GameMGR.Instance.uiManager.goldCount >= 3)
                     {
-                        GameMGR.Instance.Event_Buy(gameObject.GetComponent<Card>()); //±¸¸ÅÇÑ Ä«µå°¡ ±¸¸Å½Ã È¿°ú°¡ ÀÖ´Ù¸é ½ºÅ³ ¹ßµ¿
+                        GameMGR.Instance.Event_Buy(gameObject.GetComponent<Card>()); //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ä«ï¿½å°¡ ï¿½ï¿½ï¿½Å½ï¿½ È¿ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ù¸ï¿½ ï¿½ï¿½Å³ ï¿½ßµï¿½
 
                         GameMGR.Instance.uiManager.goldCount -= 3;
                         GameMGR.Instance.uiManager.goldTXT.text = "" + GameMGR.Instance.uiManager.goldCount.ToString();
@@ -193,7 +193,7 @@ public partial class Drag2D : MonoBehaviour
 
             if (gameObject.CompareTag("BattleMonster") || gameObject.CompareTag("BattleMonster2") || gameObject.CompareTag("BattleMonster3"))
             {
-                // Àâ°í ÀÖ´Â ¿ÀºêÁ§Æ®°¡ ¹èÆ²Á¸¿¡ ´êÀ¸¸é ¿ÀºêÁ§Æ® À§Ä¡°ª ÀúÀå
+                // ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½Æ²ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 if (collision.gameObject.CompareTag("BattleZone"))
                 {
                     pos = collision.gameObject.transform.position;
@@ -255,14 +255,14 @@ public partial class Drag2D : MonoBehaviour
         GameMGR.Instance.uiManager.sell.gameObject.SetActive(false);
     }
 
-    // ÆÇ¸Å¹öÆ° ON OFF
+    // ï¿½Ç¸Å¹ï¿½Æ° ON OFF
     IEnumerator COR_SellButton()
     {
         yield return new WaitForSeconds(0.12f);
         GameMGR.Instance.uiManager.sell.gameObject.SetActive(false);
     }
 
-    // ¿ø·¡ À§Ä¡·Î µ¹¸®´Â ÇÔ¼ö
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
     private IEnumerator COR_BackAgain()
     {
         yield return wait;

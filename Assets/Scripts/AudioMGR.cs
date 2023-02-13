@@ -1,13 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class AudioMGR : MonoBehaviour
 {
     // Clip ī�װ��� �з��� ���� Enum
-    public enum Type { Background, Unit, UI, Effect };
+    public enum Type { Background, Unit, UI, Effect};
 
     // Type �� Audio Clip �з�
     [SerializeField] AudioClip[] BackGroundClip = null;
@@ -16,11 +15,6 @@ public class AudioMGR : MonoBehaviour
     [SerializeField] AudioClip[] EffectSFXClip = null;
 
     AudioClip audioClip = null;
-    AudioSource StoreAudioSource = null;
-    AudioSource StoreBGM = null;
-
-    AudioSource BattleBGM = null;
-    AudioSource BattleAudio = null;
 
     // AudioClip Name, AudioClip���� Dictionary ����
     Dictionary<string, AudioClip> BackgroundDic = new Dictionary<string, AudioClip>();
@@ -30,18 +24,32 @@ public class AudioMGR : MonoBehaviour
 
     private void Awake()
     {
-        Init();
+       Init();
     }
 
     //  AudioClip Name�� Ű, AudioClip�� ������ Dictionary�� �߰� 
     private void Init()
     {
-        StoreAudioSource = GetComponent<AudioSource>();
+        for (int i = 0; i < BackGroundClip.Length; i++)
+        {
+            BackgroundDic.Add(BackGroundClip[i].name, BackGroundClip[i]);
+        }
 
-        for (int i = 0; i < BackGroundClip.Length; i++) { BackgroundDic.Add(BackGroundClip[i].name, BackGroundClip[i]); }
-        for (int i = 0; i < UnitSFXClip.Length; i++) { UnitSFXDic.Add(UnitSFXClip[i].name, UnitSFXClip[i]); }
-        for (int i = 0; i < UISFXClip.Length; i++) { UISFXDic.Add(UISFXClip[i].name, UISFXClip[i]); }
-        for (int i = 0; i < EffectSFXClip.Length; i++) { EffectSFXDic.Add(EffectSFXClip[i].name, EffectSFXClip[i]); }
+
+        for (int i = 0; i < UnitSFXClip.Length; i++)
+        {
+            UnitSFXDic.Add(UnitSFXClip[i].name, UnitSFXClip[i]);
+        }
+
+        for (int i = 0; i < UISFXClip.Length; i++)
+        {
+            UISFXDic.Add(UISFXClip[i].name, UISFXClip[i]);
+        }
+
+        for (int i = 0; i < EffectSFXClip.Length; i++)
+        {
+            EffectSFXDic.Add(EffectSFXClip[i].name, EffectSFXClip[i]);
+        }
     }
 
     // Ÿ Ŭ�������� �Լ� ȣ�� �� Type, ClipName�� �´� AudioClip ��ȯ

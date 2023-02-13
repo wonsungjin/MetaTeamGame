@@ -90,7 +90,7 @@ public partial class Card : MonoBehaviour
                 if (level == 1)
                 {
                     Debug.Log("1레벨에서 렙업");
-                    audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.Unit, "Mergesound");
+                    audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.Unit, "Merge_sound");
                     audioSource.Play();
 
                     curEXP += value;
@@ -108,7 +108,7 @@ public partial class Card : MonoBehaviour
                 {
                     Debug.Log("2레벨에서 렙업");
                     curEXP += value;
-                    audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.Unit, "Mergesound");
+                    audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.Unit, "Merge_sound");
                     audioSource.Play();
                     if (curEXP >= 3)
                     {
