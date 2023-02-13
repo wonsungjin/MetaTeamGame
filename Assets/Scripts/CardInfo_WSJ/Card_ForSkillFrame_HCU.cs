@@ -193,9 +193,12 @@ public partial class Card : MonoBehaviour
                 }
                 break;
             case EffectType.summon:
-                    Debug.Log("소환 효과 발동!");
-                    Card summonCard = Resources.Load<Card>($"Prefabs/{cardInfo.sumom_Unit}");
-                    //GameMGR.Instance.battleLogic.playerForwardUnits.Add(summonCard.gameObject);
+                    Debug.Log(cardInfo.sumom_Unit);
+                    GameObject summonCard = Resources.Load<GameObject>($"Prefabs/{cardInfo.sumom_Unit}");
+                //summoncard 이름 디버그 띄울것
+                
+                //GameMGR.Instance.battleLogic.playerForwardUnits.Add(summonCard.gameObject);
+                Debug.Log(targetPos + ": 소환할 때 지정되어있던 타겟포즈");
                     summonCard.transform.position = targetPos;
                 break;
             case EffectType.reduceShopLevelUpCost:
@@ -368,7 +371,8 @@ public partial class Card : MonoBehaviour
                     {
                         if (GameMGR.Instance.spawner.cardBatch[i] == null)
                         {
-                            targetPos = GameMGR.Instance.spawner.cardBatch[i].transform.position;
+                            targetPos = GameMGR.Instance.spawner.shopBatchPos[i].transform.position;
+                            Debug.Log(targetPos + ": 타겟포즈");
                             isFind = true;
                         }
                     }

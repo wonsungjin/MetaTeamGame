@@ -1,4 +1,5 @@
 using MongoDB.Driver;
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -17,10 +18,25 @@ public class Sell : MonoBehaviour
         {
             Selld(collision);
 
-            GameMGR.Instance.objectPool.DestroyPrefab(collision.gameObject.transform.parent.gameObject);
-            GameMGR.Instance.uiManager.OnEnter_Set_SkillExplantion(false, Vector3.zero);
-            gameObject.SetActive(false);
+            if(collision.GetComponentInChildren<Card>().cardInfo.skillTiming == SkillTiming.sell)
+            {
+                StartCoroutine(COR_SellActive(collision));
+            }
+            else
+            {
+                GameMGR.Instance.objectPool.DestroyPrefab(collision.gameObject.transform.parent.gameObject);
+                GameMGR.Instance.uiManager.OnEnter_Set_SkillExplantion(false, Vector3.zero);
+                gameObject.SetActive(false);
+            }
         }
+    }
+
+    IEnumerator COR_SellActive(Collider2D collision)
+    {
+        yield return new WaitForSecondsRealtime(0.5f);
+        GameMGR.Instance.objectPool.DestroyPrefab(collision.gameObject.transform.parent.gameObject);
+        GameMGR.Instance.uiManager.OnEnter_Set_SkillExplantion(false, Vector3.zero);
+        gameObject.SetActive(false);
     }
 
     void Selld(Collider2D coll)
@@ -44,11 +60,13 @@ public class Sell : MonoBehaviour
         }
         // 오디오 매니저에서 실행한다 (여기서 하면 사라지기에)
         GameMGR.Instance.audioMGR.SoundSell();
-
+        Debug.Log("sell Something");
         if (coll.GetComponentInChildren<Card>().cardInfo.skillTiming == SkillTiming.sell)
         {
+            Debug.Log("my skillTiming as same as Sell");
             card = coll.GetComponentInChildren<Card>();
             card.SkillActive2(card);
+            Debug.Log("Sell Skill Trigger On");
         }
         //GameMGR.Instance.Event_Sell(coll.gameObject.GetComponent<Card>());
     }

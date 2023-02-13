@@ -9,6 +9,7 @@ public class Spawner : MonoBehaviourPun
     AudioSource audioSource;
 
     [SerializeField] Node[] monsterTrans;
+    [SerializeField] public Transform[] shopBatchPos;
 
     public GameObject[] trans = null;
 
