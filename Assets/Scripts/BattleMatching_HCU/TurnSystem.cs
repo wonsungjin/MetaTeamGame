@@ -13,7 +13,7 @@ using TMPro;
 public class TurnSystem : MonoBehaviourPunCallbacks
 {
     private bool isGameOver;
-    private int []  readyCount = new int[2];
+    private int[] readyCount = new int[2];
 
     [SerializeField] private GameObject Me;
     [SerializeField] private GameObject enemyDeck;
@@ -90,9 +90,9 @@ public class TurnSystem : MonoBehaviourPunCallbacks
         //matchingList.Remove((int)otherPlayer.CustomProperties["Number"]);
         //exitPlayerList.Add((int)otherPlayer.CustomProperties["Nunber"]);
         //if (PhotonNetwork.PlayerList.Length == 2) 
-        
-            cloneOpponent = -1;
-            cloneOpponentsOpponent = -1;
+
+        cloneOpponent = -1;
+        cloneOpponentsOpponent = -1;
         Debug.Log(otherPlayer + "가 나갔다");
         if (otherPlayer.IsInactive) Debug.Log(" IsInactive");
         else Debug.Log("NotInactive");
@@ -161,16 +161,16 @@ public class TurnSystem : MonoBehaviourPunCallbacks
     public void SetFirstAttack()
     {
 
-        for(int i = 0; i < matchNum.Length; i+=2) 
+        for (int i = 0; i < matchNum.Length; i += 2)
         {
             // 내 덱 수가 상대 덱 수보다 많을 때
-            if(GameMGR.Instance.batch.GetBatch(matchNum[i]).Count > GameMGR.Instance.batch.GetBatch(matchNum[i+1]).Count)
+            if (GameMGR.Instance.batch.GetBatch(matchNum[i]).Count > GameMGR.Instance.batch.GetBatch(matchNum[i + 1]).Count)
             {
                 isFirst[matchNum[i]] = true;
                 isFirst[matchNum[i + 1]] = false;
             }
 
-            else if(GameMGR.Instance.batch.GetBatch(matchNum[i]).Count < GameMGR.Instance.batch.GetBatch(matchNum[i + 1]).Count)
+            else if (GameMGR.Instance.batch.GetBatch(matchNum[i]).Count < GameMGR.Instance.batch.GetBatch(matchNum[i + 1]).Count)
             {
                 isFirst[matchNum[i + 1]] = true;
                 isFirst[matchNum[i]] = false;
@@ -181,7 +181,7 @@ public class TurnSystem : MonoBehaviourPunCallbacks
                 int randomPoint = UnityEngine.Random.Range(0, 10);
                 int randomPoint2 = UnityEngine.Random.Range(0, 10);
                 firstPoint[matchNum[i]] += randomPoint;
-                firstPoint[matchNum[i+1]] += randomPoint2;
+                firstPoint[matchNum[i + 1]] += randomPoint2;
 
                 if (firstPoint[matchNum[i]] > firstPoint[matchNum[i + 1]])
                 {
@@ -199,7 +199,7 @@ public class TurnSystem : MonoBehaviourPunCallbacks
                 {
                     // 같을 때
                     int a = UnityEngine.Random.Range(0, 2);
-                    if(a == 0)
+                    if (a == 0)
                     {
                         isFirst[matchNum[i]] = true;
                         isFirst[matchNum[i + 1]] = false;
