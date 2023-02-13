@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.Rendering;
+using TMPro;
 //using Hashtable = ExitGames.Client.Photon.Hashtable; // 이게 구버전 한정인지 필수인지는 나도 모른다는 것이 학계의 점심
 
 
@@ -536,7 +537,10 @@ public class TurnSystem : MonoBehaviourPunCallbacks
         GameMGR.Instance.batch.UnitPlacement();
         GameMGR.Instance.battleLogic.AttackLogic();
         GameMGR.Instance.uiManager.OnBattleUI();
+
+        GameMGR.Instance.Init(3); // Move to Battle Scene
     }
+
     /*
     private void BattleOrder()
     {
