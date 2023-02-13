@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class AudioMGR : MonoBehaviour
 {
     // Clip ī�װ��� �з��� ���� Enum
-    public enum Type { Background, Unit, UI, Effect};
+    public enum Type { Background, Unit, UI, Effect };
 
     // Type �� Audio Clip �з�
     [SerializeField] AudioClip[] BackGroundClip = null;
@@ -15,6 +16,11 @@ public class AudioMGR : MonoBehaviour
     [SerializeField] AudioClip[] EffectSFXClip = null;
 
     AudioClip audioClip = null;
+    AudioSource StoreAudioSource = null;
+    AudioSource StoreBGM = null;
+
+    AudioSource BattleBGM = null;
+    AudioSource BattleAudio = null;
 
     // AudioClip Name, AudioClip���� Dictionary ����
     Dictionary<string, AudioClip> BackgroundDic = new Dictionary<string, AudioClip>();
@@ -24,32 +30,18 @@ public class AudioMGR : MonoBehaviour
 
     private void Awake()
     {
-       Init();
+        Init();
     }
 
     //  AudioClip Name�� Ű, AudioClip�� ������ Dictionary�� �߰� 
     private void Init()
     {
-        for (int i = 0; i < BackGroundClip.Length; i++)
-        {
-            BackgroundDic.Add(BackGroundClip[i].name, BackGroundClip[i]);
-        }
+        StoreAudioSource = GetComponent<AudioSource>();
 
-
-        for (int i = 0; i < UnitSFXClip.Length; i++)
-        {
-            UnitSFXDic.Add(UnitSFXClip[i].name, UnitSFXClip[i]);
-        }
-
-        for (int i = 0; i < UISFXClip.Length; i++)
-        {
-            UISFXDic.Add(UISFXClip[i].name, UISFXClip[i]);
-        }
-
-        for (int i = 0; i < EffectSFXClip.Length; i++)
-        {
-            EffectSFXDic.Add(EffectSFXClip[i].name, EffectSFXClip[i]);
-        }
+        for (int i = 0; i < BackGroundClip.Length; i++) { BackgroundDic.Add(BackGroundClip[i].name, BackGroundClip[i]); }
+        for (int i = 0; i < UnitSFXClip.Length; i++) { UnitSFXDic.Add(UnitSFXClip[i].name, UnitSFXClip[i]); }
+        for (int i = 0; i < UISFXClip.Length; i++) { UISFXDic.Add(UISFXClip[i].name, UISFXClip[i]); }
+        for (int i = 0; i < EffectSFXClip.Length; i++) { EffectSFXDic.Add(EffectSFXClip[i].name, EffectSFXClip[i]); }
     }
 
     // Ÿ Ŭ�������� �Լ� ȣ�� �� Type, ClipName�� �´� AudioClip ��ȯ
@@ -80,20 +72,37 @@ public class AudioMGR : MonoBehaviour
         StoreAudioSource.Play();
     }
 
+    public void SoundButton()
+    {
+        StoreAudioSource.clip = ReturnAudioClip(Type.UI, "button_sound");
+        StoreAudioSource.Play();
+    }
+
+    public void SoundMonsterClick()
+    {
+        StoreAudioSource.clip = ReturnAudioClip(Type.Unit, "pick_sound");
+        StoreAudioSource.Play();
+    }
+
     public void StoreSceneBGM(bool isStoreScene)
     {
         StoreBGM = GameObject.Find("BackImage").GetComponent<AudioSource>();
-        StoreBGM.clip = ReturnAudioClip(Type.Background, "Maintenance");
+        StoreBGM.clip = ReturnAudioClip(Type.Background, "MP_maintenanceBgm");
         StoreBGM.playOnAwake = isStoreScene;
         StoreBGM.loop = isStoreScene;
 
         if (isStoreScene) { StoreBGM.Play(); }
         else if (!isStoreScene) { StoreBGM.Pause(); }
     }
-
     public void SoundSell()
     {
-        StoreAudioSource.clip = ReturnAudioClip(Type.UI, "Public_landing");
+        StoreAudioSource.clip = ReturnAudioClip(Type.UI, "gold +1");
+        StoreAudioSource.Play();
+    }
+
+    public void SoundBuy()
+    {
+        StoreAudioSource.clip = ReturnAudioClip(Type.UI, "gold -1");
         StoreAudioSource.Play();
     }
     #endregion
