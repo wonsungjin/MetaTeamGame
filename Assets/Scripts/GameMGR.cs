@@ -102,6 +102,7 @@ public partial class GameMGR : Singleton<GameMGR>
         {
             GameMGR.Instance.uiManager.BattleUIInit();
 
+            uiManager.ResultUnitPosition();
             audioMGR.StoreSceneBGM(false);
             audioMGR.BattleSceneBGM(true);
         }
@@ -109,7 +110,7 @@ public partial class GameMGR : Singleton<GameMGR>
         // RoundScene
         else if (num == 4)
         {
-
+            
         }
     }
 }

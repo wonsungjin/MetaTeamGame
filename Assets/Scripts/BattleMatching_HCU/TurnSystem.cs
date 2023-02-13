@@ -541,35 +541,6 @@ public class TurnSystem : MonoBehaviourPunCallbacks
         GameMGR.Instance.Init(3); // Move to Battle Scene
     }
 
-    public IEnumerator COR_MoveToResultScene(bool Win)
-    {
-        yield return new WaitForSeconds(1f);
-        Camera.main.gameObject.transform.position = new Vector3(40, 0, -10);
-
-
-        GameMGR.Instance.uiManager.PlayerSetArrangement(); // save player unit array
-
-        GameMGR.Instance.audioMGR.BattleSceneBGM(false);
-        if (Win) 
-        {
-            GameMGR.Instance.audioMGR.BattleRoundResult(Win);
-            GameMGR.Instance.uiManager.PlayerBattleWin();
-        }
-        
-        else if (!Win) 
-        {
-            GameMGR.Instance.audioMGR.BattleRoundResult(Win);
-            GameMGR.Instance.uiManager.PlayerBattleLose();
-        }
-
-        // 무승부 로직 추가필요
-        yield return new WaitForSeconds(5f);
-
-        GameMGR.Instance.uiManager.ResetPlayerUnit(); // Unit Reset
-        GameMGR.Instance.spawner.TestButton(); 
-    }
-
-
     /*
     private void BattleOrder()
     {
