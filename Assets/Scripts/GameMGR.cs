@@ -98,6 +98,8 @@ public partial class GameMGR : Singleton<GameMGR>
         // BattleScene
         else if (num == 3)
         {
+            audioMGR.StoreSceneBGM(false);
+
 
         }
 

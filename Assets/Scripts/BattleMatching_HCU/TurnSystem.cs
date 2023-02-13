@@ -524,7 +524,6 @@ public class TurnSystem : MonoBehaviourPunCallbacks
                     }
                 }
             }
-
         }
         StartCoroutine(COR_DelayMove());
     }
@@ -535,8 +534,16 @@ public class TurnSystem : MonoBehaviourPunCallbacks
         GameMGR.Instance.uiManager.storePannel.SetActive(false);
         GameMGR.Instance.batch.UnitPlacement();
         GameMGR.Instance.battleLogic.AttackLogic();
-        GameMGR.Instance.uiManager.OnBattleUI();
+
+        GameMGR.Instance.uiManager.BattleUIInit(); // Init Battle UI
     }
+
+    IEnumerator COR_MoveToRoundResult()
+    {
+        yield return new WaitForSeconds(1f);
+        Camera.main.gameObject.transform.position = new Vector3(40, 0, -10);
+    }
+
     /*
     private void BattleOrder()
     {
