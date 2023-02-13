@@ -17,6 +17,12 @@ public class MetaTrendAPI : MonoBehaviour
 	[SerializeField] string FullAppsProductionURL = "https://odin-api.browseosiris.com";
 	[SerializeField] string FullAppsStagingURL = "https://odin-api-sat.browseosiris.com";
 
+	// 버튼 누를시 URL 연결
+	public void ButtonGetURL()
+	{
+		Application.OpenURL("https://www.naver.com/");
+	}
+
 	string getBaseURL()
 	{
 		// 프로덕션 단계라면
