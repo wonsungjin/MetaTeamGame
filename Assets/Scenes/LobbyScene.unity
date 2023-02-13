@@ -7164,37 +7164,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8359877118856600461, guid: 306e3f38cec157842b453c50aac32a45, type: 3}
   m_PrefabInstance: {fileID: 457645062}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &466408828
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 466408829}
-  m_Layer: 0
-  m_Name: SSHTEST
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &466408829
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 466408828}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 22
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &469884665
 GameObject:
   m_ObjectHideFlags: 0
@@ -29517,6 +29486,13 @@ MonoBehaviour:
   curHP: 0
   curEXP: 0
   expSlider: {fileID: 0}
+  skillTarget: []
+  batchPos: {x: 0, y: 0}
+  targetPos: {x: 0, y: 0}
+  curPos: {fileID: 0}
+  giveDamage: 0
+  takeDamage: 0
+  searchArea: []
 --- !u!114 &1244862510948258122
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29529,7 +29505,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cda88de653f299840b5c51af7dbe0bd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pos: {fileID: 0}
   isFreezen: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   outlineSize: 5
@@ -29558,7 +29533,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cda88de653f299840b5c51af7dbe0bd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pos: {fileID: 0}
   isFreezen: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   outlineSize: 5
@@ -29620,6 +29594,13 @@ MonoBehaviour:
   curHP: 0
   curEXP: 0
   expSlider: {fileID: 0}
+  skillTarget: []
+  batchPos: {x: 0, y: 0}
+  targetPos: {x: 0, y: 0}
+  curPos: {fileID: 0}
+  giveDamage: 0
+  takeDamage: 0
+  searchArea: []
 --- !u!50 &1683130933639958611
 Rigidbody2D:
   serializedVersion: 4
@@ -29738,6 +29719,13 @@ MonoBehaviour:
   curHP: 0
   curEXP: 0
   expSlider: {fileID: 0}
+  skillTarget: []
+  batchPos: {x: 0, y: 0}
+  targetPos: {x: 0, y: 0}
+  curPos: {fileID: 0}
+  giveDamage: 0
+  takeDamage: 0
+  searchArea: []
 --- !u!50 &1891945566863584470
 Rigidbody2D:
   serializedVersion: 4
@@ -29780,6 +29768,13 @@ MonoBehaviour:
   curHP: 0
   curEXP: 0
   expSlider: {fileID: 0}
+  skillTarget: []
+  batchPos: {x: 0, y: 0}
+  targetPos: {x: 0, y: 0}
+  curPos: {fileID: 0}
+  giveDamage: 0
+  takeDamage: 0
+  searchArea: []
 --- !u!114 &1926938376398959714
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29792,7 +29787,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cda88de653f299840b5c51af7dbe0bd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pos: {fileID: 0}
   isFreezen: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   outlineSize: 5
@@ -29864,6 +29858,13 @@ MonoBehaviour:
   curHP: 0
   curEXP: 0
   expSlider: {fileID: 0}
+  skillTarget: []
+  batchPos: {x: 0, y: 0}
+  targetPos: {x: 0, y: 0}
+  curPos: {fileID: 0}
+  giveDamage: 0
+  takeDamage: 0
+  searchArea: []
 --- !u!50 &2221145007596496290
 Rigidbody2D:
   serializedVersion: 4
@@ -29906,6 +29907,13 @@ MonoBehaviour:
   curHP: 0
   curEXP: 0
   expSlider: {fileID: 0}
+  skillTarget: []
+  batchPos: {x: 0, y: 0}
+  targetPos: {x: 0, y: 0}
+  curPos: {fileID: 0}
+  giveDamage: 0
+  takeDamage: 0
+  searchArea: []
 --- !u!61 &2382412561666352698
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -30238,7 +30246,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cda88de653f299840b5c51af7dbe0bd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pos: {fileID: 0}
   isFreezen: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   outlineSize: 5
@@ -30800,7 +30807,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cda88de653f299840b5c51af7dbe0bd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pos: {fileID: 0}
   isFreezen: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   outlineSize: 5
@@ -30970,6 +30976,13 @@ MonoBehaviour:
   curHP: 0
   curEXP: 0
   expSlider: {fileID: 0}
+  skillTarget: []
+  batchPos: {x: 0, y: 0}
+  targetPos: {x: 0, y: 0}
+  curPos: {fileID: 0}
+  giveDamage: 0
+  takeDamage: 0
+  searchArea: []
 --- !u!114 &4790532487075826102
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30982,7 +30995,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cda88de653f299840b5c51af7dbe0bd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pos: {fileID: 0}
   isFreezen: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   outlineSize: 5
@@ -30998,7 +31010,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cda88de653f299840b5c51af7dbe0bd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pos: {fileID: 0}
   isFreezen: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   outlineSize: 5
@@ -31092,7 +31103,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cda88de653f299840b5c51af7dbe0bd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pos: {fileID: 0}
   isFreezen: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   outlineSize: 5
@@ -31276,7 +31286,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cda88de653f299840b5c51af7dbe0bd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pos: {fileID: 0}
   isFreezen: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   outlineSize: 5
@@ -31301,6 +31310,13 @@ MonoBehaviour:
   curHP: 1
   curEXP: 9
   expSlider: {fileID: 0}
+  skillTarget: []
+  batchPos: {x: 0, y: 0}
+  targetPos: {x: 0, y: 0}
+  curPos: {fileID: 0}
+  giveDamage: 0
+  takeDamage: 0
+  searchArea: []
 --- !u!1 &6139308160527905803
 GameObject:
   m_ObjectHideFlags: 0
@@ -32144,7 +32160,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cda88de653f299840b5c51af7dbe0bd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pos: {fileID: 0}
   isFreezen: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   outlineSize: 5
@@ -32169,6 +32184,13 @@ MonoBehaviour:
   curHP: 0
   curEXP: 0
   expSlider: {fileID: 0}
+  skillTarget: []
+  batchPos: {x: 0, y: 0}
+  targetPos: {x: 0, y: 0}
+  curPos: {fileID: 0}
+  giveDamage: 0
+  takeDamage: 0
+  searchArea: []
 --- !u!61 &7974875336583478583
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -32229,6 +32251,13 @@ MonoBehaviour:
   curHP: 0
   curEXP: 0
   expSlider: {fileID: 0}
+  skillTarget: []
+  batchPos: {x: 0, y: 0}
+  targetPos: {x: 0, y: 0}
+  curPos: {fileID: 0}
+  giveDamage: 0
+  takeDamage: 0
+  searchArea: []
 --- !u!1 &7984887278620950173
 GameObject:
   m_ObjectHideFlags: 0
@@ -32496,7 +32525,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cda88de653f299840b5c51af7dbe0bd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pos: {fileID: 0}
   isFreezen: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   outlineSize: 5
@@ -32570,3 +32598,10 @@ MonoBehaviour:
   curHP: 0
   curEXP: 0
   expSlider: {fileID: 0}
+  skillTarget: []
+  batchPos: {x: 0, y: 0}
+  targetPos: {x: 0, y: 0}
+  curPos: {fileID: 0}
+  giveDamage: 0
+  takeDamage: 0
+  searchArea: []
