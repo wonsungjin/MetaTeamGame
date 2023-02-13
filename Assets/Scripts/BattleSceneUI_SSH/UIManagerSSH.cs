@@ -7,15 +7,26 @@ public partial class  UIManager : MonoBehaviour
 {
     GameObject battleSceneUI = null;
     GameObject ResultSceneUI = null;
+    GameObject winUI = null;
+    GameObject loseUI = null;
     
     public GameObject[] playerArrangement = new GameObject[6];
     public Transform[] playerPosition = new Transform[6];
+
+    private void Awake()
+    {
+        ResultUnitPosition();
+    }
 
     #region BattleScene
     public void BattleUIInit()
     {
         battleSceneUI = GameObject.Find("BattleSceneCanvas");
+        winUI = GameObject.Find("ResultWin");
+        loseUI = GameObject.Find("ResultLose");
 
+        winUI.SetActive(false);
+        loseUI.SetActive(false);
         battleSceneUI.SetActive(false);
     }
 
@@ -28,34 +39,34 @@ public partial class  UIManager : MonoBehaviour
 
 
     #region RoundResultScene
-    private void ResultSceneInit()
+    private void ResultUnitPosition()
     {
-        ResultSceneUI = GameObject.Find("ResultSceneCanvas");
-        PlayerSetArrangement();
-        PlayerSetPosition();
+            playerPosition = GameObject.Find("ResultPlayerPosition").GetComponentsInChildren<Transform>();
     }
 
-    private void PlayerSetArrangement()
+    public void ResultSceneInit()
+    {
+        ResultSceneUI = GameObject.Find("ResultSceneCanvas");
+        ResultSceneUI.SetActive(false);
+        PlayerSetArrangement();
+    }
+
+    public void PlayerSetArrangement()
     {
         for (int i = 0; i < playerArrangement.Length; i++)
         {
-
+            playerArrangement[i].transform.position = playerPosition[i].position;
         }
-    }
-
-    private void PlayerSetPosition()
-    {
-
     }
 
     public void PlayerBattleWin()
     {
-
+        winUI.SetActive(true);
     }
 
     public void PlayerBattleLose()
     {
-
+        loseUI.SetActive(true);
     }
     #endregion
 }

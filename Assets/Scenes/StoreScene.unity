@@ -686,6 +686,7 @@ MonoBehaviour:
   isHere: 0
   myNum: 5
   myObj: {fileID: 0}
+  myPrefab: {fileID: 0}
 --- !u!82 &41134537
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2127,6 +2128,7 @@ MonoBehaviour:
   isHere: 0
   myNum: 2
   myObj: {fileID: 0}
+  myPrefab: {fileID: 0}
 --- !u!82 &195171385
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3700,7 +3702,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1582478508024995863, guid: 7e2fcefe0bdd47a42bc54348212bbf97, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1582478508053310010, guid: 7e2fcefe0bdd47a42bc54348212bbf97, type: 3}
       propertyPath: m_AnchorMax.y
@@ -3990,6 +3992,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1582478509285167723, guid: 7e2fcefe0bdd47a42bc54348212bbf97, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1582478509286922155, guid: 7e2fcefe0bdd47a42bc54348212bbf97, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -4109,6 +4115,10 @@ PrefabInstance:
     - target: {fileID: 1582478509631883007, guid: 7e2fcefe0bdd47a42bc54348212bbf97, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1582478509640509015, guid: 7e2fcefe0bdd47a42bc54348212bbf97, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1582478509700059934, guid: 7e2fcefe0bdd47a42bc54348212bbf97, type: 3}
       propertyPath: m_AnchorMax.y
@@ -10381,6 +10391,7 @@ MonoBehaviour:
   isHere: 0
   myNum: 0
   myObj: {fileID: 0}
+  myPrefab: {fileID: 0}
 --- !u!82 &1723697888
 AudioSource:
   m_ObjectHideFlags: 0
@@ -11191,6 +11202,7 @@ MonoBehaviour:
   isHere: 0
   myNum: 1
   myObj: {fileID: 0}
+  myPrefab: {fileID: 0}
 --- !u!82 &1810743071
 AudioSource:
   m_ObjectHideFlags: 0
@@ -13047,6 +13059,7 @@ MonoBehaviour:
   isHere: 0
   myNum: 3
   myObj: {fileID: 0}
+  myPrefab: {fileID: 0}
 --- !u!82 &2040472134
 AudioSource:
   m_ObjectHideFlags: 0
@@ -13558,6 +13571,7 @@ MonoBehaviour:
   isHere: 0
   myNum: 4
   myObj: {fileID: 0}
+  myPrefab: {fileID: 0}
 --- !u!82 &2107974388
 AudioSource:
   m_ObjectHideFlags: 0
