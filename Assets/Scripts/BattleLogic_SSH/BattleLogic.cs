@@ -801,6 +801,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                 PlayerBattleWin();
                 break;
             }
+
             isEnemyAliveCount = 0;
         }
     }
