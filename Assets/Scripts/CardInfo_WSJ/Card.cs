@@ -114,6 +114,7 @@ public partial class Card : MonoBehaviour
                     {
                         ChangeValue(CardStatus.Level);
                         gameObject.tag = "BattleMonster3";
+                        gameObject.name = "Level3";
                         audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.Unit, "UnitLevelUP_sound");
                         audioSource.Play();
                     }
