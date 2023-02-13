@@ -82,6 +82,7 @@ public class AudioMGR : MonoBehaviour
         if (isStoreScene) { StoreBGM.Play(); }
         else if (!isStoreScene) { StoreBGM.Pause(); }
     }
+
     public void SoundSell()
     {
         StoreAudioSource.clip = ReturnAudioClip(Type.UI, "Public_landing");
