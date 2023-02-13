@@ -59,6 +59,11 @@ public partial class  UIManager : MonoBehaviour
         }
     }
 
+    public void ResetPlayerUnit()
+    {
+        for (int i = 0; i < playerArrangement.Length; i++) { Destroy(playerArrangement[i]); }        
+    }
+
     public void PlayerBattleWin()
     {
         winUI.SetActive(true);

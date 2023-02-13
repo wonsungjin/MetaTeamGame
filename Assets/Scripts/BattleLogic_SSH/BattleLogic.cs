@@ -813,7 +813,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
         GameObject.Find("firstAttack").GetComponent<TextMeshProUGUI>().text = isFirstAttack.ToString();
         GameObject.Find("resultText").GetComponent<TextMeshProUGUI>().text = "win";
         Debug.Log("Player Win");
-        // �¸� ���� �߰�
+
     }
 
     // �й� ��

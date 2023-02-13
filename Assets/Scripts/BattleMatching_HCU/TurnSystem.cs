@@ -541,7 +541,7 @@ public class TurnSystem : MonoBehaviourPunCallbacks
         GameMGR.Instance.Init(3); // Move to Battle Scene
     }
 
-    IEnumerator COR_MoveToResultScene(bool Win)
+    public IEnumerator COR_MoveToResultScene(bool Win)
     {
         yield return new WaitForSeconds(1f);
         Camera.main.gameObject.transform.position = new Vector3(40, 0, -10);
@@ -563,6 +563,10 @@ public class TurnSystem : MonoBehaviourPunCallbacks
         }
 
         // 무승부 로직 추가필요
+        yield return new WaitForSeconds(5f);
+
+        GameMGR.Instance.uiManager.ResetPlayerUnit(); // Unit Reset
+        GameMGR.Instance.spawner.TestButton(); 
     }
 
 
