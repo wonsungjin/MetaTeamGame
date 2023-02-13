@@ -31,7 +31,15 @@ public partial class UIManager : MonoBehaviour
     #region RoundResultScene
     public void ResultUnitPosition()
     {
-        playerPosition = GameObject.Find("ResultPlayerPosition").GetComponentsInChildren<Transform>();
+        int count = 0;
+
+        playerPosition = GameObject.Find("ResultBackGround").GetComponentsInChildren<Transform>();
+
+        foreach (Transform child in playerPosition)
+        {
+            playerPosition[count] = child;
+            count++;
+        }
     }
 
     public void ResultSceneInit()
@@ -51,13 +59,22 @@ public partial class UIManager : MonoBehaviour
     {
         for (int i = 0; i < playerArrangement.Length; i++)
         {
+            if (playerArrangement[i] != null)
+            {
+                Debug.Log($"playerArrangement {i} : " + playerArrangement[i].gameObject.name);
+                Debug.Log($"playerPosition {i} : " + playerPosition[i].name);
+            }
+
             if (playerArrangement[i] != null) { playerArrangement[i].transform.position = playerPosition[i].position; }
         }
     }
 
     public void ResetPlayerUnit()
     {
-        for (int i = 0; i < playerArrangement.Length; i++) { Destroy(playerArrangement[i]); }
+        for (int i = 0; i < playerArrangement.Length; i++)
+        {
+            if (playerArrangement != null) { Destroy(playerArrangement[i]); }
+        }
     }
 
     public void PlayerBattleWin(bool isWin)
@@ -73,7 +90,6 @@ public partial class UIManager : MonoBehaviour
 
     public IEnumerator COR_MoveToResultScene(bool Win)
     {
-        yield return new WaitForSeconds(1f);
         Camera.main.gameObject.transform.position = new Vector3(40, 0, -10);
 
         GameMGR.Instance.audioMGR.BattleSceneBGM(false);
@@ -94,5 +110,13 @@ public partial class UIManager : MonoBehaviour
 
         GameMGR.Instance.uiManager.ResetPlayerUnit(); // Unit Reset
         GameMGR.Instance.spawner.TestButton();
+
+        // Move the camera position to the store scene
+        Camera.main.gameObject.transform.position = new Vector3(0, 0, -10);
+
+        if (winUI.activeSelf == true) { winUI.SetActive(false); }
+        if (loseUI.activeSelf == true) { loseUI.SetActive(false); }
+        if (ResultSceneUI.activeSelf == true) { ResultSceneUI.SetActive(false); }
+        GameMGR.Instance.Init(2);
     }
 }

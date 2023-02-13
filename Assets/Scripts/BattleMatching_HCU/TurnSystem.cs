@@ -36,8 +36,8 @@ public class TurnSystem : MonoBehaviourPunCallbacks
 
     // 플레이어 라이프 관련
     public int[] life = null;
-    public int myLife = 10;
-    [SerializeField] public int startLife = 10;
+    public int myLife = 20;
+    public int startLife = 20;
 
     // 전투 승패 관련
     public bool isWin = false;
