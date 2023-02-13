@@ -13,11 +13,6 @@ public partial class  UIManager : MonoBehaviour
     public GameObject[] playerArrangement = new GameObject[6];
     public Transform[] playerPosition = new Transform[6];
 
-    private void Awake()
-    {
-        ResultUnitPosition();
-    }
-
     #region BattleScene
     public void BattleUIInit()
     {
@@ -39,7 +34,7 @@ public partial class  UIManager : MonoBehaviour
 
 
     #region RoundResultScene
-    private void ResultUnitPosition()
+    public void ResultUnitPosition()
     {
             playerPosition = GameObject.Find("ResultPlayerPosition").GetComponentsInChildren<Transform>();
     }
@@ -47,8 +42,8 @@ public partial class  UIManager : MonoBehaviour
     public void ResultSceneInit()
     {
         ResultSceneUI = GameObject.Find("ResultSceneCanvas");
-        ResultSceneUI.SetActive(false);
         PlayerSetArrangement();
+        ResultSceneUI.SetActive(false);
     }
 
     public void PlayerSetArrangement()
@@ -74,4 +69,32 @@ public partial class  UIManager : MonoBehaviour
         loseUI.SetActive(true);
     }
     #endregion
+
+    public IEnumerator COR_MoveToResultScene(bool Win)
+    {
+        yield return new WaitForSeconds(1f);
+        Camera.main.gameObject.transform.position = new Vector3(40, 0, -10);
+
+
+        GameMGR.Instance.uiManager.PlayerSetArrangement(); // save player unit array
+
+        GameMGR.Instance.audioMGR.BattleSceneBGM(false);
+        if (Win)
+        {
+            GameMGR.Instance.audioMGR.BattleRoundResult(Win);
+            GameMGR.Instance.uiManager.PlayerBattleWin();
+        }
+
+        else if (!Win)
+        {
+            GameMGR.Instance.audioMGR.BattleRoundResult(Win);
+            GameMGR.Instance.uiManager.PlayerBattleLose();
+        }
+
+        // 무승부 로직 추가필요
+        yield return new WaitForSeconds(5f);
+
+        GameMGR.Instance.uiManager.ResetPlayerUnit(); // Unit Reset
+        GameMGR.Instance.spawner.TestButton();
+    }
 }
