@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Node : MonoBehaviour
@@ -8,31 +9,38 @@ public class Node : MonoBehaviour
 
     public bool isNotMonster = false;
 
-    GameObject collisionObj;
+    public GameObject collisionObj;
+
+    bool isEnter = false;
     private void Start()
     {
         mySprite = GetComponent<SpriteRenderer>();
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-
-        if (collision.gameObject.CompareTag("FreezeCard"))
+        if (isEnter == false)
         {
-            this.isNotSpawn = true;
-            gameObject.tag = "FullZone";
-            gameObject.transform.localScale = new Vector3(0.245f, 0.245f, 1);
-            mySprite.sprite = Resources.Load<Sprite>("FrameFreeze");
-        }
+            if (collisionObj == collision.gameObject && collision.gameObject.CompareTag("FreezeCard"))
+            {
+                this.isNotSpawn = true;
+                gameObject.tag = "FullZone";
+                gameObject.transform.localScale = new Vector3(0.245f, 0.245f, 1);
+                mySprite.sprite = Resources.Load<Sprite>("FrameFreeze");
+            }
 
-        if (collisionObj == null && collision.gameObject.CompareTag("Monster"))
-        {
-            collisionObj = collision.gameObject;
-            gameObject.tag = "FullZone";
-            mySprite.sprite = Resources.Load<Sprite>("FrameOn");
-            isNotMonster = true;
+            if (collisionObj == null || collisionObj == collision.gameObject && collision.gameObject.CompareTag("Monster"))
+            {
+                collisionObj = collision.gameObject;
+                gameObject.tag = "FullZone";
+                mySprite.sprite = Resources.Load<Sprite>("FrameOn");
+                isNotMonster = true;
+            }
         }
-
+    }
+    public void NullObj()
+    {
+        collisionObj = null;
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -42,16 +50,17 @@ public class Node : MonoBehaviour
             gameObject.tag = "SelectRing";
             mySprite.sprite = Resources.Load<Sprite>("FrameOff");
             isNotMonster = false;
-            collisionObj = null;
-
+            //collisionObj = null;
+            isEnter = false;
         }
 
-        if (collision.gameObject.CompareTag("FreezeCard"))
+        if (collisionObj == collision.gameObject && collision.gameObject.CompareTag("FreezeCard"))
         {
             gameObject.tag = "SelectRing";
             this.isNotSpawn = false;
             gameObject.transform.localScale = new Vector3(1, 1, 1);
             mySprite.sprite = Resources.Load<Sprite>("FrameOff");
+            isEnter = false;
         }
     }
 }
