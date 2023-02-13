@@ -25841,7 +25841,7 @@ PrefabInstance:
     - target: {fileID: 2063491190, guid: a4f20f45cd3327f448bc2e26e4fe7e10, type: 3}
       propertyPath: BackGroundClip.Array.data[2]
       value: 
-      objectReference: {fileID: 8300000, guid: ebb05f4a28a4b674791415359f4a24c2, type: 3}
+      objectReference: {fileID: 8300000, guid: 3d4e204c00def894aa353575f257bc50, type: 3}
     - target: {fileID: 2063491190, guid: a4f20f45cd3327f448bc2e26e4fe7e10, type: 3}
       propertyPath: BackGroundClip.Array.data[3]
       value: 
