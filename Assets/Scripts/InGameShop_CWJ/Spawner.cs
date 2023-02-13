@@ -213,7 +213,8 @@ public class Spawner : MonoBehaviourPun
             }
             ChooseRandomCard();
 
-            // GameMGR.Instance.Event_Reroll();    // 리롤시 능력가진 카드들 효과 발동
+            GameMGR.Instance.Event_Reroll();    // 리롤시 능력가진 카드들 효과 발동
+            
         }
         else
         {

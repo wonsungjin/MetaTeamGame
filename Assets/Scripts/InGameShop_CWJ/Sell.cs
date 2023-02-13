@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Sell : MonoBehaviour
 {
+    Card card;  // Sell 콜라이더에 닿은 유닛의 데이터를 담기 위한 멤버 변수
     private void Start()
     {
         transform.GetChild(0).GetComponent<MeshRenderer>().sortingLayerName = "SellTXT";
@@ -43,6 +44,12 @@ public class Sell : MonoBehaviour
         }
         // 오디오 매니저에서 실행한다 (여기서 하면 사라지기에)
         GameMGR.Instance.audioMGR.SoundSell();
-        GameMGR.Instance.Event_Sell(coll.gameObject.GetComponent<Card>());
+
+        if (coll.GetComponentInChildren<Card>().cardInfo.skillTiming == SkillTiming.sell)
+        {
+            card = coll.GetComponentInChildren<Card>();
+            card.SkillActive2(card);
+        }
+        //GameMGR.Instance.Event_Sell(coll.gameObject.GetComponent<Card>());
     }
 }
