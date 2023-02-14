@@ -1,6 +1,7 @@
 using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public partial class GameMGR : Singleton<GameMGR>
@@ -85,9 +86,10 @@ public partial class GameMGR : Singleton<GameMGR>
         {
             spawner = FindObjectOfType<Spawner>();
             uiManager = FindObjectOfType<UIManager>();
+            batch = FindObjectOfType<Batch>();
+            batch.Init();
             uiManager.Init_Scene2();
             spawner.gameObject.GetPhotonView().RPC("StartSetting", RpcTarget.MasterClient);
-            batch = FindObjectOfType<Batch>();
             battleLogic = FindObjectOfType<BattleLogic>();
             timerSound = FindObjectOfType<TimerSound>();
 
@@ -95,7 +97,7 @@ public partial class GameMGR : Singleton<GameMGR>
 
             // battle Scene
             uiManager.BattleUIInit();
-                        
+
             // result Scene
             uiManager.ResultSceneInit();
             uiManager.PlayerBattleWin(false);
@@ -119,6 +121,16 @@ public partial class GameMGR : Singleton<GameMGR>
             uiManager.BattleUIInit();
             audioMGR.BattleSceneBGM(false);
             uiManager.OnResultUI();
+        }
+
+        // RoundScene
+        else if (num == 5)
+        {
+            GameMGR.Instance.spawner.ResetStore();
+
+            // result Scene
+            uiManager.PlayerBattleWin(false);
+            uiManager.PlayerBattleLose(false);
         }
     }
 }

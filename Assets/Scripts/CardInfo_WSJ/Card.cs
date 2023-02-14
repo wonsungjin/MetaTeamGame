@@ -32,7 +32,7 @@ public partial class Card : MonoBehaviour
 
     /*자신의 오브젝트 이름과 같은 스크립터블 데이터를 읽어와서 설정한다
     스프라이트 랜더러도 같은 원리로 설정*/
-    public void SetMyInfo(string myname)
+    public void SetMyInfo(string myname,bool flip=true)
     {
         name = myname;
         Debug.Log(name);
@@ -52,6 +52,7 @@ public partial class Card : MonoBehaviour
         levelText.text = level.ToString();
         skeletonAnimation = GetComponent<SkeletonAnimation>();
         SetSkillTiming();
+        if(flip==true) SetFlip(false);
         transform.parent.gameObject.transform.localScale = Vector3.one;
     }
     public void SetFlip(bool isSet)

@@ -7,6 +7,7 @@ public partial class UIManager : MonoBehaviour
 {
     GameObject battleSceneUI = null;
     GameObject ResultSceneUI = null;
+    public GameObject finalSceneUI = null;
     GameObject winUI = null;
     GameObject loseUI = null;
 
@@ -71,7 +72,11 @@ public partial class UIManager : MonoBehaviour
     {
         for (int i = 0; i < playerArrangement.Length; i++)
         {
-            if (playerArrangement != null) { Destroy(playerArrangement[i]); }
+            if (playerArrangement[i] != null)
+            {
+                // GameMGR.Instance.objectPool.DestroyPrefab(playerArrangement[i]);
+                Destroy(playerArrangement[i]);
+            }
         }
     }
 
@@ -116,6 +121,6 @@ public partial class UIManager : MonoBehaviour
         if (loseUI.activeSelf == true) { loseUI.SetActive(false); }
         if (ResultSceneUI.activeSelf == true) { ResultSceneUI.SetActive(false); }
         GameMGR.Instance.uiManager.storePannel.SetActive(true);
-        GameMGR.Instance.Init(2);
+        GameMGR.Instance.Init(5);
     }
 }
