@@ -29773,6 +29773,7 @@ MonoBehaviour:
   curPos: {fileID: 0}
   giveDamage: 0
   takeDamage: 0
+  isMine: 0
   searchArea: []
 --- !u!114 &1244862510948258122
 MonoBehaviour:
@@ -29883,6 +29884,7 @@ MonoBehaviour:
   curPos: {fileID: 0}
   giveDamage: 0
   takeDamage: 0
+  isMine: 0
   searchArea: []
 --- !u!50 &1683130933639958611
 Rigidbody2D:
@@ -30008,6 +30010,7 @@ MonoBehaviour:
   curPos: {fileID: 0}
   giveDamage: 0
   takeDamage: 0
+  isMine: 0
   searchArea: []
 --- !u!50 &1891945566863584470
 Rigidbody2D:
@@ -30057,6 +30060,7 @@ MonoBehaviour:
   curPos: {fileID: 0}
   giveDamage: 0
   takeDamage: 0
+  isMine: 0
   searchArea: []
 --- !u!114 &1926938376398959714
 MonoBehaviour:
@@ -30148,6 +30152,7 @@ MonoBehaviour:
   curPos: {fileID: 0}
   giveDamage: 0
   takeDamage: 0
+  isMine: 0
   searchArea: []
 --- !u!50 &2221145007596496290
 Rigidbody2D:
@@ -30197,6 +30202,7 @@ MonoBehaviour:
   curPos: {fileID: 0}
   giveDamage: 0
   takeDamage: 0
+  isMine: 0
   searchArea: []
 --- !u!61 &2382412561666352698
 BoxCollider2D:
@@ -31268,6 +31274,7 @@ MonoBehaviour:
   curPos: {fileID: 0}
   giveDamage: 0
   takeDamage: 0
+  isMine: 0
   searchArea: []
 --- !u!114 &4790532487075826102
 MonoBehaviour:
@@ -31606,6 +31613,7 @@ MonoBehaviour:
   curPos: {fileID: 0}
   giveDamage: 0
   takeDamage: 0
+  isMine: 0
   searchArea: []
 --- !u!1 &6139308160527905803
 GameObject:
@@ -32496,6 +32504,7 @@ MonoBehaviour:
   curPos: {fileID: 0}
   giveDamage: 0
   takeDamage: 0
+  isMine: 0
   searchArea: []
 --- !u!61 &7974875336583478583
 BoxCollider2D:
@@ -32563,6 +32572,7 @@ MonoBehaviour:
   curPos: {fileID: 0}
   giveDamage: 0
   takeDamage: 0
+  isMine: 0
   searchArea: []
 --- !u!1 &7984887278620950173
 GameObject:
@@ -32911,4 +32921,5 @@ MonoBehaviour:
   curPos: {fileID: 0}
   giveDamage: 0
   takeDamage: 0
+  isMine: 0
   searchArea: []
