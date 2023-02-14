@@ -108,7 +108,7 @@ public partial class Batch : MonoBehaviourPun
                 else { GameMGR.Instance.battleLogic.playerBackwardUnits[i - 3] = unitCard.gameObject; }
 
                 // add result unit
-                GameMGR.Instance.uiManager.playerArrangement[i] = unitCard.gameObject;
+                GameMGR.Instance.uiManager.playerArrangement[i] = GameObject.Instantiate<GameObject>(cardList[i].gameObject);
             }
 
             // enemy Unit ��ġ ����
