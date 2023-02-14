@@ -64,7 +64,16 @@ public partial class Batch : MonoBehaviourPun
         }
     }
 
-    // ������ ��ġ ������ ���� ���� *������
+    [PunRPC]
+    public void ClearBatch(int playerNum)
+    {
+        List<GameObject> cardList = null;
+        bool listCheck = GameMGR.Instance.playerList.TryGetValue(playerNum, out cardList);
+        if (listCheck == true)
+        {
+            cardList.Clear();
+        }
+    }
     [PunRPC]
     public void SetBatch(int playerNum, string cardName, int hp, int attackValue, int exp, int level)
     {
@@ -140,6 +149,7 @@ public partial class Batch : MonoBehaviourPun
             // player Unit ��ġ ����
             if (myCard == true)
             {
+                Debug.Log(i);
                 unitCard.transform.position = myCardPosition[i + 1].position;
                 if (i < 3) { GameMGR.Instance.battleLogic.playerForwardUnits[i] = unitCard.gameObject; }
                 else { GameMGR.Instance.battleLogic.playerBackwardUnits[i - 3] = unitCard.gameObject; }

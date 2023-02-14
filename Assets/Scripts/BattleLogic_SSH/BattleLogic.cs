@@ -116,7 +116,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
         while (true)
         {
             Debug.Log("Player first attack");
-            // ���� ���� ������ �ִ� �迭 1���� ������ �� 0��°�� �ʱ�ȭ
+            
             if (randomArrayNum == exArray.Length) { randomArrayNum = 0; }
             // [Player -> Enemy Attack] ���� ������ ����ִ� ���
             if (isEnemyPreemptiveAlive)
@@ -124,7 +124,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                 isPlayerAliveCount = 0;
                 isEnemyAliveCount = 0;
 
-                // �ǰ� ������ ���� ���ö����� randomArray ��ȸ
+                
                 while (enemyForwardUnits[exArray[randomArrayNum]] == null)
                 {
                     randomArrayNum++;
@@ -145,7 +145,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
 
                 if (playerAttackArray.Length <= playerTurnCount) { playerTurnCount = 0; }
 
-                // ���� ������ �÷��̾ ���ö� ���� playerturnCount ����
+                
                 while (playerAttackArray[playerTurnCount] == null)
                 {
                     playerTurnCount++;
@@ -172,7 +172,6 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                 yield return new WaitUntil(() => isWaitAttack);
                 isWaitAttack = false;
 
-                // �ǰ� ���� ������ �迭���� ����
                 for (int i = 0; i < enemyAttackArray.Length; i++)
                 {
                     if (enemyAttackArray[i] == enemyForwardUnits[exArray[randomArrayNum]])

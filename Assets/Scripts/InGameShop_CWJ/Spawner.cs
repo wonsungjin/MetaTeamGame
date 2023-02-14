@@ -107,6 +107,7 @@ public class Spawner : MonoBehaviourPun
     {
         if (isClick) return;
         isClick = true;
+        GameMGR.Instance.batch.gameObject.GetPhotonView().RPC("ClearBatch", RpcTarget.All, (int)PhotonNetwork.LocalPlayer.CustomProperties["Number"]);
         for (int i = 0; i < cardBatch.Length; i++)
         {
             if (cardBatch[i] != null)
