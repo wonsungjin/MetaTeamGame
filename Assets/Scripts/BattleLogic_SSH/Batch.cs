@@ -9,10 +9,10 @@ public partial class Batch : MonoBehaviourPun
 
     Transform[] myCardPosition = null;
     Transform[] enemyCardPosition = null;
-
+    List<int> CustomNumberList = new List<int>();
     bool isMinePlayerNum = true;
-
-    // �ѽ��� ���� ���� ������ ���� �߰� �ڵ� - HCU *������
+    [SerializeField] GameObject playerRanking;
+    [SerializeField] Transform playerRankingUi;
     int tempHp = 0;
     int tempAtk = 0;
     int tempExp = 0;
@@ -22,12 +22,44 @@ public partial class Batch : MonoBehaviourPun
     {
         Init();
     }
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.A)) FinalCardUi();
+    }
+    public void FinalCardUi()
+    {
+        for (int i = 0; i < CustomNumberList.Count; i++)
+        {
+            List<GameObject> cardList = null;
+            GameObject unitCard = GameObject.Instantiate<GameObject>(playerRanking);
+            unitCard.transform.SetParent(playerRankingUi);
+            GameMGR.Instance.playerList.TryGetValue(CustomNumberList[i], out cardList);
+            
+            for (int j = 0; j < cardList.Count; j++)
+            {
+                if (cardList[j] == null) continue;
+                unitCard.transform.GetChild(8 + j).GetComponent<CardUI>().SetMyInfo(cardList[j].name.Replace("(Clone)", ""));
+                unitCard.transform.GetChild(8 + j).GetComponent<CardUI>().OffFrame();
+
+            }
+        }
+    }
     public void Init()
     {
+        StartCoroutine(COR_SetCustomDelay());
         GameObject temporaryPlayerObjects = GameObject.Find("PlayerPosition");
         GameObject temporaryEnemyObjects = GameObject.Find("EnemyPosition");
+        playerRankingUi = GameObject.Find("playerRankingUI").transform;
         myCardPosition = temporaryPlayerObjects.transform.GetComponentsInChildren<Transform>();
         enemyCardPosition = temporaryEnemyObjects.transform.GetComponentsInChildren<Transform>();
+    }
+    IEnumerator COR_SetCustomDelay()
+    {
+        yield return new WaitForSeconds(1f);
+        for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
+        {
+            CustomNumberList.Add((int)PhotonNetwork.PlayerList[i].CustomProperties["Number"]);
+        }
     }
 
     // ������ ��ġ ������ ���� ���� *������
