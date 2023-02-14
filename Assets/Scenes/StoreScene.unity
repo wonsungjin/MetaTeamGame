@@ -1059,6 +1059,13 @@ MonoBehaviour:
   - {fileID: 1726932551}
   - {fileID: 899408586}
   - {fileID: 1217976076}
+  shopBatchPos:
+  - {fileID: 1723697885}
+  - {fileID: 1810743068}
+  - {fileID: 195171382}
+  - {fileID: 2040472131}
+  - {fileID: 2107974385}
+  - {fileID: 41134534}
   trans: []
   removeUnit: []
   monsterNames: []
