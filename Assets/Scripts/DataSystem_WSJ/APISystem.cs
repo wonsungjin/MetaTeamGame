@@ -1,7 +1,10 @@
+
 //유저의 정보 가져오기
 //sessionID가 유효한지 여부를 인증
 //현재 Odin이 실행중인지 확인, Osiris Multi Wallet을 통해 Odin에 연결하도록 함
 //(a)
+using JetBrains.Annotations;
+//using UnityEditor.VersionControl;
 
 [System.Serializable]
 public class Res_UserProfile

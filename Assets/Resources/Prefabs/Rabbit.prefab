@@ -461,4 +461,5 @@ MonoBehaviour:
   curPos: {fileID: 0}
   giveDamage: 0
   takeDamage: 0
+  isMine: 0
   searchArea: []
