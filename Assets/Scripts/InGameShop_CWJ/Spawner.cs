@@ -206,7 +206,7 @@ public class Spawner : MonoBehaviourPun
         {
             GameMGR.Instance.objectPool.DestroyPrefab(removeUnit[i].transform.parent.gameObject);
         }
-        ChooseRandomCard();
+        ChooseRandomCard();        
     }
 
     // 리롤
