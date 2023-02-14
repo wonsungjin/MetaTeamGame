@@ -71,7 +71,10 @@ public partial class UIManager : MonoBehaviour
     {
         for (int i = 0; i < playerArrangement.Length; i++)
         {
-            if (playerArrangement != null) { Destroy(playerArrangement[i]); }
+            if (playerArrangement != null)
+            {
+                GameMGR.Instance.objectPool.DestroyPrefab(playerArrangement[i].transform.parent.gameObject);
+            }
         }
     }
 
