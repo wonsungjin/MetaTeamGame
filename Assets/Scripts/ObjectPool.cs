@@ -20,7 +20,7 @@ public class ObjectPool : Singleton<ObjectPool>
         if (list.Count == 0)
         {
             instance = GameObject.Instantiate(prefab, position, rotation);
-        Debug.Log(prefab.name.Replace("(Clone)", ""));
+            Debug.Log(prefab.name.Replace("(Clone)", ""));
         }
         else if (list.Count > 0)
         {

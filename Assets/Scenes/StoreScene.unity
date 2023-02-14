@@ -12734,7 +12734,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 104937936}
         m_TargetAssemblyTypeName: Spawner, Assembly-CSharp
-        m_MethodName: ReturnStoreScene
+        m_MethodName: TestButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
