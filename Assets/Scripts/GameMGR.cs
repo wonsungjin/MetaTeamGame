@@ -125,10 +125,11 @@ public partial class GameMGR : Singleton<GameMGR>
         // RoundScene
         else if (num == 5)
         {
+            GameMGR.Instance.spawner.ResetStore();
+
             // result Scene
             uiManager.PlayerBattleWin(false);
             uiManager.PlayerBattleLose(false);
-            
         }
     }
 }
