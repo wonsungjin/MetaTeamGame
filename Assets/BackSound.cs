@@ -12,7 +12,7 @@ public class BackSound : MonoBehaviour
     {
         mainCam = Camera.main;
     }
-    private void OnMouseUp()
+    private void OnMouseDown()
     {
         Vector3 mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance);
         Vector3 objPosition = mainCam.ScreenToWorldPoint(mousePosition);
@@ -25,7 +25,7 @@ public class BackSound : MonoBehaviour
                 || hit.collider.gameObject.CompareTag("Sell") || hit.collider.gameObject.CompareTag("SelectRing")
                 || hit.collider.gameObject.CompareTag("ShopLevelUp") || hit.collider.gameObject.CompareTag("FullZone")
                 || hit.collider.gameObject.CompareTag("SpecialZone") || hit.collider.gameObject.CompareTag("RefreshButton")
-                || hit.collider.gameObject.CompareTag("Rect"))
+                || hit.collider.gameObject.CompareTag("Rect") || hit.collider.gameObject.CompareTag("BattleZone"))
             {
                 return;
             }

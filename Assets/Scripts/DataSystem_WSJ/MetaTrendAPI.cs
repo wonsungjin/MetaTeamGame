@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 
 using TMPro;
+using Unity.VisualScripting;
 
 public class MetaTrendAPI : MonoBehaviour
 {
@@ -17,11 +18,15 @@ public class MetaTrendAPI : MonoBehaviour
 	[SerializeField] string FullAppsProductionURL = "https://odin-api.browseosiris.com";
 	[SerializeField] string FullAppsStagingURL = "https://odin-api-sat.browseosiris.com";
 
+
+
 	// 버튼 누를시 URL 연결
 	public void ButtonGetURL()
 	{
 		Application.OpenURL("https://www.naver.com/");
 	}
+
+
 
 	string getBaseURL()
 	{
@@ -35,6 +40,7 @@ public class MetaTrendAPI : MonoBehaviour
 	public Res_UserProfile res_UserProfile = null;
 	Res_UserSessionID res_UserSessionID = null;
 	Res_BettingSetting res_BettingSetting = null;
+	public Res_DummyPool res_DummyPool = null;
 	//---------------
 	// 유저 정보
 	public void GetUserProfile()
@@ -67,6 +73,64 @@ public class MetaTrendAPI : MonoBehaviour
 		Res_UserProfile res_getUserProfile = JsonUtility.FromJson<Res_UserProfile>(www.downloadHandler.text);
 		callback(res_getUserProfile);
 	}
+
+
+    //------------------------------
+
+
+
+
+
+
+
+
+
+
+    public void GetDummyPool()
+    {
+        StartCoroutine(processRequestGetDummy());
+    }
+    //------------------------------
+	IEnumerator processRequestGetDummy()
+	{
+		yield return requestGetDummy((response) =>
+		{
+			if (response != null)
+			{
+				// response.data.records[0].startTime
+            }
+		});
+	}
+	//--------------------------------
+
+    delegate void resCallback_GetDummy(Res_DummyPool response);
+    IEnumerator requestGetDummy(resCallback_GetDummy callback)
+	{
+        UnityWebRequest www = UnityWebRequest.Get("https://odin-api-uat.browseosiris.com/v1/dummy-tournament-pool/get-data");
+        yield return www.SendWebRequest();
+
+        Res_DummyPool res_DummyPool = JsonUtility.FromJson<Res_DummyPool>(www.downloadHandler.text);
+		Debug.Log(www.downloadHandler.text);
+		callback(res_DummyPool);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	//---------------
 	// Session ID
@@ -102,6 +166,16 @@ public class MetaTrendAPI : MonoBehaviour
 	string wallet_address;
 	int amount_in_integers;
 	int balance;
+
+	string dummy_Id;
+	string dummy_Title;
+	string dummy_Amount;
+	string dummy_TotalCollectedAmount;
+	string dummy_StartTime;
+	string dummy_EndTime;
+	string dummy_CreatedAt;
+	string dummy_UpdatedAt;
+
 	
 	public float GetZera() { return balance; }
 	//해당 코인을 얻습니다.
