@@ -102,8 +102,11 @@ public class Spawner : MonoBehaviourPun
 
     // 레디 버튼 누르면 이루어짐 몬스터 삭제 , 시간 초기화 , 머니 초기화
     Card card;
+    public bool isClick;
     public void OnCLick_ReadyButton()
     {
+        if (isClick) return;
+        isClick = true;
         for (int i = 0; i < cardBatch.Length; i++)
         {
             if (cardBatch[i] != null)
