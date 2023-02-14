@@ -1,6 +1,7 @@
 using Photon.Pun;
 using System.Collections.Generic;
 using System.Net.NetworkInformation;
+using System.Threading;
 using UnityEngine;
 
 
@@ -12,6 +13,8 @@ public class Spawner : MonoBehaviourPun
     [SerializeField] public Transform[] shopBatchPos;
 
     public GameObject[] trans = null;
+    public GameObject[] removeUnit = null;
+
 
     [Header("몬스터 프리팹")]
     public List<string> monsterNames = new List<string>();
@@ -195,6 +198,17 @@ public class Spawner : MonoBehaviourPun
         }
     }
 
+    public void ResetStore()
+    {
+        GameObject[] removeUnit = GameObject.FindGameObjectsWithTag("Monster"); ;
+
+        for (int i = 0; i < removeUnit.Length; i++)
+        {
+            GameMGR.Instance.objectPool.DestroyPrefab(removeUnit[i].transform.parent.gameObject);
+        }
+        ChooseRandomCard();
+    }
+
     // 리롤
     public void OnClick_Reset_Monster()
     {
@@ -205,7 +219,6 @@ public class Spawner : MonoBehaviourPun
             GameMGR.Instance.uiManager.goldTXT.text = "" + GameMGR.Instance.uiManager.goldCount.ToString();
             audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.UI, "Refresh");
             audioSource.Play();
-
 
             for (int i = 0; i < monster.Length; i++)
             {

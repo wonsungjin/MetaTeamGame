@@ -5,11 +5,11 @@ using UnityEngine.UI;
 public partial class UIManager : MonoBehaviour
 {
     [Header("Pannel")]
+    public GameObject cardPannel;
     private GameObject lobbyPannel;
     private GameObject myDeckPannel;
     private GameObject packChoicePannel;
     private GameObject customPannel;
-    public GameObject cardPannel;
     private GameObject menuPannel;
     private GameObject nameMakeUI;
     private GameObject deleteWarringUI;

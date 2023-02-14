@@ -32,6 +32,7 @@ public partial class UIManager : MonoBehaviour
         storePannel = GameObject.Find("StorePannel");
         skillExplantion2 = GameObject.Find("Explantion");
         battleSceneUI = GameObject.Find("BattleSceneCanvas");
+        finalSceneUI = GameObject.Find("FinalSceneCanvas");
         skillExplantionText[0] = GameObject.Find("cardName").GetComponent<TextMeshProUGUI>();
         skillExplantionText[1] = GameObject.Find("level1").GetComponent<TextMeshProUGUI>();
         skillExplantionText[2] = GameObject.Find("level2").GetComponent<TextMeshProUGUI>();
@@ -45,7 +46,7 @@ public partial class UIManager : MonoBehaviour
         shopLevelTXT = GameObject.Find("ShopLevelUpTXT").GetComponent<TextMeshProUGUI>();
         timerTXT = GameObject.Find("TimerTXT").GetComponent<TextMeshProUGUI>();
         sell = GameObject.Find("Sell");
-
+        finalSceneUI.SetActive(false);
         InitUI();
     }
 
