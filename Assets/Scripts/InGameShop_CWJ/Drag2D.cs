@@ -167,7 +167,14 @@ public partial class Drag2D : MonoBehaviour
                         Vector2 monTras = gameObject.transform.parent.localScale;
                         gameObject.transform.parent.localScale = monTras * 2;
                         pos = collision.GetComponent<BattleZone>();
-                        GameMGR.Instance.Event_Buy(gameObject.GetComponent<Card>()); //구매한 카드가 구매시 효과가 있다면 스킬 발동
+
+
+                        if(card.cardInfo.skillTiming == SkillTiming.buy)
+                        {
+                            card.SkillActive2(card);
+                        }
+
+                        //GameMGR.Instance.Event_Buy(gameObject.GetComponent<Card>()); //구매한 카드가 구매시 효과가 있다면 스킬 발동
 
                     }
                 }
@@ -182,6 +189,11 @@ public partial class Drag2D : MonoBehaviour
                         GameMGR.Instance.uiManager.goldCount -= 3;
                         GameMGR.Instance.uiManager.goldTXT.text = "" + GameMGR.Instance.uiManager.goldCount.ToString();
                         ShopCardLevelUp(collision.gameObject);
+
+                        if (card.cardInfo.skillTiming == SkillTiming.buy)
+                        {
+                            card.SkillActive2(card);
+                        }
                     }
                 }
             }
@@ -196,6 +208,7 @@ public partial class Drag2D : MonoBehaviour
                         if (collision.transform.position.y > transform.position.y)
                         {
                             ShopCardLevelUp(collision.gameObject);
+
                         }
                     }
 
@@ -311,6 +324,10 @@ public partial class Drag2D : MonoBehaviour
         GameMGR.Instance.uiManager.goldCount -= 3;
         GameMGR.Instance.uiManager.goldTXT.text = "" + GameMGR.Instance.uiManager.goldCount.ToString();
 
-        GameMGR.Instance.Event_Buy(gameObject.GetComponent<Card>());
+        if (card.cardInfo.skillTiming == SkillTiming.buy)
+        {
+            card.SkillActive2(card);
+        }
+        //GameMGR.Instance.Event_Buy(gameObject.GetComponent<Card>());
     }
 }

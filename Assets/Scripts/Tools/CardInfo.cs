@@ -22,7 +22,6 @@ public enum SkillTiming     // 스킬이 발동되는 때
 public enum EffectTarget // 타겟 유형 - 적, 나, 아군 등
 {
     none,
-
     both,
     enemy,
     ally,
@@ -55,8 +54,9 @@ public enum TargetType // 스킬이 어떤 타입을 노리는지(ex - 공격력 높은 유닛)
 
 }
 
-public enum TriggerCondition // 발동되기 위한 조건 - ex ) 빈 자리가 있어야한다
+public enum TriggerCondition // 발동되기 위한 특수 조건 - ex ) 빈 자리가 있어야한다
 {
+    none,
     allyEmpty,
     damageEcess,
     losePlayerHP,

@@ -56,7 +56,7 @@ public partial class GameMGR : Singleton<GameMGR>
     }
     public void Event_Reroll()
     {
-        if(callbackEvent_Reroll!=null) callbackEvent_Reroll();
+        if(callbackEvent_Reroll != null) callbackEvent_Reroll();
     }
     public void Event_BattleStart()
     {
