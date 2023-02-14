@@ -36,7 +36,9 @@ public class TurnSystem : MonoBehaviourPunCallbacks
 
     // 플레이어 라이프 관련
     public int[] life = null;
+    // 핵심
     public int myLife = 20;
+
     public int startLife = 20;
 
     // 전투 승패 관련
@@ -575,7 +577,7 @@ public class TurnSystem : MonoBehaviourPunCallbacks
         }
     }
 
-    public void LifeDown(int value)
+    public void LifeDown(int value) // 각 로컬들이 이 함수에 접근해서 자기 라이프인 myLife 값을 실시간으로 동기화한다고 할 수 있는 부분적인 부분적인 파트 오브 파트
     {
         myLife -= value;
         PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "Life", $"{myLife}" } });
