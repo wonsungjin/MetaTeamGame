@@ -197,15 +197,15 @@ public class Spawner : MonoBehaviourPun
         }
     }
 
-    public void ResetStore(GameObject[] resetunit)
+    public void ResetStore()
     {
-        removeUnit = resetunit;
+        GameObject[] removeUnit = GameObject.FindGameObjectsWithTag("Monster"); ;
 
-        for (int i = 0; i < resetunit.Length; i++)
+        for (int i = 0; i < removeUnit.Length; i++)
         {
-            //Destroy(monster[i].transform.parent.gameObject);
             GameMGR.Instance.objectPool.DestroyPrefab(removeUnit[i].transform.parent.gameObject);
         }
+        ChooseRandomCard();
     }
 
     // 리롤
@@ -218,8 +218,6 @@ public class Spawner : MonoBehaviourPun
             GameMGR.Instance.uiManager.goldTXT.text = "" + GameMGR.Instance.uiManager.goldCount.ToString();
             audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.UI, "Refresh");
             audioSource.Play();
-
-            ResetStore(monster);
 
             for (int i = 0; i < monster.Length; i++)
             {
