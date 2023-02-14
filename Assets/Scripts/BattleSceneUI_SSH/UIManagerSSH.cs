@@ -32,7 +32,10 @@ public partial class UIManager : MonoBehaviour
     {
         battleSceneUI = GameObject.Find("BattleSceneCanvas");
         battleOptionPanel = GameObject.Find("OptionPanel");
-        battleOptionPanel.SetActive(false);
+        if (battleOptionPanel.activeSelf)
+        {
+            battleOptionPanel.SetActive(false);
+        } 
 
         battleSceneUI.SetActive(false);
         isOption = battleSceneUI.activeSelf;
