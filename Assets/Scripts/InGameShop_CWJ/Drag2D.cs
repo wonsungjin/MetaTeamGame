@@ -168,7 +168,6 @@ public partial class Drag2D : MonoBehaviour
                         gameObject.transform.parent.localScale = monTras * 2;
                         pos = collision.GetComponent<BattleZone>();
                         GameMGR.Instance.Event_Buy(gameObject.GetComponent<Card>()); //구매한 카드가 구매시 효과가 있다면 스킬 발동
-
                     }
                 }
 
@@ -185,7 +184,6 @@ public partial class Drag2D : MonoBehaviour
                     }
                 }
             }
-
 
             if (gameObject.name == collision.gameObject.name)
             {
