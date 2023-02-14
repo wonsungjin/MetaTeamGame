@@ -12,7 +12,7 @@ public class BackSound : MonoBehaviour
     {
         mainCam = Camera.main;
     }
-    private void OnMouseUp()
+    private void OnMouseDown()
     {
         Vector3 mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance);
         Vector3 objPosition = mainCam.ScreenToWorldPoint(mousePosition);
