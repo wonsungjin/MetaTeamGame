@@ -116,6 +116,6 @@ public partial class UIManager : MonoBehaviour
         if (loseUI.activeSelf == true) { loseUI.SetActive(false); }
         if (ResultSceneUI.activeSelf == true) { ResultSceneUI.SetActive(false); }
         GameMGR.Instance.uiManager.storePannel.SetActive(true);
-        GameMGR.Instance.Init(2);
+        GameMGR.Instance.Init(5);
     }
 }

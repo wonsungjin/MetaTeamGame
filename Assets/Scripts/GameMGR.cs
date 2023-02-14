@@ -1,6 +1,7 @@
 using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public partial class GameMGR : Singleton<GameMGR>
@@ -94,7 +95,7 @@ public partial class GameMGR : Singleton<GameMGR>
 
             // battle Scene
             uiManager.BattleUIInit();
-                        
+
             // result Scene
             uiManager.ResultSceneInit();
             uiManager.PlayerBattleWin(false);
@@ -118,6 +119,15 @@ public partial class GameMGR : Singleton<GameMGR>
             uiManager.BattleUIInit();
             audioMGR.BattleSceneBGM(false);
             uiManager.OnResultUI();
+        }
+
+        // RoundScene
+        else if (num == 5)
+        {
+            // result Scene
+            uiManager.PlayerBattleWin(false);
+            uiManager.PlayerBattleLose(false);
+            
         }
     }
 }
