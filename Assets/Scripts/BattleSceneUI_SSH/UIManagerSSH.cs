@@ -112,6 +112,7 @@ public partial class UIManager : MonoBehaviour
         yield return new WaitForSeconds(5f);
 
         GameMGR.Instance.uiManager.ResetPlayerUnit(); // Unit Reset
+        yield return new WaitForSeconds(0.1f);
         GameMGR.Instance.spawner.TestButton();
 
         // Move the camera position to the store scene

@@ -318,6 +318,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65fe8111d5fe90f429cfa313264e83f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  finalSceneUI: {fileID: 0}
   playerArrangement:
   - {fileID: 0}
   - {fileID: 0}
@@ -12732,7 +12733,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 104937936}
         m_TargetAssemblyTypeName: Spawner, Assembly-CSharp
-        m_MethodName: ReturnStoreScene
+        m_MethodName: TestButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
