@@ -534,6 +534,8 @@ public class TurnSystem : MonoBehaviourPunCallbacks
     IEnumerator COR_DelayMove()
     {
         yield return new WaitForSeconds(1f);
+        readyCount[0] = 0;
+        GameMGR.Instance.spawner.isClick = false;
         Camera.main.gameObject.transform.position = new Vector3(20, 0, -10);
         GameMGR.Instance.uiManager.storePannel.SetActive(false);
         GameMGR.Instance.batch.UnitPlacement();

@@ -7,8 +7,8 @@ using UnityEngine;
 public partial class Batch : MonoBehaviourPun
 {
 
-    Transform[] myCardPosition = null;
-    Transform[] enemyCardPosition = null;
+    public Transform[] myCardPosition = null;
+    public Transform[] enemyCardPosition = null;
     List<int> CustomNumberList = new List<int>();
     bool isMinePlayerNum = true;
     [SerializeField] GameObject playerRanking;
@@ -37,8 +37,8 @@ public partial class Batch : MonoBehaviourPun
                 if (cardList[j] == null)
                 {
                     unitCard.transform.GetChild(8 + j).GetComponent<CardUI>().OffFrame();
-                }
                 continue;
+                }
                 unitCard.transform.GetChild(8 + j).GetComponent<CardUI>().SetMyInfo(cardList[j].name.Replace("(Clone)", ""));
                 unitCard.transform.GetChild(8 + j).GetComponent<CardUI>().OffFrame();
                 unitCard.transform.GetChild(8 + j).GetComponent<CardUI>().SpriteNone();
@@ -133,7 +133,9 @@ public partial class Batch : MonoBehaviourPun
             if (cardList[i] == null) continue;
             Debug.Log("cardList name" + cardList[i].name);
             //GameObject unitCard = GameObject.Instantiate<GameObject>(cardList[i].gameObject);
+            Debug.Log(cardList[i]);
             GameObject unitCard = GameMGR.Instance.objectPool.CreatePrefab(cardList[i],Vector3.zero,Quaternion.identity);
+            Debug.Log(unitCard.name);
 
             // player Unit ��ġ ����
             if (myCard == true)
