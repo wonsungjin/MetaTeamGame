@@ -3,7 +3,8 @@
 //   Part of: Photon Unity Utilities, 
 // </copyright>
 // <summary>
-//  This component will destroy the GameObject it is attached to (in Start()).
+//  This component will
+//  the GameObject it is attached to (in Start()).
 // </summary>
 // <author>developer@exitgames.com</author>
 // --------------------------------------------------------------------------------------------------------------------

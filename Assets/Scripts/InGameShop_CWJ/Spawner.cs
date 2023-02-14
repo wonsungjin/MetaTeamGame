@@ -1,6 +1,7 @@
 using Photon.Pun;
 using System.Collections.Generic;
 using System.Net.NetworkInformation;
+using System.Threading;
 using UnityEngine;
 
 
@@ -11,6 +12,8 @@ public class Spawner : MonoBehaviourPun
     [SerializeField] Node[] monsterTrans;
 
     public GameObject[] trans = null;
+    public GameObject[] removeUnit = null;
+
 
     [Header("몬스터 프리팹")]
     public List<string> monsterNames = new List<string>();
@@ -194,6 +197,17 @@ public class Spawner : MonoBehaviourPun
         }
     }
 
+    public void ResetStore(GameObject[] resetunit)
+    {
+        removeUnit = resetunit;
+
+        for (int i = 0; i < resetunit.Length; i++)
+        {
+            //Destroy(monster[i].transform.parent.gameObject);
+            GameMGR.Instance.objectPool.DestroyPrefab(removeUnit[i].transform.parent.gameObject);
+        }
+    }
+
     // 리롤
     public void OnClick_Reset_Monster()
     {
@@ -205,6 +219,7 @@ public class Spawner : MonoBehaviourPun
             audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.UI, "Refresh");
             audioSource.Play();
 
+            ResetStore(monster);
 
             for (int i = 0; i < monster.Length; i++)
             {
