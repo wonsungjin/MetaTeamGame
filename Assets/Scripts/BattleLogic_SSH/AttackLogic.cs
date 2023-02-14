@@ -40,7 +40,7 @@ public partial class AttackLogic : Skill
         curTime = 0f;
         //is delvoewafafcajff
         card.Attack( card.curAttackValue, targetUint.GetComponentInChildren<Card>(), true, true );
-        targetUint.SetActive(false);
+        GameMGR.Instance.objectPool.DestroyPrefab(targetUint);
 
         while (Vector2.Distance(gameObject.transform.parent.position, returnPosition) > 0)
         {

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using MongoDB.Driver.Linq;
 
 public partial class Card : MonoBehaviour
 {
@@ -195,13 +196,13 @@ public partial class Card : MonoBehaviour
                 break;
             case EffectType.summon:
                 Debug.Log(cardInfo.sumom_Unit);
-                GameObject summonCard = Resources.Load<GameObject>($"Prefabs/{cardInfo.sumom_Unit}");
+                GameObject summonCard = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{cardInfo.sumom_Unit}"),targetPos, Quaternion.identity);
                 //summoncard 이름 디버그 띄울것
                 Debug.Log(summonCard.name);
 
                 //GameMGR.Instance.battleLogic.playerForwardUnits.Add(summonCard.gameObject);
                 Debug.Log(targetPos + ": 소환할 때 지정되어있던 타겟포즈");
-                summonCard.transform.position = targetPos;
+                //summonCard.transform.position = targetPos;
                 break;
             case EffectType.reduceShopLevelUpCost:
                 Debug.Log("상점 렙업 비용 감소 효과 발동");
