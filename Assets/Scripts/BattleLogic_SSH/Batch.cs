@@ -132,7 +132,8 @@ public partial class Batch : MonoBehaviourPun
         {
             if (cardList[i] == null) continue;
             Debug.Log("cardList name" + cardList[i].name);
-            GameObject unitCard = GameObject.Instantiate<GameObject>(cardList[i].gameObject);
+            //GameObject unitCard = GameObject.Instantiate<GameObject>(cardList[i].gameObject);
+            GameObject unitCard = GameMGR.Instance.objectPool.CreatePrefab(cardList[i],Vector3.zero,Quaternion.identity);
 
             // player Unit ��ġ ����
             if (myCard == true)
@@ -142,7 +143,7 @@ public partial class Batch : MonoBehaviourPun
                 else { GameMGR.Instance.battleLogic.playerBackwardUnits[i - 3] = unitCard.gameObject; }
 
                 // add result unit
-                GameMGR.Instance.uiManager.playerArrangement[i] = GameObject.Instantiate<GameObject>(cardList[i].gameObject);
+                GameMGR.Instance.uiManager.playerArrangement[i] = GameObject.Instantiate<GameObject>(cardList[i]);
             }
 
             // enemy Unit ��ġ ����
