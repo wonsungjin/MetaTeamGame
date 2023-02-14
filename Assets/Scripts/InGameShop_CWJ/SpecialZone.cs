@@ -20,7 +20,7 @@ public class SpecialZone : MonoBehaviour
     {
         if(isEnter == false)
         {
-            if (collisionObj == null || collisionObj == collision.gameObject && collision.gameObject.CompareTag("SpecialMonster"))
+            if (collisionObj == null || collisionObj == collision.gameObject && collision.gameObject.CompareTag("Monster"))
             {
                 mySprite.sprite = Resources.Load<Sprite>("FrameSp");
                 gameObject.tag = "FullZone";
@@ -45,7 +45,7 @@ public class SpecialZone : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collisionObj == collision.gameObject && collision.gameObject.CompareTag("SpecialMonster"))
+        if (collisionObj == collision.gameObject && collision.gameObject.CompareTag("Monster"))
         {
             gameObject.tag = "SpecialZone";
             mySprite.sprite = Resources.Load<Sprite>("FrameOff");

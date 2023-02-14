@@ -15,7 +15,6 @@ public partial class Drag2D : MonoBehaviour
     MeshRenderer spriteRenderer;
     public BattleZone pos;
     Vector2 selectZonePos;
-
     Vector3 monsterPos = new Vector3(0, -0.6f, 0);
 
     float timer = 0f;
@@ -107,8 +106,6 @@ public partial class Drag2D : MonoBehaviour
             StartCoroutine(COR_BackAgain());
         }
 
-        else if (gameObject.CompareTag("SpecialMonster")) StartCoroutine(COR_BackAgain());
-
         else if (this.gameObject.CompareTag("FreezeCard"))
         {
             StartCoroutine(COR_BackAgain());
@@ -149,7 +146,7 @@ public partial class Drag2D : MonoBehaviour
             }
 
             // 상점에서 구매 할때 배틀존에 용병 넣으면 레벨업 된다.
-            if (gameObject.CompareTag("Monster") || gameObject.CompareTag("SpecialMonster"))
+            if (gameObject.CompareTag("Monster"))
             {
                 // 프리즈에 닿으면 프리즈카드로 태그를 바꾼 후 원래 위치로 돌린다.
                 if (collision.gameObject.CompareTag("Freeze"))
@@ -187,6 +184,7 @@ public partial class Drag2D : MonoBehaviour
                     }
                 }
             }
+
 
             if (gameObject.name == collision.gameObject.name)
             {
@@ -293,12 +291,6 @@ public partial class Drag2D : MonoBehaviour
         else if (CompareTag("Monster"))
         {
             this.transform.parent.position = selectZonePos;
-        }
-
-        else if (CompareTag("SpecialMonster"))
-        {
-            this.transform.parent.position = selectZonePos;
-            transform.parent.position -= monsterPos;
         }
 
         else if (CompareTag("FreezeCard"))
