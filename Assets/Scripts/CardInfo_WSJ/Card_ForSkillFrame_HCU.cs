@@ -383,10 +383,31 @@ public partial class Card : MonoBehaviour
             case TargetType.random:
                 Debug.Log("대상은 랜덤");
                 int random = Random.Range(0, searchArea.Count);
-                while (searchArea[random].GetComponent<Card>().curHP <= 0) // 죽은 아군이 아닐 때까지 랜덤값을 돌려
+
+                List<Card> targetArray1 = new List<Card>();
+                for (int i = 0; i < searchArea.Count; i++)
                 {
-                    random = Random.Range(0, searchArea.Count);
+                    if (searchArea[i] != null)
+                    {
+                        targetArray1.Add(searchArea[i].GetComponentInChildren<Card>());
+                    }
                 }
+
+                for (int i = 0; i < cardInfo.GetMaxTarget(cardInfo.level); i++)
+                {
+                    random = Random.Range(0, targetArray1.Count);
+                    Debug.Log(random);
+                    Debug.Log(targetArray1[random]);
+                    if (skillTarget.Contains(targetArray1[random])) // 죽은 아군이 아닐 때까지 랜덤값을 돌려
+                    {
+                        i--;
+                        continue;
+                    }
+                    skillTarget.Add(targetArray1[random]);
+                    if (targetArray1.Count < cardInfo.GetMaxTarget(cardInfo.level)) break;
+                    Debug.Log("skillTarget에 Add함");
+                }
+
                 //skillTarget.Add(GameMGR.Instance.battleLogic.)
                 skillTarget.Add(transform.parent.transform.GetChild(random).gameObject.GetComponent<Card>());
                 break;

@@ -575,9 +575,9 @@ public class TurnSystem : MonoBehaviourPunCallbacks
         }
     }
 
-    public void LifeDown()
+    public void LifeDown(int value)
     {
-        myLife--;
+        myLife -= value;
         PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "Life", $"{myLife}" } });
     }
 
