@@ -52,6 +52,7 @@ public partial class Card : MonoBehaviour
         levelText.text = level.ToString();
         skeletonAnimation = GetComponent<SkeletonAnimation>();
         SetSkillTiming();
+        SetFlip(false);
         transform.parent.gameObject.transform.localScale = Vector3.one;
     }
     public void SetFlip(bool isSet)
