@@ -18,16 +18,13 @@ public partial class Batch : MonoBehaviourPun
     int tempExp = 0;
     int tempLevel = 0;
 
-    private void Start()
-    {
-        Init();
-    }
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.A)) FinalCardUi();
     }
     public void FinalCardUi()
     {
+        GameMGR.Instance.uiManager.finalSceneUI.SetActive(true);
         for (int i = 0; i < CustomNumberList.Count; i++)
         {
             List<GameObject> cardList = null;
@@ -37,9 +34,14 @@ public partial class Batch : MonoBehaviourPun
             
             for (int j = 0; j < cardList.Count; j++)
             {
-                if (cardList[j] == null) continue;
+                if (cardList[j] == null)
+                {
+                    unitCard.transform.GetChild(8 + j).GetComponent<CardUI>().OffFrame();
+                }
+                continue;
                 unitCard.transform.GetChild(8 + j).GetComponent<CardUI>().SetMyInfo(cardList[j].name.Replace("(Clone)", ""));
                 unitCard.transform.GetChild(8 + j).GetComponent<CardUI>().OffFrame();
+                unitCard.transform.GetChild(8 + j).GetComponent<CardUI>().SpriteNone();
 
             }
         }
@@ -81,7 +83,7 @@ public partial class Batch : MonoBehaviourPun
             card = instance.GetComponentInChildren<Card>();
             Debug.Log(instance);
             if (instance == null) Debug.Log("sjf");
-            card.SetMyInfo(cardName);
+            card.SetMyInfo(cardName,false);
             card.curHP = hp;
             card.curAttackValue = attackValue;
             card.curEXP = exp;

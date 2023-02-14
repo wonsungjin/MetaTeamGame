@@ -85,9 +85,10 @@ public partial class GameMGR : Singleton<GameMGR>
         {
             spawner = FindObjectOfType<Spawner>();
             uiManager = FindObjectOfType<UIManager>();
+            batch = FindObjectOfType<Batch>();
+            batch.Init();
             uiManager.Init_Scene2();
             spawner.gameObject.GetPhotonView().RPC("StartSetting", RpcTarget.MasterClient);
-            batch = FindObjectOfType<Batch>();
             battleLogic = FindObjectOfType<BattleLogic>();
             timerSound = FindObjectOfType<TimerSound>();
 

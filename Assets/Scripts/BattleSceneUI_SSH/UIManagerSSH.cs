@@ -7,6 +7,7 @@ public partial class UIManager : MonoBehaviour
 {
     GameObject battleSceneUI = null;
     GameObject ResultSceneUI = null;
+    public GameObject finalSceneUI = null;
     GameObject winUI = null;
     GameObject loseUI = null;
 

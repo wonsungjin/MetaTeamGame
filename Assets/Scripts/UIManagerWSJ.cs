@@ -56,11 +56,6 @@ public partial class UIManager : MonoBehaviour
         skillExplantion[1] = GameObject.Find("Skillexplanation2").GetComponent<TextMeshProUGUI>();
         skillExplantion[2] = GameObject.Find("Skillexplanation3").GetComponent<TextMeshProUGUI>();
         myContent = GameObject.Find("MyContent").transform;
-
-        for(int i = 1; i < 6; i++)
-        tier1[i] = GameObject.Find("ContentTier"+(i+1).ToString()).transform;
-        
-
         tier1[0] = GameObject.Find("ContentTier1").transform;
         tier1[1] = GameObject.Find("ContentTier2").transform;
         tier1[2] = GameObject.Find("ContentTier3").transform;

@@ -21,6 +21,11 @@ public class CardUI : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler,
         Debug.Log(cardInfo.objName);
         image.sprite = Resources.Load<Sprite>($"Sprites/Nomal/{name}");
     }
+    public void SpriteNone()
+    {
+        image.sprite = null;
+
+    }
 
     Color FrameColor = new Color(1f, 1f, 1f, 1/255f);
     /*커스텀덱 설정할 때 클릭하면 실행되는 함수*/
