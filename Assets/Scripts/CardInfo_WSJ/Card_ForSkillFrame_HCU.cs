@@ -196,6 +196,7 @@ public partial class Card : MonoBehaviour
                     Debug.Log(cardInfo.sumom_Unit);
                     GameObject summonCard = Resources.Load<GameObject>($"Prefabs/{cardInfo.sumom_Unit}");
                 //summoncard 이름 디버그 띄울것
+                Debug.Log(summonCard.name);
                 
                 //GameMGR.Instance.battleLogic.playerForwardUnits.Add(summonCard.gameObject);
                 Debug.Log(targetPos + ": 소환할 때 지정되어있던 타겟포즈");
