@@ -18,8 +18,8 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
     public GameObject[] enemyAttackArray = new GameObject[6]; // enemy atack unit
 
     private bool isPlayerPreemptiveAlive = true; // playerForwardUnits alive 
-
     private bool isEnemyPreemptiveAlive = true; // enemyForwardUnits alive
+
     public bool isFirstAttack = true; // isFirstAttack = true => Player fisrt attack
     public bool isWaitAttack = false; // wait for attack
 
@@ -70,6 +70,9 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
     // �ΰ��� ���� ����
     public void AttackLogic()
     {
+        isPlayerPreemptiveAlive = true;
+        isEnemyPreemptiveAlive = true;
+
         Debug.Log("AttackLogic : " + isFirstAttack);
 
         // player first attack
