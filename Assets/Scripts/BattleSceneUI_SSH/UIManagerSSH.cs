@@ -9,12 +9,16 @@ using TMPro;
 public partial class UIManager : MonoBehaviour
 {
     GameObject battleSceneUI = null;
+    GameObject battleOptionPanel = null;
+
     GameObject ResultSceneUI = null;
     GameObject winUI = null;
     GameObject loseUI = null;
 
     TextMeshProUGUI winText = null;
     TextMeshProUGUI loseText = null;
+
+    [SerializeField] bool isOption = true;
 
     public GameObject finalSceneUI = null;
 
@@ -27,14 +31,25 @@ public partial class UIManager : MonoBehaviour
     public void BattleUIInit()
     {
         battleSceneUI = GameObject.Find("BattleSceneCanvas");
+        battleOptionPanel = GameObject.Find("OptionPanel");
+        battleOptionPanel.SetActive(false);
 
         battleSceneUI.SetActive(false);
+        isOption = battleSceneUI.activeSelf;
     }
 
     public void OnBattleUI()
     {
         battleSceneUI.SetActive(true);
+
     }
+
+    public void BattleOption()
+    {
+        isOption = !isOption;
+        battleOptionPanel.SetActive(isOption);
+    }
+
     #endregion
 
 
@@ -55,7 +70,7 @@ public partial class UIManager : MonoBehaviour
     public void ResultSceneInit()
     {
         ResultSceneUI = GameObject.Find("ResultSceneCanvas");
-        
+
         winUI = GameObject.Find("ResultWin");
         winText = GameObject.Find("WinRoundText").GetComponent<TextMeshProUGUI>();
 
@@ -74,10 +89,10 @@ public partial class UIManager : MonoBehaviour
     {
         for (int i = 0; i < playerArrangement.Length; i++)
         {
-            if (playerArrangement[i] != null) 
+            if (playerArrangement[i] != null)
             {
                 playerArrangement[i].transform.localScale = new Vector3(2f, 2f, 2f);
-                playerArrangement[i].transform.GetChild(0).position = playerPosition[i+1].position; 
+                playerArrangement[i].transform.GetChild(0).position = playerPosition[i + 1].position;
             }
         }
     }
