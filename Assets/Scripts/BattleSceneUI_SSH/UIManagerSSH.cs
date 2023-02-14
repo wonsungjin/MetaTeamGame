@@ -1,19 +1,27 @@
+using MongoDB.Bson.IO;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
+using TMPro;
 
 public partial class UIManager : MonoBehaviour
 {
     GameObject battleSceneUI = null;
     GameObject ResultSceneUI = null;
-    public GameObject finalSceneUI = null;
     GameObject winUI = null;
     GameObject loseUI = null;
 
+    TextMeshProUGUI winText = null;
+    TextMeshProUGUI loseText = null;
+
+    public GameObject finalSceneUI = null;
+
     public GameObject[] playerArrangement = new GameObject[6];
     public Transform[] playerPosition = new Transform[6];
+
+    public int curRound = 0;
 
     #region BattleScene
     public void BattleUIInit()
@@ -47,8 +55,13 @@ public partial class UIManager : MonoBehaviour
     public void ResultSceneInit()
     {
         ResultSceneUI = GameObject.Find("ResultSceneCanvas");
+        
         winUI = GameObject.Find("ResultWin");
+        winText = GameObject.Find("WinRoundText").GetComponent<TextMeshProUGUI>();
+
         loseUI = GameObject.Find("ResultLose");
+        loseText = GameObject.Find("LoseRoundText").GetComponent<TextMeshProUGUI>();
+
         ResultSceneUI.SetActive(false);
     }
 
@@ -83,11 +96,13 @@ public partial class UIManager : MonoBehaviour
 
     public void PlayerBattleWin(bool isWin)
     {
+        winText.text = "Round" + curRound;
         winUI.SetActive(isWin);
     }
 
     public void PlayerBattleLose(bool isWin)
     {
+        loseText.text = "Round" + curRound;
         loseUI.SetActive(isWin);
     }
     #endregion
