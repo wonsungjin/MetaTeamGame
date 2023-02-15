@@ -9,7 +9,15 @@ public class SoundSlider : MonoBehaviour
     public AudioMixer audioMixer;
     public Slider audioSlider;
 
-    public void AudioControl(float sliderVal)
+    public void SFXAudioControl(float sliderVal)
+    {
+        audioMixer.SetFloat("SFX", sliderVal);
+    }
+    public void BGMAudioControl(float sliderVal)
+    {
+        audioMixer.SetFloat("BGM", sliderVal);
+    }
+    public void MasterAudioControl(float sliderVal)
     {
         audioMixer.SetFloat("Master", sliderVal);
     }
