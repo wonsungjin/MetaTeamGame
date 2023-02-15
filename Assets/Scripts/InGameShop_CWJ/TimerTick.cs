@@ -4,33 +4,35 @@ using UnityEngine;
 
 public class TimerTick : MonoBehaviour
 {
+    public float rotateSpeed = 30f;
+    public float rotateAngle = 5f;
+    private float startingAngle;
+    private float targetAngle;
+    private bool rotateRight = true;
 
-    float tickTime = 0.6f;
-    Quaternion leftTick = new Quaternion(0, 0, -15, 0);
-    Quaternion rightTick = new Quaternion(0, 0, 15, 0);
-    bool tickEnd = false;
-
-    private void Start()
+    void Start()
     {
-        TickTime();
+        startingAngle = transform.eulerAngles.z;
+        targetAngle = startingAngle + rotateAngle;
     }
 
-    void TickTime()
+    void Update()
     {
-        if(tickEnd == false)
+        float currentAngle = Mathf.MoveTowardsAngle(transform.eulerAngles.z, targetAngle, rotateSpeed * Time.deltaTime);
+        transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, currentAngle);
+
+        if (currentAngle == targetAngle)
         {
-            transform.rotation = Quaternion.Slerp(Quaternion.identity, rightTick, tickTime);
-            tickEnd = true;
+            if (rotateRight)
+            {
+                targetAngle = startingAngle - rotateAngle;
+            }
+            else
+            {
+                targetAngle = startingAngle + rotateAngle;
+            }
 
-            TickTime();
-        }
-
-        if(tickEnd== true)
-        {
-            transform.rotation = Quaternion.Slerp(Quaternion.identity, leftTick, tickTime);
-            tickEnd = true;
-
-            TickTime();
+            rotateRight = !rotateRight;
         }
     }
 }
