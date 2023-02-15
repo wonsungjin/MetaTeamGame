@@ -10,7 +10,7 @@ public partial class GameMGR : Singleton<GameMGR>
 
     // 서로가 동일한 랜덤값을 가지기 위한 것이다.
     public int[] randomValue = new int[100];
-    public Dictionary<int, List<GameObject>> playerList = new Dictionary<int, List<GameObject>>();
+    public Dictionary<int, List<Card>> playerList = new Dictionary<int, List<Card>>();
 
     public bool isBattleNow = false; // 현재 전투씬인지 비전투씬인지를 구분하는 불값.
 

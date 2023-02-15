@@ -19568,8 +19568,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1490507039}
         m_TargetAssemblyTypeName: SoundSlider, Assembly-CSharp
-        m_MethodName: AudioControl
-        m_Mode: 0
+        m_MethodName: BGMAudioControl
+        m_Mode: 4
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -19957,8 +19957,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1498951335}
         m_TargetAssemblyTypeName: SoundSlider, Assembly-CSharp
-        m_MethodName: AudioControl
-        m_Mode: 0
+        m_MethodName: SFXAudioControl
+        m_Mode: 4
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -29774,6 +29774,7 @@ MonoBehaviour:
   giveDamage: 0
   takeDamage: 0
   isMine: 0
+  shopBatchEmptyIndex: 0
   searchArea: []
 --- !u!114 &1244862510948258122
 MonoBehaviour:
@@ -29885,6 +29886,7 @@ MonoBehaviour:
   giveDamage: 0
   takeDamage: 0
   isMine: 0
+  shopBatchEmptyIndex: 0
   searchArea: []
 --- !u!50 &1683130933639958611
 Rigidbody2D:
@@ -30011,6 +30013,7 @@ MonoBehaviour:
   giveDamage: 0
   takeDamage: 0
   isMine: 0
+  shopBatchEmptyIndex: 0
   searchArea: []
 --- !u!50 &1891945566863584470
 Rigidbody2D:
@@ -30061,6 +30064,7 @@ MonoBehaviour:
   giveDamage: 0
   takeDamage: 0
   isMine: 0
+  shopBatchEmptyIndex: 0
   searchArea: []
 --- !u!114 &1926938376398959714
 MonoBehaviour:
@@ -30153,6 +30157,7 @@ MonoBehaviour:
   giveDamage: 0
   takeDamage: 0
   isMine: 0
+  shopBatchEmptyIndex: 0
   searchArea: []
 --- !u!50 &2221145007596496290
 Rigidbody2D:
@@ -30203,6 +30208,7 @@ MonoBehaviour:
   giveDamage: 0
   takeDamage: 0
   isMine: 0
+  shopBatchEmptyIndex: 0
   searchArea: []
 --- !u!61 &2382412561666352698
 BoxCollider2D:
@@ -31275,6 +31281,7 @@ MonoBehaviour:
   giveDamage: 0
   takeDamage: 0
   isMine: 0
+  shopBatchEmptyIndex: 0
   searchArea: []
 --- !u!114 &4790532487075826102
 MonoBehaviour:
@@ -31614,6 +31621,7 @@ MonoBehaviour:
   giveDamage: 0
   takeDamage: 0
   isMine: 0
+  shopBatchEmptyIndex: 0
   searchArea: []
 --- !u!1 &6139308160527905803
 GameObject:
@@ -32507,6 +32515,7 @@ MonoBehaviour:
   giveDamage: 0
   takeDamage: 0
   isMine: 0
+  shopBatchEmptyIndex: 0
   searchArea: []
 --- !u!61 &7974875336583478583
 BoxCollider2D:
@@ -32575,6 +32584,7 @@ MonoBehaviour:
   giveDamage: 0
   takeDamage: 0
   isMine: 0
+  shopBatchEmptyIndex: 0
   searchArea: []
 --- !u!1 &7984887278620950173
 GameObject:
@@ -32924,4 +32934,5 @@ MonoBehaviour:
   giveDamage: 0
   takeDamage: 0
   isMine: 0
+  shopBatchEmptyIndex: 0
   searchArea: []

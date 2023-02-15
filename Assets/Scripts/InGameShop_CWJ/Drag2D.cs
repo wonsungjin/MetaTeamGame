@@ -29,6 +29,7 @@ public partial class Drag2D : MonoBehaviour
         spriteRenderer = GetComponent<MeshRenderer>();
         pol = GetComponent<BoxCollider2D>();
         card = GetComponent<Card>();
+        if(this.transform.parent!=null)
         this.selectZonePos = this.transform.parent.position;
     }
 
