@@ -202,25 +202,24 @@ public partial class Drag2D : MonoBehaviour
 
             if (gameObject.name == collision.gameObject.name)
             {
+                if (gameObject.CompareTag("BattleMonster2") && collision.gameObject.CompareTag("BattleMonster2"))
+                {
+                    if (collision.transform.position.y > transform.position.y)
+                    {
+                        ShopCardLevelUp(collision.gameObject);
+                    }
+                }
+
                 if (gameObject.CompareTag("BattleMonster") || gameObject.CompareTag("BattleMonster2"))
                 {
-                    if (gameObject.CompareTag("BattleMonster2") && collision.gameObject.CompareTag("BattleMonster2"))
-                    {
-                        if (collision.transform.position.y > transform.position.y)
-                        {
-                            ShopCardLevelUp(collision.gameObject);
-
-                        }
-                    }
-
-                    else if (gameObject.name == collision.gameObject.name && collision.gameObject.CompareTag("BattleMonster") || collision.gameObject.CompareTag("BattleMonster2"))
+                    if (collision.gameObject.CompareTag("BattleMonster") || collision.gameObject.CompareTag("BattleMonster2"))
                     {
                         ShopCardLevelUp(collision.gameObject);
                     }
                 }
             }
 
-            if (collision.gameObject.CompareTag("BattleMonster3"))
+            if (collision.gameObject.CompareTag("BattleMonster3") || gameObject.CompareTag("BattleMonster3"))
             {
                 return;
             }
