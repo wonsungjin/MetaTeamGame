@@ -32,10 +32,10 @@ public partial class UIManager : MonoBehaviour
     {
         battleSceneUI = GameObject.Find("BattleSceneCanvas");
         battleOptionPanel = GameObject.Find("OptionPanel");
-        if (battleOptionPanel.activeSelf)
-        {
-            battleOptionPanel.SetActive(false);
-        } 
+        //if (battleOptionPanel.activeSelf)
+        //{
+        //    battleOptionPanel.SetActive(false);
+        //} 
 
         battleSceneUI.SetActive(false);
         isOption = battleSceneUI.activeSelf;
@@ -94,8 +94,8 @@ public partial class UIManager : MonoBehaviour
         {
             if (playerArrangement[i] != null)
             {
-                playerArrangement[i].transform.localScale = new Vector3(2f, 2f, 2f);
-                playerArrangement[i].transform.GetChild(0).position = playerPosition[i + 1].position;
+                playerArrangement[i].transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+                playerArrangement[i].transform.position = playerPosition[i + 1].position;
             }
         }
     }
