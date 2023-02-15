@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using MongoDB.Driver.Linq;
+using MongoDB.Driver;
 
 public partial class Card : MonoBehaviour
 {
@@ -17,7 +18,7 @@ public partial class Card : MonoBehaviour
     public int takeDamage = 0;
 
     public bool isMine;
-
+    public int shopBatchEmptyIndex = 0;  // 상점 배치 인덱스값을 저장하는 변수
     public void Start()
     {
         // SetSkillTiming(); // 나의 스킬타이밍에 따라 이벤트에 추가해야한다면 추가한다.
@@ -120,7 +121,7 @@ public partial class Card : MonoBehaviour
 
         if (cardInfo.effectType == EffectType.summon)
         {
-            for (int i = 0; i < cardInfo.GetValue(1, level); i++)
+            for (int i = 0; i < cardInfo.GetNumTrigger(level); i++)
             {
                 FindTargetType();
                 SkillEffect();
@@ -193,9 +194,15 @@ public partial class Card : MonoBehaviour
                 break;
             case EffectType.summon:
                 Debug.Log(cardInfo.sumom_Unit);
-                GameObject summonCard = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{cardInfo.sumom_Unit}"),new Vector2(999, 999f), Quaternion.identity);
-                summonCard.tag = "BattleMonster";
-                summonCard.transform.position = targetPos + new Vector2(0, -0.6f);
+                if (targetPos == Vector2.zero) break; //만약에 빈칸이 없다면 소환을 하지말라
+                GameObject summonCard = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{cardInfo.sumom_Unit}"), targetPos + new Vector2(0, -0.6f), Quaternion.identity);
+                summonCard.transform.GetChild(0).tag = "BattleMonster";
+                summonCard.transform.localScale = summonCard.transform.localScale * 2;
+
+                GameMGR.Instance.spawner.cardBatch[shopBatchEmptyIndex] = summonCard;
+                //summonCard.transform.position = targetPos + new Vector2(0, -0.6f);
+                //summonCard.GetComponentInChildren<BoxCollider2D>().enabled = false;
+                //summonCard.GetComponentInChildren<BoxCollider2D>().enabled = true;
                 //summoncard 이름 디버그 띄울것
                 Debug.Log(summonCard.name);
 
@@ -374,6 +381,7 @@ public partial class Card : MonoBehaviour
 
             case TargetType.empty: // 빈 공간을 찾는다 = 소환시
                 bool isFind = false;
+                targetPos = Vector2.zero; //위치값 초기화
                 Debug.Log("대상은 빈칸");
                 if (GameMGR.Instance.isBattleNow)    // 현재 상태가 전투씬인 경우
                 {
@@ -393,9 +401,13 @@ public partial class Card : MonoBehaviour
                             if (GameMGR.Instance.battleLogic.playerBackwardUnits[i] == null)
                             {
                                 targetPos = GameMGR.Instance.battleLogic.playerForwardUnits[i].transform.position;
+                                isFind = true;
                                 break;
                             }
-
+                        }
+                        if(!isFind)
+                        {
+                            // 튕겨나가는 애니메이션 출력하면서 어딘가에 소환했다가 삭제
                         }
                     }
                 }
@@ -407,8 +419,15 @@ public partial class Card : MonoBehaviour
                         {
                             targetPos = GameMGR.Instance.spawner.shopBatchPos[i].transform.position;
                             Debug.Log(targetPos + ": 타겟포즈");
+                            shopBatchEmptyIndex = i; // 찾은 빈칸 인덱스 기록
                             isFind = true;
+                            break;
                         }
+                    }
+
+                    if(!isFind)
+                    {
+                        // 튕겨나가는 애니메이션 출력하면서 어딘가에 소환했다가 삭제
                     }
                 }
                 break;
