@@ -27,7 +27,7 @@ public partial class Batch : MonoBehaviourPun
         GameMGR.Instance.uiManager.finalSceneUI.SetActive(true);
         for (int i = 0; i < CustomNumberList.Count; i++)
         {
-            List<GameObject> cardList = null;
+            List<Card> cardList = null;
             GameObject unitCard = GameObject.Instantiate<GameObject>(playerRanking);
             unitCard.transform.SetParent(playerRankingUi);
             GameMGR.Instance.playerList.TryGetValue(CustomNumberList[i], out cardList);
@@ -67,7 +67,7 @@ public partial class Batch : MonoBehaviourPun
     [PunRPC]
     public void ClearBatch(int playerNum)
     {
-        List<GameObject> cardList = null;
+        List<Card> cardList = null;
         bool listCheck = GameMGR.Instance.playerList.TryGetValue(playerNum, out cardList);
         if (listCheck == true)
         {
@@ -77,7 +77,7 @@ public partial class Batch : MonoBehaviourPun
     [PunRPC]
     public void SetBatch(int playerNum, string cardName, int hp, int attackValue, int exp, int level)
     {
-        List<GameObject> cardList = null;
+        List<Card> cardList = null;
         Card card = null;
         GameObject instance = Resources.Load<GameObject>($"Prefabs/{cardName}");
         Debug.Log(cardName);
@@ -85,7 +85,7 @@ public partial class Batch : MonoBehaviourPun
         bool listCheck = GameMGR.Instance.playerList.TryGetValue(playerNum, out cardList);
         if (listCheck == false)
         {
-            cardList = new List<GameObject>();
+            cardList = new List<Card>();
         }
         if (cardName != "")
         {
@@ -97,7 +97,7 @@ public partial class Batch : MonoBehaviourPun
             card.curAttackValue = attackValue;
             card.curEXP = exp;
             card.level = level;
-            cardList.Add(instance);
+            cardList.Add(card);
         }
         else cardList.Add(null);
 
@@ -105,9 +105,9 @@ public partial class Batch : MonoBehaviourPun
         GameMGR.Instance.playerList.TryAdd(playerNum, cardList);
     }
 
-    public List<GameObject> GetBatch(int playerNum)
+    public List<Card> GetBatch(int playerNum)
     {
-        List<GameObject> cardList = null;
+        List<Card> cardList = null;
         bool listCheck = GameMGR.Instance.playerList.TryGetValue(playerNum, out cardList);
         return cardList;
     }
@@ -134,7 +134,7 @@ public partial class Batch : MonoBehaviourPun
     /// <param name="CreateBatch"></param>
     public void CreateBatch(int playerNum, bool myCard = true)
     {
-        List<GameObject> cardList = null;
+        List<Card> cardList = null;
         GameMGR.Instance.playerList.TryGetValue(playerNum, out cardList);
 
         for (int i = 0; i < cardList.Count; i++)
@@ -142,8 +142,9 @@ public partial class Batch : MonoBehaviourPun
             if (cardList[i] == null) continue;
             Debug.Log("cardList name" + cardList[i].name);
             //GameObject unitCard = GameObject.Instantiate<GameObject>(cardList[i].gameObject);
-            Debug.Log(cardList[i]);
-            GameObject unitCard = GameMGR.Instance.objectPool.CreatePrefab(cardList[i],Vector3.zero,Quaternion.identity);
+            Debug.Log(Resources.Load<GameObject>($"Prefabs/{cardList[i].name}"));
+            GameObject unitCard = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{cardList[i].name}"),Vector3.zero,Quaternion.identity);
+            unitCard.GetComponentInChildren<Card>().ChangeCard(cardList[i]);
             Debug.Log(unitCard.name);
 
             // player Unit ��ġ ����
@@ -155,7 +156,7 @@ public partial class Batch : MonoBehaviourPun
                 else { GameMGR.Instance.battleLogic.playerBackwardUnits[i - 3] = unitCard.gameObject; }
 
                 // add result unit
-                GameMGR.Instance.uiManager.playerArrangement[i] = GameObject.Instantiate<GameObject>(cardList[i]);
+                GameMGR.Instance.uiManager.playerArrangement[i] = GameObject.Instantiate<GameObject>(cardList[i].gameObject);
             }
 
             // enemy Unit ��ġ ����

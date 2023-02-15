@@ -34,6 +34,7 @@ public partial class Card : MonoBehaviour
     스프라이트 랜더러도 같은 원리로 설정*/
     public void SetMyInfo(string myname,bool flip=true)
     {
+        if (transform.parent == null) return;
         name = myname;
         Debug.Log(name);
         curEXP = 0;
@@ -54,6 +55,14 @@ public partial class Card : MonoBehaviour
         SetSkillTiming();
         if(flip==true) SetFlip(false);
         transform.parent.gameObject.transform.localScale = Vector3.one;
+    }
+    public void ChangeCard(Card card)
+    {
+        ChangeValue(CardStatus.Hp, card.curHP);
+        ChangeValue(CardStatus.Attack, card.curAttackValue);
+        if (level == 2) expSlider.value = card.curEXP * 0.5f;
+        else expSlider.value = card.curEXP * 0.33f;
+        levelText.text = card.level.ToString();
     }
     public void SetFlip(bool isSet)
     {
