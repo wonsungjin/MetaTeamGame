@@ -8,6 +8,7 @@ public class SoundSlider : MonoBehaviour
 {
     public AudioMixer audioMixer;
     public Slider audioSlider;
+    public Slider SfxSlider;
 
     public void SFXAudioControl(float sliderVal)
     {
