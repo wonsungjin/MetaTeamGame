@@ -171,61 +171,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.7172842, y: 4.35962}
   m_EdgeRadius: 0
---- !u!114 &8169547127287847132
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8843016776999967166}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e05b8c94d5fb69948b8dd34210bf692f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skillType: 
---- !u!114 &8169547127287847137
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8843016776999967166}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cda88de653f299840b5c51af7dbe0bd2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isFreezen: 0
-  color: {r: 1, g: 0, b: 0, a: 1}
-  outlineSize: 5
---- !u!114 &8169547127287847138
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8843016776999967166}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2435f21eb5008146b871a8c0fa54c9c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cardInfo: {fileID: 0}
-  hpText: {fileID: 0}
-  atkText: {fileID: 0}
-  levelText: {fileID: 0}
-  level: 0
-  curAttackValue: 0
-  curHP: 0
-  curEXP: 0
-  expSlider: {fileID: 0}
-  skillTarget: []
-  batchPos: {x: 0, y: 0}
-  targetPos: {x: 0, y: 0}
-  curPos: {fileID: 0}
-  giveDamage: 0
-  takeDamage: 0
 --- !u!82 &5477631462066124283
 AudioSource:
   m_ObjectHideFlags: 0
@@ -235,7 +180,7 @@ AudioSource:
   m_GameObject: {fileID: 8843016776999967166}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -3061437003081056062, guid: 2c12bcf17943adb44beee154fe69321a, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -322,6 +267,65 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &8169547127287847132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8843016776999967166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e05b8c94d5fb69948b8dd34210bf692f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillType: 
+--- !u!114 &8169547127287847137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8843016776999967166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cda88de653f299840b5c51af7dbe0bd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pos: {fileID: 0}
+  isFreezen: 0
+  color: {r: 1, g: 0, b: 0, a: 1}
+  outlineSize: 5
+--- !u!114 &8169547127287847138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8843016776999967166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2435f21eb5008146b871a8c0fa54c9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardInfo: {fileID: 0}
+  hpText: {fileID: 0}
+  atkText: {fileID: 0}
+  levelText: {fileID: 0}
+  level: 0
+  curAttackValue: 0
+  curHP: 0
+  curEXP: 0
+  expSlider: {fileID: 0}
+  skillTarget: []
+  batchPos: {x: 0, y: 0}
+  targetPos: {x: 0, y: 0}
+  curPos: {fileID: 0}
+  giveDamage: 0
+  takeDamage: 0
+  isMine: 0
+  shopBatchEmptyIndex: 0
+  searchArea: []
 --- !u!1001 &8169547128213089039
 PrefabInstance:
   m_ObjectHideFlags: 0

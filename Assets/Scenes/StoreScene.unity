@@ -9428,7 +9428,7 @@ GameObject:
   - component: {fileID: 1293335266}
   - component: {fileID: 1293335267}
   m_Layer: 5
-  m_Name: BGMSlider (1)
+  m_Name: SFXSlider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11430,6 +11430,7 @@ GameObject:
   - component: {fileID: 1664842313}
   - component: {fileID: 1664842315}
   - component: {fileID: 1664842314}
+  - component: {fileID: 1664842316}
   m_Layer: 5
   m_Name: Sound
   m_TagString: Untagged
@@ -11499,6 +11500,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1664842312}
   m_CullTransparentMesh: 1
+--- !u!114 &1664842316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1664842312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f07d5c7ad8f866042a2928ef5866b7b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioMixer: {fileID: 24100000, guid: 2c12bcf17943adb44beee154fe69321a, type: 2}
+  audioSlider: {fileID: 550001310}
+  SfxSlider: {fileID: 1293335267}
 --- !u!1 &1674398099
 GameObject:
   m_ObjectHideFlags: 0
