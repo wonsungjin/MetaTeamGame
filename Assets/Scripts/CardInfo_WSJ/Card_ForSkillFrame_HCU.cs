@@ -24,7 +24,6 @@ public partial class Card : MonoBehaviour
         // SetSkillTiming(); // 나의 스킬타이밍에 따라 이벤트에 추가해야한다면 추가한다.
     }
 
-
     #region 스킬 효과 적용 관련 변수 모음
 
     public void Attack(int damage, Card Target, bool isDirect, bool isFirst) // 자신이 공격시 호출하는 함수 // 주는 데미지, 때릴 대상 // 직접 공격이냐 아니냐 (공격 차례때 때리는 것 / 스킬데미지로 때리는 것) // 첫타 구분(무한루프 방지)
@@ -174,15 +173,15 @@ public partial class Card : MonoBehaviour
                 Debug.Log("체력 효과 발동");
                 for (int i = 0; i < skillTarget.Count; i++)
                 {
-                    skillTarget[i].curHP += cardInfo.GetValue(1, level);
+                    skillTarget[i].ChangeValue(CardStatus.Hp, cardInfo.GetValue(1, level), true);
                 }
                 break;
             case EffectType.changeATKandHP:
                 Debug.Log("공격력 체력 효과 발동");
                 for (int i = 0; i < skillTarget.Count; i++)
                 {
-                    skillTarget[i].ChangeValue(CardStatus.Attack, cardInfo.GetValue(1, level), true);
-                    skillTarget[i].ChangeValue(CardStatus.Attack, cardInfo.GetValue(2, level), true);
+                        skillTarget[i].ChangeValue(CardStatus.Attack, cardInfo.GetValue(1, level), true);
+                        skillTarget[i].ChangeValue(CardStatus.Hp, cardInfo.GetValue(2, level), true);
                 }
                 break;
             case EffectType.grantEXP:
@@ -193,7 +192,7 @@ public partial class Card : MonoBehaviour
                 }
                 break;
             case EffectType.summon:
-                Debug.Log(cardInfo.sumom_Unit);
+                Debug.Log(cardInfo.sumom_Unit + "소환 효과 발동");
                 if (targetPos == Vector2.zero) break; //만약에 빈칸이 없다면 소환을 하지말라
                 GameObject summonCard = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{cardInfo.sumom_Unit}"), targetPos + new Vector2(0, -0.6f), Quaternion.identity);
                 summonCard.transform.GetChild(0).tag = "BattleMonster";
@@ -222,6 +221,26 @@ public partial class Card : MonoBehaviour
                 // 고용가능 유닛 추가
                 GameMGR.Instance.spawner.SpecialMonster();
                 break;
+        }
+    }
+
+    //==============================================================================================================================================================
+    //===================================================                 발동 조건                  ================================================================
+    //==============================================================================================================================================================
+
+    public void CheckTriggerCondition()
+    {
+        if(cardInfo.triggerCondition != 0) // 특수 발동조건이 있는 경우
+        {
+            switch(cardInfo.triggerCondition)
+            {
+                case TriggerCondition.allyEmpty:
+                    for(int i = 0; i < 6; i++)
+                    {
+
+                    }
+                    break;
+            }
         }
     }
 
