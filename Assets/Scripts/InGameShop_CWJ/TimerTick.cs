@@ -34,5 +34,15 @@ public class TimerTick : MonoBehaviour
 
             rotateRight = !rotateRight;
         }
+
+        if (GameMGR.Instance.uiManager.isTimerFast == true)
+        {
+            TimerTickFaster();
+        }
+    }
+
+    void TimerTickFaster()
+    {
+        rotateSpeed = 50f;
     }
 }
