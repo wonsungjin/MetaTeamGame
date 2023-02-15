@@ -1,7 +1,13 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum faidType
+{
+    Out,
+    In,
+}
 public partial class UIManager : MonoBehaviour
 {
     [Header("Pannel")]
@@ -13,6 +19,8 @@ public partial class UIManager : MonoBehaviour
     private GameObject menuPannel;
     private GameObject nameMakeUI;
     private GameObject deleteWarringUI;
+    public GameObject blackUI;
+    private GameObject logoPannel;
     [Header("PackList")]
     [SerializeField] private MyDeck packButton;
     private GameObject myPackList;
@@ -33,6 +41,8 @@ public partial class UIManager : MonoBehaviour
     public TextMeshProUGUI[] tierCountText;
     public void Init_Scene1()
     {
+        blackUI = GameObject.Find("BlackUI");
+        logoPannel = GameObject.Find("LogoPannel");
         lobbyPannel = GameObject.Find("LobbyPannel");
         myDeckPannel = GameObject.Find("MyDeckPannel");
         customPannel = GameObject.Find("CustomPannel");
@@ -78,11 +88,21 @@ public partial class UIManager : MonoBehaviour
         deleteWarringUI.SetActive(false);
         customPannel.SetActive(false);
         packChoicePannel.SetActive(false);
+        lobbyPannel.SetActive(false);
         cardPannel.SetActive(false);
         myDeckPannel.SetActive(false);
         nameMakeUI.SetActive(false);
         menuPannel.SetActive(false);
+        blackUI.SetActive(false);
         SetFalseStar(0);
+        StartCoroutine(COR_FaidDelay());
+    }
+    IEnumerator COR_FaidDelay()
+    {
+        Faid(logoPannel, faidType.Out, 0.02f);
+        yield return new WaitForSeconds(2f);
+        Faid(lobbyPannel, faidType.In, 0.02f);
+
     }
     public void SetFalseStar(int set)
     {
@@ -199,4 +219,41 @@ public partial class UIManager : MonoBehaviour
         GameMGR.Instance.dataBase.inventoryData.DeleteCustomDeck(myDeckNum);
         Destroy(myDeck);
     }
+    
+    public void Faid(GameObject obj, faidType type,float time)
+    {
+        obj.SetActive(true);
+        faidTime = new WaitForSeconds(time);
+        if (type == faidType.In) StartCoroutine(COR_FaidIn(obj));
+        else if(type == faidType.Out) StartCoroutine(COR_FaidOut(obj));
+    }
+    WaitForSeconds faidTime = new WaitForSeconds(0.02f);
+    IEnumerator COR_FaidIn(GameObject obj)
+    {
+        obj.TryGetComponent(out CanvasGroup canvasGroup);
+        if (canvasGroup == null) canvasGroup = obj.AddComponent<CanvasGroup>();
+        canvasGroup.alpha = 0;
+        while(canvasGroup.alpha<1)
+        {
+            canvasGroup.alpha += 0.04f;
+            yield return faidTime;
+        }
+
+    }
+    IEnumerator COR_FaidOut(GameObject obj)
+    {
+        obj.TryGetComponent(out CanvasGroup canvasGroup);
+        if (canvasGroup == null) canvasGroup = obj.AddComponent<CanvasGroup>();
+        canvasGroup.alpha = 1;
+        while (canvasGroup.alpha > 0)
+        {
+            canvasGroup.alpha -= 0.04f;
+            yield return faidTime;
+        }
+        obj.SetActive(false);
+
+    }
+
+
+
 }

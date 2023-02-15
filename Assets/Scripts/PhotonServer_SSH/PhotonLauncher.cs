@@ -23,10 +23,10 @@ public class PhotonLauncher : MonoBehaviourPunCallbacks
         // 룸 내의 로드된 레벨 동기화
         PhotonNetwork.AutomaticallySyncScene = true;
         playerCount= GameObject.Find("PlayerCount").GetComponent<TextMeshProUGUI>();
-        joinRoomButton = GameObject.Find("StartButton").GetComponent<Button>();
+       // joinRoomButton = GameObject.Find("StartButton").GetComponent<Button>();
         leaveRoomButton = GameObject.Find("LeaveButton").GetComponent<Button>();
         matchingPannel = GameObject.Find("MatchingPannel");
-        matchingPannel.gameObject.SetActive(false);
+        matchingPannel.SetActive(false);
 
 
         // 룸 생성 옵션 : MaxPlayer
@@ -72,7 +72,7 @@ public class PhotonLauncher : MonoBehaviourPunCallbacks
     {
         Debug.Log("OnMaster");
 
-        joinRoomButton.enabled = true;
+      //  joinRoomButton.enabled = true;
     }
 
     public override void OnCreatedRoom()
@@ -94,7 +94,7 @@ public class PhotonLauncher : MonoBehaviourPunCallbacks
         photonView.RPC("SyncCurrentRoomPlayer", RpcTarget.Others, true);
         StatusServer();
         leaveRoomButton.gameObject.SetActive(true);
-        joinRoomButton.enabled = false;
+       // joinRoomButton.enabled = false;
         Debug.Log("test룸 입장");
         Debug.Log("방 접속자 수 : " + PhotonNetwork.PlayerList.Length);
         for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
@@ -131,7 +131,7 @@ public class PhotonLauncher : MonoBehaviourPunCallbacks
     public override void OnLeftRoom()
     {
         StatusServer();
-        joinRoomButton.enabled = true;
+       // joinRoomButton.enabled = true;
     }
 
     // 서버 상태 표시
@@ -158,7 +158,7 @@ public class PhotonLauncher : MonoBehaviourPunCallbacks
     private void Init()
     {
         StatusServer();
-        joinRoomButton.enabled = false;
+       // joinRoomButton.enabled = false;
     }
 
     // JoinRoom Button 클릭시 실행되는 함수
@@ -186,7 +186,8 @@ public class PhotonLauncher : MonoBehaviourPunCallbacks
             if (PhotonNetwork.CurrentRoom.PlayerCount >= maxPlayer)
             {
                 PhotonNetwork.CurrentRoom.IsOpen = false;
-                PhotonNetwork.LoadLevel("StoreScene");
+                GameMGR.Instance.uiManager.Faid(GameMGR.Instance.uiManager.blackUI, faidType.In, 0.02f);
+                StartCoroutine(COR_SceneDelay());
             }
             else PhotonNetwork.CurrentRoom.IsOpen = true;
         if (roomState)
@@ -205,4 +206,9 @@ public class PhotonLauncher : MonoBehaviourPunCallbacks
         }
     }
     #endregion
+    IEnumerator COR_SceneDelay()
+    {
+        yield return new WaitForSeconds(1f); 
+        PhotonNetwork.LoadLevel("StoreScene");
+    }
 }
