@@ -193,7 +193,7 @@ public partial class Card : MonoBehaviour
                 break;
             case EffectType.summon:
                 Debug.Log(cardInfo.sumom_Unit);
-                GameObject summonCard = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{cardInfo.sumom_Unit}"),targetPos + new Vector2(0, -0.5f), Quaternion.identity);
+                GameObject summonCard = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{cardInfo.sumom_Unit}"),new Vector2(999, 999f), Quaternion.identity);
                 summonCard.tag = "BattleMonster";
                 summonCard.transform.position = targetPos + new Vector2(0, -0.6f);
                 //summoncard 이름 디버그 띄울것
