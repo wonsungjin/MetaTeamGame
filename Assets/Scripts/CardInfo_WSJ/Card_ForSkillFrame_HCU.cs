@@ -215,6 +215,7 @@ public partial class Card : MonoBehaviour
                 // 상점 레벨업 비용 감소
                 if (GameMGR.Instance.uiManager.shopMoney > 0)
                     GameMGR.Instance.uiManager.shopMoney -= cardInfo.GetValue(1, level);
+                GameMGR.Instance.uiManager.ChangeShopLevelUpCost(GameMGR.Instance.uiManager.shopMoney); //  비용값 변경 출력
                 break;
             case EffectType.addHireUnit:
                 Debug.Log("고용가능 유닛 추가 효과 발동");
