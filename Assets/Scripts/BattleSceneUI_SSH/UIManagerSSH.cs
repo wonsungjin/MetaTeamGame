@@ -1,31 +1,58 @@
+using MongoDB.Bson.IO;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
+using TMPro;
 
 public partial class UIManager : MonoBehaviour
 {
     GameObject battleSceneUI = null;
+    GameObject battleOptionPanel = null;
+
     GameObject ResultSceneUI = null;
-    public GameObject finalSceneUI = null;
     GameObject winUI = null;
     GameObject loseUI = null;
 
+    TextMeshProUGUI winText = null;
+    TextMeshProUGUI loseText = null;
+
+    [SerializeField] bool isOption = true;
+
+    public GameObject finalSceneUI = null;
+
     public GameObject[] playerArrangement = new GameObject[6];
     public Transform[] playerPosition = new Transform[6];
+
+    public int curRound = 0;
 
     #region BattleScene
     public void BattleUIInit()
     {
         battleSceneUI = GameObject.Find("BattleSceneCanvas");
+        battleOptionPanel = GameObject.Find("OptionPanel");
+        if (battleOptionPanel.activeSelf)
+        {
+            battleOptionPanel.SetActive(false);
+        } 
 
         battleSceneUI.SetActive(false);
+        isOption = battleSceneUI.activeSelf;
     }
 
     public void OnBattleUI()
     {
         battleSceneUI.SetActive(true);
+
     }
+
+    public void BattleOption()
+    {
+        isOption = !isOption;
+        battleOptionPanel.SetActive(isOption);
+    }
+
     #endregion
 
 
@@ -46,8 +73,13 @@ public partial class UIManager : MonoBehaviour
     public void ResultSceneInit()
     {
         ResultSceneUI = GameObject.Find("ResultSceneCanvas");
+
         winUI = GameObject.Find("ResultWin");
+        winText = GameObject.Find("WinRoundText").GetComponent<TextMeshProUGUI>();
+
         loseUI = GameObject.Find("ResultLose");
+        loseText = GameObject.Find("LoseRoundText").GetComponent<TextMeshProUGUI>();
+
         ResultSceneUI.SetActive(false);
     }
 
@@ -60,10 +92,10 @@ public partial class UIManager : MonoBehaviour
     {
         for (int i = 0; i < playerArrangement.Length; i++)
         {
-            if (playerArrangement[i] != null) 
+            if (playerArrangement[i] != null)
             {
                 playerArrangement[i].transform.localScale = new Vector3(2f, 2f, 2f);
-                playerArrangement[i].transform.GetChild(0).position = playerPosition[i+1].position; 
+                playerArrangement[i].transform.GetChild(0).position = playerPosition[i + 1].position;
             }
         }
     }
@@ -82,11 +114,13 @@ public partial class UIManager : MonoBehaviour
 
     public void PlayerBattleWin(bool isWin)
     {
+        winText.text = "Round" + curRound;
         winUI.SetActive(isWin);
     }
 
     public void PlayerBattleLose(bool isWin)
     {
+        loseText.text = "Round" + curRound;
         loseUI.SetActive(isWin);
     }
     #endregion
