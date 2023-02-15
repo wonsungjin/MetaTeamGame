@@ -108,6 +108,7 @@ public partial class GameMGR : Singleton<GameMGR>
         else if (num == 3)
         {
             uiManager.OnBattleUI();
+            uiManager.curRound++;
 
             uiManager.ResultUnitPosition();
             audioMGR.StoreSceneBGM(false);

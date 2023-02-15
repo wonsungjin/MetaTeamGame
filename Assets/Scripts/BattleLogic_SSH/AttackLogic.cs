@@ -46,11 +46,16 @@ public partial class AttackLogic : Skill
         {
             curTime += Time.deltaTime;
 
+            gameObject.transform.transform.eulerAngles = new Vector2(0 , 180);
+
             // return position
             gameObject.transform.parent.position = Vector2.Lerp(enemyTrans, returnPosition, curTime / goalTime);
 
             yield return waitForFixedUpdate;
         }
+
+        gameObject.transform.transform.eulerAngles = Vector2.zero;
+
         GameMGR.Instance.battleLogic.isWaitAttack = true;
     }
     public void UnitAttack(GameObject targetUnit)

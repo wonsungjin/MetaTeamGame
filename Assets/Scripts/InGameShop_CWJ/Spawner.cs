@@ -102,8 +102,12 @@ public class Spawner : MonoBehaviourPun
 
     // 레디 버튼 누르면 이루어짐 몬스터 삭제 , 시간 초기화 , 머니 초기화
     Card card;
+    public bool isClick;
     public void OnCLick_ReadyButton()
     {
+        if (isClick) return;
+        isClick = true;
+        GameMGR.Instance.batch.gameObject.GetPhotonView().RPC("ClearBatch", RpcTarget.All, (int)PhotonNetwork.LocalPlayer.CustomProperties["Number"]);
         for (int i = 0; i < cardBatch.Length; i++)
         {
             if (cardBatch[i] != null)
@@ -206,7 +210,7 @@ public class Spawner : MonoBehaviourPun
         {
             GameMGR.Instance.objectPool.DestroyPrefab(removeUnit[i].transform.parent.gameObject);
         }
-        ChooseRandomCard();        
+        ChooseRandomCard();
     }
 
     // 리롤
@@ -228,7 +232,7 @@ public class Spawner : MonoBehaviourPun
             ChooseRandomCard();
 
             GameMGR.Instance.Event_Reroll();    // 리롤시 능력가진 카드들 효과 발동
-            
+
         }
         else
         {
@@ -482,38 +486,112 @@ public class Spawner : MonoBehaviourPun
     }
     public void SpecialMonster()
     {
+        Debug.Log("스페셜몬스터 생성");
+
         trans = GameObject.FindGameObjectsWithTag("SpecialZone");
 
-        if (trans != null)
+        if (trans.Length <= 0)
         {
+            Debug.Log("트랜스 랭스 값이 0아더");
+            return;
+        }
+
+        if (trans.Length == 2)
+        {
+            Debug.Log("트랜스랭스 2");
             switch (GameMGR.Instance.uiManager.shopLevel)
             {
                 case 1:
                     int randomNum1 = Random.Range(customDeck.tier_1.Count, customDeck.tier_1.Count + customDeck.tier_2.Count);
-                    GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum1]}"), trans[0].transform.position, Quaternion.identity);
-                    mon.transform.position -= vec;
+
+                    if (trans[0].transform.position.x < trans[1].transform.position.x)
+                    {
+                        GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum1]}"), trans[0].transform.position - vec, Quaternion.identity);
+                    }
+                    else
+                    {
+                        GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum1]}"), trans[1].transform.position - vec, Quaternion.identity);
+                    }
                     break;
                 case 2:
-
                     int randomNum2 = Random.Range(customDeck.tier_1.Count + customDeck.tier_2.Count, customDeck.tier_1.Count + customDeck.tier_2.Count + customDeck.tier_3.Count);
-                    GameObject mon2 = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum2]}"), trans[0].transform.position, Quaternion.identity);
-                    mon2.transform.position -= vec;
+                    if (trans[0].transform.position.x < trans[1].transform.position.x)
+                    {
+                        GameObject mon2 = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum2]}"), trans[0].transform.position - vec, Quaternion.identity);
+                    }
+                    else
+                    {
+                        GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum2]}"), trans[1].transform.position - vec, Quaternion.identity);
+                    }
+                    break;
+                case 3:
+                    int randomNum3 = Random.Range(customDeck.tier_1.Count + customDeck.tier_2.Count + customDeck.tier_3.Count, customDeck.tier_1.Count + customDeck.tier_2.Count + customDeck.tier_3.Count + customDeck.tier_4.Count);
+                    if (trans[0].transform.position.x < trans[1].transform.position.x)
+                    {
+                        GameObject mon3 = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum3]}"), trans[0].transform.position - vec, Quaternion.identity);
+                    }
+                    else
+                    {
+                        GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum3]}"), trans[1].transform.position - vec, Quaternion.identity);
+                    }
+                    break; ;
+                case 4:
+                    int randomNum4 = Random.Range(customDeck.tier_1.Count + customDeck.tier_2.Count + customDeck.tier_3.Count + customDeck.tier_4.Count, customDeck.tier_1.Count + customDeck.tier_2.Count + customDeck.tier_3.Count + customDeck.tier_4.Count + customDeck.tier_5.Count);
+                    if (trans[0].transform.position.x < trans[1].transform.position.x)
+                    {
+                        GameObject mon4 = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum4]}"), trans[0].transform.position - vec, Quaternion.identity);
+                    }
+                    else
+                    {
+                        GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum4]}"), trans[1].transform.position - vec, Quaternion.identity);
+                    }
+                    break; ;
+                case 5:
+                    int randomNum5 = Random.Range(customDeck.tier_1.Count + customDeck.tier_2.Count + customDeck.tier_3.Count + customDeck.tier_4.Count + customDeck.tier_5.Count, customDeck.tier_1.Count + customDeck.tier_2.Count + customDeck.tier_3.Count + customDeck.tier_4.Count + customDeck.tier_5.Count + customDeck.tier_6.Count);
+                    if (trans[0].transform.position.x < trans[1].transform.position.x)
+                    {
+                        GameObject mon5 = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum5]}"), trans[0].transform.position - vec, Quaternion.identity);
+                    }
+                    else
+                    {
+                        GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum5]}"), trans[1].transform.position - vec, Quaternion.identity);
+                    }
+                    break; ;
+            }
+        }
+
+        if (trans.Length == 1)
+        {
+            Debug.Log("트랜스랭스 1");
+            switch (GameMGR.Instance.uiManager.shopLevel)
+            {
+                case 1:
+                    int randomNum1 = Random.Range(customDeck.tier_1.Count, customDeck.tier_1.Count + customDeck.tier_2.Count);
+                    GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum1]}"), trans[0].transform.position - vec, Quaternion.identity);
+                    break;
+                case 2:
+                    int randomNum2 = Random.Range(customDeck.tier_1.Count + customDeck.tier_2.Count, customDeck.tier_1.Count + customDeck.tier_2.Count + customDeck.tier_3.Count);
+
+                    GameObject mon2 = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum2]}"), trans[0].transform.position - vec, Quaternion.identity);
+
                     break;
                 case 3:
                     int randomNum3 = Random.Range(customDeck.tier_1.Count + customDeck.tier_2.Count + customDeck.tier_3.Count, customDeck.tier_1.Count + customDeck.tier_2.Count + customDeck.tier_3.Count + customDeck.tier_4.Count);
 
-                    GameObject mon3 = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum3]}"), trans[0].transform.position, Quaternion.identity);
-                    mon3.transform.position -= vec;
+                    GameObject mon3 = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum3]}"), trans[0].transform.position - vec, Quaternion.identity);
+
                     break; ;
                 case 4:
                     int randomNum4 = Random.Range(customDeck.tier_1.Count + customDeck.tier_2.Count + customDeck.tier_3.Count + customDeck.tier_4.Count, customDeck.tier_1.Count + customDeck.tier_2.Count + customDeck.tier_3.Count + customDeck.tier_4.Count + customDeck.tier_5.Count);
-                    GameObject mon4 = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum4]}"), trans[0].transform.position, Quaternion.identity);
-                    mon4.transform.position -= vec;
+
+                    GameObject mon4 = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum4]}"), trans[0].transform.position - vec, Quaternion.identity);
+
                     break; ;
                 case 5:
                     int randomNum5 = Random.Range(customDeck.tier_1.Count + customDeck.tier_2.Count + customDeck.tier_3.Count + customDeck.tier_4.Count + customDeck.tier_5.Count, customDeck.tier_1.Count + customDeck.tier_2.Count + customDeck.tier_3.Count + customDeck.tier_4.Count + customDeck.tier_5.Count + customDeck.tier_6.Count);
-                    GameObject mon5 = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum5]}"), trans[0].transform.position, Quaternion.identity);
-                    mon5.transform.position -= vec;
+
+                    GameObject mon5 = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum5]}"), trans[0].transform.position - vec, Quaternion.identity);
+
                     break; ;
             }
         }

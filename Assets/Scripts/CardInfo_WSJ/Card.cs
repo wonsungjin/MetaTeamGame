@@ -129,7 +129,7 @@ public partial class Card : MonoBehaviour
                 level++;
                 levelText.text = level.ToString();
                 GameMGR.Instance.spawner.SpecialMonster();
-
+                
                 break;
         }
     }

@@ -7,8 +7,8 @@ using UnityEngine;
 public partial class Batch : MonoBehaviourPun
 {
 
-    Transform[] myCardPosition = null;
-    Transform[] enemyCardPosition = null;
+    public Transform[] myCardPosition = null;
+    public Transform[] enemyCardPosition = null;
     List<int> CustomNumberList = new List<int>();
     bool isMinePlayerNum = true;
     [SerializeField] GameObject playerRanking;
@@ -37,8 +37,8 @@ public partial class Batch : MonoBehaviourPun
                 if (cardList[j] == null)
                 {
                     unitCard.transform.GetChild(8 + j).GetComponent<CardUI>().OffFrame();
-                }
                 continue;
+                }
                 unitCard.transform.GetChild(8 + j).GetComponent<CardUI>().SetMyInfo(cardList[j].name.Replace("(Clone)", ""));
                 unitCard.transform.GetChild(8 + j).GetComponent<CardUI>().OffFrame();
                 unitCard.transform.GetChild(8 + j).GetComponent<CardUI>().SpriteNone();
@@ -64,7 +64,16 @@ public partial class Batch : MonoBehaviourPun
         }
     }
 
-    // ������ ��ġ ������ ���� ���� *������
+    [PunRPC]
+    public void ClearBatch(int playerNum)
+    {
+        List<GameObject> cardList = null;
+        bool listCheck = GameMGR.Instance.playerList.TryGetValue(playerNum, out cardList);
+        if (listCheck == true)
+        {
+            cardList.Clear();
+        }
+    }
     [PunRPC]
     public void SetBatch(int playerNum, string cardName, int hp, int attackValue, int exp, int level)
     {
@@ -133,11 +142,14 @@ public partial class Batch : MonoBehaviourPun
             if (cardList[i] == null) continue;
             Debug.Log("cardList name" + cardList[i].name);
             //GameObject unitCard = GameObject.Instantiate<GameObject>(cardList[i].gameObject);
+            Debug.Log(cardList[i]);
             GameObject unitCard = GameMGR.Instance.objectPool.CreatePrefab(cardList[i],Vector3.zero,Quaternion.identity);
+            Debug.Log(unitCard.name);
 
             // player Unit ��ġ ����
             if (myCard == true)
             {
+                Debug.Log(i);
                 unitCard.transform.position = myCardPosition[i + 1].position;
                 if (i < 3) { GameMGR.Instance.battleLogic.playerForwardUnits[i] = unitCard.gameObject; }
                 else { GameMGR.Instance.battleLogic.playerBackwardUnits[i - 3] = unitCard.gameObject; }
