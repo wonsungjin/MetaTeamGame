@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using MongoDB.Driver.Linq;
+using MongoDB.Driver;
 
 public partial class Card : MonoBehaviour
 {
@@ -17,7 +18,7 @@ public partial class Card : MonoBehaviour
     public int takeDamage = 0;
 
     public bool isMine;
-
+    public int shopBatchEmptyIndex = 0;  // 상점 배치 인덱스값을 저장하는 변수
     public void Start()
     {
         // SetSkillTiming(); // 나의 스킬타이밍에 따라 이벤트에 추가해야한다면 추가한다.
@@ -120,7 +121,7 @@ public partial class Card : MonoBehaviour
 
         if (cardInfo.effectType == EffectType.summon)
         {
-            for (int i = 0; i < cardInfo.GetValue(1, level); i++)
+            for (int i = 0; i < cardInfo.GetNumTrigger(level); i++)
             {
                 FindTargetType();
                 SkillEffect();
@@ -132,14 +133,11 @@ public partial class Card : MonoBehaviour
             FindTargetType();
             SkillEffect();
         }
-
-
     }
 
 
     public void SkillEffect() // 스킬 발동시 적용되는 효과
     {
-
         Debug.Log(skillTarget.Count + "스킬타겟 길이");
         Debug.Log("스킬효과 발동");
         switch (cardInfo.effectType)
@@ -196,7 +194,15 @@ public partial class Card : MonoBehaviour
                 break;
             case EffectType.summon:
                 Debug.Log(cardInfo.sumom_Unit);
-                GameObject summonCard = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{cardInfo.sumom_Unit}"),targetPos, Quaternion.identity);
+                if (targetPos == Vector2.zero) break; //만약에 빈칸이 없다면 소환을 하지말라
+                GameObject summonCard = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{cardInfo.sumom_Unit}"), targetPos + new Vector2(0, -0.6f), Quaternion.identity);
+                summonCard.transform.GetChild(0).tag = "BattleMonster";
+                summonCard.transform.localScale = summonCard.transform.localScale * 2;
+
+                GameMGR.Instance.spawner.cardBatch[shopBatchEmptyIndex] = summonCard;
+                //summonCard.transform.position = targetPos + new Vector2(0, -0.6f);
+                //summonCard.GetComponentInChildren<BoxCollider2D>().enabled = false;
+                //summonCard.GetComponentInChildren<BoxCollider2D>().enabled = true;
                 //summoncard 이름 디버그 띄울것
                 Debug.Log(summonCard.name);
 
@@ -224,81 +230,108 @@ public partial class Card : MonoBehaviour
         searchArea.Clear();
         skillTarget.Clear();
         Debug.Log("타겟을 찾는다");
-        if (isMine)
+        // 유닛이 스킬 사용시 나의 유닛 기준인지 상대 유닛 기준인지에 따라서 담아주는 경우가 다른 경우를 말하는 경우라고 할 수 있는 경우
+        GameObject[] myArea;
+        GameObject[] myAreaFront;
+        GameObject[] myAreaBack;
+        GameObject[] enemyArea;
+        GameObject[] enemyAreaFront;
+        GameObject[] enemyAreaBack;
+
+        if(isMine)
         {
+            myArea = GameMGR.Instance.battleLogic.playerAttackArray;
+            myAreaFront = GameMGR.Instance.battleLogic.playerForwardUnits;
+            myAreaBack = GameMGR.Instance.battleLogic.playerBackwardUnits;
+
+            enemyArea = GameMGR.Instance.battleLogic.enemyAttackArray;
+            enemyAreaFront = GameMGR.Instance.battleLogic.enemyForwardUnits;
+            enemyAreaBack = GameMGR.Instance.battleLogic.enemyBackwardUnits;
+        }
+        else
+        {
+            enemyArea = GameMGR.Instance.battleLogic.playerAttackArray;
+            enemyAreaFront = GameMGR.Instance.battleLogic.playerForwardUnits;
+            enemyAreaBack = GameMGR.Instance.battleLogic.playerBackwardUnits;
+
+            myArea = GameMGR.Instance.battleLogic.enemyAttackArray;
+            myAreaFront = GameMGR.Instance.battleLogic.enemyForwardUnits;
+            myAreaBack = GameMGR.Instance.battleLogic.enemyBackwardUnits;
+        }
+
             if (GameMGR.Instance.isBattleNow)
             {
                 switch (cardInfo.effectTarget) // 스킬 효과 적용 대상에 따른 탐색 범위 지정
                 {
                     case EffectTarget.ally:
                         Debug.Log("아군");
-                        for (int i = 0; i < GameMGR.Instance.battleLogic.playerAttackArray.Length; i++)
+                        for (int i = 0; i < myArea.Length; i++)
                         {
-                            if (GameMGR.Instance.battleLogic.playerAttackArray[i] != null)
+                            if (myArea[i] != null)
                             {
-                                searchArea.Add(GameMGR.Instance.battleLogic.playerAttackArray[i]);
+                                searchArea.Add(myArea[i]);
                             }
                         }
                         break;
                     case EffectTarget.allyForward:
                         Debug.Log("아군전열");
-                        for (int i = 0; i < GameMGR.Instance.battleLogic.playerForwardUnits.Length; i++)
+                        for (int i = 0; i < myAreaFront.Length; i++)
                         {
-                            if (GameMGR.Instance.battleLogic.playerForwardUnits[i] != null)
+                            if (myAreaFront[i] != null)
                             {
-                                searchArea.Add(GameMGR.Instance.battleLogic.playerForwardUnits[i]);
+                                searchArea.Add(myAreaFront[i]);
                             }
                         }
                         break;
                     case EffectTarget.allyBackward:
                         Debug.Log("아군후열");
-                        for (int i = 0; i < GameMGR.Instance.battleLogic.playerBackwardUnits.Length; i++)
+                        for (int i = 0; i < myAreaBack.Length; i++)
                         {
-                            if (GameMGR.Instance.battleLogic.playerBackwardUnits[i] != null)
+                            if (myAreaBack[i] != null)
                             {
-                                searchArea.Add(GameMGR.Instance.battleLogic.playerBackwardUnits[i]);
+                                searchArea.Add(myAreaBack[i]);
                             }
                         }
                         break;
                     case EffectTarget.enemy:
                         Debug.Log("적군");
-                        for (int i = 0; i < GameMGR.Instance.battleLogic.enemyAttackArray.Length; i++)
+                        for (int i = 0; i < enemyArea.Length; i++)
                         {
-                            if (GameMGR.Instance.battleLogic.enemyAttackArray[i] != null)
+                            if (enemyArea[i] != null)
                             {
-                                searchArea.Add(GameMGR.Instance.battleLogic.enemyAttackArray[i]);
+                                searchArea.Add(enemyArea[i]);
                             }
                         }
                         break;
                     case EffectTarget.enemyForward:
                         Debug.Log("적전열");
-                        for (int i = 0; i < GameMGR.Instance.battleLogic.enemyForwardUnits.Length; i++)
+                        for (int i = 0; i < enemyAreaFront.Length; i++)
                         {
-                            if (GameMGR.Instance.battleLogic.enemyForwardUnits[i] != null)
+                            if (enemyAreaFront[i] != null)
                             {
-                                searchArea.Add(GameMGR.Instance.battleLogic.enemyForwardUnits[i]);
+                                searchArea.Add(enemyAreaFront[i]);
                             }
                         }
                         break;
                     case EffectTarget.enemyBackward:
                         Debug.Log("적후열");
-                        for (int i = 0; i < GameMGR.Instance.battleLogic.enemyBackwardUnits.Length; i++)
+                        for (int i = 0; i < enemyAreaBack.Length; i++)
                         {
-                            if (GameMGR.Instance.battleLogic.enemyBackwardUnits[i] != null)
+                            if (enemyAreaBack[i] != null)
                             {
-                                searchArea.Add(GameMGR.Instance.battleLogic.enemyBackwardUnits[i]);
+                                searchArea.Add(enemyAreaBack[i]);
                             }
                         }
                         break;
                     case EffectTarget.both:
                         Debug.Log("전체");
-                        for (int i = 0; i < GameMGR.Instance.battleLogic.playerAttackArray.Length; i++)
+                        for (int i = 0; i < myArea.Length; i++)
                         {
-                            searchArea.Add(GameMGR.Instance.battleLogic.playerAttackArray[i]);
+                            searchArea.Add(myArea[i]);
                         }
-                        for (int i = 0; i < GameMGR.Instance.battleLogic.enemyAttackArray.Length; i++)
+                        for (int i = 0; i < enemyArea.Length; i++)
                         {
-                            searchArea.Add(GameMGR.Instance.battleLogic.enemyAttackArray[i]);
+                            searchArea.Add(enemyArea[i]);
                         }
                         break;
                     case EffectTarget.none:
@@ -308,7 +341,7 @@ public partial class Card : MonoBehaviour
                 Debug.Log("현재는 전투씬 기준");
 
             }
-            else // 전투씬이 아니라면 상점씬 기준으로
+            else // 전투씬이 아니라면 상점씬 기준으로  // 상점씬으로 들어오면 적군 경우는 해당하지 않게 된다. 
             {
                 Debug.Log("현재는 상점씬 기준");
                 switch (cardInfo.effectTarget) // 스킬 효과 적용 대상에 따른 탐색 범위 지정
@@ -333,11 +366,7 @@ public partial class Card : MonoBehaviour
                         break;
                 }
             }
-        }
-        else
-        {
-
-        }
+        
 
 
         //=============================================================================================================================================================
@@ -352,6 +381,7 @@ public partial class Card : MonoBehaviour
 
             case TargetType.empty: // 빈 공간을 찾는다 = 소환시
                 bool isFind = false;
+                targetPos = Vector2.zero; //위치값 초기화
                 Debug.Log("대상은 빈칸");
                 if (GameMGR.Instance.isBattleNow)    // 현재 상태가 전투씬인 경우
                 {
@@ -371,9 +401,13 @@ public partial class Card : MonoBehaviour
                             if (GameMGR.Instance.battleLogic.playerBackwardUnits[i] == null)
                             {
                                 targetPos = GameMGR.Instance.battleLogic.playerForwardUnits[i].transform.position;
+                                isFind = true;
                                 break;
                             }
-
+                        }
+                        if(!isFind)
+                        {
+                            // 튕겨나가는 애니메이션 출력하면서 어딘가에 소환했다가 삭제
                         }
                     }
                 }
@@ -385,8 +419,15 @@ public partial class Card : MonoBehaviour
                         {
                             targetPos = GameMGR.Instance.spawner.shopBatchPos[i].transform.position;
                             Debug.Log(targetPos + ": 타겟포즈");
+                            shopBatchEmptyIndex = i; // 찾은 빈칸 인덱스 기록
                             isFind = true;
+                            break;
                         }
+                    }
+
+                    if(!isFind)
+                    {
+                        // 튕겨나가는 애니메이션 출력하면서 어딘가에 소환했다가 삭제
                     }
                 }
                 break;
