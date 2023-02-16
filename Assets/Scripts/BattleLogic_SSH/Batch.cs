@@ -1,4 +1,5 @@
 using Photon.Pun;
+using Photon.Realtime;
 using Photon.Pun.Demo.PunBasics;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,8 +10,8 @@ public partial class Batch : MonoBehaviourPun
 
     public Transform[] myCardPosition = null;
     public Transform[] enemyCardPosition = null;
-    List<int> CustomNumberList = new List<int>();
-    List<string> PlayerNameList = new List<string>();
+    [SerializeField] List<int> CustomNumberList = new List<int>();
+    [SerializeField] List<string> PlayerNameList = new List<string>();
     bool isMinePlayerNum = true;
     [SerializeField] GameObject playerRanking;
     [SerializeField] Transform playerRankingUi;

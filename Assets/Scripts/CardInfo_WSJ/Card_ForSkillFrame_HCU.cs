@@ -528,6 +528,7 @@ public partial class Card : MonoBehaviourPun
                 //skillTarget.Add(GameMGR.Instance.battleLogic.)
                 skillTarget.Add(transform.parent.transform.GetChild(random).gameObject.GetComponent<Card>());
                 break;
+
             case TargetType.randomExceptMe:
                 Debug.Log("企雌精 劾 薦須廃 沓棋");
                 //if (searchArea.Count == 1) break;
@@ -545,8 +546,7 @@ public partial class Card : MonoBehaviourPun
                 for (int i = 0; i < cardInfo.GetMaxTarget(cardInfo.level); i++)
                 {
                     random = Random.Range(0, targetArray.Count);
-                    Debug.Log(random);
-                    Debug.Log(targetArray[random]);
+                    if (targetArray.Count == 0) break;
                     if (skillTarget.Contains(targetArray[random])) // 宋精 焼浦戚 焼諌 凶猿走 沓棋葵聖 宜形
                     {
                         i--;
@@ -558,7 +558,7 @@ public partial class Card : MonoBehaviourPun
                 }
                 break;
 
-            case TargetType.front:      // 穿伸じしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじし
+            case TargetType.forward:      // 穿伸じしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじし
                 Debug.Log("企雌精 穿伸");
                 random = Random.Range(0, 3);
                 bool isAllDead = true;
@@ -590,7 +590,7 @@ public partial class Card : MonoBehaviourPun
                 }
                 break;
 
-            case TargetType.back:       // 板伸 ぞしぞしぞしぞしぞしぞしぞしぞしぞしぞしぞしぞしぞしぞしぞしぞしぞしぞしぞしぞしぞしぞしぞしぞしぞしぞしぞしぞしぞしぞしぞしぞしぞし
+            case TargetType.backward:       // 板伸 ぞしぞしぞしぞしぞしぞしぞしぞしぞしぞしぞしぞしぞしぞしぞしぞしぞしぞしぞしぞしぞしぞしぞしぞしぞしぞしぞしぞしぞしぞしぞしぞしぞし
                 Debug.Log("企雌精 板伸");
                 random = Random.Range(0, 3);
                 isAllDead = true;
@@ -615,6 +615,71 @@ public partial class Card : MonoBehaviourPun
                         random = Random.Range(0, 3);
                     }
                     skillTarget.Add(searchArea[random].GetComponent<Card>());
+                }
+                break;
+
+            case TargetType.front:  // 鎧 蒋
+                for(int i = 3; i < 6; i++)
+                {
+                    if (searchArea[i].GetComponent<Card>() == this)
+                    {
+                        if(searchArea[i-3].GetComponent<Card>() != null)
+                        {
+                            skillTarget.Add(searchArea[i-3].GetComponent<Card>());
+                        }
+                    }
+                }
+                break;
+
+            case TargetType.back:   // 鎧 及
+                for (int i = 3; i < 6; i++)
+                {
+                    if (searchArea[i].GetComponent<Card>() == this)
+                    {
+                        if (searchArea[i + 3].GetComponent<Card>() != null)
+                        {
+                            skillTarget.Add(searchArea[i + 3].GetComponent<Card>());
+                        }
+                    }
+                }
+                break;
+
+            case TargetType.near:   //昔羨
+                for(int i = 0; i < 6; i++)
+                {
+                    if (searchArea[i].GetComponent<Card>() == this)
+                    {
+                        switch(i)
+                        {
+                            case 0:
+                                skillTarget.Add(searchArea[1].GetComponent<Card>());
+                                skillTarget.Add(searchArea[3].GetComponent<Card>());
+                                break;
+                            case 1:
+                                skillTarget.Add(searchArea[0].GetComponent<Card>());
+                                skillTarget.Add(searchArea[2].GetComponent<Card>());
+                                skillTarget.Add(searchArea[4].GetComponent<Card>());
+                                break;
+                            case 2:
+                                skillTarget.Add(searchArea[1].GetComponent<Card>());
+                                skillTarget.Add(searchArea[5].GetComponent<Card>());
+                                break;
+                            case 3:
+                                skillTarget.Add(searchArea[0].GetComponent<Card>());
+                                skillTarget.Add(searchArea[4].GetComponent<Card>());
+                                break;
+                            case 4:
+                                skillTarget.Add(searchArea[1].GetComponent<Card>());
+                                skillTarget.Add(searchArea[3].GetComponent<Card>());
+                                skillTarget.Add(searchArea[5].GetComponent<Card>());
+                                break;
+                            case 5:
+                                skillTarget.Add(searchArea[2].GetComponent<Card>());
+                                skillTarget.Add(searchArea[4].GetComponent<Card>());
+                                break;
+
+                        }
+                    }
                 }
                 break;
 
@@ -675,6 +740,7 @@ public partial class Card : MonoBehaviourPun
                 }
                 skillTarget.Add(searchArea[mostAtk].GetComponent<Card>());
                 break;
+
             case TargetType.leastHP:
                 Debug.Log("企雌精 置社端径");
                 int[] hpArray = new int[6];
@@ -698,6 +764,7 @@ public partial class Card : MonoBehaviourPun
                 }
                 skillTarget.Add(searchArea[leastHp].gameObject.GetComponent<Card>());
                 break;
+
             case TargetType.mostHP:
                 Debug.Log("企雌精 置企端径");
                 hpArray = new int[6];
@@ -721,6 +788,7 @@ public partial class Card : MonoBehaviourPun
                 }
                 skillTarget.Add(searchArea[mostHp].GetComponent<Card>());
                 break;
+            
 
             default:
                 break;
