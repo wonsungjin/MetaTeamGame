@@ -15,7 +15,7 @@ public partial class UIManager : MonoBehaviour
     public TextMeshProUGUI NowShopLevelTXT = null;
     public TextMeshProUGUI goldTXT = null;
     public TextMeshProUGUI shopLevelTXT = null;
-    public Sprite[] unitSprite = null;
+    public Image[] unitSprite = null;
     public GameObject playerBatchUI = null;
     public TextMeshProUGUI playerName = null;
 
@@ -33,6 +33,7 @@ public partial class UIManager : MonoBehaviour
     bool isTimeOEnd = false;
     public void Init_Scene2()
     {
+        unitSprite = new Image[7];
         blackUI = GameObject.Find("BlackUI");
         storePannel = GameObject.Find("StorePannel");
         skillExplantion2 = GameObject.Find("Explantion");
@@ -42,6 +43,7 @@ public partial class UIManager : MonoBehaviour
         skillExplantionText[1] = GameObject.Find("level1").GetComponent<TextMeshProUGUI>();
         skillExplantionText[2] = GameObject.Find("level2").GetComponent<TextMeshProUGUI>();
         skillExplantionText[3] = GameObject.Find("level3").GetComponent<TextMeshProUGUI>();
+        unitSprite[6] = GameObject.Find("CardImage").GetComponent<Image>();
         timerSlider = GameObject.Find("ImageFill").GetComponent<Image>();
         reFreshButton = GameObject.Find("ReFreshButton").GetComponent<Button>();
         levelUpButton = GameObject.Find("LevelUPButton").GetComponent<Button>();
@@ -53,13 +55,12 @@ public partial class UIManager : MonoBehaviour
         playerName = GameObject.Find("PlayerName").GetComponent<TextMeshProUGUI>();
         sell = GameObject.Find("Sell");
         playerBatchUI = GameObject.Find("PlayerBatchUI");
-        unitSprite = new Sprite[6];
-        unitSprite[0] = GameObject.Find("Unit1").GetComponent<Sprite>();
-        unitSprite[1] = GameObject.Find("Unit2").GetComponent<Sprite>();
-        unitSprite[2] = GameObject.Find("Unit3").GetComponent<Sprite>();
-        unitSprite[3] = GameObject.Find("Unit4").GetComponent<Sprite>();
-        unitSprite[4] = GameObject.Find("Unit5").GetComponent<Sprite>();
-        unitSprite[5] = GameObject.Find("Unit6").GetComponent<Sprite>();
+        unitSprite[0] = GameObject.Find("Unit1").GetComponent<Image>();
+        unitSprite[1] = GameObject.Find("Unit2").GetComponent<Image>();
+        unitSprite[2] = GameObject.Find("Unit3").GetComponent<Image>();
+        unitSprite[3] = GameObject.Find("Unit4").GetComponent<Image>();
+        unitSprite[4] = GameObject.Find("Unit5").GetComponent<Image>();
+        unitSprite[5] = GameObject.Find("Unit6").GetComponent<Image>();
 
         finalSceneUI.SetActive(false);
         playerBatchUI.SetActive(false);
