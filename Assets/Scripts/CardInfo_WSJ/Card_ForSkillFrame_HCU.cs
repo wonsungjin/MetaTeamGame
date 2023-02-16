@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Linq;
 using MongoDB.Driver.Linq;
 using MongoDB.Driver;
+using Unity.VisualScripting;
 
 public partial class Card : MonoBehaviour
 {
@@ -17,8 +18,19 @@ public partial class Card : MonoBehaviour
     public int giveDamage = 0;
     public int takeDamage = 0;
 
-    public bool isMine;
+    
     public int shopBatchEmptyIndex = 0;  // 상점 배치 인덱스값을 저장하는 변수
+
+    public bool isMine; // 이 카드가 나의 것인지 적의 것인지
+
+    //스킬 범위를 설정하는 배열 ( 위 isMine 값에 따라 들어가는 기준이 다르다 )
+    GameObject[] myArea;
+    GameObject[] myAreaFront;
+    GameObject[] myAreaBack;
+    GameObject[] enemyArea;
+    GameObject[] enemyAreaFront;
+    GameObject[] enemyAreaBack;
+
     public void Start()
     {
         // SetSkillTiming(); // 나의 스킬타이밍에 따라 이벤트에 추가해야한다면 추가한다.
@@ -225,10 +237,10 @@ public partial class Card : MonoBehaviour
     }
 
     //==============================================================================================================================================================
-    //===================================================                 발동 조건                  ================================================================
+    //==========================================               ★ 특 수 발 동 조 건 ★                ================================================================
     //==============================================================================================================================================================
 
-    public void CheckTriggerCondition()
+    public void CheckTriggerCondition(Card target = null)
     {
         if(cardInfo.triggerCondition != 0) // 특수 발동조건이 있는 경우
         {
@@ -237,12 +249,29 @@ public partial class Card : MonoBehaviour
                 case TriggerCondition.allyEmpty:
                     for(int i = 0; i < 6; i++)
                     {
+                        if (GameMGR.Instance.spawner.cardBatch[i] == null)
+                        {
+                            //스킬 발동 가능
+                        }
+                    }
+                    break;
+                case TriggerCondition.damageEcess:
+                    if(curAttackValue > target.curHP)
+                    {
+                        int excessDamage = curAttackValue - target.curHP;
+                        FindTargetType();
+                        
 
+                        Attack(excessDamage, target, false, false);
                     }
                     break;
             }
         }
     }
+
+    //==============================================================================================================================================================
+    //==============================================================================================================================================================
+    //==============================================================================================================================================================
 
     public List<GameObject> searchArea = new List<GameObject>(); // 대상 범위가 아군인지 적군인지에 따라 구분하여 담는 게임오브젝트 변수
     public void FindTargetType() // 어떤 유형의 대상을 찾는지에 따라 실행하는 경우가 다르다는 말이란 말이란 말이란 말이란 말이란 말
@@ -251,12 +280,7 @@ public partial class Card : MonoBehaviour
         skillTarget.Clear();
         Debug.Log("타겟을 찾는다");
         // 유닛이 스킬 사용시 나의 유닛 기준인지 상대 유닛 기준인지에 따라서 담아주는 경우가 다른 경우를 말하는 경우라고 할 수 있는 경우
-        GameObject[] myArea;
-        GameObject[] myAreaFront;
-        GameObject[] myAreaBack;
-        GameObject[] enemyArea;
-        GameObject[] enemyAreaFront;
-        GameObject[] enemyAreaBack;
+        
 
         if(isMine)
         {
