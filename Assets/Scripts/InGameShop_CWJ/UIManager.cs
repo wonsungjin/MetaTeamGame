@@ -20,6 +20,8 @@ public partial class UIManager : MonoBehaviour
                 skillExplantionText[1].text = cardInfo.GetSkillExplantion(1);
                 skillExplantionText[2].text = cardInfo.GetSkillExplantion(2);
                 skillExplantionText[3].text = cardInfo.GetSkillExplantion(3);
+                unitSprite[6].sprite = Resources.Load<Sprite>($"Sprites/Nomal/{cardInfo.objName.Replace(" ", "")}");
+
             }
         }
     }
