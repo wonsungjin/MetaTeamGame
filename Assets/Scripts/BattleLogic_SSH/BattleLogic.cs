@@ -30,6 +30,8 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
     private int isPlayerAliveCount = 0;
     private int isEnemyAliveCount = 0;
 
+    public int curLife = 20;
+
     private int[] exArray = new int[100];
 
     private int playerCurRound = 0;
@@ -828,7 +830,12 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
         GameObject.Find("firstAttack").GetComponent<TextMeshProUGUI>().text = isFirstAttack.ToString();
         GameObject.Find("resultText").GetComponent<TextMeshProUGUI>().text = "lose";
         Debug.Log("Player Lose");
-        
+
+        curLife--;
+        GameMGR.Instance.uiManager.ChangeLife(curLife);
+
+        PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "Life", curLife } });
+
         GameMGR.Instance.uiManager.PlayerSetArrangement();
         GameMGR.Instance.Init(4);
         GameMGR.Instance.uiManager.PlayerBattleLose(false);

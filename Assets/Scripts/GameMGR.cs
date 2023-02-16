@@ -67,6 +67,7 @@ public partial class GameMGR : Singleton<GameMGR>
         //yield return new WaitUntil(() => stayAPI[0]);
         //yield return new WaitUntil(() => stayAPI[1]);
         dataBase.Login();
+        PhotonNetwork.LocalPlayer.NickName = GameMGR.Instance.dataBase.userName;
         Debug.Log("???"+metaTrendAPI.GetZera());
     }
     public void Init(int num)
