@@ -834,7 +834,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
         curLife--;
         GameMGR.Instance.uiManager.ChangeLife(curLife);
 
-        PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "Life", $"{curLife}" } });
+        PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "Life", curLife } });
 
         GameMGR.Instance.uiManager.PlayerSetArrangement();
         GameMGR.Instance.Init(4);

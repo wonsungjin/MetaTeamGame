@@ -21,7 +21,7 @@ public partial class UIManager : MonoBehaviour
     TextMeshProUGUI loseText = null;
 
     [SerializeField] bool isOption = true;
-    [SerializeField] Sprite changeImage = null;
+    Sprite changeImage = null;
 
     public GameObject finalSceneUI = null;
 
@@ -131,6 +131,7 @@ public partial class UIManager : MonoBehaviour
 
     public void ChangeLife(int Life)
     {
+        changeImage = Resources.Load<Sprite>($"Sprites/Nomal/Icon_ItemIcon_Skull");
         lifeImage[19-Life].sprite = changeImage;
     }
 
