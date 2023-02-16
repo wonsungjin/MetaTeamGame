@@ -533,10 +533,15 @@ public class TurnSystem : MonoBehaviourPunCallbacks
     }
     IEnumerator COR_DelayMove()
     {
-        yield return new WaitForSeconds(1f);
+        GameMGR.Instance.uiManager.Faid(GameMGR.Instance.uiManager.blackUI, faidType.In, 0.02f);
+        yield return new WaitForSeconds(1.5f);
+        GameMGR.Instance.uiManager.Faid(GameMGR.Instance.uiManager.blackUI, faidType.Out, 0.02f);
         readyCount[0] = 0;
         GameMGR.Instance.spawner.isClick = false;
+
+
         Camera.main.gameObject.transform.position = new Vector3(20, 0, -10);
+        yield return new WaitForSeconds(1.5f);
         GameMGR.Instance.uiManager.storePannel.SetActive(false);
         GameMGR.Instance.batch.UnitPlacement();
         GameMGR.Instance.battleLogic.AttackLogic();

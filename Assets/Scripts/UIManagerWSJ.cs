@@ -101,7 +101,7 @@ public partial class UIManager : MonoBehaviour
     {
         Faid(logoPannel, faidType.Out, 0.02f);
         yield return new WaitForSeconds(2f);
-        Faid(lobbyPannel, faidType.In, 0.02f);
+        Faid(lobbyPannel, faidType.In, 0.03f);
 
     }
     public void SetFalseStar(int set)
@@ -235,7 +235,7 @@ public partial class UIManager : MonoBehaviour
         canvasGroup.alpha = 0;
         while(canvasGroup.alpha<1)
         {
-            canvasGroup.alpha += 0.04f;
+            canvasGroup.alpha += 0.03f;
             yield return faidTime;
         }
 
@@ -247,7 +247,7 @@ public partial class UIManager : MonoBehaviour
         canvasGroup.alpha = 1;
         while (canvasGroup.alpha > 0)
         {
-            canvasGroup.alpha -= 0.04f;
+            canvasGroup.alpha -= 0.03f;
             yield return faidTime;
         }
         obj.SetActive(false);

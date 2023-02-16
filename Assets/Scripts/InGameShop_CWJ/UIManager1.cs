@@ -48,7 +48,7 @@ public partial class UIManager : MonoBehaviour
         timerTXT = GameObject.Find("TimerTXT").GetComponent<TextMeshProUGUI>();
         sell = GameObject.Find("Sell");
         finalSceneUI.SetActive(false);
-        Faid(blackUI, faidType.Out, 0.02f);
+        Faid(blackUI, faidType.Out, 0.03f);
         InitUI();
     }
 

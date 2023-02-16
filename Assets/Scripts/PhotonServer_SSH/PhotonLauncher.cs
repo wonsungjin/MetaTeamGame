@@ -91,7 +91,7 @@ public class PhotonLauncher : MonoBehaviourPunCallbacks
     {
         Debug.Log("방 입장 성공");
         Debug.Log(PhotonNetwork.CurrentRoom.PlayerCount);
-        photonView.RPC("SyncCurrentRoomPlayer", RpcTarget.Others, true);
+        photonView.RPC("SyncCurrentRoomPlayer", RpcTarget.All, true);
         StatusServer();
         leaveRoomButton.gameObject.SetActive(true);
        // joinRoomButton.enabled = false;
@@ -172,7 +172,7 @@ public class PhotonLauncher : MonoBehaviourPunCallbacks
     // LeaveRoom Button 클릭시 실행되는 함수
     public void OnClick_Leave_Room()
     {
-        photonView.RPC("SyncCurrentRoomPlayer", RpcTarget.Others, false);
+        photonView.RPC("SyncCurrentRoomPlayer", RpcTarget.All, false);
         matchingPannel.SetActive(false);
         PhotonNetwork.LeaveRoom();   
     }
@@ -182,14 +182,16 @@ public class PhotonLauncher : MonoBehaviourPunCallbacks
     [PunRPC]
     public void SyncCurrentRoomPlayer(bool roomState)
     {
-        if (PhotonNetwork.IsMasterClient)
-            if (PhotonNetwork.CurrentRoom.PlayerCount >= maxPlayer)
+        if (PhotonNetwork.CurrentRoom.PlayerCount >= maxPlayer)
+        {
+            GameMGR.Instance.uiManager.Faid(GameMGR.Instance.uiManager.blackUI, faidType.In, 0.03f);
+            if (PhotonNetwork.IsMasterClient)
             {
                 PhotonNetwork.CurrentRoom.IsOpen = false;
-                GameMGR.Instance.uiManager.Faid(GameMGR.Instance.uiManager.blackUI, faidType.In, 0.02f);
                 StartCoroutine(COR_SceneDelay());
             }
             else PhotonNetwork.CurrentRoom.IsOpen = true;
+        }
         if (roomState)
         {
             playerCount.text = PhotonNetwork.CurrentRoom.PlayerCount.ToString()+"/"+maxPlayer;
@@ -200,15 +202,11 @@ public class PhotonLauncher : MonoBehaviourPunCallbacks
             playerCount.text = (PhotonNetwork.CurrentRoom.PlayerCount - 1).ToString() + "/" + maxPlayer;
         }
 
-        if (PhotonNetwork.CurrentRoom.PlayerCount == maxPlayer && PhotonNetwork.IsMasterClient == true)
-        {
-              
-        }
     }
     #endregion
     IEnumerator COR_SceneDelay()
     {
-        yield return new WaitForSeconds(1f); 
+        yield return new WaitForSeconds(2f); 
         PhotonNetwork.LoadLevel("StoreScene");
     }
 }
