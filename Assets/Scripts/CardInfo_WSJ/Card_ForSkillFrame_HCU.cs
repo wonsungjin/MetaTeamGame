@@ -261,9 +261,11 @@ public partial class Card : MonoBehaviour
                         int excessDamage = curAttackValue - target.curHP;
                         FindTargetType();
                         
-
                         Attack(excessDamage, target, false, false);
                     }
+                    break;
+                case TriggerCondition.losePlayerHP:
+
                     break;
             }
         }
