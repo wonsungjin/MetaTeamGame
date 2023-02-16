@@ -30,6 +30,7 @@ public partial class UIManager : MonoBehaviour
     bool isTimeOEnd = false;
     public void Init_Scene2()
     {
+        blackUI = GameObject.Find("BlackUI");
         storePannel = GameObject.Find("StorePannel");
         skillExplantion2 = GameObject.Find("Explantion");
         battleSceneUI = GameObject.Find("BattleSceneCanvas");
@@ -48,6 +49,7 @@ public partial class UIManager : MonoBehaviour
         timerTXT = GameObject.Find("TimerTXT").GetComponent<TextMeshProUGUI>();
         sell = GameObject.Find("Sell");
         finalSceneUI.SetActive(false);
+        Faid(blackUI, faidType.Out, 0.03f);
         InitUI();
     }
 
