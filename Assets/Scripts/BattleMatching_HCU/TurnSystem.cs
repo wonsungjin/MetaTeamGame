@@ -542,8 +542,8 @@ public class TurnSystem : MonoBehaviourPunCallbacks
 
         Camera.main.gameObject.transform.position = new Vector3(20, 0, -10);
         GameMGR.Instance.batch.UnitPlacement();
-        yield return new WaitForSeconds(1.5f);
         GameMGR.Instance.uiManager.storePannel.SetActive(false);
+        yield return new WaitForSeconds(1.5f);
         GameMGR.Instance.battleLogic.AttackLogic();
         GameMGR.Instance.uiManager.OnBattleUI();
 

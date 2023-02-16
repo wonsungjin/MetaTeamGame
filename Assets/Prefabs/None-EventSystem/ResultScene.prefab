@@ -953,6 +953,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1052564649210249722}
   - component: {fileID: 1052564649210249723}
+  - component: {fileID: 392707128}
   m_Layer: 5
   m_Name: Life
   m_TagString: Untagged
@@ -1024,6 +1025,14 @@ MonoBehaviour:
   m_Spacing: {x: 70, y: 50}
   m_Constraint: 2
   m_ConstraintCount: 2
+--- !u!222 &392707128
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1052564649210249717}
+  m_CullTransparentMesh: 1
 --- !u!1 &1052564649241233736
 GameObject:
   m_ObjectHideFlags: 0
