@@ -12,21 +12,19 @@ public partial class UIManager : MonoBehaviour
 {
     GameObject battleSceneUI = null;
     GameObject battleOptionPanel = null;
-
     GameObject ResultSceneUI = null;
     GameObject winUI = null;
     GameObject loseUI = null;
-
     public GameObject finalSceneUI = null;
     public GameObject[] playerArrangement = new GameObject[6];
 
     TextMeshProUGUI winText = null;
     TextMeshProUGUI loseText = null;
+    TextMeshProUGUI lifeText = new TextMeshProUGUI();
 
     bool isOption = true;
-    Sprite changeImage = null;
 
-    TextMeshProUGUI lifeText = new TextMeshProUGUI();
+    Sprite changeImage = null;
 
     public Image[] lifeImage = new Image[20];
     
@@ -34,16 +32,17 @@ public partial class UIManager : MonoBehaviour
 
     public int curRound = 0;
 
+    Slider SFXSlider = null;
+    Slider BGMSlider = null;
+
     #region BattleScene
     public void BattleUIInit()
     {
         battleSceneUI = GameObject.Find("BattleSceneCanvas");
         battleOptionPanel = GameObject.Find("OptionPanel");
         lifeText = GameObject.Find("CurLife").gameObject.GetComponent<TextMeshProUGUI>();
-        //if (battleOptionPanel.activeSelf)
-        //{
-        //    battleOptionPanel.SetActive(false);
-        //} 
+        SFXSlider = GameObject.Find("SFXSlider").gameObject.GetComponent<Slider>();
+        BGMSlider = GameObject.Find("BGMSlider").gameObject.GetComponent<Slider>();
 
         battleSceneUI.SetActive(false);
         isOption = battleSceneUI.activeSelf;
@@ -183,5 +182,11 @@ public partial class UIManager : MonoBehaviour
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #endif
+    }
+
+    public void BattleSceneVolumeManager()
+    {
+        GameMGR.Instance.audioMGR.BattleBGM.volume = BGMSlider.value;
+        GameMGR.Instance.audioMGR.BattleAudio.volume = SFXSlider.value;
     }
 }

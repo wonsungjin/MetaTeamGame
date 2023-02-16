@@ -19,8 +19,8 @@ public class AudioMGR : MonoBehaviour
     AudioSource StoreAudioSource = null;
     AudioSource StoreBGM = null;
 
-    AudioSource BattleBGM = null;
-    AudioSource BattleAudio = null;
+    public AudioSource BattleBGM = null;
+    public AudioSource BattleAudio = null;
 
     // AudioClip Name, AudioClip���� Dictionary ����
     Dictionary<string, AudioClip> BackgroundDic = new Dictionary<string, AudioClip>();
@@ -127,7 +127,10 @@ public class AudioMGR : MonoBehaviour
         BattleBGM.playOnAwake = isBattleScene;
         BattleBGM.loop = isBattleScene;
 
-        if (isBattleScene) { BattleBGM.Play(); }
+        if (isBattleScene) 
+        { 
+            BattleBGM.Play(); 
+        }
         else if (!isBattleScene) { BattleBGM.Pause(); }
     }
 
