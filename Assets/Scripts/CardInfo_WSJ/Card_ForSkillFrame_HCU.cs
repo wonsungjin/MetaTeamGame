@@ -5,7 +5,9 @@ using MongoDB.Driver.Linq;
 using MongoDB.Driver;
 using Unity.VisualScripting;
 
-public partial class Card : MonoBehaviour
+using Photon.Pun;
+
+public partial class Card : MonoBehaviourPun
 {
     //[SerializeField] public CardInfo cardInfo;
     [SerializeField] List<Card> skillTarget;
@@ -211,9 +213,6 @@ public partial class Card : MonoBehaviour
                 summonCard.transform.localScale = summonCard.transform.localScale * 2;
 
                 GameMGR.Instance.spawner.cardBatch[shopBatchEmptyIndex] = summonCard;
-                //summonCard.transform.position = targetPos + new Vector2(0, -0.6f);
-                //summonCard.GetComponentInChildren<BoxCollider2D>().enabled = false;
-                //summonCard.GetComponentInChildren<BoxCollider2D>().enabled = true;
                 //summoncard 이름 디버그 띄울것
                 Debug.Log(summonCard.name);
 
@@ -251,7 +250,9 @@ public partial class Card : MonoBehaviour
                     {
                         if (GameMGR.Instance.spawner.cardBatch[i] == null)
                         {
-                            //스킬 발동 가능
+                            curAttackValue = cardInfo.GetValue(1, level);
+                            curHP = cardInfo.GetValue(2, level);
+                            break;
                         }
                     }
                     break;
@@ -259,32 +260,42 @@ public partial class Card : MonoBehaviour
                     if(curAttackValue > target.curHP)
                     {
                         int excessDamage = curAttackValue - target.curHP;
-                        FindTargetType();
-                        
-                        Attack(excessDamage, target, false, false);
+                        FindTargetType(false);
+                        List<GameObject> curExistBatch = new List<GameObject>();
+                        for(int i = 0; i < enemyArea.Length; i++)
+                        {
+                            if (enemyArea[i] != null)
+                            {
+                                curExistBatch.Add(enemyArea[i]);
+                            }
+                        }
+                        if (curExistBatch.Count == 0) break;
+
+                        int curTargetNum = Random.Range(0, curExistBatch.Count);
+
+                        Attack(excessDamage, curExistBatch[curTargetNum].GetComponentInChildren<Card>(), false, false);
                     }
                     break;
                 case TriggerCondition.losePlayerHP:
-
+                    int curLoseLife = 20 - (int)PhotonNetwork.LocalPlayer.CustomProperties["Life"];
+                    curHP += curLoseLife * cardInfo.GetValue(1, level);
                     break;
             }
         }
     }
 
     //==============================================================================================================================================================
-    //==============================================================================================================================================================
-    //==============================================================================================================================================================
 
     public List<GameObject> searchArea = new List<GameObject>(); // 대상 범위가 아군인지 적군인지에 따라 구분하여 담는 게임오브젝트 변수
-    public void FindTargetType() // 어떤 유형의 대상을 찾는지에 따라 실행하는 경우가 다르다는 말이란 말이란 말이란 말이란 말이란 말
+    public void FindTargetType(bool isBaseOnDB = true) // 어떤 유형의 대상을 찾는지에 따라 실행하는 경우가 다르다는 말이란 말이란 말이란 말이란 말이란 말
     {
         searchArea.Clear();
         skillTarget.Clear();
         Debug.Log("타겟을 찾는다");
         // 유닛이 스킬 사용시 나의 유닛 기준인지 상대 유닛 기준인지에 따라서 담아주는 경우가 다른 경우를 말하는 경우라고 할 수 있는 경우
-        
 
-        if(isMine)
+
+        if (isMine)
         {
             myArea = GameMGR.Instance.battleLogic.playerAttackArray;
             myAreaFront = GameMGR.Instance.battleLogic.playerForwardUnits;
@@ -305,6 +316,14 @@ public partial class Card : MonoBehaviour
             myAreaBack = GameMGR.Instance.battleLogic.enemyBackwardUnits;
         }
 
+        if(isBaseOnDB)  SetTargetType();    // 디테일한 대상 찾기
+    }
+
+    //===============================================================================================================================================================
+    //======================================     대상을 찾는 범위 설정 및 구체적인 대상의 특징을 설정하는 부분         =====================================================
+    //===============================================================================================================================================================
+    private void SetTargetType()
+    {
             if (GameMGR.Instance.isBattleNow)
             {
                 switch (cardInfo.effectTarget) // 스킬 효과 적용 대상에 따른 탐색 범위 지정
