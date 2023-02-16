@@ -310,7 +310,7 @@ MonoBehaviour:
   atkText: {fileID: 8931242442199043043}
   levelText: {fileID: 8931242440455447205}
   level: 1
-  curAttackValue: 2
+  curAttackValue: 3
   curHP: 1
   curEXP: 0
   expSlider: {fileID: 7086704749162298161}
@@ -320,8 +320,8 @@ MonoBehaviour:
   curPos: {fileID: 0}
   giveDamage: 0
   takeDamage: 0
-  isMine: 0
   shopBatchEmptyIndex: 0
+  isMine: 0
   searchArea: []
 --- !u!82 &3272275253484546860
 AudioSource:

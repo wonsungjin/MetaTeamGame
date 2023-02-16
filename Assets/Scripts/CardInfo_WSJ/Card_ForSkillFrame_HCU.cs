@@ -50,8 +50,8 @@ public partial class Card : MonoBehaviourPun
 
     public void Hit(int damage, Card Attacker, bool isDirect, bool isFirst) // 자신이 피격시 호출되는 함수 // 받은 데미지, 날 때린 사람
     {
-        if (isDirect && isFirst == true) // 처음 직접 공격을 받았을 때만 응수를 하는 것이 응당 정당 타당 합당 마땅하다.
-            Attacker.Hit(damage, this, true, false); // 니가 날 직접 때렸다면 나도 너를 때릴 것이다.
+        //if (isDirect && isFirst == true) // 처음 직접 공격을 받았을 때만 응수를 하는 것이 응당 정당 타당 합당 마땅하다.
+            //Attacker.Hit(damage, this, true, false); // 니가 날 직접 때렸다면 나도 너를 때릴 것이다.
         this.curHP -= damage;
         if (this.curHP <= 0)
         {
@@ -677,7 +677,6 @@ public partial class Card : MonoBehaviourPun
                                 skillTarget.Add(searchArea[2].GetComponent<Card>());
                                 skillTarget.Add(searchArea[4].GetComponent<Card>());
                                 break;
-
                         }
                     }
                 }
