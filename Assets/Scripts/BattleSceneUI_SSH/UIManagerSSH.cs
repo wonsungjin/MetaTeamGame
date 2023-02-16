@@ -3,8 +3,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
+//using UnityEngine.UIElements;
 using TMPro;
+using UnityEngine.UI;
 
 public partial class UIManager : MonoBehaviour
 {
@@ -15,10 +16,12 @@ public partial class UIManager : MonoBehaviour
     GameObject winUI = null;
     GameObject loseUI = null;
 
+    public Image[] lifeImage = new Image[20];
     TextMeshProUGUI winText = null;
     TextMeshProUGUI loseText = null;
 
     [SerializeField] bool isOption = true;
+    [SerializeField] Sprite changeImage = null;
 
     public GameObject finalSceneUI = null;
 
@@ -44,7 +47,7 @@ public partial class UIManager : MonoBehaviour
     public void OnBattleUI()
     {
         battleSceneUI.SetActive(true);
-
+        if (battleOptionPanel != null) { battleOptionPanel.SetActive(false); }
     }
 
     public void BattleOption()
@@ -54,7 +57,6 @@ public partial class UIManager : MonoBehaviour
     }
 
     #endregion
-
 
     #region RoundResultScene
     public void ResultUnitPosition()
@@ -79,6 +81,8 @@ public partial class UIManager : MonoBehaviour
 
         loseUI = GameObject.Find("ResultLose");
         loseText = GameObject.Find("LoseRoundText").GetComponent<TextMeshProUGUI>();
+
+        lifeImage = GameObject.Find("Life").GetComponentsInChildren<Image>();
 
         ResultSceneUI.SetActive(false);
     }
@@ -124,6 +128,11 @@ public partial class UIManager : MonoBehaviour
         loseUI.SetActive(isWin);
     }
     #endregion
+
+    public void ChangeLife(int Life)
+    {
+        lifeImage[19-Life].sprite = changeImage;
+    }
 
     public IEnumerator COR_MoveToResultScene(bool Win)
     {
