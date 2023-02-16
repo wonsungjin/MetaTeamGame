@@ -6,6 +6,7 @@ using UnityEngine;
 //using UnityEngine.UIElements;
 using TMPro;
 using UnityEngine.UI;
+using UnityEditor;
 
 public partial class UIManager : MonoBehaviour
 {
@@ -16,16 +17,19 @@ public partial class UIManager : MonoBehaviour
     GameObject winUI = null;
     GameObject loseUI = null;
 
-    public Image[] lifeImage = new Image[20];
+    public GameObject finalSceneUI = null;
+    public GameObject[] playerArrangement = new GameObject[6];
+
     TextMeshProUGUI winText = null;
     TextMeshProUGUI loseText = null;
 
-    [SerializeField] bool isOption = true;
+    bool isOption = true;
     Sprite changeImage = null;
 
-    public GameObject finalSceneUI = null;
+    TextMeshProUGUI lifeText = new TextMeshProUGUI();
 
-    public GameObject[] playerArrangement = new GameObject[6];
+    public Image[] lifeImage = new Image[20];
+    
     public Transform[] playerPosition = new Transform[6];
 
     public int curRound = 0;
@@ -35,6 +39,7 @@ public partial class UIManager : MonoBehaviour
     {
         battleSceneUI = GameObject.Find("BattleSceneCanvas");
         battleOptionPanel = GameObject.Find("OptionPanel");
+        lifeText = GameObject.Find("CurLife").gameObject.GetComponent<TextMeshProUGUI>();
         //if (battleOptionPanel.activeSelf)
         //{
         //    battleOptionPanel.SetActive(false);
@@ -47,6 +52,7 @@ public partial class UIManager : MonoBehaviour
     public void OnBattleUI()
     {
         battleSceneUI.SetActive(true);
+        lifeText.text = GameMGR.Instance.battleLogic.curLife.ToString();
         if (battleOptionPanel != null) { battleOptionPanel.SetActive(false); }
     }
 
@@ -167,5 +173,15 @@ public partial class UIManager : MonoBehaviour
         if (ResultSceneUI.activeSelf == true) { ResultSceneUI.SetActive(false); }
         GameMGR.Instance.uiManager.storePannel.SetActive(true);
         GameMGR.Instance.Init(5);
+    }
+
+    // Exit program
+    public void ExitGame()
+    {
+        Application.Quit();
+
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
     }
 }
