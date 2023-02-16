@@ -12,6 +12,7 @@ public class DataBase : MonoBehaviour
     // Start is called before the first frame update
     public IMongoDatabase database = null;
     public IMongoCollection<BsonDocument> collection;
+    public string userName;
     void Start()
     {
         database = client.GetDatabase("userlist");
@@ -96,8 +97,11 @@ public class DataBase : MonoBehaviour
     public void FindInventoryData()
     {
         var fillter = Builders<BsonDocument>.Filter.Eq("address", GameMGR.Instance.metaTrendAPI.res_UserProfile.userProfile.public_address);//찾을 도큐먼트의 Name이 아디인것
+        
         nullFillter = collection.Find(fillter).FirstOrDefault();//if null 이면 찾지 못함
         BsonValue value = null;
+        nullFillter.TryGetValue("username", out value);
+        userName = value.ToString();
         BsonValue value2 = null;
         BsonValue value3 = null;
         string number = null;
