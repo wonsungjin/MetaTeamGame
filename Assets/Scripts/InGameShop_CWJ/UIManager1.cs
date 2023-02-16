@@ -24,6 +24,7 @@ public partial class UIManager : MonoBehaviour
     public int hireUnitCost = 3; // 유닛 고용 비용
     public float timer = 60f;
     private bool isScene = false;
+    public bool isTimerFast = true;
 
     public bool isTimeOver = false;
     bool isTimeOEnd = false;
@@ -76,6 +77,7 @@ public partial class UIManager : MonoBehaviour
     void timerSound()
     {
         GameMGR.Instance.timerSound.TimeSound();
+        isTimerFast = true;
     }
 
     void InitUI()
