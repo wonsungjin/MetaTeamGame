@@ -152,24 +152,33 @@ public class Spawner : MonoBehaviourPun
     // 샵 레벨업 버튼
     public void OnClick_ShopLevelUp()
     {
-        if (GameMGR.Instance.uiManager.shopMoney <= GameMGR.Instance.uiManager.goldCount)
-        {
-            GameMGR.Instance.uiManager.shopLevel++;
-            GameMGR.Instance.uiManager.NowShopLevelTXT.text = "" + GameMGR.Instance.uiManager.shopLevel.ToString();
-            GameMGR.Instance.uiManager.goldCount -= GameMGR.Instance.uiManager.shopMoney;
-            GameMGR.Instance.uiManager.goldTXT.text = "" + GameMGR.Instance.uiManager.goldCount.ToString();
-            GameMGR.Instance.uiManager.shopLevelTXT.text = "" + GameMGR.Instance.uiManager.shopMoney.ToString();
-
-            // 함수 호출 레벨 업 후 돈?
-            ShopLevelUp();
-        }
-        else if (GameMGR.Instance.uiManager.shopMoney > GameMGR.Instance.uiManager.goldCount)
+        if (GameMGR.Instance.uiManager.shopLevel >= 6)
         {
             audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.UI, "fail_sound");
             audioSource.Play();
+            return;
+        }
+
+        else
+        {
+            if (GameMGR.Instance.uiManager.shopMoney <= GameMGR.Instance.uiManager.goldCount)
+            {
+                GameMGR.Instance.uiManager.shopLevel++;
+                GameMGR.Instance.uiManager.NowShopLevelTXT.text = "" + GameMGR.Instance.uiManager.shopLevel.ToString();
+                GameMGR.Instance.uiManager.goldCount -= GameMGR.Instance.uiManager.shopMoney;
+                GameMGR.Instance.uiManager.goldTXT.text = "" + GameMGR.Instance.uiManager.goldCount.ToString();
+                GameMGR.Instance.uiManager.shopLevelTXT.text = "" + GameMGR.Instance.uiManager.shopMoney.ToString();
+
+                // 함수 호출 레벨 업 후 돈?
+                ShopLevelUp();
+            }
+            else if (GameMGR.Instance.uiManager.shopMoney > GameMGR.Instance.uiManager.goldCount)
+            {
+                audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.UI, "fail_sound");
+                audioSource.Play();
+            }
         }
     }
-
     // 용병고용소의 레벨 업 할때마다 머니 
     void ShopLevelUp()
     {
@@ -186,18 +195,21 @@ public class Spawner : MonoBehaviourPun
                 GameMGR.Instance.uiManager.shopLevelTXT.text = "" + GameMGR.Instance.uiManager.shopMoney.ToString();
                 audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.UI, "StoreLevelup_sound");
                 audioSource.Play();
+                GameMGR.Instance.chainBroken.ChainsBroken();
                 break;
             case 4:
                 GameMGR.Instance.uiManager.shopMoney = 10;
                 GameMGR.Instance.uiManager.shopLevelTXT.text = "" + GameMGR.Instance.uiManager.shopMoney.ToString();
                 audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.UI, "StoreLevelup_sound");
                 audioSource.Play();
+                GameMGR.Instance.chainBroken.ChainsBroken();
                 break;
             case 5:
                 GameMGR.Instance.uiManager.shopMoney = 11;
                 GameMGR.Instance.uiManager.shopLevelTXT.text = "" + GameMGR.Instance.uiManager.shopMoney.ToString();
                 audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.UI, "StoreLevelup_sound");
                 audioSource.Play();
+                GameMGR.Instance.chainBroken.ChainsBroken();
                 break;
         }
     }

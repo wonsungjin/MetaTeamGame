@@ -22,6 +22,8 @@ public partial class GameMGR : Singleton<GameMGR>
     public Batch batch;
     public TimerSound timerSound;
 
+    public ChainBroken chainBroken;
+
     private void Awake()
     {
         WaitForSeconds ww = new WaitForSeconds(1f);
@@ -93,7 +95,7 @@ public partial class GameMGR : Singleton<GameMGR>
             spawner.gameObject.GetPhotonView().RPC("StartSetting", RpcTarget.MasterClient);
             battleLogic = FindObjectOfType<BattleLogic>();
             timerSound = FindObjectOfType<TimerSound>();
-
+            chainBroken = FindObjectOfType<ChainBroken>();
             audioMGR.StoreSceneBGM(true);
 
             // battle Scene

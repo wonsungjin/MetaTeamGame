@@ -16,6 +16,7 @@ public partial class Drag2D : MonoBehaviour
     public BattleZone pos;
     Vector2 selectZonePos;
     Vector3 monsterPos = new Vector3(0, -0.6f, 0);
+    Vector3 monsterPos1 = new Vector3(0, 1f, 0);
 
     float timer = 0f;
     float distance = 10;
@@ -142,6 +143,7 @@ public partial class Drag2D : MonoBehaviour
                         Vector2 monTras = gameObject.transform.parent.localScale;
                         gameObject.transform.parent.localScale = monTras * 2;
                         BackMeltBuy(collision);
+                        StartCoroutine(COR_BuyMonsterEF());
                     }
                 }
             }
@@ -168,9 +170,9 @@ public partial class Drag2D : MonoBehaviour
                         Vector2 monTras = gameObject.transform.parent.localScale;
                         gameObject.transform.parent.localScale = monTras * 2;
                         pos = collision.GetComponent<BattleZone>();
+                        StartCoroutine(COR_BuyMonsterEF());
 
-
-                        if(card.cardInfo.skillTiming == SkillTiming.buy)
+                        if (card.cardInfo.skillTiming == SkillTiming.buy)
                         {
                             card.SkillActive2(card);
                         }
@@ -226,6 +228,18 @@ public partial class Drag2D : MonoBehaviour
         }
     }
 
+    IEnumerator COR_BuyMonsterEF()
+    {
+        GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>("Heart"), gameObject.transform.position + monsterPos1, Quaternion.identity);
+        yield return new WaitForSeconds(0.3f);
+        GameMGR.Instance.objectPool.DestroyPrefab(mon.transform.gameObject);
+    }
+    IEnumerator COR_ComBineMonsterEF()
+    {
+        GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>("Heart"), gameObject.transform.position + monsterPos1, Quaternion.identity);
+        yield return new WaitForSeconds(0.3f);
+        GameMGR.Instance.objectPool.DestroyPrefab(mon.transform.gameObject);
+    }
     void ShopCardLevelUp(GameObject collision)
     {
         int colAttack = collision.gameObject.GetComponentInChildren<Card>().curAttackValue;

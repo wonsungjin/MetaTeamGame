@@ -5,7 +5,7 @@ using UnityEngine;
 public class TimerTick : MonoBehaviour
 {
     public float rotateSpeed = 30f;
-    public float rotateAngle = 5f;
+    public float rotateAngle = 3.5f;
     private float startingAngle;
     private float targetAngle;
     private bool rotateRight = true;
