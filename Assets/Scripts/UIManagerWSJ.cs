@@ -189,7 +189,7 @@ public partial class UIManager : MonoBehaviour
         attackValue.text = $"{cardInfo.atk}";
         hpValue.text = $"{cardInfo.hp}";
         cardName.text = $"{cardInfo.objName}";
-        cardImage.sprite = Resources.Load<Sprite>($"Sprites/Nomal/{cardInfo.objName.Replace(" ", "")}");
+        cardImage.sprite = Resources.Load<Sprite>($"Sprites/Normal/{cardInfo.objName.Replace(" ", "")}");
         skillExplantion[0].text = cardInfo.GetSkillExplantion(1);
         skillExplantion[1].text = cardInfo.GetSkillExplantion(2);
         skillExplantion[2].text = cardInfo.GetSkillExplantion(3);

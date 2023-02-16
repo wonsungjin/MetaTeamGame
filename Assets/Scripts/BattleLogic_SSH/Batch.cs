@@ -10,6 +10,7 @@ public partial class Batch : MonoBehaviourPun
     public Transform[] myCardPosition = null;
     public Transform[] enemyCardPosition = null;
     List<int> CustomNumberList = new List<int>();
+    List<string> PlayerNameList = new List<string>();
     bool isMinePlayerNum = true;
     [SerializeField] GameObject playerRanking;
     [SerializeField] Transform playerRankingUi;
@@ -21,6 +22,32 @@ public partial class Batch : MonoBehaviourPun
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.A)) FinalCardUi();
+    }
+    public void OnClick_Set_PlayerBatch(int num)
+    {
+        Debug.Log(num);
+        Debug.Log(PlayerNameList.Count);
+        Debug.Log(PlayerNameList[num]);
+       GameMGR.Instance.uiManager.playerBatchUI.SetActive(true);
+        GameMGR.Instance.uiManager.playerName.text = PlayerNameList[num];
+        for (int i = 0; i < CustomNumberList.Count; i++)
+        {
+            List<Card> cardList = null;
+            GameMGR.Instance.playerList.TryGetValue(CustomNumberList[i], out cardList);
+
+            for (int j = 0; j < cardList.Count; j++)
+            {
+                if (cardList[j] == null)
+                {
+                    GameMGR.Instance.uiManager.unitSprite[i] = null;
+                    continue;
+                }
+                 GameMGR.Instance.uiManager.unitSprite[i]= Resources.Load<Sprite>($"Sprites/Nomal/{cardList[j].name}");
+                
+
+            }
+        }
+        //
     }
     public void FinalCardUi()
     {
@@ -37,11 +64,11 @@ public partial class Batch : MonoBehaviourPun
                 if (cardList[j] == null)
                 {
                     unitCard.transform.GetChild(8 + j).GetComponent<CardUI>().OffFrame();
+                    unitCard.transform.GetChild(8 + j).GetComponent<CardUI>().SpriteNone();
                 continue;
                 }
                 unitCard.transform.GetChild(8 + j).GetComponent<CardUI>().SetMyInfo(cardList[j].name.Replace("(Clone)", ""));
                 unitCard.transform.GetChild(8 + j).GetComponent<CardUI>().OffFrame();
-                unitCard.transform.GetChild(8 + j).GetComponent<CardUI>().SpriteNone();
 
             }
         }
@@ -60,8 +87,14 @@ public partial class Batch : MonoBehaviourPun
         yield return new WaitForSeconds(1f);
         for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
         {
+            Debug.Log((int)PhotonNetwork.PlayerList[i].CustomProperties["Number"]);
+            Debug.Log(PhotonNetwork.PlayerList[i].NickName);
             CustomNumberList.Add((int)PhotonNetwork.PlayerList[i].CustomProperties["Number"]);
+            PlayerNameList.Add(PhotonNetwork.PlayerList[i].NickName);
+            
         }
+        Debug.Log(PlayerNameList.Count);
+        Debug.Log(CustomNumberList.Count);
     }
 
     [PunRPC]

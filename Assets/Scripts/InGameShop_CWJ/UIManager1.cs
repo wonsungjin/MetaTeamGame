@@ -15,6 +15,9 @@ public partial class UIManager : MonoBehaviour
     public TextMeshProUGUI NowShopLevelTXT = null;
     public TextMeshProUGUI goldTXT = null;
     public TextMeshProUGUI shopLevelTXT = null;
+    public Sprite[] unitSprite = null;
+    public GameObject playerBatchUI = null;
+    public TextMeshProUGUI playerName = null;
 
     public TextMeshProUGUI timerTXT = null;
 
@@ -47,8 +50,19 @@ public partial class UIManager : MonoBehaviour
         goldTXT = GameObject.Find("GoldTXT").GetComponent<TextMeshProUGUI>();
         shopLevelTXT = GameObject.Find("ShopLevelUpTXT").GetComponent<TextMeshProUGUI>();
         timerTXT = GameObject.Find("TimerTXT").GetComponent<TextMeshProUGUI>();
+        playerName = GameObject.Find("PlayerName").GetComponent<TextMeshProUGUI>();
         sell = GameObject.Find("Sell");
+        playerBatchUI = GameObject.Find("PlayerBatchUI");
+        unitSprite = new Sprite[6];
+        unitSprite[0] = GameObject.Find("Unit1").GetComponent<Sprite>();
+        unitSprite[1] = GameObject.Find("Unit2").GetComponent<Sprite>();
+        unitSprite[2] = GameObject.Find("Unit3").GetComponent<Sprite>();
+        unitSprite[3] = GameObject.Find("Unit4").GetComponent<Sprite>();
+        unitSprite[4] = GameObject.Find("Unit5").GetComponent<Sprite>();
+        unitSprite[5] = GameObject.Find("Unit6").GetComponent<Sprite>();
+
         finalSceneUI.SetActive(false);
+        playerBatchUI.SetActive(false);
         Faid(blackUI, faidType.Out, 0.03f);
         InitUI();
     }
