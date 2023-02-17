@@ -179,8 +179,8 @@ public class TurnSystem : MonoBehaviourPunCallbacks
             // 서로 덱 수가 같다면
             else
             {
-                int randomPoint = UnityEngine.Random.Range(0, 10);
-                int randomPoint2 = UnityEngine.Random.Range(0, 10);
+                int randomPoint = UnityEngine.Random.Range(0, 5);
+                int randomPoint2 = UnityEngine.Random.Range(0, 5);
                 firstPoint[matchNum[i]] += randomPoint;
                 firstPoint[matchNum[i + 1]] += randomPoint2;
 
@@ -212,8 +212,8 @@ public class TurnSystem : MonoBehaviourPunCallbacks
                     }
                 }
 
-                if (isFirst[matchNum[i]]) { firstPoint[matchNum[i]] -= 5; }
-                if (isFirst[matchNum[i + 1]]) { firstPoint[matchNum[i + 1]] -= 5; }
+                if (isFirst[matchNum[i]]) { firstPoint[matchNum[i]] -= 15; }
+                if (isFirst[matchNum[i + 1]]) { firstPoint[matchNum[i + 1]] -= 15; }
             }
         }
         //GameMGR.Instance.battleLogic.isFirstAttack = isFirst[me];
