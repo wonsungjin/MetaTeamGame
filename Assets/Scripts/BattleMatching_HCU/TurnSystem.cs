@@ -211,6 +211,9 @@ public class TurnSystem : MonoBehaviourPunCallbacks
                         isFirst[matchNum[i]] = false;
                     }
                 }
+
+                if (isFirst[matchNum[i]]) { firstPoint[matchNum[i]] -= 5; }
+                if (isFirst[matchNum[i + 1]]) { firstPoint[matchNum[i + 1]] -= 5; }
             }
         }
         //GameMGR.Instance.battleLogic.isFirstAttack = isFirst[me];
