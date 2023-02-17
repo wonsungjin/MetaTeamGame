@@ -16,7 +16,7 @@ public partial class Drag2D : MonoBehaviour
     public BattleZone pos;
     Vector2 selectZonePos;
     Vector3 monsterPos = new Vector3(0, -0.6f, 0);
-    Vector3 monsterPos1 = new Vector3(0, 1f, 0);
+    Vector3 monsterPos1 = new Vector3(0, 0.6f, 0);
 
     float timer = 0f;
     float distance = 10;
