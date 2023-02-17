@@ -1,3 +1,4 @@
+using Photon.Pun;
 using Spine.Unity;
 using TMPro;
 using UnityEngine;
@@ -11,7 +12,7 @@ public enum CardStatus
     Exp,
     Level,
 }
-public partial class Card : MonoBehaviour
+public partial class Card : MonoBehaviourPun
 {
     [SerializeField] public CardInfo cardInfo;
     public TextMeshPro hpText;

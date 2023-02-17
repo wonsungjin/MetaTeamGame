@@ -438,7 +438,7 @@ MonoBehaviour:
   atkText: {fileID: 8494144633956486599}
   levelText: {fileID: 8494144632481096833}
   level: 1
-  curAttackValue: 1
+  curAttackValue: 2
   curHP: 1
   curEXP: 0
   expSlider: {fileID: 7803170560863288597}
@@ -448,8 +448,8 @@ MonoBehaviour:
   curPos: {fileID: 0}
   giveDamage: 0
   takeDamage: 0
-  isMine: 0
   shopBatchEmptyIndex: 0
+  isMine: 0
   searchArea: []
 --- !u!4 &6139368758880310230 stripped
 Transform:

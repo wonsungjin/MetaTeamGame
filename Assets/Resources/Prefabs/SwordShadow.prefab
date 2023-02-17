@@ -413,9 +413,9 @@ MonoBehaviour:
   atkText: {fileID: 7252062213936032906}
   levelText: {fileID: 7252062215411811788}
   level: 1
-  curAttackValue: 3
-  curHP: 1
-  curEXP: 0
+  curAttackValue: 5
+  curHP: 2
+  curEXP: 1
   expSlider: {fileID: 9011612605386480728}
   skillTarget: []
   batchPos: {x: 0, y: 0}
@@ -423,8 +423,8 @@ MonoBehaviour:
   curPos: {fileID: 0}
   giveDamage: 0
   takeDamage: 0
-  isMine: 0
   shopBatchEmptyIndex: 0
+  isMine: 0
   searchArea: []
 --- !u!114 &4928726740127134378
 MonoBehaviour:
