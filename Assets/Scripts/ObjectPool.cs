@@ -48,9 +48,12 @@ public class ObjectPool : Singleton<ObjectPool>
             Debug.LogError("Not Found" + Prefab.name);
             return;
         }
-        Prefab.TryGetComponent(out Card card);
-        if (card !=null)
-        Prefab.GetComponentInChildren<Card>().SetMyInfo(prefabld);
+        if (Prefab.transform.GetChild(0) != null)
+        {
+            Prefab.transform.GetChild(0).TryGetComponent(out Card card);
+            if (card != null)
+                Prefab.GetComponentInChildren<Card>().SetMyInfo(prefabld);
+        }
         Prefab.SetActive(false);
         list.Add(Prefab);
     }
