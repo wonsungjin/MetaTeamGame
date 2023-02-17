@@ -5557,6 +5557,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65fe8111d5fe90f429cfa313264e83f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  finalSceneUI: {fileID: 0}
+  playerArrangement:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  BattleBGMAudio: {fileID: 0}
+  BattleSFXAudio: {fileID: 0}
   lifeImage:
   - {fileID: 0}
   - {fileID: 0}
@@ -5572,15 +5582,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  isOption: 1
-  finalSceneUI: {fileID: 0}
-  playerArrangement:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
