@@ -234,12 +234,7 @@ public partial class Drag2D : MonoBehaviour
         yield return new WaitForSeconds(0.3f);
         GameMGR.Instance.objectPool.DestroyPrefab(mon.transform.gameObject);
     }
-    IEnumerator COR_ComBineMonsterEF()
-    {
-        GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>("Heart"), gameObject.transform.position + monsterPos1, Quaternion.identity);
-        yield return new WaitForSeconds(0.3f);
-        GameMGR.Instance.objectPool.DestroyPrefab(mon.transform.gameObject);
-    }
+ 
     void ShopCardLevelUp(GameObject collision)
     {
         int colAttack = collision.gameObject.GetComponentInChildren<Card>().curAttackValue;
