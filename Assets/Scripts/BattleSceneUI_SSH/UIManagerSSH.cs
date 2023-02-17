@@ -108,6 +108,7 @@ public partial class UIManager : MonoBehaviour
     public void OnResultUI()
     {
         ResultSceneUI.SetActive(true);
+        lifeText.text = GameMGR.Instance.battleLogic.curLife.ToString();
     }
 
     public void PlayerSetArrangement()

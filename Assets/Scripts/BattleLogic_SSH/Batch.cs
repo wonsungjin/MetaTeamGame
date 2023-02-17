@@ -32,7 +32,7 @@ public partial class Batch : MonoBehaviourPun
 
         List<Card> cardList = null;
         GameMGR.Instance.playerList.TryGetValue(CustomNumberList[num], out cardList);
-
+        if (cardList.Count == 0) return;
         for (int j = 0; j < cardList.Count; j++)
         {
             CardUI get = GameMGR.Instance.uiManager.unitSprite[j].GetComponentInParent<CardUI>();
