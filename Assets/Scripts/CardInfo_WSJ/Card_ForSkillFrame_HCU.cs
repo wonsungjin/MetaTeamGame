@@ -58,6 +58,8 @@ public partial class Card : MonoBehaviourPun
             if (Attacker.cardInfo.skillTiming == SkillTiming.kill) Attacker.SkillActive(); // 내가 죽었는데 적이 처치시 효과가 있다면 적 효과 먼저 발동시켜준다.
             if (cardInfo.skillTiming == SkillTiming.death) SkillActive(); // 사망시 효과 발동
             GameMGR.Instance.objectPool.DestroyPrefab(gameObject.transform.parent.gameObject);
+
+            GameMGR.Instance.battleLogic.isWaitAttack = true;
         } 
 
         if (cardInfo.skillTiming == SkillTiming.hit) // 피격시 효과 발동. 죽으면 피격시 효과가 발동하지 않는다.

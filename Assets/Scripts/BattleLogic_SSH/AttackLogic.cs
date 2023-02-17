@@ -43,7 +43,7 @@ public partial class AttackLogic : Skill
         card.Attack( card.curAttackValue, targetUint.GetComponentInChildren<Card>(), true, true );
         //GameMGR.Instance.objectPool.DestroyPrefab(targetUint);
 
-        if (gameObject == null) yield return null;
+        if (card.curHP <= 0) yield return null;
 
         else
         {
