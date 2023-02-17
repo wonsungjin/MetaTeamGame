@@ -31,7 +31,6 @@ public class TurnSystem : MonoBehaviourPunCallbacks
 
     public int matchingDone;
 
-
     public int userID = 0;
 
     // 플레이어 라이프 관련
