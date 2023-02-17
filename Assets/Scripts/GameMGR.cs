@@ -122,7 +122,7 @@ public partial class GameMGR : Singleton<GameMGR>
         else if (num == 4)
         {
             // battle Scene
-            uiManager.BattleUIInit();
+            // uiManager.BattleUIInit();
             audioMGR.BattleSceneBGM(false);
             uiManager.OnResultUI();
         }

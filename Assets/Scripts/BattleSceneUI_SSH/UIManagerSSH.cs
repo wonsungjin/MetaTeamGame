@@ -23,8 +23,8 @@ public partial class UIManager : MonoBehaviour
     TextMeshProUGUI loseText = null;
     TextMeshProUGUI lifeText = new TextMeshProUGUI();
 
-    AudioSource BattleBGMAudio = null;
-    AudioSource BattleSFXAudio = null;
+    public AudioSource BattleBGMAudio = null;
+    public AudioSource BattleSFXAudio = null;
 
 
     bool isOption = true;
@@ -52,7 +52,7 @@ public partial class UIManager : MonoBehaviour
 
         SoundPanel.SetActive(false);
         battleSceneUI.SetActive(false);
-        isOption = battleSceneUI.activeSelf;
+        // isOption = battleSceneUI.activeSelf;
     }
 
     public void OnBattleUI()
@@ -64,13 +64,13 @@ public partial class UIManager : MonoBehaviour
         lifeText.text = GameMGR.Instance.battleLogic.curLife.ToString();
         if (battleOptionPanel != null) { battleOptionPanel.SetActive(false); }
     }
-
+/*
     public void BattleOption()
     {
         isOption = !isOption;
         battleOptionPanel.SetActive(isOption);
     }
-
+*/
     #endregion
 
     #region RoundResultScene
@@ -89,6 +89,9 @@ public partial class UIManager : MonoBehaviour
 
     public void ResultSceneInit()
     {
+        SoundPanel.SetActive(false);
+        battleSceneUI.SetActive(false);
+
         ResultSceneUI = GameObject.Find("ResultSceneCanvas");
 
         winUI = GameObject.Find("ResultWin");
