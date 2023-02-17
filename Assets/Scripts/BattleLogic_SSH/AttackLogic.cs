@@ -1,6 +1,7 @@
 using MongoDB.Driver.Builders;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public partial class AttackLogic : Skill
@@ -39,18 +40,24 @@ public partial class AttackLogic : Skill
 
         curTime = 0f;
         //is delvoewafafcajff
-        // card.Attack( card.curAttackValue, targetUint.GetComponentInChildren<Card>(), true, true );
-        GameMGR.Instance.objectPool.DestroyPrefab(targetUint);
+        card.Attack( card.curAttackValue, targetUint.GetComponentInChildren<Card>(), true, true );
+        //GameMGR.Instance.objectPool.DestroyPrefab(targetUint);
 
-        while (Vector2.Distance(gameObject.transform.parent.position, returnPosition) > 0)
+        if (gameObject == null) yield return null;
+
+        else
         {
-            curTime += Time.deltaTime;
+            while (Vector2.Distance(gameObject.transform.parent.position, returnPosition) > 0)
+            {
+                curTime += Time.deltaTime;
 
-            // return position
-            gameObject.transform.parent.position = Vector2.Lerp(enemyTrans, returnPosition, curTime / goalTime);
+                // return position
+                gameObject.transform.parent.position = Vector2.Lerp(enemyTrans, returnPosition, curTime / goalTime);
 
-            yield return waitForFixedUpdate;
+                yield return waitForFixedUpdate;
+            }
         }
+        
 
         GameMGR.Instance.battleLogic.isWaitAttack = true;
     }
