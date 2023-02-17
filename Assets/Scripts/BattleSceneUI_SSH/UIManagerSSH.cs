@@ -23,6 +23,10 @@ public partial class UIManager : MonoBehaviour
     TextMeshProUGUI loseText = null;
     TextMeshProUGUI lifeText = new TextMeshProUGUI();
 
+    public AudioSource BattleBGMAudio = null;
+    public AudioSource BattleSFXAudio = null;
+
+
     bool isOption = true;
 
     Sprite changeImage = null;
@@ -43,27 +47,30 @@ public partial class UIManager : MonoBehaviour
         battleOptionPanel = GameObject.Find("OptionPanel");
         SoundPanel = GameObject.Find("SoundPanel");
         lifeText = GameObject.Find("CurLife").gameObject.GetComponent<TextMeshProUGUI>();
-        // SFXSlider = GameObject.Find("SFXSlider").gameObject.GetComponent<Slider>();
-        // BGMSlider = GameObject.Find("BGMSlider").gameObject.GetComponent<Slider>();
+        SFXSlider = GameObject.Find("SFXSlider").gameObject.GetComponent<Slider>();
+        BGMSlider = GameObject.Find("BGMSlider").gameObject.GetComponent<Slider>();
 
-        // SoundPanel.SetActive(false);
+        SoundPanel.SetActive(false);
         battleSceneUI.SetActive(false);
-        isOption = battleSceneUI.activeSelf;
+        // isOption = battleSceneUI.activeSelf;
     }
 
     public void OnBattleUI()
     {
         battleSceneUI.SetActive(true);
+        BattleBGMAudio = GameMGR.Instance.audioMGR.BattleBGM;
+        BattleSFXAudio = GameMGR.Instance.audioMGR.BattleAudio;
+
         lifeText.text = GameMGR.Instance.battleLogic.curLife.ToString();
         if (battleOptionPanel != null) { battleOptionPanel.SetActive(false); }
     }
-
+/*
     public void BattleOption()
     {
         isOption = !isOption;
         battleOptionPanel.SetActive(isOption);
     }
-
+*/
     #endregion
 
     #region RoundResultScene
@@ -82,6 +89,9 @@ public partial class UIManager : MonoBehaviour
 
     public void ResultSceneInit()
     {
+        SoundPanel.SetActive(false);
+        battleSceneUI.SetActive(false);
+
         ResultSceneUI = GameObject.Find("ResultSceneCanvas");
 
         winUI = GameObject.Find("ResultWin");
@@ -189,7 +199,7 @@ public partial class UIManager : MonoBehaviour
 
     public void BattleSceneVolumeManager()
     {
-        GameMGR.Instance.audioMGR.BattleBGM.volume = BGMSlider.value;
-        GameMGR.Instance.audioMGR.BattleAudio.volume = SFXSlider.value;
+        BattleBGMAudio.volume = BGMSlider.value;
+        BattleSFXAudio.volume = SFXSlider.value;
     }
 }
