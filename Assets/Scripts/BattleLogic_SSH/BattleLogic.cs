@@ -299,6 +299,10 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                 isPlayerAliveCount = 0;
                 isEnemyAliveCount = 0;
 
+                Debug.Log("playerForwardUnits[exArray[randomArrayNum]] " + playerForwardUnits[exArray[randomArrayNum]]);
+                Debug.Log("[exArray[randomArrayNum] " + exArray[randomArrayNum]);
+
+
                 // �ǰ� ������ Player�� ���ö����� ���� �� �� ����
                 while (playerForwardUnits[exArray[randomArrayNum]] == null)
                 {

@@ -6,56 +6,71 @@ using UnityEngine;
 //using UnityEngine.UIElements;
 using TMPro;
 using UnityEngine.UI;
+using UnityEditor;
 
 public partial class UIManager : MonoBehaviour
 {
     GameObject battleSceneUI = null;
     GameObject battleOptionPanel = null;
-
     GameObject ResultSceneUI = null;
     GameObject winUI = null;
     GameObject loseUI = null;
+    GameObject SoundPanel = null;
+    public GameObject finalSceneUI = null;
+    public GameObject[] playerArrangement = new GameObject[6];
 
-    public Image[] lifeImage = new Image[20];
     TextMeshProUGUI winText = null;
     TextMeshProUGUI loseText = null;
+    TextMeshProUGUI lifeText = new TextMeshProUGUI();
 
-    [SerializeField] bool isOption = true;
+    public AudioSource BattleBGMAudio = null;
+    public AudioSource BattleSFXAudio = null;
+
+
+    bool isOption = true;
+
     Sprite changeImage = null;
 
-    public GameObject finalSceneUI = null;
-
-    public GameObject[] playerArrangement = new GameObject[6];
+    public Image[] lifeImage = new Image[20];
+    
     public Transform[] playerPosition = new Transform[6];
 
     public int curRound = 0;
+
+    Slider SFXSlider = null;
+    Slider BGMSlider = null;
 
     #region BattleScene
     public void BattleUIInit()
     {
         battleSceneUI = GameObject.Find("BattleSceneCanvas");
         battleOptionPanel = GameObject.Find("OptionPanel");
-        //if (battleOptionPanel.activeSelf)
-        //{
-        //    battleOptionPanel.SetActive(false);
-        //} 
+        SoundPanel = GameObject.Find("SoundPanel");
+        lifeText = GameObject.Find("CurLife").gameObject.GetComponent<TextMeshProUGUI>();
+        SFXSlider = GameObject.Find("SFXSlider").gameObject.GetComponent<Slider>();
+        BGMSlider = GameObject.Find("BGMSlider").gameObject.GetComponent<Slider>();
 
+        SoundPanel.SetActive(false);
         battleSceneUI.SetActive(false);
-        isOption = battleSceneUI.activeSelf;
+        // isOption = battleSceneUI.activeSelf;
     }
 
     public void OnBattleUI()
     {
         battleSceneUI.SetActive(true);
+        BattleBGMAudio = GameMGR.Instance.audioMGR.BattleBGM;
+        BattleSFXAudio = GameMGR.Instance.audioMGR.BattleAudio;
+
+        lifeText.text = GameMGR.Instance.battleLogic.curLife.ToString();
         if (battleOptionPanel != null) { battleOptionPanel.SetActive(false); }
     }
-
+/*
     public void BattleOption()
     {
         isOption = !isOption;
         battleOptionPanel.SetActive(isOption);
     }
-
+*/
     #endregion
 
     #region RoundResultScene
@@ -74,6 +89,9 @@ public partial class UIManager : MonoBehaviour
 
     public void ResultSceneInit()
     {
+        SoundPanel.SetActive(false);
+        battleSceneUI.SetActive(false);
+
         ResultSceneUI = GameObject.Find("ResultSceneCanvas");
 
         winUI = GameObject.Find("ResultWin");
@@ -90,6 +108,7 @@ public partial class UIManager : MonoBehaviour
     public void OnResultUI()
     {
         ResultSceneUI.SetActive(true);
+        lifeText.text = GameMGR.Instance.battleLogic.curLife.ToString();
     }
 
     public void PlayerSetArrangement()
@@ -167,5 +186,21 @@ public partial class UIManager : MonoBehaviour
         if (ResultSceneUI.activeSelf == true) { ResultSceneUI.SetActive(false); }
         GameMGR.Instance.uiManager.storePannel.SetActive(true);
         GameMGR.Instance.Init(5);
+    }
+
+    // Exit program
+    public void ExitGame()
+    {
+        Application.Quit();
+
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
+    }
+
+    public void BattleSceneVolumeManager()
+    {
+        BattleBGMAudio.volume = BGMSlider.value;
+        BattleSFXAudio.volume = SFXSlider.value;
     }
 }

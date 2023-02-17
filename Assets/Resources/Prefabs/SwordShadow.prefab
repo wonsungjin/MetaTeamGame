@@ -413,7 +413,7 @@ MonoBehaviour:
   atkText: {fileID: 7252062213936032906}
   levelText: {fileID: 7252062215411811788}
   level: 1
-  curAttackValue: 3
+  curAttackValue: 7
   curHP: 1
   curEXP: 0
   expSlider: {fileID: 9011612605386480728}

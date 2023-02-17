@@ -110,6 +110,7 @@ public partial class GameMGR : Singleton<GameMGR>
         // BattleScene
         else if (num == 3)
         {
+            GameMGR.Instance.isBattleNow = true;
             uiManager.OnBattleUI();
             uiManager.curRound++;
 
@@ -122,7 +123,7 @@ public partial class GameMGR : Singleton<GameMGR>
         else if (num == 4)
         {
             // battle Scene
-            uiManager.BattleUIInit();
+            // uiManager.BattleUIInit();
             audioMGR.BattleSceneBGM(false);
             uiManager.OnResultUI();
         }
@@ -130,6 +131,7 @@ public partial class GameMGR : Singleton<GameMGR>
         // RoundScene
         else if (num == 5)
         {
+            GameMGR.Instance.isBattleNow = false;
             GameMGR.Instance.spawner.ResetStore();
 
             // result Scene

@@ -31,11 +31,13 @@ public class CardUI : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler,
     public void ResetColor()
     {
         if (image == null) image = transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>();
-        image.color = new Color(1, 1, 1, 1);
+        transform.GetChild(0).GetComponent<Image>().color = resetColor;
+        image.color = resetColor;
 
     }
 
     Color FrameColor = new Color(1f, 1f, 1f, 1/255f);
+    Color resetColor = new Color(1f, 1f, 1f, 1);
     /*커스텀덱 설정할 때 클릭하면 실행되는 함수*/
     public void OffFrame()
     {
