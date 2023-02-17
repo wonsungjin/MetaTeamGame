@@ -302,7 +302,6 @@ public partial class Drag2D : MonoBehaviour
                 GameObject vec = GameObject.FindGameObjectWithTag("BattleZone");
                 if (vec != null)
                     gameObject.transform.parent.position = vec.transform.position + Vector3.down;
-
             }
             else
             {

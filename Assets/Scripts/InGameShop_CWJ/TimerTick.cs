@@ -1,48 +1,43 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Networking;
+using UnityEngine.UI;
 
 public class TimerTick : MonoBehaviour
 {
-    public float rotateSpeed = 30f;
-    public float rotateAngle = 3.5f;
-    private float startingAngle;
-    private float targetAngle;
-    private bool rotateRight = true;
+    public Sprite[] images; // array of sprites representing the images in the sequence
+    private int currentImageIndex = 0; // index of the current image in the sequence
 
-    void Start()
+
+    private void Start()
     {
-        startingAngle = transform.eulerAngles.z;
-        targetAngle = startingAngle + rotateAngle;
+        StartCoroutine(ShowImages());
     }
 
-    void Update()
+    private Sprite nextImage()
     {
-        float currentAngle = Mathf.MoveTowardsAngle(transform.eulerAngles.z, targetAngle, rotateSpeed * Time.deltaTime);
-        transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, currentAngle);
+        // Get the next image in the sequence
+        Sprite nextSprite = images[currentImageIndex];
 
-        if (currentAngle == targetAngle)
-        {
-            if (rotateRight)
-            {
-                targetAngle = startingAngle - rotateAngle;
-            }
-            else
-            {
-                targetAngle = startingAngle + rotateAngle;
-            }
+        // Increment the index, wrapping around to the beginning of the array if necessary
+        currentImageIndex = (currentImageIndex + 1) % images.Length;
 
-            rotateRight = !rotateRight;
-        }
-
-        if (GameMGR.Instance.uiManager.isTimerFast == true)
-        {
-            TimerTickFaster();
-        }
+        return nextSprite;
     }
 
-    void TimerTickFaster()
+
+    IEnumerator ShowImages()
     {
-        rotateSpeed = 50f;
+        SpriteRenderer renderer = GetComponent<SpriteRenderer>();
+        while (true)
+        {
+            // Switch to the next image in the sequence
+            renderer.sprite = nextImage();
+
+            // Wait for 0.1 seconds
+            yield return new WaitForSeconds(0.1f);
+        }
     }
 }
