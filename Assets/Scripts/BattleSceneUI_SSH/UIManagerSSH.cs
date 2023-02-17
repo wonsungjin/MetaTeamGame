@@ -15,6 +15,7 @@ public partial class UIManager : MonoBehaviour
     GameObject ResultSceneUI = null;
     GameObject winUI = null;
     GameObject loseUI = null;
+    GameObject SoundPanel = null;
     public GameObject finalSceneUI = null;
     public GameObject[] playerArrangement = new GameObject[6];
 
@@ -40,10 +41,12 @@ public partial class UIManager : MonoBehaviour
     {
         battleSceneUI = GameObject.Find("BattleSceneCanvas");
         battleOptionPanel = GameObject.Find("OptionPanel");
+        SoundPanel = GameObject.Find("SoundPanel");
         lifeText = GameObject.Find("CurLife").gameObject.GetComponent<TextMeshProUGUI>();
-        SFXSlider = GameObject.Find("SFXSlider").gameObject.GetComponent<Slider>();
-        BGMSlider = GameObject.Find("BGMSlider").gameObject.GetComponent<Slider>();
+        // SFXSlider = GameObject.Find("SFXSlider").gameObject.GetComponent<Slider>();
+        // BGMSlider = GameObject.Find("BGMSlider").gameObject.GetComponent<Slider>();
 
+        // SoundPanel.SetActive(false);
         battleSceneUI.SetActive(false);
         isOption = battleSceneUI.activeSelf;
     }
