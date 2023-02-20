@@ -20,7 +20,7 @@ MonoBehaviour:
   atk: 1
   description: Increase own HP +1. Increase own HP +2. Increase own HP +3.
   skillTiming: 8
-  targetType: 0
+  targetType: 15
   effectTarget: 1
   minTarget: 1
   maxTarget: 1

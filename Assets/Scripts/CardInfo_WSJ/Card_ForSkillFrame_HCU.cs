@@ -51,8 +51,10 @@ public partial class Card : MonoBehaviourPun
     public void Hit(int damage, Card Attacker, bool isDirect, bool isFirst) // 자신이 피격시 호출되는 함수 // 받은 데미지, 날 때린 사람
     {
         //if (isDirect && isFirst == true) // 처음 직접 공격을 받았을 때만 응수를 하는 것이 응당 정당 타당 합당 마땅하다.
-            //Attacker.Hit(damage, this, true, false); // 니가 날 직접 때렸다면 나도 너를 때릴 것이다.
-        this.curHP -= damage;
+        //Attacker.Hit(damage, this, true, false); // 니가 날 직접 때렸다면 나도 너를 때릴 것이다.
+        curHP -= damage;
+        hpText.text = curHP.ToString();
+
         if (this.curHP <= 0)
         {
             if (Attacker.cardInfo.skillTiming == SkillTiming.kill) Attacker.SkillActive(); // 내가 죽었는데 적이 처치시 효과가 있다면 적 효과 먼저 발동시켜준다.
@@ -60,13 +62,15 @@ public partial class Card : MonoBehaviourPun
             GameMGR.Instance.objectPool.DestroyPrefab(gameObject.transform.parent.gameObject);
 
             //GameMGR.Instance.battleLogic.isWaitAttack = true;
-        } 
+        }
+
+        GameMGR.Instance.Event_HitEnemy(this);
 
         if (cardInfo.skillTiming == SkillTiming.hit) // 피격시 효과 발동. 죽으면 피격시 효과가 발동하지 않는다.
         {
-            GameMGR.Instance.Event_HitEnemy();
             SkillActive();
         }
+        
     }
 
     #endregion
@@ -96,20 +100,11 @@ public partial class Card : MonoBehaviourPun
                 GameMGR.Instance.callbackEvent_Reroll += SkillActive;
                 Debug.Log("리롤시효과니까 이벤트에 추가");
                 break;
-            /*case SkillTiming.attackBefore:
-                GameMGR.Instance.callbackEvent_BeforeAttack += SkillActive;
-                break;
-            case SkillTiming.attackAfter:
-                GameMGR.Instance.callbackEvent_AfterAttack += SkillActive;
-                break;*/
             case SkillTiming.kill:
                 GameMGR.Instance.callbackEvent_Kill += SkillActive;
                 break;
-            /*case SkillTiming.hit:
-                GameMGR.Instance.callbackEvent_Hit += SkillActive;
-                break;*/
             case SkillTiming.hitEnemy:
-                GameMGR.Instance.callbackEvent_HitEnemy += SkillActive;
+                GameMGR.Instance.callbackEvent_HitEnemy += SkillActive2;
                 break;
             case SkillTiming.death:
                 GameMGR.Instance.callbackEvent_Death += SkillActive;
@@ -132,9 +127,18 @@ public partial class Card : MonoBehaviourPun
 
     public void SkillActive2(Card card)
     {
-        if (card != this) return;
+        if (cardInfo.skillTiming == SkillTiming.hitEnemy)
+        {
+            if ((isMine && !card.isMine) || (!isMine && card.isMine))
+            {
+                FindTargetType();
+                SkillEffect();
+            }
+            else return;
+        }
+        else if (card != this) return;
 
-        if (cardInfo.effectType == EffectType.summon)
+        else if (cardInfo.effectType == EffectType.summon)
         {
             for (int i = 0; i < cardInfo.GetNumTrigger(level); i++)
             {
@@ -172,8 +176,12 @@ public partial class Card : MonoBehaviourPun
                 Debug.Log("데미지 증감 효과 발동");
                 for (int i = 0; i < skillTarget.Count; i++)
                 {
-                    skillTarget[i].giveDamage += cardInfo.GetValue(1, level);
-                    skillTarget[i].takeDamage += cardInfo.GetValue(2, level);
+                    if (skillTarget[i].curAttackValue > 0 && skillTarget[i].curAttackValue > cardInfo.GetValue(1, level))
+                    {
+                        skillTarget[i].giveDamage += cardInfo.GetValue(1, level);
+                        skillTarget[i].takeDamage += cardInfo.GetValue(2, level);
+                    }
+                    
                 }
                 break;
             case EffectType.changeATK:
@@ -182,6 +190,8 @@ public partial class Card : MonoBehaviourPun
                 {
                     if (skillTarget[i].curAttackValue > cardInfo.GetValue(1, level))
                         skillTarget[i].ChangeValue(CardStatus.Attack, cardInfo.GetValue(1, level), true);
+                    else if (skillTarget[i].curAttackValue - cardInfo.GetValue(1, level) < 1)
+                        skillTarget[i].ChangeValue(CardStatus.Attack, 1);
                     Debug.Log(cardInfo.GetValue(1, level));
                     //skillTarget[i].curAttackValue += cardInfo.value1;
                 }
@@ -529,7 +539,6 @@ public partial class Card : MonoBehaviourPun
                 }
 
                 //skillTarget.Add(GameMGR.Instance.battleLogic.)
-                skillTarget.Add(transform.parent.transform.GetChild(random).gameObject.GetComponent<Card>());
                 break;
 
             case TargetType.randomExceptMe:

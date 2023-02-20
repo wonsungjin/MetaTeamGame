@@ -28,7 +28,7 @@ public partial class GameMGR : Singleton<GameMGR>
     public event _callback_SkillTiming callbackEvent_AfterAttack;
     public event _callback_SkillTiming callbackEvent_Kill;
     public event _callback_SkillTiming callbackEvent_Hit;
-    public event _callback_SkillTiming callbackEvent_HitEnemy;
+    public event _callback_SkillTiming2 callbackEvent_HitEnemy;
     public event _callback_SkillTiming callbackEvent_Death;
     public event _callback_SkillTiming callbackEvent_Summon;
 
@@ -66,9 +66,10 @@ public partial class GameMGR : Singleton<GameMGR>
     {
         callbackEvent_Summon();
     }
-    public void Event_HitEnemy()
+    public void Event_HitEnemy(Card card)
     {
-        callbackEvent_HitEnemy();
+        if(callbackEvent_HitEnemy != null)
+            callbackEvent_HitEnemy(card);
     }
     
     #endregion
