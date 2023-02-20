@@ -9,7 +9,7 @@ public class ShopCards : MonoBehaviour
     public List<CardUI> clearList = new List<CardUI>();
     public void Init()
     {
-        CardUI obj = null;
+        
         CardInfo[] cards = Resources.LoadAll<CardInfo>($"ScriptableDBs/");
         for(int i = 0; i<cards.Length;i++)
         {
@@ -17,23 +17,37 @@ public class ShopCards : MonoBehaviour
 
             AddTierList(cards[i].tier, cards[i]);
         }
-        for (int tierNum = 1; tierNum < 7; tierNum++)
-        {            
-            List<CardInfo> list = GetTierList(tierNum);
+        StartCoroutine(CreateInit());
         
+    }
+    IEnumerator CreateInit()
+    {
+        yield return new WaitForSeconds(2f);
+        CardUI obj = null;
+        for (int tierNum = 1; tierNum < 7; tierNum++)
+        {
+            List<CardInfo> list = GetTierList(tierNum);
+
             for (int i = 0; i < list.Count; i++)
             {
                 if (list[i].appear == "FALSE")
                 {
                     Debug.Log("삭제&^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^" + list[i].objName);
                     //list.Remove(list[i]);
-                continue;
+                    continue;
                 }
                 Debug.Log("생성~~~~~~~~~~~~~~~~~~~" + list[i].objName);
 
                 obj = GameObject.Instantiate<CardUI>(card);
-                obj.transform.SetParent(GameMGR.Instance.uiManager.tier1[tierNum-1].transform);
+                obj.transform.SetParent(GameMGR.Instance.uiManager.tier1[tierNum - 1].transform);
                 obj.transform.localScale = Vector3.one;
+                List<string> hashList = GameMGR.Instance.dataBase.unitData.hashtable["A" + tierNum] as List<string>;
+                Debug.Log(GameMGR.Instance.dataBase.unitData.hashtable["A" + tierNum] as List<string>);
+                for (int a = 0; a < hashList.Count; a++) Debug.Log(hashList[a]);
+                if (hashList.Contains(list[i].objName.Replace(" ", "")) == false)
+                {
+                    obj.DonHave();
+                }
                 obj.SetMyInfo(list[i].name);
                 obj.OffFrame();
                 clearList.Add(obj);

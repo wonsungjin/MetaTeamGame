@@ -45,6 +45,7 @@ public class CardUI : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler,
     }
     public void OnPointerClick(PointerEventData eventData)
     {
+        if (isDonHave) return;
         if (GameMGR.Instance.customDeckShop.isJoinShop)
         {
             // Debug.Log(GameMGR.Instance.customDeckShop.AddTierList(cardInfo.tier, cardInfo.objName));
@@ -73,11 +74,17 @@ public class CardUI : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler,
         image.sprite = Resources.Load<Sprite>($"Sprites/Nomal/{name}");
     }
 
+   bool isDonHave;
+    public void DonHave()
+    {
+        if (image == null) image = transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>();
+        isDonHave = true;
+        image.color = new Color(0.3f, 0.3f, 0.3f);
+    }
     public void OnPointerExit(PointerEventData eventData)
     {
 
     }
-
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (isNonePointer) return;
