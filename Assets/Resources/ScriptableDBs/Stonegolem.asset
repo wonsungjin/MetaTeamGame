@@ -21,7 +21,7 @@ MonoBehaviour:
   description: Increase own HP +1. Increase own HP +2. Increase own HP +3.
   skillTiming: 8
   targetType: 15
-  effectTarget: 1
+  effectTarget: 3
   minTarget: 1
   maxTarget: 1
   triggerCondition: 0

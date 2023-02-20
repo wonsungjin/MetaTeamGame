@@ -75,8 +75,45 @@ public partial class Card : MonoBehaviourPun
                         GameMGR.Instance.battleLogic.playerAttackArray[i] = null;
                         break;
                     }
+                }
 
+                for (int i = 0; i < 3; i++)
+                {
+                    if (GameMGR.Instance.battleLogic.playerForwardUnits[i].GetComponentInChildren<Card>() == this)
+                    {
+                        GameMGR.Instance.battleLogic.playerForwardUnits[i] = null;
+                        break;
+                    }
+                    if (GameMGR.Instance.battleLogic.playerBackwardUnits[i].GetComponentInChildren<Card>() == this)
+                    {
+                        GameMGR.Instance.battleLogic.playerBackwardUnits[i] = null;
+                        break;
+                    }
+                }
+            }
+            else // 적인 경우
+            {
+                for (int i = 0; i < 6; i++)
+                {
+                    if (GameMGR.Instance.battleLogic.enemyAttackArray[i].GetComponentInChildren<Card>() == this)
+                    {
+                        GameMGR.Instance.battleLogic.enemyAttackArray[i] = null;
+                        break;
+                    }
+                }
 
+                for (int i = 0; i < 3; i++)
+                {
+                    if (GameMGR.Instance.battleLogic.enemyForwardUnits[i].GetComponentInChildren<Card>() == this)
+                    {
+                        GameMGR.Instance.battleLogic.enemyForwardUnits[i] = null;
+                        break;
+                    }
+                    if (GameMGR.Instance.battleLogic.enemyBackwardUnits[i].GetComponentInChildren<Card>() == this)
+                    {
+                        GameMGR.Instance.battleLogic.enemyBackwardUnits[i] = null;
+                        break;
+                    }
                 }
             }
             
