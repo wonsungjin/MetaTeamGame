@@ -56,6 +56,7 @@ public partial class Card : MonoBehaviourPun
         atkText.text = curAttackValue.ToString();
         level = 1;
         levelText.text = level.ToString();
+        gameObject.layer = 0;
         skeletonAnimation = GetComponent<SkeletonAnimation>();
         SetSkillTiming();
         if (flip == true) SetFlip(false);
