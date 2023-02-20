@@ -70,4 +70,9 @@ public partial class AttackLogic : Skill
 
         StartCoroutine(COR_Delay(targetUnit.transform.gameObject));
     }
+
+    public void OnDisable()
+    {
+        GameMGR.Instance.battleLogic.isWaitAttack = true;
+    }
 }
