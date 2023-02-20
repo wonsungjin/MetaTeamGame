@@ -26,7 +26,7 @@ public class ShopCards : MonoBehaviour
                 if (list[i].appear == "FALSE")
                 {
                     Debug.Log("삭제&^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^" + list[i].objName);
-                    list.Remove(list[i]);
+                    //list.Remove(list[i]);
                 continue;
                 }
                 Debug.Log("생성~~~~~~~~~~~~~~~~~~~" + list[i].objName);
