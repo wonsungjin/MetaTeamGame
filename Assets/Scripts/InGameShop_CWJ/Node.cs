@@ -12,6 +12,10 @@ public class Node : MonoBehaviour
     public GameObject collisionObj;
 
     bool isEnter = false;
+    int num;
+
+    [SerializeField] GameObject[] stars = null;
+
     private void Start()
     {
         mySprite = GetComponent<SpriteRenderer>();
@@ -35,6 +39,36 @@ public class Node : MonoBehaviour
                 gameObject.tag = "FullZone";
                 mySprite.sprite = Resources.Load<Sprite>("FrameOn");
                 isNotMonster = true;
+
+                int colTire = collision.gameObject.GetComponentInChildren<Card>().cardInfo.tier;
+
+                switch (colTire)
+                {
+                    case 1:
+                        stars[0].SetActive(true);
+                        num = 0;
+                        break;
+                    case 2:
+                        stars[1].SetActive(true);
+                        num = 1;
+                        break;
+                    case 3:
+                        stars[2].SetActive(true);
+                        num = 2;
+                        break;
+                    case 4:
+                        stars[3].SetActive(true);
+                        num = 3;
+                        break;
+                    case 5:
+                        stars[4].SetActive(true);
+                        num = 4;
+                        break;
+                    case 6:
+                        stars[5].SetActive(true);
+                        num = 5;
+                        break;
+                }
             }
         }
     }
@@ -52,6 +86,7 @@ public class Node : MonoBehaviour
             isNotMonster = false;
             //collisionObj = null;
             isEnter = false;
+            stars[num].SetActive(false);
         }
 
         if (collisionObj == collision.gameObject && collision.gameObject.CompareTag("FreezeCard"))
