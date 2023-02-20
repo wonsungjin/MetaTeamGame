@@ -136,7 +136,7 @@ public class MetaTrendAPI : MonoBehaviour
         yield return www.SendWebRequest();
 
         Res_DummyPool res_DummyPool = JsonUtility.FromJson<Res_DummyPool>(www.downloadHandler.text);
-        Debug.Log(www.downloadHandler.text);
+       // Debug.Log(www.downloadHandler.text);
         callback(res_DummyPool);
     }
 
@@ -163,7 +163,7 @@ public class MetaTrendAPI : MonoBehaviour
     IEnumerator requestGetSessionID(resCallback_GetSessionID callback)
     {
         // get session id
-        UnityWebRequest www = UnityWebRequest.Get("http://localhost:8546/api/getsessionid");
+        UnityWebRequest www = UnityWebRequest.Get("http://localhost:8544/api/getsessionid");
         yield return www.SendWebRequest();
         Debug.Log(www.downloadHandler.text);
         //txtInputField.text = www.downloadHandler.text;

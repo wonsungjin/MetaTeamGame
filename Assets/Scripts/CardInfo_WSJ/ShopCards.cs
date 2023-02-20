@@ -13,19 +13,24 @@ public class ShopCards : MonoBehaviour
         CardInfo[] cards = Resources.LoadAll<CardInfo>($"ScriptableDBs/");
         for(int i = 0; i<cards.Length;i++)
         {
+            Debug.Log(cards[i].tier + "~~~~~~~~추가~~~~~~~~~~~" + cards[i].objName);
+
             AddTierList(cards[i].tier, cards[i]);
         }
         for (int tierNum = 1; tierNum < 7; tierNum++)
         {            
             List<CardInfo> list = GetTierList(tierNum);
-            if (list==null) continue;
+        
             for (int i = 0; i < list.Count; i++)
             {
                 if (list[i].appear == "FALSE")
                 {
+                    Debug.Log("삭제&^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^" + list[i].objName);
                     list.Remove(list[i]);
                 continue;
                 }
+                Debug.Log("생성~~~~~~~~~~~~~~~~~~~" + list[i].objName);
+
                 obj = GameObject.Instantiate<CardUI>(card);
                 obj.transform.SetParent(GameMGR.Instance.uiManager.tier1[tierNum-1].transform);
                 obj.transform.localScale = Vector3.one;
