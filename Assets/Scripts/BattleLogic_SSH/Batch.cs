@@ -189,6 +189,7 @@ public partial class Batch : MonoBehaviourPun
             if (myCard == true)
             {
                 Debug.Log(i);
+                unitCard.GetComponentInChildren<Card>().isMine = true;
                 unitCard.transform.position = myCardPosition[i + 1].position;
                 if (i < 3) { GameMGR.Instance.battleLogic.playerForwardUnits[i] = unitCard.gameObject; }
                 else { GameMGR.Instance.battleLogic.playerBackwardUnits[i - 3] = unitCard.gameObject; }

@@ -23,7 +23,7 @@ public partial class Card : MonoBehaviourPun
     
     public int shopBatchEmptyIndex = 0;  // 상점 배치 인덱스값을 저장하는 변수
 
-    public bool isMine; // 이 카드가 나의 것인지 적의 것인지
+    public bool isMine = false; // 이 카드가 나의 것인지 적의 것인지
 
     public int triggerOnCount;
 
