@@ -22,7 +22,6 @@ public partial class UIManager : MonoBehaviour
 
     public TextMeshProUGUI timerTXT = null;
 
-    public int nowhp = 20;
     public int shopMoney = 0;
     public int goldCount = 0;
     public int shopLevel = 0;
@@ -30,6 +29,7 @@ public partial class UIManager : MonoBehaviour
     public float timer = 60f;
     private bool isScene = false;
     public bool isTimerFast = false;
+    private int nowhp = 20;
 
     public bool isTimeOver = false;
     bool isTimeOEnd = false;

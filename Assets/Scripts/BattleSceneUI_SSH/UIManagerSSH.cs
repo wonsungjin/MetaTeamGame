@@ -210,6 +210,8 @@ public partial class UIManager : MonoBehaviour
         if (drawUI.activeSelf == true) { drawUI.SetActive(false); }
         if (ResultSceneUI.activeSelf == true) { ResultSceneUI.SetActive(false); }
         GameMGR.Instance.uiManager.storePannel.SetActive(true);
+        GameMGR.Instance.uiManager.hpTXT.text = lifeText.text;
+
         GameMGR.Instance.Init(5);
     }
 
