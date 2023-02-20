@@ -22,7 +22,6 @@ public partial class UIManager : MonoBehaviour
 
     public TextMeshProUGUI timerTXT = null;
 
-    public int nowhp = 20;
     public int shopMoney = 0;
     public int goldCount = 0;
     public int shopLevel = 0;
@@ -113,6 +112,6 @@ public partial class UIManager : MonoBehaviour
         sell.gameObject.SetActive(false);
         //battleSceneUI.SetActive(false);
         isScene = true;
-        hpTXT.text = nowhp.ToString();
+        // hpTXT.text = nowhp.ToString();
     }
 }
