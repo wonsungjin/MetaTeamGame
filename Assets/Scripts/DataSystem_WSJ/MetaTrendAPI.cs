@@ -163,7 +163,7 @@ public class MetaTrendAPI : MonoBehaviour
     IEnumerator requestGetSessionID(resCallback_GetSessionID callback)
     {
         // get session id
-        UnityWebRequest www = UnityWebRequest.Get("http://localhost:8544/api/getsessionid");
+        UnityWebRequest www = UnityWebRequest.Get("http://localhost:8546/api/getsessionid");
         yield return www.SendWebRequest();
         Debug.Log(www.downloadHandler.text);
         //txtInputField.text = www.downloadHandler.text;
