@@ -7,37 +7,41 @@ using UnityEngine.UI;
 
 public class TimerTick : MonoBehaviour
 {
-    public Sprite[] images; // array of sprites representing the images in the sequence
-    private int currentImageIndex = 0; // index of the current image in the sequence
+    public Sprite[] sprites; // 이미지 배열
+    public Image image; // 이미지 컴포넌트
+    WaitForSeconds waittimer = new WaitForSeconds(0.3f);
 
+    private int currentSprite = 0; // 현재 이미지 인덱스
 
-    private void Start()
+    void Start()
     {
-        StartCoroutine(ShowImages());
+        StartCoroutine(AnimateSprite()); // 코루틴 시작
     }
 
-    private Sprite nextImage()
+    IEnumerator AnimateSprite()
     {
-        // Get the next image in the sequence
-        Sprite nextSprite = images[currentImageIndex];
-
-        // Increment the index, wrapping around to the beginning of the array if necessary
-        currentImageIndex = (currentImageIndex + 1) % images.Length;
-
-        return nextSprite;
-    }
-
-
-    IEnumerator ShowImages()
-    {
-        SpriteRenderer renderer = GetComponent<SpriteRenderer>();
         while (true)
         {
-            // Switch to the next image in the sequence
-            renderer.sprite = nextImage();
+            image.sprite = sprites[currentSprite]; // 이미지 변경
+            currentSprite++; // 인덱스 증가
 
-            // Wait for 0.1 seconds
-            yield return new WaitForSeconds(0.1f);
+            if (currentSprite >= sprites.Length)
+            {
+                currentSprite = 0; // 배열 끝에 도달하면 처음으로 돌아감
+            }
+
+            if (GameMGR.Instance.uiManager.isTimerFast == false)
+            {
+                Debug.Log("타이머 슬로우");
+                yield return waittimer; // 0.3초 대기
+            }
+
+            else if (GameMGR.Instance.uiManager.isTimerFast == true)
+            {
+                Debug.Log(GameMGR.Instance.uiManager.isTimerFast);
+                Debug.Log("타이머 패스트");
+                yield return new WaitForSeconds(0.1f);
+            }
         }
     }
 }

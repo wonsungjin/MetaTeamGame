@@ -23,9 +23,9 @@ public class Sell : MonoBehaviour
         }
     }
 
-    IEnumerator COR_ComBineMonsterEF()
+    IEnumerator COR_ComBineMonsterEF(Collider2D coll)
     {
-        GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>("CFX3_Hit_SmokePuff"), gameObject.transform.position, Quaternion.identity);
+        GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>("CFX3_Hit_SmokePuff"), coll.gameObject.transform.position, Quaternion.identity);
         yield return new WaitForSeconds(0.3f);
         GameMGR.Instance.objectPool.DestroyPrefab(mon.transform.gameObject);
     }
@@ -33,7 +33,7 @@ public class Sell : MonoBehaviour
 
     void Selld(Collider2D coll)
     {
-        StartCoroutine(COR_ComBineMonsterEF());
+        StartCoroutine(COR_ComBineMonsterEF(coll));
 
         if (coll.CompareTag("BattleMonster"))
         {

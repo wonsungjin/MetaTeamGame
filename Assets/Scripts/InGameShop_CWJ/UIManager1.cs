@@ -27,7 +27,7 @@ public partial class UIManager : MonoBehaviour
     public int hireUnitCost = 3; // 유닛 고용 비용
     public float timer = 60f;
     private bool isScene = false;
-    public bool isTimerFast = true;
+    public bool isTimerFast = false;
 
     public bool isTimeOver = false;
     bool isTimeOEnd = false;
@@ -80,7 +80,7 @@ public partial class UIManager : MonoBehaviour
             timerTXT.text = string.Format("Time : {0:N0}sec", timer);
         }
 
-        if (timerSlider.fillAmount <= 0.2f && timerSlider.fillAmount >= 0.2f) timerSound();
+        if (timer <= 15f) timerSound();
         else if (timerSlider.fillAmount <= 0f)
         {
             GameMGR.Instance.timerSound.TimeSoundEnd();
@@ -91,6 +91,7 @@ public partial class UIManager : MonoBehaviour
 
     void timerSound()
     {
+        Debug.Log("여기로 들어옴");
         GameMGR.Instance.timerSound.TimeSound();
         isTimerFast = true;
     }
