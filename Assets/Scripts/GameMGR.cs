@@ -10,7 +10,7 @@ public partial class GameMGR : Singleton<GameMGR>
     public DataBase dataBase;
     public ObjectPool objectPool;
     public AudioMGR audioMGR;
-    
+
     public CustomDeckShop customDeckShop;
     public ShopCards shopCards;
 
@@ -53,7 +53,7 @@ public partial class GameMGR : Singleton<GameMGR>
         if (myCustomDeck != null)
         {
             photonLauncher.OnClick_Join_Room();
-           // SceneManager.LoadScene("StoreScene");
+            // SceneManager.LoadScene("StoreScene");
         }
         else Debug.Log("덱선택");
     }
@@ -63,7 +63,7 @@ public partial class GameMGR : Singleton<GameMGR>
     {
         yield return new WaitForSeconds(2f);
         if (stayAPI[0] == false && stayAPI[1] == false) uiManager.loginSystemUI.SetActive(true);
-        while(stayAPI[0] == false && stayAPI[1] == false)
+        while (stayAPI[0] == false && stayAPI[1] == false)
         {
             yield return new WaitForSeconds(2f);
             metaTrendAPI.GetUserProfile();
@@ -81,7 +81,7 @@ public partial class GameMGR : Singleton<GameMGR>
         uiManager.Faid(uiManager.loginSystemUI, faidType.Out, 0.03f);
         dataBase.Login();
         PhotonNetwork.LocalPlayer.NickName = GameMGR.Instance.dataBase.userName;
-        Debug.Log("???"+metaTrendAPI.GetZera());
+        Debug.Log("???" + metaTrendAPI.GetZera());
     }
     public void Init(int num)
     {
@@ -98,7 +98,7 @@ public partial class GameMGR : Singleton<GameMGR>
             uiManager.Init_Scene1();
             shopCards.Init();
         }
-        else if (num==2)
+        else if (num == 2)
         {
             spawner = FindObjectOfType<Spawner>();
             uiManager = FindObjectOfType<UIManager>();
@@ -110,6 +110,9 @@ public partial class GameMGR : Singleton<GameMGR>
             timerSound = FindObjectOfType<TimerSound>();
             chainBroken = FindObjectOfType<ChainBroken>();
             audioMGR.StoreSceneBGM(true);
+
+            // lobby timerInit
+            uiManager.isLobby = false;
 
             // battle Scene
             uiManager.BattleUIInit();
