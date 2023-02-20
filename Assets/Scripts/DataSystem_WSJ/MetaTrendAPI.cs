@@ -136,7 +136,7 @@ public class MetaTrendAPI : MonoBehaviour
         yield return www.SendWebRequest();
 
         Res_DummyPool res_DummyPool = JsonUtility.FromJson<Res_DummyPool>(www.downloadHandler.text);
-        Debug.Log(www.downloadHandler.text);
+       // Debug.Log(www.downloadHandler.text);
         callback(res_DummyPool);
     }
 

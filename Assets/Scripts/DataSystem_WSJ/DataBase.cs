@@ -84,6 +84,7 @@ public class DataBase : MonoBehaviour
             }));
             var update = Builders<BsonDocument>.Update.Set("inventory", inventoryData);//찾은거 바꾸기
             var update2 = Builders<BsonDocument>.Update.Set("unitData", unitData);//찾은거 바꾸기
+            unitData.RandomAdd();
             GameMGR.Instance.customDeckShop.Create_CustomDeck();
             collection.UpdateOne(fillter, update);
             collection.UpdateOne(fillter, update2);
@@ -91,6 +92,7 @@ public class DataBase : MonoBehaviour
         else
         {
             FindInventoryData();
+            FindUnitData();
             GameMGR.Instance.dataBase.InsertInventoryData();
             GameMGR.Instance.uiManager.SetParentPackAddButton();
         }
@@ -98,6 +100,36 @@ public class DataBase : MonoBehaviour
     }
     public InventoryData inventoryData = new InventoryData();
     public UnitData unitData = new UnitData();
+    public void FindUnitData()
+    {
+        var fillter = Builders<BsonDocument>.Filter.Eq("address", GameMGR.Instance.metaTrendAPI.res_UserProfile.userProfile.public_address);//찾을 도큐먼트의 Name이 아디인것
+
+        nullFillter = collection.Find(fillter).FirstOrDefault();//if null 이면 찾지 못함
+        BsonValue value = null;
+        BsonValue value2 = null;
+        BsonValue value3 = null;
+        nullFillter.TryGetValue("unitData", out value);
+        value.ToBsonDocument().TryGetValue("hashtable", out value);
+        unitData = new UnitData();
+        for (int tier = 1; tier < 7; tier++)
+        {
+            value.ToBsonDocument().TryGetValue("A" + tier, out value2);
+            Debug.Log("A" + tier+value2);
+            value2.ToBsonDocument().TryGetValue("_v", out value3);
+            string[] valueSplit = value2.ToString().Split(':');
+            valueSplit = valueSplit[2].Replace("[", "").Replace("]", "").Replace(" ", "").Replace("{", "").Replace("}", "").Replace("\"", "").Split(',');
+            List<string> hashList = new List<string>();
+            for (int j = 0; j < valueSplit.Length; j++)
+            {
+                hashList.Add(valueSplit[j]);
+            }
+            unitData.hashtable.Add("A" + tier, hashList);
+            Debug.Log(hashList.Count + "???????zkdnsmdmdmxkedkek");
+        }
+
+
+
+    }
     public void FindInventoryData()
     {
         var fillter = Builders<BsonDocument>.Filter.Eq("address", GameMGR.Instance.metaTrendAPI.res_UserProfile.userProfile.public_address);//찾을 도큐먼트의 Name이 아디인것
@@ -313,12 +345,25 @@ public class CustomDeck
 }
 public class UnitData
 {
-    public List<string> tier_1 = new List<string>();
-    public List<string> tier_2 = new List<string>();
-    public List<string> tier_3 = new List<string>();
-    public List<string> tier_4 = new List<string>();
-    public List<string> tier_5 = new List<string>();
-    public List<string> tier_6 = new List<string>();
-
+    public Hashtable hashtable = new Hashtable();
+    public void RandomAdd()
+    {
+        List<CardInfo> list = null;
+        for (int tier = 1; tier < 7; tier++)
+        {
+        List<string> hashList = new List<string>();
+            GameMGR.Instance.shopCards.customDeckList.TryGetValue(tier, out list);
+        int ran= UnityEngine.Random.Range(0, list.Count);
+            for(int i = 0; i < 4;i++)
+            {
+                while (hashList.Contains(list[ran].objName.Replace(" ","")))
+                {
+                    ran = UnityEngine.Random.Range(0, list.Count);
+                }
+                hashList.Add(list[ran].objName.Replace(" ", ""));
+            }
+                hashtable.Add("A"+tier, hashList);
+        }
+    }
 }
 

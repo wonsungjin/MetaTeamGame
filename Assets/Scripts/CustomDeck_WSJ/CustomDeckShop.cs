@@ -132,7 +132,7 @@ public class CustomDeckShop : MonoBehaviour
             {
                 while (list.Count < 8)
                 {
-                    while (list.Contains(shopList[ran].objName) == true)
+                    while (list.Contains(shopList[ran].objName) == true|| shopList[ran].appear == "FALSE")
                     {
                         ran = Random.Range(0, shopList.Count);
                     }
