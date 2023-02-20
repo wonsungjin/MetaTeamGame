@@ -59,8 +59,6 @@ public partial class AttackLogic : Skill
         {
             yield return new WaitForSecondsRealtime(1f);
         }
-            
-                
 
         GameMGR.Instance.battleLogic.isWaitAttack = true;
     }

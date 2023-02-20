@@ -219,6 +219,7 @@ MonoBehaviour:
   takeDamage: 0
   shopBatchEmptyIndex: 0
   isMine: 0
+  triggerOnCount: 0
   searchArea: []
 --- !u!114 &6087694543895898707
 MonoBehaviour:

@@ -25,6 +25,8 @@ public partial class Card : MonoBehaviourPun
 
     public bool isMine; // 이 카드가 나의 것인지 적의 것인지
 
+    public int triggerOnCount;
+
     //스킬 범위를 설정하는 배열 ( 위 isMine 값에 따라 들어가는 기준이 다르다 )
     GameObject[] myArea;
     GameObject[] myAreaFront;
@@ -36,12 +38,14 @@ public partial class Card : MonoBehaviourPun
     public void Start()
     {
         // SetSkillTiming(); // 나의 스킬타이밍에 따라 이벤트에 추가해야한다면 추가한다.
+        triggerOnCount = cardInfo.GetNumTrigger(level);
     }
 
     #region 스킬 효과 적용 관련 변수 모음
 
     public void Attack(int damage, Card Target, bool isDirect, bool isFirst) // 자신이 공격시 호출하는 함수 // 주는 데미지, 때릴 대상 // 직접 공격이냐 아니냐 (공격 차례때 때리는 것 / 스킬데미지로 때리는 것) // 첫타 구분(무한루프 방지)
     {
+        Debug.Log($"{gameObject.name}이 {Target.name}에게 {damage} 데미지를 주었다");
         if (cardInfo.skillTiming == SkillTiming.attackBefore) SkillActive(); // 공격 전 효과 발동
         //GameMGR.Instance.audioMGR.BattleAttackSound(damage);
         Target.Hit(damage, this, isDirect, isFirst); // 지금부터 내가 너를 때리겠다는 말이야
@@ -50,8 +54,9 @@ public partial class Card : MonoBehaviourPun
 
     public void Hit(int damage, Card Attacker, bool isDirect, bool isFirst) // 자신이 피격시 호출되는 함수 // 받은 데미지, 날 때린 사람
     {
-        //if (isDirect && isFirst == true) // 처음 직접 공격을 받았을 때만 응수를 하는 것이 응당 정당 타당 합당 마땅하다.
-        //Attacker.Hit(damage, this, true, false); // 니가 날 직접 때렸다면 나도 너를 때릴 것이다.
+        Debug.Log($"{gameObject.name}이 {Attacker.name}에게 {damage}만큼 맞았다. 직접공격 : {isDirect}, 첫공격 : {isFirst}");
+        if (isDirect && isFirst == true) // 처음 직접 공격을 받았을 때만 응수를 하는 것이 응당 정당 타당 합당 마땅하다.
+        Attacker.Hit(curAttackValue, this, true, false); // 니가 날 직접 때렸다면 나도 너를 때릴 것이다.
         curHP -= damage;
         hpText.text = curHP.ToString();
 
@@ -59,9 +64,10 @@ public partial class Card : MonoBehaviourPun
         {
             if (Attacker.cardInfo.skillTiming == SkillTiming.kill) Attacker.SkillActive(); // 내가 죽었는데 적이 처치시 효과가 있다면 적 효과 먼저 발동시켜준다.
             if (cardInfo.skillTiming == SkillTiming.death) SkillActive(); // 사망시 효과 발동
+            GameMGR.Instance.battleLogic.isWaitAttack = true;
             GameMGR.Instance.objectPool.DestroyPrefab(gameObject.transform.parent.gameObject);
 
-            //GameMGR.Instance.battleLogic.isWaitAttack = true;
+            
         }
 
         GameMGR.Instance.Event_HitEnemy(this);
@@ -120,19 +126,24 @@ public partial class Card : MonoBehaviourPun
 
     public void SkillActive() // 스킬 효과 발동 // FindTargetType 함수를 통해 구체적인 스킬 적용 대상이 정해지고 난 이후에 발동하는 게 맞다고 볼 수 있는 부분적인 부분
     {
+        if (triggerOnCount < 1) return;
         Debug.Log("Skill Active");
         FindTargetType();
         SkillEffect();
+        triggerOnCount--;
     }
 
     public void SkillActive2(Card card)
     {
+        if (triggerOnCount < 1) return;
+
         if (cardInfo.skillTiming == SkillTiming.hitEnemy)
         {
             if ((isMine && !card.isMine) || (!isMine && card.isMine))
             {
                 FindTargetType();
                 SkillEffect();
+                triggerOnCount--;
             }
             else return;
         }
@@ -144,6 +155,7 @@ public partial class Card : MonoBehaviourPun
             {
                 FindTargetType();
                 SkillEffect();
+                triggerOnCount--;
             }
         }
         else
@@ -151,6 +163,7 @@ public partial class Card : MonoBehaviourPun
             Debug.Log("Skill Active 2");
             FindTargetType();
             SkillEffect();
+            triggerOnCount--;
         }
     }
 
@@ -186,6 +199,10 @@ public partial class Card : MonoBehaviourPun
                 break;
             case EffectType.changeATK:
                 Debug.Log("공격력 효과 발동");
+                for(int j = 0; j < cardInfo.GetNumTrigger(level); j++)
+                {
+
+                }
                 for (int i = 0; i < skillTarget.Count; i++)
                 {
                     if (skillTarget[i].curAttackValue > cardInfo.GetValue(1, level))
