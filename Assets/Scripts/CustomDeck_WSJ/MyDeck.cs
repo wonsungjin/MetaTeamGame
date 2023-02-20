@@ -11,7 +11,6 @@ public class MyDeck : MonoBehaviour
     public void SetMyDeck(CustomDeck customDeck)
     {
         myDeck = customDeck;
-        GameMGR.Instance.uiManager.SetMyDeckName(myDeck.DeckName);
     }
     public void OnClick_Delete_MyDeck()
     {
@@ -31,9 +30,11 @@ public class MyDeck : MonoBehaviour
             for (int i = 0; i < myDeckList.Count; i++)
                 myDeckList[i].gameObject.SetActive(true);
             GameMGR.Instance.uiManager.OnClick_Join_MyDeckInfo();
+            GameMGR.Instance.uiManager.SetMyDeckName(myDeck.DeckName);
         }
         else//처음 들어올때 덱에든 유닛을 모두 생성
         {
+            GameMGR.Instance.uiManager.SetMyDeckName(myDeck.DeckName);
             isJoin = true;
             CardUI obj = null;
             if (myDeck.tier_1 != null)

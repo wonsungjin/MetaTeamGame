@@ -83,8 +83,10 @@ public class DataBase : MonoBehaviour
 
             }));
             var update = Builders<BsonDocument>.Update.Set("inventory", inventoryData);//찾은거 바꾸기
+            var update2 = Builders<BsonDocument>.Update.Set("unitData", unitData);//찾은거 바꾸기
             GameMGR.Instance.customDeckShop.Create_CustomDeck();
             collection.UpdateOne(fillter, update);
+            collection.UpdateOne(fillter, update2);
         }
         else
         {
@@ -95,6 +97,7 @@ public class DataBase : MonoBehaviour
 
     }
     public InventoryData inventoryData = new InventoryData();
+    public UnitData unitData = new UnitData();
     public void FindInventoryData()
     {
         var fillter = Builders<BsonDocument>.Filter.Eq("address", GameMGR.Instance.metaTrendAPI.res_UserProfile.userProfile.public_address);//찾을 도큐먼트의 Name이 아디인것
@@ -308,3 +311,14 @@ public class CustomDeck
     public List<string> tier_5 = new List<string>();
     public List<string> tier_6 = new List<string>();
 }
+public class UnitData
+{
+    public List<string> tier_1 = new List<string>();
+    public List<string> tier_2 = new List<string>();
+    public List<string> tier_3 = new List<string>();
+    public List<string> tier_4 = new List<string>();
+    public List<string> tier_5 = new List<string>();
+    public List<string> tier_6 = new List<string>();
+
+}
+
