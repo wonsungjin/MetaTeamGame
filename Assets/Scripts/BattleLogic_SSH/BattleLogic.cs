@@ -42,6 +42,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
     private void Start()
     {
         Init();
+        PhotonNetwork.FetchServerTimestamp();
     }
 
     private void Init()
