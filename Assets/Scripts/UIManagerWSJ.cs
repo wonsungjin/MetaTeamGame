@@ -22,6 +22,10 @@ public partial class UIManager : MonoBehaviour
     public GameObject loginSystemUI;
     public GameObject blackUI;
     private GameObject logoPannel;
+
+    public TextMeshProUGUI tournamentText;
+    public bool isLobby = true;
+
     [Header("PackList")]
     [SerializeField] private MyDeck packButton;
     private GameObject myPackList;
@@ -86,6 +90,7 @@ public partial class UIManager : MonoBehaviour
         tierCountText[3] = GameObject.Find("4").transform.GetChild(2).GetComponent<TextMeshProUGUI>();
         tierCountText[4] = GameObject.Find("5").transform.GetChild(2).GetComponent<TextMeshProUGUI>();
         tierCountText[5] = GameObject.Find("6").transform.GetChild(2).GetComponent<TextMeshProUGUI>();
+        tournamentText = GameObject.Find("MonthlyTime").GetComponent<TextMeshProUGUI>();
         toggleGroup = FindObjectOfType<ToggleGroup>();
         deleteWarringUI.SetActive(false);
         customPannel.SetActive(false);
@@ -99,6 +104,9 @@ public partial class UIManager : MonoBehaviour
         blackUI.SetActive(false);
         SetFalseStar(0);
         StartCoroutine(COR_FaidDelay());
+
+        isLobby = true;
+        StartCoroutine(GameMGR.Instance.metaTrendAPI.processRequestGetDummy());
     }
     IEnumerator COR_FaidDelay()
     {
