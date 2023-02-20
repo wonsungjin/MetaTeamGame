@@ -29,6 +29,7 @@ public partial class UIManager : MonoBehaviour
     public float timer = 60f;
     private bool isScene = false;
     public bool isTimerFast = false;
+    private int nowhp = 20;
 
     public bool isTimeOver = false;
     bool isTimeOEnd = false;
@@ -112,6 +113,6 @@ public partial class UIManager : MonoBehaviour
         sell.gameObject.SetActive(false);
         //battleSceneUI.SetActive(false);
         isScene = true;
-        // hpTXT.text = nowhp.ToString();
+        hpTXT.text = nowhp.ToString();
     }
 }
