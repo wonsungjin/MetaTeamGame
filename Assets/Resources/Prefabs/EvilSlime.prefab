@@ -450,6 +450,7 @@ MonoBehaviour:
   takeDamage: 0
   shopBatchEmptyIndex: 0
   isMine: 0
+  triggerOnCount: 0
   searchArea: []
 --- !u!4 &6139368758880310230 stripped
 Transform:
