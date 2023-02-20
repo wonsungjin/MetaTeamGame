@@ -6,6 +6,7 @@ using UnityEngine.Networking;
 using TMPro;
 using Unity.VisualScripting;
 using System;
+using Photon.Pun;
 
 public class MetaTrendAPI : MonoBehaviour
 {
@@ -19,8 +20,11 @@ public class MetaTrendAPI : MonoBehaviour
 	[SerializeField] string FullAppsProductionURL = "https://odin-api.browseosiris.com";
 	[SerializeField] string FullAppsStagingURL = "https://odin-api-sat.browseosiris.com";
 
-	// 버튼 누를시 URL 연결
-	public void ButtonGetURL()
+	DateTime APITime;
+	DateTime ServerTime;
+
+    // 버튼 누를시 URL 연결
+    public void ButtonGetURL()
 	{
 		Application.OpenURL("https://www.naver.com/");
 	}
@@ -88,7 +92,11 @@ public class MetaTrendAPI : MonoBehaviour
 		{
 			if (response != null)
 			{
-				Debug.Log("startTime" + response.data.records[0].startTime); 
+				Debug.LogError("startTime" + response.data.records[0].startTime);
+				APITime = DateTime.Parse(response.data.records[0].startTime);
+				Debug.LogError("APITime :" + APITime);
+				ServerTime = DateTimeOffset.FromUnixTimeSeconds(PhotonNetwork.ServerTimestamp).LocalDateTime;
+                Debug.LogError("ServerTime : "+ ServerTime);
             }
 		});
 	}
