@@ -138,7 +138,7 @@ public class AudioMGR : MonoBehaviour
     public void SoundRefreshButton()
     {
         StoreAudioSource.outputAudioMixerGroup = SFXAudioMixer;
-        StoreAudioSource.clip = ReturnAudioClip(Type.UI, "StoreLevelup_sound");
+        StoreAudioSource.clip = ReturnAudioClip(Type.UI, "Refresh");
         StoreAudioSource.Play();
     }
 

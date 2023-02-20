@@ -24655,6 +24655,118 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2063491190, guid: a4f20f45cd3327f448bc2e26e4fe7e10, type: 3}
+      propertyPath: UISFXClip.Array.size
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 2063491190, guid: a4f20f45cd3327f448bc2e26e4fe7e10, type: 3}
+      propertyPath: UnitSFXClip.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2063491190, guid: a4f20f45cd3327f448bc2e26e4fe7e10, type: 3}
+      propertyPath: UISFXClip.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 1b151418fe3a7884d9c3706e19e509e1, type: 3}
+    - target: {fileID: 2063491190, guid: a4f20f45cd3327f448bc2e26e4fe7e10, type: 3}
+      propertyPath: UISFXClip.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 02c8db426dcf63e4492bb92abafd7e91, type: 3}
+    - target: {fileID: 2063491190, guid: a4f20f45cd3327f448bc2e26e4fe7e10, type: 3}
+      propertyPath: UISFXClip.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: 278dc47bffed78347ae33bf91a94f14b, type: 3}
+    - target: {fileID: 2063491190, guid: a4f20f45cd3327f448bc2e26e4fe7e10, type: 3}
+      propertyPath: UISFXClip.Array.data[3]
+      value: 
+      objectReference: {fileID: 8300000, guid: 67aea021707b5ee41bde9b684e7e2ee8, type: 3}
+    - target: {fileID: 2063491190, guid: a4f20f45cd3327f448bc2e26e4fe7e10, type: 3}
+      propertyPath: UISFXClip.Array.data[4]
+      value: 
+      objectReference: {fileID: 8300000, guid: a643d10b0f7071b45b7ec3883fbed506, type: 3}
+    - target: {fileID: 2063491190, guid: a4f20f45cd3327f448bc2e26e4fe7e10, type: 3}
+      propertyPath: UISFXClip.Array.data[5]
+      value: 
+      objectReference: {fileID: 8300000, guid: a66e86293a885664ebef2dc45efc8e2b, type: 3}
+    - target: {fileID: 2063491190, guid: a4f20f45cd3327f448bc2e26e4fe7e10, type: 3}
+      propertyPath: UISFXClip.Array.data[6]
+      value: 
+      objectReference: {fileID: 8300000, guid: 1adda10808ff5d34b92bc0e625f0f40c, type: 3}
+    - target: {fileID: 2063491190, guid: a4f20f45cd3327f448bc2e26e4fe7e10, type: 3}
+      propertyPath: UISFXClip.Array.data[7]
+      value: 
+      objectReference: {fileID: 8300000, guid: 458893b0c25f6d44cbff28b9bc22ddf6, type: 3}
+    - target: {fileID: 2063491190, guid: a4f20f45cd3327f448bc2e26e4fe7e10, type: 3}
+      propertyPath: UISFXClip.Array.data[8]
+      value: 
+      objectReference: {fileID: 8300000, guid: 6df2c0f4436059342ad2f65f1c717357, type: 3}
+    - target: {fileID: 2063491190, guid: a4f20f45cd3327f448bc2e26e4fe7e10, type: 3}
+      propertyPath: UISFXClip.Array.data[9]
+      value: 
+      objectReference: {fileID: 8300000, guid: 5ae9b6980ef442344a5d8a3e537618d3, type: 3}
+    - target: {fileID: 2063491190, guid: a4f20f45cd3327f448bc2e26e4fe7e10, type: 3}
+      propertyPath: UISFXClip.Array.data[10]
+      value: 
+      objectReference: {fileID: 8300000, guid: 862de707f6598d04ea8c243a892c0280, type: 3}
+    - target: {fileID: 2063491190, guid: a4f20f45cd3327f448bc2e26e4fe7e10, type: 3}
+      propertyPath: UISFXClip.Array.data[11]
+      value: 
+      objectReference: {fileID: 8300000, guid: 07a664c96c0ecf04aa1f1e0c8ad62438, type: 3}
+    - target: {fileID: 2063491190, guid: a4f20f45cd3327f448bc2e26e4fe7e10, type: 3}
+      propertyPath: UISFXClip.Array.data[12]
+      value: 
+      objectReference: {fileID: 8300000, guid: d10c79d45817a1f4fa554143d0bcbe50, type: 3}
+    - target: {fileID: 2063491190, guid: a4f20f45cd3327f448bc2e26e4fe7e10, type: 3}
+      propertyPath: UISFXClip.Array.data[13]
+      value: 
+      objectReference: {fileID: 8300000, guid: 0f3c4e38898270f45bb4747698550bb1, type: 3}
+    - target: {fileID: 2063491190, guid: a4f20f45cd3327f448bc2e26e4fe7e10, type: 3}
+      propertyPath: UISFXClip.Array.data[14]
+      value: 
+      objectReference: {fileID: 8300000, guid: 594391597c2cb8640b8504fad5f74499, type: 3}
+    - target: {fileID: 2063491190, guid: a4f20f45cd3327f448bc2e26e4fe7e10, type: 3}
+      propertyPath: UISFXClip.Array.data[15]
+      value: 
+      objectReference: {fileID: 8300000, guid: 6737eae19b590444ea38397543d278ab, type: 3}
+    - target: {fileID: 2063491190, guid: a4f20f45cd3327f448bc2e26e4fe7e10, type: 3}
+      propertyPath: UISFXClip.Array.data[16]
+      value: 
+      objectReference: {fileID: 8300000, guid: 38c354996d7002b46b17b9f543529c27, type: 3}
+    - target: {fileID: 2063491190, guid: a4f20f45cd3327f448bc2e26e4fe7e10, type: 3}
+      propertyPath: UnitSFXClip.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 0e483a069338af14494ff01ee0d5de3b, type: 3}
+    - target: {fileID: 2063491190, guid: a4f20f45cd3327f448bc2e26e4fe7e10, type: 3}
+      propertyPath: UnitSFXClip.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: c7cdb163eaeb80f4f99c025d97b4e267, type: 3}
+    - target: {fileID: 2063491190, guid: a4f20f45cd3327f448bc2e26e4fe7e10, type: 3}
+      propertyPath: UnitSFXClip.Array.data[3]
+      value: 
+      objectReference: {fileID: 8300000, guid: c123cb3ca84a4c949a5b56d6acd77906, type: 3}
+    - target: {fileID: 2063491190, guid: a4f20f45cd3327f448bc2e26e4fe7e10, type: 3}
+      propertyPath: UnitSFXClip.Array.data[4]
+      value: 
+      objectReference: {fileID: 8300000, guid: 2f724425b787dcd45bcfd045d0f5aa08, type: 3}
+    - target: {fileID: 2063491190, guid: a4f20f45cd3327f448bc2e26e4fe7e10, type: 3}
+      propertyPath: UnitSFXClip.Array.data[5]
+      value: 
+      objectReference: {fileID: 8300000, guid: 74958d97534c85d4c98a7408ffd17afc, type: 3}
+    - target: {fileID: 2063491190, guid: a4f20f45cd3327f448bc2e26e4fe7e10, type: 3}
+      propertyPath: UnitSFXClip.Array.data[6]
+      value: 
+      objectReference: {fileID: 8300000, guid: 10f4036b489e2fe429f3f9453ca27f41, type: 3}
+    - target: {fileID: 2063491190, guid: a4f20f45cd3327f448bc2e26e4fe7e10, type: 3}
+      propertyPath: BackGroundClip.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 44824f7f8510829418e3b7e5bbb3afce, type: 3}
+    - target: {fileID: 2063491190, guid: a4f20f45cd3327f448bc2e26e4fe7e10, type: 3}
+      propertyPath: BackGroundClip.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 3d4e204c00def894aa353575f257bc50, type: 3}
+    - target: {fileID: 2063491190, guid: a4f20f45cd3327f448bc2e26e4fe7e10, type: 3}
+      propertyPath: BackGroundClip.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: 358be2c5c78b27447907c536a4968233, type: 3}
     - target: {fileID: 6544229276892394786, guid: a4f20f45cd3327f448bc2e26e4fe7e10, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -27771,11 +27883,13 @@ MonoBehaviour:
   timerSlider: {fileID: 0}
   NowShopLevelTXT: {fileID: 0}
   goldTXT: {fileID: 0}
+  hpTXT: {fileID: 0}
   shopLevelTXT: {fileID: 0}
   unitSprite: []
   playerBatchUI: {fileID: 0}
   playerName: {fileID: 0}
   timerTXT: {fileID: 0}
+  nowhp: 20
   shopMoney: 0
   goldCount: 10
   shopLevel: 1
