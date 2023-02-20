@@ -223,7 +223,7 @@ public partial class Drag2D : MonoBehaviour
 
             if (collision.gameObject.CompareTag("BattleMonster3") || gameObject.CompareTag("BattleMonster3"))
             {
-                return;
+                StartCoroutine(COR_BackAgain());
             }
         }
     }
@@ -231,6 +231,7 @@ public partial class Drag2D : MonoBehaviour
     IEnumerator COR_BuyMonsterEF()
     {
         GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>("Heart"), gameObject.transform.position + monsterPos1, Quaternion.identity);
+        mon.layer = 2;
         yield return new WaitForSeconds(0.3f);
         GameMGR.Instance.objectPool.DestroyPrefab(mon.transform.gameObject);
     }
@@ -278,7 +279,7 @@ public partial class Drag2D : MonoBehaviour
             thisExp += 3;
             collision.gameObject.GetComponentInChildren<Card>().ChangeValue(CardStatus.Exp, thisExp);
         }
-
+        
         GameMGR.Instance.objectPool.DestroyPrefab(this.gameObject.transform.parent.gameObject);
         GameMGR.Instance.uiManager.sell.gameObject.SetActive(false);
     }

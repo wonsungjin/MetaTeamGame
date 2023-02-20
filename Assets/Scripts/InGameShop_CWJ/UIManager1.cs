@@ -1,4 +1,3 @@
-using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,6 +13,7 @@ public partial class UIManager : MonoBehaviour
     public Image timerSlider = null;
     public TextMeshProUGUI NowShopLevelTXT = null;
     public TextMeshProUGUI goldTXT = null;
+    public TextMeshProUGUI hpTXT = null;
     public TextMeshProUGUI shopLevelTXT = null;
     public Image[] unitSprite = null;
     public GameObject playerBatchUI = null;
@@ -21,6 +21,7 @@ public partial class UIManager : MonoBehaviour
 
     public TextMeshProUGUI timerTXT = null;
 
+    public int nowhp = 20;
     public int shopMoney = 0;
     public int goldCount = 0;
     public int shopLevel = 0;
@@ -50,6 +51,7 @@ public partial class UIManager : MonoBehaviour
         optionButton = GameObject.Find("OptionButton").GetComponent<Button>();
         NowShopLevelTXT = GameObject.Find("NowShopLevelTXT").GetComponent<TextMeshProUGUI>();
         goldTXT = GameObject.Find("GoldTXT").GetComponent<TextMeshProUGUI>();
+        hpTXT = GameObject.Find("HpTXT").GetComponent<TextMeshProUGUI>();
         shopLevelTXT = GameObject.Find("ShopLevelUpTXT").GetComponent<TextMeshProUGUI>();
         timerTXT = GameObject.Find("TimerTXT").GetComponent<TextMeshProUGUI>();
         playerName = GameObject.Find("PlayerName").GetComponent<TextMeshProUGUI>();
@@ -102,5 +104,6 @@ public partial class UIManager : MonoBehaviour
         sell.gameObject.SetActive(false);
         //battleSceneUI.SetActive(false);
         isScene = true;
+        hpTXT.text = nowhp.ToString();
     }
 }
