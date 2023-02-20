@@ -14,6 +14,7 @@ public partial class UIManager : MonoBehaviour
     public Image timerSlider = null;
     public TextMeshProUGUI NowShopLevelTXT = null;
     public TextMeshProUGUI goldTXT = null;
+    public TextMeshProUGUI hpTXT = null;
     public TextMeshProUGUI shopLevelTXT = null;
     public Image[] unitSprite = null;
     public GameObject playerBatchUI = null;
@@ -21,6 +22,7 @@ public partial class UIManager : MonoBehaviour
 
     public TextMeshProUGUI timerTXT = null;
 
+    public int nowhp = 20;
     public int shopMoney = 0;
     public int goldCount = 0;
     public int shopLevel = 0;
@@ -31,6 +33,9 @@ public partial class UIManager : MonoBehaviour
 
     public bool isTimeOver = false;
     bool isTimeOEnd = false;
+
+    WaitForSeconds wait = new WaitForSeconds(0.1f);
+
     public void Init_Scene2()
     {
         unitSprite = new Image[7];
@@ -50,6 +55,7 @@ public partial class UIManager : MonoBehaviour
         optionButton = GameObject.Find("OptionButton").GetComponent<Button>();
         NowShopLevelTXT = GameObject.Find("NowShopLevelTXT").GetComponent<TextMeshProUGUI>();
         goldTXT = GameObject.Find("GoldTXT").GetComponent<TextMeshProUGUI>();
+        hpTXT = GameObject.Find("HpTXT").GetComponent<TextMeshProUGUI>();
         shopLevelTXT = GameObject.Find("ShopLevelUpTXT").GetComponent<TextMeshProUGUI>();
         timerTXT = GameObject.Find("TimerTXT").GetComponent<TextMeshProUGUI>();
         playerName = GameObject.Find("PlayerName").GetComponent<TextMeshProUGUI>();
@@ -78,20 +84,25 @@ public partial class UIManager : MonoBehaviour
             timer -= Time.deltaTime;
             timerSlider.fillAmount = timer / 100 * 1.667f;
             timerTXT.text = string.Format("Time : {0:N0}sec", timer);
-        }
 
-        if (timer <= 15f) timerSound();
-        else if (timerSlider.fillAmount <= 0f)
-        {
-            GameMGR.Instance.timerSound.TimeSoundEnd();
-            isTimeOEnd = true;
-            timer = 0f;
+            if (timer <= 15f && timer >= 1f) timerSound();
+            else if (timer <= 0f)
+            {
+                Debug.Log("0이됐다 시간이");
+                GameMGR.Instance.timerSound.TimeSoundEnd();
+                isTimeOEnd = true;
+            }
         }
+    }
+
+    IEnumerator COR_Timer()
+    {
+        while (true)
+        yield return wait;
     }
 
     void timerSound()
     {
-        Debug.Log("여기로 들어옴");
         GameMGR.Instance.timerSound.TimeSound();
         isTimerFast = true;
     }
@@ -102,5 +113,6 @@ public partial class UIManager : MonoBehaviour
         sell.gameObject.SetActive(false);
         //battleSceneUI.SetActive(false);
         isScene = true;
+        hpTXT.text = nowhp.ToString();
     }
 }

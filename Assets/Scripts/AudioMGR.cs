@@ -120,6 +120,28 @@ public class AudioMGR : MonoBehaviour
         StoreAudioSource.clip = ReturnAudioClip(Type.UI, "gold -1");
         StoreAudioSource.Play();
     }
+
+    public void SoundLevelUpButtonFail()
+    {
+        StoreAudioSource.outputAudioMixerGroup = SFXAudioMixer;
+        StoreAudioSource.clip = ReturnAudioClip(Type.UI, "fail_sound");
+        StoreAudioSource.Play();
+    }
+
+    public void SoundLevelUpButton()
+    {
+        StoreAudioSource.outputAudioMixerGroup = SFXAudioMixer;
+        StoreAudioSource.clip = ReturnAudioClip(Type.UI, "StoreLevelup_sound");
+        StoreAudioSource.Play();
+    }
+
+    public void SoundRefreshButton()
+    {
+        StoreAudioSource.outputAudioMixerGroup = SFXAudioMixer;
+        StoreAudioSource.clip = ReturnAudioClip(Type.UI, "Refresh");
+        StoreAudioSource.Play();
+    }
+
     #endregion
 
 
