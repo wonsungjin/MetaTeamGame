@@ -43,6 +43,6 @@ public class TimerTick : MonoBehaviour
 
     void TimerTickFaster()
     {
-        rotateSpeed = 50f;
+        rotateSpeed = 60f;
     }
 }
