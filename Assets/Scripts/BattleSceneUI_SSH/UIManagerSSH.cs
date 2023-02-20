@@ -15,12 +15,14 @@ public partial class UIManager : MonoBehaviour
     GameObject ResultSceneUI = null;
     GameObject winUI = null;
     GameObject loseUI = null;
+    GameObject drawUI = null;
     GameObject SoundPanel = null;
     public GameObject finalSceneUI = null;
     public GameObject[] playerArrangement = new GameObject[6];
 
     TextMeshProUGUI winText = null;
     TextMeshProUGUI loseText = null;
+    TextMeshProUGUI drawText = null;
     TextMeshProUGUI lifeText = new TextMeshProUGUI();
 
     public AudioSource BattleBGMAudio = null;
@@ -100,6 +102,9 @@ public partial class UIManager : MonoBehaviour
         loseUI = GameObject.Find("ResultLose");
         loseText = GameObject.Find("LoseRoundText").GetComponent<TextMeshProUGUI>();
 
+        drawUI = GameObject.Find("ResultDraw");
+        drawText = GameObject.Find("DrawRoundText").GetComponent<TextMeshProUGUI>();
+
         lifeImage = GameObject.Find("Life").GetComponentsInChildren<Image>();
 
         ResultSceneUI.SetActive(false);
@@ -148,30 +153,45 @@ public partial class UIManager : MonoBehaviour
     }
     #endregion
 
+    public void PlayerBattleDraw(bool isDraw)
+    {
+        drawText.text = "Round" + curRound;
+        drawUI.SetActive(isDraw);
+    }
+
     public void ChangeLife(int Life)
     {
         changeImage = Resources.Load<Sprite>($"Sprites/Nomal/Icon_ItemIcon_Skull");
         lifeImage[19-Life].sprite = changeImage;
     }
 
-    public IEnumerator COR_MoveToResultScene(bool Win)
+    public IEnumerator COR_MoveToResultScene(bool Win,bool Lose, bool Draw)
     {
         Camera.main.gameObject.transform.position = new Vector3(40, 0, -10);
 
         GameMGR.Instance.audioMGR.BattleSceneBGM(false);
+
+        // win case
         if (Win)
         {
             GameMGR.Instance.audioMGR.BattleRoundResult(Win);
             GameMGR.Instance.uiManager.PlayerBattleWin(Win);
         }
 
+        // lose case
         else if (!Win)
         {
             GameMGR.Instance.audioMGR.BattleRoundResult(Win);
             GameMGR.Instance.uiManager.PlayerBattleLose(!Win);
         }
 
-        // 무승부 로직 추가필요
+        // draw case
+        if (Draw)
+        {
+            GameMGR.Instance.audioMGR.BattleRoundResult(Win);
+            GameMGR.Instance.uiManager.PlayerBattleDraw(Draw);
+        }
+
         yield return new WaitForSeconds(5f);
 
         GameMGR.Instance.uiManager.ResetPlayerUnit(); // Unit Reset

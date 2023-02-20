@@ -5,6 +5,7 @@ using UnityEngine.Networking;
 
 using TMPro;
 using Unity.VisualScripting;
+using System;
 
 public class MetaTrendAPI : MonoBehaviour
 {
@@ -17,8 +18,6 @@ public class MetaTrendAPI : MonoBehaviour
 	[Header("[Betting Backend Base URL]")]
 	[SerializeField] string FullAppsProductionURL = "https://odin-api.browseosiris.com";
 	[SerializeField] string FullAppsStagingURL = "https://odin-api-sat.browseosiris.com";
-
-
 
 	// 버튼 누를시 URL 연결
 	public void ButtonGetURL()
@@ -77,27 +76,19 @@ public class MetaTrendAPI : MonoBehaviour
 
     //------------------------------
 
-
-
-
-
-
-
-
-
-
     public void GetDummyPool()
     {
         StartCoroutine(processRequestGetDummy());
     }
     //------------------------------
+
 	IEnumerator processRequestGetDummy()
 	{
 		yield return requestGetDummy((response) =>
 		{
 			if (response != null)
 			{
-				// response.data.records[0].startTime
+				Debug.Log("startTime" + response.data.records[0].startTime); 
             }
 		});
 	}
@@ -113,24 +104,6 @@ public class MetaTrendAPI : MonoBehaviour
 		Debug.Log(www.downloadHandler.text);
 		callback(res_DummyPool);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 	//---------------
 	// Session ID
