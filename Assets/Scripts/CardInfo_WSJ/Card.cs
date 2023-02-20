@@ -1,5 +1,6 @@
 using Photon.Pun;
 using Spine.Unity;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Animations;
@@ -25,6 +26,9 @@ public partial class Card : MonoBehaviourPun
     public Slider expSlider;
     SkeletonAnimation skeletonAnimation;
     AudioSource audioSource;
+
+    Vector3 vec = new Vector3(0, 0.6f, 0);
+
     private void Awake()
     {
         SetMyInfo(name);
@@ -33,7 +37,7 @@ public partial class Card : MonoBehaviourPun
 
     /*자신의 오브젝트 이름과 같은 스크립터블 데이터를 읽어와서 설정한다
     스프라이트 랜더러도 같은 원리로 설정*/
-    public void SetMyInfo(string myname,bool flip=true)
+    public void SetMyInfo(string myname, bool flip = true)
     {
         if (transform.parent == null) return;
         name = myname;
@@ -54,7 +58,7 @@ public partial class Card : MonoBehaviourPun
         levelText.text = level.ToString();
         skeletonAnimation = GetComponent<SkeletonAnimation>();
         SetSkillTiming();
-        if(flip==true) SetFlip(false);
+        if (flip == true) SetFlip(false);
         transform.parent.gameObject.transform.localScale = Vector3.one;
     }
     public void ChangeCard(Card card)
@@ -73,7 +77,7 @@ public partial class Card : MonoBehaviourPun
     {
         skeletonAnimation.AnimationState.SetAnimation(0, ani, isSet);
     }
-    public void ChangeValue(CardStatus key, int value = 0,bool plus = false)
+    public void ChangeValue(CardStatus key, int value = 0, bool plus = false)
     {
         switch (key)
         {
@@ -83,30 +87,31 @@ public partial class Card : MonoBehaviourPun
                 {
                     curHP += value;
                 }
-                
+
                 hpText.text = curHP.ToString();
                 break;
 
             case CardStatus.Attack:
-                if(plus == false) curAttackValue = value;
+                if (plus == false) curAttackValue = value;
                 else
                 {
                     curAttackValue += value;
                 }
-                    
+
                 atkText.text = curAttackValue.ToString();
                 break;
 
             case CardStatus.Exp:
                 if (level == 1)
                 {
-                    Debug.Log("1레벨에서 렙업");
                     audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.Unit, "Merge_sound");
                     audioSource.Play();
+                    StartCoroutine(COR_ComBineMonsterEF());
 
                     curEXP += value;
                     if (curEXP >= 2)
                     {
+                        StartCoroutine(COR_LevelUpMonsterEF());
                         ChangeValue(CardStatus.Level);
                         gameObject.tag = "BattleMonster2";
                         audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.Unit, "UnitLevelUP_sound");
@@ -121,13 +126,17 @@ public partial class Card : MonoBehaviourPun
                     curEXP += value;
                     audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.Unit, "Merge_sound");
                     audioSource.Play();
+                    StartCoroutine(COR_ComBineMonsterEF());
+
                     if (curEXP >= 3)
                     {
+                        StartCoroutine(COR_LevelUpMonsterEF());
                         ChangeValue(CardStatus.Level);
                         gameObject.tag = "BattleMonster3";
                         gameObject.name = "Level3";
                         audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.Unit, "UnitLevelUP_sound");
                         audioSource.Play();
+                       
                     }
                     else expSlider.value = curEXP * 0.33f;
                 }
@@ -139,9 +148,24 @@ public partial class Card : MonoBehaviourPun
                 level++;
                 levelText.text = level.ToString();
                 GameMGR.Instance.spawner.SpecialMonster();
-                
+
                 break;
         }
     }
+
+    IEnumerator COR_ComBineMonsterEF()
+    {
+        GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>("skillAttack2"), gameObject.transform.position + vec, Quaternion.identity);
+        yield return new WaitForSeconds(0.3f);
+        GameMGR.Instance.objectPool.DestroyPrefab(mon.transform.gameObject);
+    }
+
+    IEnumerator COR_LevelUpMonsterEF()
+    {
+        GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>("skillAttack"), gameObject.transform.position + vec, Quaternion.identity);
+        yield return new WaitForSeconds(0.3f);
+        GameMGR.Instance.objectPool.DestroyPrefab(mon.transform.gameObject);
+    }
+
 }
 
