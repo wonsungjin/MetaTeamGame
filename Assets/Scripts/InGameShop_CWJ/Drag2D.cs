@@ -223,7 +223,7 @@ public partial class Drag2D : MonoBehaviour
 
             if (collision.gameObject.CompareTag("BattleMonster3") || gameObject.CompareTag("BattleMonster3"))
             {
-                StartCoroutine(COR_BackAgain());
+                return;
             }
         }
     }

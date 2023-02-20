@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -32,6 +33,9 @@ public partial class UIManager : MonoBehaviour
 
     public bool isTimeOver = false;
     bool isTimeOEnd = false;
+
+    WaitForSeconds wait = new WaitForSeconds(0.1f);
+
     public void Init_Scene2()
     {
         unitSprite = new Image[7];
@@ -80,20 +84,25 @@ public partial class UIManager : MonoBehaviour
             timer -= Time.deltaTime;
             timerSlider.fillAmount = timer / 100 * 1.667f;
             timerTXT.text = string.Format("Time : {0:N0}sec", timer);
-        }
 
-        if (timer <= 15f) timerSound();
-        else if (timerSlider.fillAmount <= 0f)
-        {
-            GameMGR.Instance.timerSound.TimeSoundEnd();
-            isTimeOEnd = true;
-            timer = 0f;
+            if (timer <= 15f && timer >= 1f) timerSound();
+            else if (timer <= 0f)
+            {
+                Debug.Log("0이됐다 시간이");
+                GameMGR.Instance.timerSound.TimeSoundEnd();
+                isTimeOEnd = true;
+            }
         }
+    }
+
+    IEnumerator COR_Timer()
+    {
+        while (true)
+        yield return wait;
     }
 
     void timerSound()
     {
-        Debug.Log("여기로 들어옴");
         GameMGR.Instance.timerSound.TimeSound();
         isTimerFast = true;
     }
