@@ -12,6 +12,8 @@ public partial class UIManager : MonoBehaviour
 {
     GameObject battleSceneUI = null;
     GameObject battleOptionPanel = null;
+    GameObject leavPanel = null;
+
     GameObject ResultSceneUI = null;
     GameObject winUI = null;
     GameObject loseUI = null;
@@ -47,6 +49,7 @@ public partial class UIManager : MonoBehaviour
     {
         battleSceneUI = GameObject.Find("BattleSceneCanvas");
         battleOptionPanel = GameObject.Find("OptionPanel");
+        leavPanel = GameObject.Find("LeavePanel");
         SoundPanel = GameObject.Find("SoundPanel");
         lifeText = GameObject.Find("CurLife").gameObject.GetComponent<TextMeshProUGUI>();
         SFXSlider = GameObject.Find("SFXSlider").gameObject.GetComponent<Slider>();
@@ -65,6 +68,7 @@ public partial class UIManager : MonoBehaviour
 
         lifeText.text = GameMGR.Instance.battleLogic.curLife.ToString();
         if (battleOptionPanel != null) { battleOptionPanel.SetActive(false); }
+        if (leavPanel != null) { leavPanel.SetActive(false); }
     }
 /*
     public void BattleOption()
@@ -203,6 +207,7 @@ public partial class UIManager : MonoBehaviour
 
         if (winUI.activeSelf == true) { winUI.SetActive(false); }
         if (loseUI.activeSelf == true) { loseUI.SetActive(false); }
+        if (drawUI.activeSelf == true) { drawUI.SetActive(false); }
         if (ResultSceneUI.activeSelf == true) { ResultSceneUI.SetActive(false); }
         GameMGR.Instance.uiManager.storePannel.SetActive(true);
         GameMGR.Instance.Init(5);
