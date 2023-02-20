@@ -7,8 +7,6 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviourPun
 {
-    AudioSource audioSource;
-
     [SerializeField] Node[] monsterTrans;
     [SerializeField] public Transform[] shopBatchPos;
 
@@ -69,7 +67,6 @@ public class Spawner : MonoBehaviourPun
     }
     private void Start()
     {
-        audioSource = GetComponent<AudioSource>();
         GameMGR.Instance.Init(2);
         SetMyDeckSetting();
         // 처음에 카드 생성
@@ -154,8 +151,7 @@ public class Spawner : MonoBehaviourPun
     {
         if (GameMGR.Instance.uiManager.shopLevel >= 6)
         {
-            audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.UI, "fail_sound");
-            audioSource.Play();
+            GameMGR.Instance.audioMGR.SoundLevelUpButtonFail();
             return;
         }
 
@@ -174,8 +170,7 @@ public class Spawner : MonoBehaviourPun
             }
             else if (GameMGR.Instance.uiManager.shopMoney > GameMGR.Instance.uiManager.goldCount)
             {
-                audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.UI, "fail_sound");
-                audioSource.Play();
+                GameMGR.Instance.audioMGR.SoundLevelUpButtonFail();
             }
         }
     }
@@ -187,28 +182,24 @@ public class Spawner : MonoBehaviourPun
             case 2:
                 GameMGR.Instance.uiManager.shopMoney = 8;
                 GameMGR.Instance.uiManager.shopLevelTXT.text = "" + GameMGR.Instance.uiManager.shopMoney.ToString();
-                audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.UI, "StoreLevelup_sound");
-                audioSource.Play();
+                GameMGR.Instance.audioMGR.SoundLevelUpButton();
                 break;
             case 3:
                 GameMGR.Instance.uiManager.shopMoney = 9;
                 GameMGR.Instance.uiManager.shopLevelTXT.text = "" + GameMGR.Instance.uiManager.shopMoney.ToString();
-                audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.UI, "StoreLevelup_sound");
-                audioSource.Play();
+                GameMGR.Instance.audioMGR.SoundLevelUpButton();
                 GameMGR.Instance.chainBroken.ChainsBroken();
                 break;
             case 4:
                 GameMGR.Instance.uiManager.shopMoney = 10;
                 GameMGR.Instance.uiManager.shopLevelTXT.text = "" + GameMGR.Instance.uiManager.shopMoney.ToString();
-                audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.UI, "StoreLevelup_sound");
-                audioSource.Play();
+                GameMGR.Instance.audioMGR.SoundLevelUpButton();
                 GameMGR.Instance.chainBroken.ChainsBroken();
                 break;
             case 5:
                 GameMGR.Instance.uiManager.shopMoney = 11;
                 GameMGR.Instance.uiManager.shopLevelTXT.text = "" + GameMGR.Instance.uiManager.shopMoney.ToString();
-                audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.UI, "StoreLevelup_sound");
-                audioSource.Play();
+                GameMGR.Instance.audioMGR.SoundLevelUpButton();
                 GameMGR.Instance.chainBroken.ChainsBroken();
                 break;
         }
@@ -233,8 +224,7 @@ public class Spawner : MonoBehaviourPun
             GameObject[] monster = GameObject.FindGameObjectsWithTag("Monster");
             GameMGR.Instance.uiManager.goldCount--;
             GameMGR.Instance.uiManager.goldTXT.text = "" + GameMGR.Instance.uiManager.goldCount.ToString();
-            audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.UI, "Refresh");
-            audioSource.Play();
+            GameMGR.Instance.audioMGR.SoundRefreshButton();
 
             for (int i = 0; i < monster.Length; i++)
             {
@@ -248,8 +238,7 @@ public class Spawner : MonoBehaviourPun
         }
         else
         {
-            audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.UI, "fail_sound");
-            audioSource.Play();
+            GameMGR.Instance.audioMGR.SoundLevelUpButtonFail();
         }
     }
 

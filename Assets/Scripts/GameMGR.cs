@@ -121,6 +121,7 @@ public partial class GameMGR : Singleton<GameMGR>
             uiManager.ResultSceneInit();
             uiManager.PlayerBattleWin(false);
             uiManager.PlayerBattleLose(false);
+            uiManager.PlayerBattleDraw(false);
         }
 
         // BattleScene
@@ -153,6 +154,7 @@ public partial class GameMGR : Singleton<GameMGR>
             // result Scene
             uiManager.PlayerBattleWin(false);
             uiManager.PlayerBattleLose(false);
+            uiManager.PlayerBattleDraw(false);
         }
     }
 }
