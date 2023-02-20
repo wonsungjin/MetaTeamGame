@@ -121,7 +121,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
         while (true)
         {
             Debug.Log("Player first attack");
-            
+
             if (randomArrayNum == exArray.Length) { randomArrayNum = 0; }
             // [Player -> Enemy Attack] ���� ������ ����ִ� ���
             if (isEnemyPreemptiveAlive)
@@ -129,7 +129,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                 isPlayerAliveCount = 0;
                 isEnemyAliveCount = 0;
 
-                
+
                 while (enemyForwardUnits[exArray[randomArrayNum]] == null)
                 {
                     randomArrayNum++;
@@ -150,7 +150,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
 
                 if (playerAttackArray.Length <= playerTurnCount) { playerTurnCount = 0; }
 
-                
+
                 while (playerAttackArray[playerTurnCount] == null)
                 {
                     playerTurnCount++;
@@ -176,6 +176,9 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                 playerAttackArray[playerTurnCount].GetComponentInChildren<AttackLogic>().UnitAttack(enemyForwardUnits[exArray[randomArrayNum]]);
                 yield return new WaitUntil(() => isWaitAttack);
                 isWaitAttack = false;
+
+                // null check for playerAttackArray, enemyAttackArray
+                if (!playerAttackArray.Any() && !enemyAttackArray.Any()) { PlayerBattleDraw(); }
 
                 for (int i = 0; i < enemyAttackArray.Length; i++)
                 {
@@ -354,6 +357,8 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                 enemyAttackArray[enemyTurnCount].GetComponentInChildren<AttackLogic>().UnitAttack(playerForwardUnits[exArray[randomArrayNum]]);
                 yield return new WaitUntil(() => isWaitAttack);
                 isWaitAttack = false;
+                // null check for playerAttackArray, enemyAttackArray
+                if (!playerAttackArray.Any() && !enemyAttackArray.Any()) { PlayerBattleDraw(); }
 
                 // �ǰ� ���� ������ ���� ����Ʈ���� ����
                 for (int i = 0; i < playerAttackArray.Length; i++)
@@ -535,6 +540,9 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                 yield return new WaitUntil(() => isWaitAttack);
                 isWaitAttack = false;
 
+                // null check for playerAttackArray, enemyAttackArray
+                if (!playerAttackArray.Any() && !enemyAttackArray.Any()) { PlayerBattleDraw(); }
+
                 // �ǰ� ���� ������ ���� ����Ʈ���� ����
                 for (int i = 0; i < playerAttackArray.Length; i++)
                 {
@@ -695,6 +703,9 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                 yield return new WaitUntil(() => isWaitAttack);
                 isWaitAttack = false;
 
+                // null check for playerAttackArray, enemyAttackArray
+                if (!playerAttackArray.Any() && !enemyAttackArray.Any()) { PlayerBattleDraw(); }
+
                 // �ǰ� ���� ������ �迭���� ����
                 for (int i = 0; i < enemyAttackArray.Length; i++)
                 {
@@ -825,7 +836,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
         GameMGR.Instance.uiManager.PlayerSetArrangement();
         GameMGR.Instance.Init(4);
         GameMGR.Instance.uiManager.PlayerBattleWin(true);
-        StartCoroutine(GameMGR.Instance.uiManager.COR_MoveToResultScene(true));
+        StartCoroutine(GameMGR.Instance.uiManager.COR_MoveToResultScene(true, false, false));
     }
 
     // �й� ��
@@ -843,6 +854,19 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
         GameMGR.Instance.uiManager.PlayerSetArrangement();
         GameMGR.Instance.Init(4);
         GameMGR.Instance.uiManager.PlayerBattleLose(false);
-        StartCoroutine(GameMGR.Instance.uiManager.COR_MoveToResultScene(false));
+        StartCoroutine(GameMGR.Instance.uiManager.COR_MoveToResultScene(false, true, false));
+    }
+
+    private void PlayerBattleDraw()
+    {
+        Debug.Log("Player Draw");
+
+        PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "Life", curLife } });
+
+        GameMGR.Instance.uiManager.PlayerSetArrangement();
+        GameMGR.Instance.Init(4);
+        GameMGR.Instance.uiManager.PlayerBattleLose(false);
+
+        StartCoroutine(GameMGR.Instance.uiManager.COR_MoveToResultScene(false, false, true));
     }
 }

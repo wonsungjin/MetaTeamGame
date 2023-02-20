@@ -40,8 +40,8 @@ public class Res_DummyPool
     [System.Serializable]
     public class Data
     {
-       public string redirectionURL;
-       public Records[] records;
+        public string redirectionURL;
+        public Records[] records;
 
         public override string ToString()
         {
@@ -57,6 +57,7 @@ public class Res_DummyPool
     }
     public Data data;
 
+
     public override string ToString()
     {
         return $"status : {status} message: {message} ";
@@ -65,8 +66,8 @@ public class Res_DummyPool
 [System.Serializable]
 public class Records
 {
-   public string _id;
-   public string title;
+    public string _id;
+    public string title;
     public int amount;
     public int totalCollectedAmount;
     public string startTime;
@@ -74,10 +75,11 @@ public class Records
     public string createdAt;
     public string updatedAt;
     public int __v;
+
     public override string ToString()
     {
-       return $"_id : {_id} title: {title} amount : {amount} totalCollectedAmount : {totalCollectedAmount} startTime : {startTime} endTime : {endTime} createdAt : {createdAt}" +
-            $"updatedAt : {updatedAt} __v : {__v}";
+        return $"_id : {_id} title: {title} amount : {amount} totalCollectedAmount : {totalCollectedAmount} startTime : {startTime} endTime : {endTime} createdAt : {createdAt}" +
+             $"updatedAt : {updatedAt} __v : {__v}";
     }
 }
 

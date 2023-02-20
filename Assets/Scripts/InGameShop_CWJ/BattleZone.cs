@@ -7,6 +7,8 @@ public class BattleZone : MonoBehaviour
     [SerializeField] GameObject aura;
     public GameObject myObj = null;
 
+    Vector3 zPos = new Vector3(0,0,5f);
+
 
     private void Start()
     {

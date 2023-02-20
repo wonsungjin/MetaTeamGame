@@ -43,6 +43,8 @@ public partial class AttackLogic : Skill
         card.Attack( card.curAttackValue, targetUint.GetComponentInChildren<Card>(), true, true );
         //GameMGR.Instance.objectPool.DestroyPrefab(targetUint);
 
+        if(card.curHP > 0)
+        {
             while (Vector2.Distance(gameObject.transform.parent.position, returnPosition) > 0)
             {
                 curTime += Time.deltaTime;
@@ -52,6 +54,12 @@ public partial class AttackLogic : Skill
 
                 yield return waitForFixedUpdate;
             }
+        }
+        else
+        {
+            yield return new WaitForSecondsRealtime(1f);
+        }
+            
                 
 
         GameMGR.Instance.battleLogic.isWaitAttack = true;
