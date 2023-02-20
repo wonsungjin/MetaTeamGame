@@ -35,7 +35,7 @@ public partial class Card : MonoBehaviourPun
     GameObject[] enemyAreaFront;
     GameObject[] enemyAreaBack;
 
-    public void Start()
+    public void OnEnable()
     {
         // SetSkillTiming(); // 나의 스킬타이밍에 따라 이벤트에 추가해야한다면 추가한다.
         triggerOnCount = cardInfo.GetNumTrigger(level);
@@ -255,27 +255,24 @@ public partial class Card : MonoBehaviourPun
                 break;
             case EffectType.changeATK:
                 Debug.Log("공격력 효과 발동");
-                for (int j = 0; j < cardInfo.GetNumTrigger(level); j++)
-                {
-
-                }
                 for (int i = 0; i < skillTarget.Count; i++)
                 {
-                    if (cardInfo.GetValue(1, level) < 0 && skillTarget[i].curAttackValue > cardInfo.GetValue(1, level))
+                    if (cardInfo.GetValue(1, level) < 0) // && skillTarget[i].curAttackValue > cardInfo.GetValue(1, level))
+                    {
+                        Debug.Log("공격력 감소 효과");
+                        if (skillTarget[i].curAttackValue + cardInfo.GetValue(1, level) < 1) skillTarget[i].ChangeValue(CardStatus.Attack, 1);
+                        else
+                        {
+                            skillTarget[i].ChangeValue(CardStatus.Attack, cardInfo.GetValue(1, level), true);
+                        }
+                        atkText.text = curAttackValue.ToString();
+                    }
+                    else
                     {
                         skillTarget[i].ChangeValue(CardStatus.Attack, cardInfo.GetValue(1, level), true);
                         atkText.text = curAttackValue.ToString();
                     }
-                    else if (cardInfo.GetValue(1, level) > 0)
-                    {
-                        skillTarget[i].ChangeValue(CardStatus.Attack, cardInfo.GetValue(1, level), true);
-                        atkText.text = curAttackValue.ToString();
-                    }
-                    if (cardInfo.GetValue(1, level) < 0 && skillTarget[i].curAttackValue - cardInfo.GetValue(1, level) < 1)
-                    {
-                        skillTarget[i].ChangeValue(CardStatus.Attack, 1);
-                        atkText.text = curAttackValue.ToString();
-                    }
+
                     Debug.Log(cardInfo.GetValue(1, level));
                     //skillTarget[i].curAttackValue += cardInfo.value1;
                 }

@@ -350,8 +350,8 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                     }
                 }
 
-                Debug.Log("enemy attack unit : " + enemyAttackArray[enemyTurnCount].name);
-                Debug.Log("player forward hit Unit : " + playerForwardUnits[exArray[randomArrayNum]].name);
+                //Debug.Log("enemy attack unit : " + enemyAttackArray[enemyTurnCount].name);
+                //Debug.Log("player forward hit Unit : " + playerForwardUnits[exArray[randomArrayNum]].name);
 
                 // �� ������ �÷��̾� ���� �� ������ �÷��̾� ����
                 isWaitAttack = false;
@@ -534,8 +534,8 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                     }
                 }
 
-                Debug.Log("enemy attack unit : " + enemyAttackArray[enemyTurnCount].name);
-                Debug.Log("player forward hit Unit : " + playerForwardUnits[exArray[randomArrayNum]].name);
+                /*Debug.Log("enemy attack unit : " + enemyAttackArray[enemyTurnCount].name);
+                Debug.Log("player forward hit Unit : " + playerForwardUnits[exArray[randomArrayNum]].name);*/
 
                 // �� ������ �÷��̾� ���� �� ������ �÷��̾� ����
                 isWaitAttack = false;
@@ -700,8 +700,8 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                     }
                 }
 
-                Debug.Log("Player Attack Unit name : " + playerAttackArray[playerTurnCount].name);
-                Debug.Log("Enemy forward hit unit : " + enemyForwardUnits[exArray[randomArrayNum]].name);
+                //Debug.Log("Player Attack Unit name : " + playerAttackArray[playerTurnCount].name);
+                //Debug.Log("Enemy forward hit unit : " + enemyForwardUnits[exArray[randomArrayNum]].name);
                 // �÷��̾� ������ �� ���� ���� ���� ����
                 isWaitAttack = false;
                 playerAttackArray[playerTurnCount].GetComponentInChildren<AttackLogic>().UnitAttack(enemyForwardUnits[exArray[randomArrayNum]]);

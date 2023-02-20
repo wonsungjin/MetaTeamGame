@@ -65,6 +65,11 @@ public partial class AttackLogic : Skill
     }
     public void UnitAttack(GameObject targetUnit)
     {
+        if (targetUnit == null)
+        {
+            GameMGR.Instance.battleLogic.isWaitAttack = true;
+            return;
+        }
         playerTrans = gameObject.transform.parent.position;
         enemyTrans = targetUnit.transform.position;
         returnPosition = playerTrans;
