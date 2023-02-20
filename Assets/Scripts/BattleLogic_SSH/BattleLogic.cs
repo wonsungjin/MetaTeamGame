@@ -178,7 +178,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                 isWaitAttack = false;
 
                 // null check for playerAttackArray, enemyAttackArray
-                if (!playerAttackArray.Any() && !enemyAttackArray.Any()) { PlayerBattleDraw(); }
+                if (playerAttackArray.All(x => x == null) && enemyAttackArray.All(x => x == null)) { PlayerBattleDraw(); }
 
                 /*for (int i = 0; i < enemyAttackArray.Length; i++)
                 {
@@ -359,7 +359,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                 yield return new WaitUntil(() => isWaitAttack);
                 isWaitAttack = false;
                 // null check for playerAttackArray, enemyAttackArray
-                if (!playerAttackArray.Any() && !enemyAttackArray.Any()) { PlayerBattleDraw(); }
+                if (playerAttackArray.All(x => x == null) && enemyAttackArray.All(x => x == null)) { PlayerBattleDraw(); }
 
                 // �ǰ� ���� ������ ���� ����Ʈ���� ����
                 /*for (int i = 0; i < playerAttackArray.Length; i++)
@@ -544,7 +544,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                 isWaitAttack = false;
 
                 // null check for playerAttackArray, enemyAttackArray
-                if (!playerAttackArray.Any() && !enemyAttackArray.Any()) { PlayerBattleDraw(); }
+                if (playerAttackArray.All(x => x == null) && enemyAttackArray.All(x => x == null)) { PlayerBattleDraw(); }
 
                 // �ǰ� ���� ������ ���� ����Ʈ���� ����
                 /*for (int i = 0; i < playerAttackArray.Length; i++)
@@ -709,7 +709,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                 isWaitAttack = false;
 
                 // null check for playerAttackArray, enemyAttackArray
-                if (!playerAttackArray.Any() && !enemyAttackArray.Any()) { PlayerBattleDraw(); }
+                if (playerAttackArray.All(x => x == null) && enemyAttackArray.All(x => x == null)) { PlayerBattleDraw(); }
 
                 // �ǰ� ���� ������ �迭���� ����
                 /*for (int i = 0; i < enemyAttackArray.Length; i++)
