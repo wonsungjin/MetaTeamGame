@@ -255,9 +255,15 @@ public partial class Card : MonoBehaviourPun
                 for (int i = 0; i < skillTarget.Count; i++)
                 {
                     if (skillTarget[i].curAttackValue > cardInfo.GetValue(1, level))
+                    {
                         skillTarget[i].ChangeValue(CardStatus.Attack, cardInfo.GetValue(1, level), true);
+                        atkText.text = curAttackValue.ToString();
+                    }
                     else if (skillTarget[i].curAttackValue - cardInfo.GetValue(1, level) < 1)
+                    {
                         skillTarget[i].ChangeValue(CardStatus.Attack, 1);
+                        atkText.text = curAttackValue.ToString();
+                    }
                     Debug.Log(cardInfo.GetValue(1, level));
                     //skillTarget[i].curAttackValue += cardInfo.value1;
                 }

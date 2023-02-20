@@ -200,6 +200,7 @@ public partial class Batch : MonoBehaviourPun
             // enemy Unit ��ġ ����
             else if (myCard == false)
             {
+                unitCard.GetComponentInChildren<Card>().isMine = false;
                 unitCard.transform.position = enemyCardPosition[i + 1].position;
                 unitCard.GetComponentInChildren<Card>().SetFlip(true);
                 if (i < 3) { GameMGR.Instance.battleLogic.enemyForwardUnits[i] = unitCard.gameObject; }

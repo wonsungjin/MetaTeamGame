@@ -43,6 +43,7 @@ public partial class AttackLogic : Skill
         card.Attack( card.curAttackValue, targetUint.GetComponentInChildren<Card>(), true, true );
         //GameMGR.Instance.objectPool.DestroyPrefab(targetUint);
 
+        Debug.Log($"{card.curHP} 가 현재 나의 체력이다");
         if(card.curHP > 0)
         {
             while (Vector2.Distance(gameObject.transform.parent.position, returnPosition) > 0)
