@@ -28,6 +28,7 @@ public class MetaTrendAPI : MonoBehaviour
     WaitForSeconds waitTime = new WaitForSeconds(1f);
 
     string timeDI;
+    string totalGold;
 
 
     // 버튼 누를시 URL 연결
@@ -93,9 +94,8 @@ public class MetaTrendAPI : MonoBehaviour
     }
     //------------------------------
 
-    IEnumerator processRequestGetDummy()
+    public IEnumerator processRequestGetDummy()
     {
-
         while (true)
         {
             yield return requestGetDummy((response) =>
@@ -124,7 +124,7 @@ public class MetaTrendAPI : MonoBehaviour
 
             yield return waitTime;
 
-
+            if (GameMGR.Instance.uiManager.isLobby) { GameMGR.Instance.uiManager.tournamentText.text = timeDI; }
         }
     }
     //--------------------------------
@@ -163,7 +163,7 @@ public class MetaTrendAPI : MonoBehaviour
     IEnumerator requestGetSessionID(resCallback_GetSessionID callback)
     {
         // get session id
-        UnityWebRequest www = UnityWebRequest.Get("http://localhost:8544/api/getsessionid");
+        UnityWebRequest www = UnityWebRequest.Get("http://localhost:8546/api/getsessionid");
         yield return www.SendWebRequest();
         Debug.Log(www.downloadHandler.text);
         //txtInputField.text = www.downloadHandler.text;
