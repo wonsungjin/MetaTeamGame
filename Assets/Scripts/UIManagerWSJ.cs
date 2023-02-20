@@ -19,6 +19,7 @@ public partial class UIManager : MonoBehaviour
     private GameObject menuPannel;
     private GameObject nameMakeUI;
     private GameObject deleteWarringUI;
+    public GameObject loginSystemUI;
     public GameObject blackUI;
     private GameObject logoPannel;
     [Header("PackList")]
@@ -41,6 +42,7 @@ public partial class UIManager : MonoBehaviour
     public TextMeshProUGUI[] tierCountText;
     public void Init_Scene1()
     {
+        loginSystemUI = GameObject.Find("LoginSystem");
         blackUI = GameObject.Find("BlackUI");
         logoPannel = GameObject.Find("LogoPannel");
         lobbyPannel = GameObject.Find("LobbyPannel");
@@ -87,6 +89,7 @@ public partial class UIManager : MonoBehaviour
         toggleGroup = FindObjectOfType<ToggleGroup>();
         deleteWarringUI.SetActive(false);
         customPannel.SetActive(false);
+        loginSystemUI.SetActive(false);
         packChoicePannel.SetActive(false);
         lobbyPannel.SetActive(false);
         cardPannel.SetActive(false);
@@ -130,6 +133,7 @@ public partial class UIManager : MonoBehaviour
     {
         MyDeck obj = GameObject.Instantiate<MyDeck>(packButton);
         obj.transform.GetChild(3).GetComponent<Toggle>().group = toggleGroup;
+        if(customDeck.DeckName=="Free Pack")obj.transform.GetChild(1).GetComponent<Image>().sprite = Resources.Load<Sprite>($"FreePack");
         obj.transform.GetChild(2).transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = customDeck.DeckName;
         obj.SetMyDeck(customDeck);
         obj.transform.SetParent(myPackList.transform);
