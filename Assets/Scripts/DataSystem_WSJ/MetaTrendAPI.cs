@@ -112,12 +112,12 @@ public class MetaTrendAPI : MonoBehaviour
 
                          if (APITime > DateTime.Now)
                          {
-                             Debug.LogError(spanTime.Days + " 일_" + spanTime.Hours + " 시간_" + spanTime.Minutes + " 분_" + spanTime.Seconds + " 초");
+                             // Debug.LogError(spanTime.Days + " 일_" + spanTime.Hours + " 시간_" + spanTime.Minutes + " 분_" + spanTime.Seconds + " 초");
                          }
 
                          else if (APITime < DateTime.Now)
                          {
-                             Debug.LogError("경과 시간 : " + timeDI);
+                             // Debug.LogError("경과 시간 : " + timeDI);
                          }
                      }
                  });
@@ -163,7 +163,7 @@ public class MetaTrendAPI : MonoBehaviour
     IEnumerator requestGetSessionID(resCallback_GetSessionID callback)
     {
         // get session id
-        UnityWebRequest www = UnityWebRequest.Get("http://localhost:8546/api/getsessionid");
+        UnityWebRequest www = UnityWebRequest.Get("http://localhost:8544/api/getsessionid");
         yield return www.SendWebRequest();
         Debug.Log(www.downloadHandler.text);
         //txtInputField.text = www.downloadHandler.text;
