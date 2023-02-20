@@ -83,6 +83,7 @@ public class DataBase : MonoBehaviour
 
             }));
             var update = Builders<BsonDocument>.Update.Set("inventory", inventoryData);//찾은거 바꾸기
+            GameMGR.Instance.customDeckShop.Create_CustomDeck();
             collection.UpdateOne(fillter, update);
         }
         else
@@ -237,6 +238,7 @@ public class InventoryData
             customDeck.Num = 1;
             one = customDeck;
             GameMGR.Instance.uiManager.CreateMyPackButton(one);
+            GameMGR.Instance.myCustomDeck = one;
         }
         else if (two == null && customDeck != null)
         {
@@ -299,10 +301,10 @@ public class CustomDeck
 {
     public int Num = 0;
     public string DeckName = "Free Pack";
-    public List<string> tier_1;
-    public List<string> tier_2;
-    public List<string> tier_3;
-    public List<string> tier_4;
-    public List<string> tier_5;
-    public List<string> tier_6 ;
+    public List<string> tier_1 = new List<string>();
+    public List<string> tier_2 = new List<string>();
+    public List<string> tier_3 = new List<string>();
+    public List<string> tier_4 = new List<string>();
+    public List<string> tier_5 = new List<string>();
+    public List<string> tier_6 = new List<string>();
 }

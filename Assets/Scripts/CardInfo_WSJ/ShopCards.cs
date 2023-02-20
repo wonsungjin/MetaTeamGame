@@ -5,7 +5,7 @@ using UnityEngine;
 public class ShopCards : MonoBehaviour
 {
     [SerializeField] private CardUI card;
-    private Dictionary<int, List<CardInfo>> customDeckList = new Dictionary<int, List<CardInfo>>();
+    public Dictionary<int, List<CardInfo>> customDeckList = new Dictionary<int, List<CardInfo>>();
     public List<CardUI> clearList = new List<CardUI>();
     public void Init()
     {
@@ -21,7 +21,11 @@ public class ShopCards : MonoBehaviour
             if (list==null) continue;
             for (int i = 0; i < list.Count; i++)
             {
-                if (list[i].appear == "FALSE") continue;
+                if (list[i].appear == "FALSE")
+                {
+                    list.Remove(list[i]);
+                continue;
+                }
                 obj = GameObject.Instantiate<CardUI>(card);
                 obj.transform.SetParent(GameMGR.Instance.uiManager.tier1[tierNum-1].transform);
                 obj.transform.localScale = Vector3.one;

@@ -38,12 +38,11 @@ public partial class GameMGR : Singleton<GameMGR>
         DontDestroyOnLoad(Instance);
 
     }
-    CustomDeck lookCustomDeck;//
-    CustomDeck myCustomDeck;//
+
+    public CustomDeck myCustomDeck;//
     public void Save_MyCustomDeck(CustomDeck customDeck)
     {
-        lookCustomDeck = customDeck;
-        myCustomDeck = lookCustomDeck;
+        myCustomDeck = customDeck;
     }
     public CustomDeck Get_CustomDeck()
     {
@@ -60,12 +59,26 @@ public partial class GameMGR : Singleton<GameMGR>
     }
 
     public bool[] stayAPI = new bool[2];
+    IEnumerator COR_Delay()
+    {
+        yield return new WaitForSeconds(2f);
+        if (stayAPI[0] == false && stayAPI[1] == false) uiManager.loginSystemUI.SetActive(true);
+        while(stayAPI[0] == false && stayAPI[1] == false)
+        {
+            yield return new WaitForSeconds(2f);
+            metaTrendAPI.GetUserProfile();
+            metaTrendAPI.GetSessionID();
+        }
+    }
     IEnumerator COR_GetCoin()
     {
         //   metaTrendAPI.GetCoin(100);
-        yield return null;
-        //yield return new WaitUntil(() => stayAPI[0]);
-        //yield return new WaitUntil(() => stayAPI[1]);
+        //yield return null;
+        StartCoroutine(COR_Delay());
+
+        yield return new WaitUntil(() => stayAPI[0]);
+        yield return new WaitUntil(() => stayAPI[1]);
+        uiManager.loginSystemUI.SetActive(false);
         dataBase.Login();
         PhotonNetwork.LocalPlayer.NickName = GameMGR.Instance.dataBase.userName;
         Debug.Log("???"+metaTrendAPI.GetZera());
