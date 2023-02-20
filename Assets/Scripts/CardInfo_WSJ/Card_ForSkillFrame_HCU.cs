@@ -180,7 +180,8 @@ public partial class Card : MonoBehaviourPun
                 Debug.Log("공격력 효과 발동");
                 for (int i = 0; i < skillTarget.Count; i++)
                 {
-                    skillTarget[i].ChangeValue(CardStatus.Attack, cardInfo.GetValue(1, level), true);
+                    if (skillTarget[i].curAttackValue > cardInfo.GetValue(1, level))
+                        skillTarget[i].ChangeValue(CardStatus.Attack, cardInfo.GetValue(1, level), true);
                     Debug.Log(cardInfo.GetValue(1, level));
                     //skillTarget[i].curAttackValue += cardInfo.value1;
                 }
