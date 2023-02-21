@@ -15,6 +15,5 @@ public class TESTSpine : MonoBehaviour
     void TestAnim()
     {
         
-    }
-    
+    }    
 }
