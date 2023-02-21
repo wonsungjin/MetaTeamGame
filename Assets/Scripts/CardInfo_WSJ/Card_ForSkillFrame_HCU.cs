@@ -61,7 +61,7 @@ public partial class Card : MonoBehaviourPun
             Attacker.Hit(curAttackValue, this, true, false); // 니가 날 직접 때렸다면 나도 너를 때릴 것이다.
         curHP -= damage;
         hpText.text = curHP.ToString();
-        
+
 
         if (this.curHP <= 0)
         {
@@ -81,7 +81,7 @@ public partial class Card : MonoBehaviourPun
     IEnumerator COR_Dead(Card Attacker)
     {
         SetAnim("Dead");
-        
+
         if (Attacker.cardInfo.skillTiming == SkillTiming.kill) Attacker.SkillActive(); // 내가 죽었는데 적이 처치시 효과가 있다면 적 효과 먼저 발동시켜준다.
         if (cardInfo.skillTiming == SkillTiming.death) SkillActive(); // 사망시 효과 발동
                                                                       //GameMGR.Instance.battleLogic.isWaitAttack = true;
@@ -194,10 +194,25 @@ public partial class Card : MonoBehaviourPun
     public void SkillActive() // 스킬 효과 발동 // FindTargetType 함수를 통해 구체적인 스킬 적용 대상이 정해지고 난 이후에 발동하는 게 맞다고 볼 수 있는 부분적인 부분
     {
         if (triggerOnCount < 1) return;
+
         Debug.Log("Skill Active");
-        FindTargetType();
-        SkillEffect();
-        triggerOnCount--;
+
+        if (cardInfo.effectType == EffectType.damage) // 데미지는 연속으로 때리는 경우가 있기 때문에 특수 처리를 해준다
+        {
+            for (int i = 0; i < cardInfo.GetValue(3, level); i++)
+            {
+                FindTargetType();
+                SkillEffect();
+                triggerOnCount--;
+            }
+        }
+        else
+        {
+            FindTargetType();
+            SkillEffect();
+            triggerOnCount--;
+        }
+
     }
 
     public void SkillActive2(Card card)
