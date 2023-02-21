@@ -67,6 +67,7 @@ public partial class AttackLogic : Skill
     {
         if (targetUnit == null)
         {
+            Debug.Log("공격하려고 보니 대상이 없더라");
             GameMGR.Instance.battleLogic.isWaitAttack = true;
             return;
         }
