@@ -260,15 +260,21 @@ public partial class Card : MonoBehaviourPun
                     if (cardInfo.GetValue(1, level) < 0) // && skillTarget[i].curAttackValue > cardInfo.GetValue(1, level))
                     {
                         Debug.Log("공격력 감소 효과");
-                        if (skillTarget[i].curAttackValue + cardInfo.GetValue(1, level) < 1) skillTarget[i].ChangeValue(CardStatus.Attack, 1);
+                        if (skillTarget[i].curAttackValue + cardInfo.GetValue(1, level) < 1)
+                        {
+                            Debug.Log("감소한 값이 음수");
+                            skillTarget[i].ChangeValue(CardStatus.Attack, 1);
+                        }
                         else
                         {
+                            Debug.Log("감소한 값이 양수");
                             skillTarget[i].ChangeValue(CardStatus.Attack, cardInfo.GetValue(1, level), true);
                         }
                         atkText.text = curAttackValue.ToString();
                     }
                     else
                     {
+                        Debug.Log("공격력 증가 효과");
                         skillTarget[i].ChangeValue(CardStatus.Attack, cardInfo.GetValue(1, level), true);
                         atkText.text = curAttackValue.ToString();
                     }
