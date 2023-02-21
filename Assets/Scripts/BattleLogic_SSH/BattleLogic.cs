@@ -22,6 +22,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
 
     public bool isFirstAttack = true; // isFirstAttack = true => Player fisrt attack
     public bool isWaitAttack = false; // wait for attack
+    private bool isDraw = false;
 
     private int playerTurnCount = 0; // Player Turn Count
     private int enemyTurnCount = 0; // Enemy Turn Count
@@ -75,6 +76,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
     {
         isPlayerPreemptiveAlive = true;
         isEnemyPreemptiveAlive = true;
+        isDraw = false;
 
         Debug.Log("AttackLogic : " + isFirstAttack);
 
@@ -844,6 +846,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
     // �¸� ��
     private void PlayerBattleWin()
     {
+        if (isDraw == true) return;
         // GameObject.Find("firstAttack").GetComponent<TextMeshProUGUI>().text = isFirstAttack.ToString();
         // GameObject.Find("resultText").GetComponent<TextMeshProUGUI>().text = "win";
         Debug.Log("Player Win");
@@ -861,6 +864,8 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
         // GameObject.Find("resultText").GetComponent<TextMeshProUGUI>().text = "lose";
         Debug.Log("Player Lose");
 
+        if (isDraw == true) return;
+
         curLife--;
         GameMGR.Instance.uiManager.ChangeLife(curLife);
 
@@ -875,6 +880,8 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
     private void PlayerBattleDraw()
     {
         Debug.Log("Player Draw");
+
+        isDraw = true;
 
         PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "Life", curLife } });
 
