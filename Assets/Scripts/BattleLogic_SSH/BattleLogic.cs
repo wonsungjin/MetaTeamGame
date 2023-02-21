@@ -849,7 +849,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
         if (isDraw == true) return;
         // GameObject.Find("firstAttack").GetComponent<TextMeshProUGUI>().text = isFirstAttack.ToString();
         // GameObject.Find("resultText").GetComponent<TextMeshProUGUI>().text = "win";
-        Debug.Log("Player Win");
+        Debug.LogError("Player Win");
 
         GameMGR.Instance.uiManager.PlayerSetArrangement();
         GameMGR.Instance.Init(4);
@@ -862,7 +862,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
     {
         // GameObject.Find("firstAttack").GetComponent<TextMeshProUGUI>().text = isFirstAttack.ToString();
         // GameObject.Find("resultText").GetComponent<TextMeshProUGUI>().text = "lose";
-        Debug.Log("Player Lose");
+        Debug.LogError("Player Lose");
 
         if (isDraw == true) return;
 
@@ -879,7 +879,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
 
     private void PlayerBattleDraw()
     {
-        Debug.Log("Player Draw");
+        Debug.LogError("Player Draw");
 
         isDraw = true;
 
