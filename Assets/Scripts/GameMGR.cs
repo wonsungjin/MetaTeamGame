@@ -133,6 +133,7 @@ public partial class GameMGR : Singleton<GameMGR>
             uiManager.curRound++;
 
             uiManager.ResultUnitPosition();
+            uiManager.battleSceneUI.SetActive(true);
             audioMGR.StoreSceneBGM(false);
             audioMGR.BattleSceneBGM(true);
         }
@@ -143,6 +144,7 @@ public partial class GameMGR : Singleton<GameMGR>
             // battle Scene
             // uiManager.BattleUIInit();
             audioMGR.BattleSceneBGM(false);
+            uiManager.battleSceneUI.SetActive(false);
             uiManager.OnResultUI();
         }
 

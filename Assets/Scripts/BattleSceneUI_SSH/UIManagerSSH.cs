@@ -10,15 +10,17 @@ using UnityEditor;
 
 public partial class UIManager : MonoBehaviour
 {
-    GameObject battleSceneUI = null;
+    public GameObject battleSceneUI = null;
     GameObject battleOptionPanel = null;
     GameObject leavPanel = null;
+    GameObject battleLife = null;
 
     GameObject ResultSceneUI = null;
     GameObject winUI = null;
     GameObject loseUI = null;
     GameObject drawUI = null;
     GameObject SoundPanel = null;
+
     public GameObject finalSceneUI = null;
     public GameObject[] playerArrangement = new GameObject[6];
 
@@ -36,7 +38,7 @@ public partial class UIManager : MonoBehaviour
     Sprite changeImage = null;
 
     public Image[] lifeImage = new Image[20];
-    
+
     public Transform[] playerPosition = new Transform[6];
 
     public int curRound = 0;
@@ -52,6 +54,8 @@ public partial class UIManager : MonoBehaviour
         leavPanel = GameObject.Find("LeavePanel");
         SoundPanel = GameObject.Find("SoundPanel");
         lifeText = GameObject.Find("CurLife").gameObject.GetComponent<TextMeshProUGUI>();
+        battleLife = GameObject.Find("BattleLife");
+
         SFXSlider = GameObject.Find("SFXSlider").gameObject.GetComponent<Slider>();
         BGMSlider = GameObject.Find("BGMSlider").gameObject.GetComponent<Slider>();
 
@@ -70,13 +74,13 @@ public partial class UIManager : MonoBehaviour
         if (battleOptionPanel != null) { battleOptionPanel.SetActive(false); }
         if (leavPanel != null) { leavPanel.SetActive(false); }
     }
-/*
-    public void BattleOption()
-    {
-        isOption = !isOption;
-        battleOptionPanel.SetActive(isOption);
-    }
-*/
+    /*
+        public void BattleOption()
+        {
+            isOption = !isOption;
+            battleOptionPanel.SetActive(isOption);
+        }
+    */
     #endregion
 
     #region RoundResultScene
@@ -166,10 +170,10 @@ public partial class UIManager : MonoBehaviour
     public void ChangeLife(int Life)
     {
         changeImage = Resources.Load<Sprite>($"Sprites/Nomal/Icon_ItemIcon_Skull");
-        lifeImage[19-Life].sprite = changeImage;
+        lifeImage[19 - Life].sprite = changeImage;
     }
 
-    public IEnumerator COR_MoveToResultScene(bool Win,bool Lose, bool Draw)
+    public IEnumerator COR_MoveToResultScene(bool Win, bool Lose, bool Draw)
     {
         Camera.main.gameObject.transform.position = new Vector3(40, 0, -10);
 

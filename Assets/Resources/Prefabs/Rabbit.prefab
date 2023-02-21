@@ -463,4 +463,5 @@ MonoBehaviour:
   takeDamage: 0
   shopBatchEmptyIndex: 0
   isMine: 0
+  triggerOnCount: 0
   searchArea: []

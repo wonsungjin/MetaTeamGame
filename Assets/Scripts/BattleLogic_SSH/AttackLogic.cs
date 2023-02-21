@@ -43,6 +43,7 @@ public partial class AttackLogic : Skill
         card.Attack( card.curAttackValue, targetUint.GetComponentInChildren<Card>(), true, true );
         //GameMGR.Instance.objectPool.DestroyPrefab(targetUint);
 
+        Debug.Log($"{card.curHP} 가 현재 나의 체력이다");
         if(card.curHP > 0)
         {
             while (Vector2.Distance(gameObject.transform.parent.position, returnPosition) > 0)
@@ -59,17 +60,25 @@ public partial class AttackLogic : Skill
         {
             yield return new WaitForSecondsRealtime(1f);
         }
-            
-                
 
         GameMGR.Instance.battleLogic.isWaitAttack = true;
     }
     public void UnitAttack(GameObject targetUnit)
     {
+        if (targetUnit == null)
+        {
+            GameMGR.Instance.battleLogic.isWaitAttack = true;
+            return;
+        }
         playerTrans = gameObject.transform.parent.position;
         enemyTrans = targetUnit.transform.position;
         returnPosition = playerTrans;
 
         StartCoroutine(COR_Delay(targetUnit.transform.gameObject));
+    }
+
+    public void OnDisable()
+    {
+        GameMGR.Instance.battleLogic.isWaitAttack = true;
     }
 }

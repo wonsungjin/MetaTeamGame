@@ -451,7 +451,7 @@ MonoBehaviour:
   atkText: {fileID: 6807979636962896944}
   levelText: {fileID: 6807979636024395126}
   level: 1
-  curAttackValue: 2
+  curAttackValue: 3
   curHP: 3
   curEXP: 0
   expSlider: {fileID: 5175164469865274594}
@@ -463,4 +463,5 @@ MonoBehaviour:
   takeDamage: 0
   shopBatchEmptyIndex: 0
   isMine: 0
+  triggerOnCount: 0
   searchArea: []

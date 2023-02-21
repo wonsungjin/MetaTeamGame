@@ -27889,7 +27889,6 @@ MonoBehaviour:
   playerBatchUI: {fileID: 0}
   playerName: {fileID: 0}
   timerTXT: {fileID: 0}
-  nowhp: 20
   shopMoney: 0
   goldCount: 10
   shopLevel: 1
