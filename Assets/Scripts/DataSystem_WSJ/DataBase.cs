@@ -88,6 +88,7 @@ public class DataBase : MonoBehaviour
             GameMGR.Instance.customDeckShop.Create_CustomDeck();
             collection.UpdateOne(fillter, update);
             collection.UpdateOne(fillter, update2);
+            isFindUnit = true;
         }
         else
         {
@@ -273,7 +274,7 @@ public class InventoryData
         if (one == null && customDeck != null)
         {
             customDeck.Num = 1;
-            one = customDeck;
+            one = customDeck;    
             GameMGR.Instance.uiManager.CreateMyPackButton(one);
             GameMGR.Instance.myCustomDeck = one;
         }
@@ -337,7 +338,7 @@ public class InventoryData
 public class CustomDeck
 {
     public int Num = 0;
-    public string DeckName = "Free Pack";
+    public string DeckName = "My Pack";
     public List<string> tier_1 = new List<string>();
     public List<string> tier_2 = new List<string>();
     public List<string> tier_3 = new List<string>();

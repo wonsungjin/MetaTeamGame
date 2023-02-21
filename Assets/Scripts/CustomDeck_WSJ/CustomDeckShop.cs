@@ -16,12 +16,23 @@ public class CustomDeckShop : MonoBehaviour
         if (customDeckList.TryGetValue(4, out list)) customDeck.tier_4 = list;
         if (customDeckList.TryGetValue(5, out list)) customDeck.tier_5 = list;
         if (customDeckList.TryGetValue(6, out list)) customDeck.tier_6 = list;
+        if (customDeck.tier_1.Count <1
+         || customDeck.tier_2.Count <1
+         || customDeck.tier_3.Count <1
+         || customDeck.tier_4.Count <1
+         || customDeck.tier_5.Count <1
+         || customDeck.tier_6.Count <1)
+        {
+            GameMGR.Instance.uiManager.SetNameMakeUI(false);
+            return;
+        }
+
         if (customDeck.tier_1.Count < 4
-         && customDeck.tier_2.Count < 4
-         && customDeck.tier_3.Count < 4
-         && customDeck.tier_4.Count < 4
-         && customDeck.tier_5.Count < 4
-         && customDeck.tier_6.Count < 4)
+         || customDeck.tier_2.Count < 4
+         || customDeck.tier_3.Count < 4
+         || customDeck.tier_4.Count < 4
+         || customDeck.tier_5.Count < 4
+         || customDeck.tier_6.Count < 4)
         {
             RandomAddDeck();
         }
@@ -34,6 +45,7 @@ public class CustomDeckShop : MonoBehaviour
     {
         Debug.Log("¾Æ¿À");
         List<string> list = null;
+        customDeck.DeckName = "Free Pack";
         if (customDeckList.TryGetValue(1, out list)) customDeck.tier_1 = list;
         if (customDeckList.TryGetValue(2, out list)) customDeck.tier_2 = list;
         if (customDeckList.TryGetValue(3, out list)) customDeck.tier_3 = list;
@@ -41,11 +53,11 @@ public class CustomDeckShop : MonoBehaviour
         if (customDeckList.TryGetValue(5, out list)) customDeck.tier_5 = list;
         if (customDeckList.TryGetValue(6, out list)) customDeck.tier_6 = list;
         if (customDeck.tier_1.Count < 4
-         && customDeck.tier_2.Count < 4
-         && customDeck.tier_3.Count < 4
-         && customDeck.tier_4.Count < 4
-         && customDeck.tier_5.Count < 4
-         && customDeck.tier_6.Count < 4)
+         || customDeck.tier_2.Count < 4
+         || customDeck.tier_3.Count < 4
+         || customDeck.tier_4.Count < 4
+         || customDeck.tier_5.Count < 4
+         || customDeck.tier_6.Count < 4)
         {
             RandomAddDeck();
         }
@@ -59,6 +71,7 @@ public class CustomDeckShop : MonoBehaviour
     public void OnChageName(string st)
     {
         customDeck.DeckName = st;
+        if (customDeck.DeckName == "Free Pack") customDeck.DeckName = "My Pack";
     }
     public void OnClick_Join_CustomDeckShop()
     {
@@ -81,7 +94,7 @@ public class CustomDeckShop : MonoBehaviour
             list = new List<string>();
             customDeckList.Add(tier, list);
         }
-        if (list.Count < 4)
+        if (list.Count < 2)
         {
             if (list.Contains(name) == false)
             {
@@ -119,7 +132,7 @@ public class CustomDeckShop : MonoBehaviour
         {
             value = GameMGR.Instance.shopCards.customDeckList.TryGetValue(tier, out shopList);
             listCheck = customDeckList.TryGetValue(tier, out list);
-            if(list==null) list = new List<string>();
+            if (list == null) list = new List<string>();
             ran = Random.Range(0, shopList.Count);
             if (tier == 1) list = customDeck.tier_1;
             else if (tier == 2) list = customDeck.tier_2;
@@ -130,9 +143,9 @@ public class CustomDeckShop : MonoBehaviour
 
             if (value != false)
             {
-                while (list.Count < 8)
+                while (list.Count < 4)
                 {
-                    while (list.Contains(shopList[ran].objName) == true|| shopList[ran].appear == "FALSE")
+                    while (list.Contains(shopList[ran].objName) == true || shopList[ran].appear == "FALSE")
                     {
                         ran = Random.Range(0, shopList.Count);
                     }
