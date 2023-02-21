@@ -131,6 +131,8 @@ public partial class GameMGR : Singleton<GameMGR>
         else if (num == 3)
         {
             GameMGR.Instance.isBattleNow = true;
+            GameMGR.Instance.Event_BattleStart();
+
             uiManager.OnBattleUI();
             uiManager.curRound++;
 
@@ -155,6 +157,8 @@ public partial class GameMGR : Singleton<GameMGR>
         {
             GameMGR.Instance.isBattleNow = false;
             GameMGR.Instance.spawner.ResetStore();
+
+            GameMGR.Instance.Event_TurnStart();
 
             // result Scene
             uiManager.PlayerBattleWin(false);

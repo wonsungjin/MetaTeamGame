@@ -71,7 +71,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
     #endregion
 
     #region 
-    // �ΰ��� ���� ����
+    // 시작시 실행되는 부분
     public void AttackLogic()
     {
         isPlayerPreemptiveAlive = true;
