@@ -258,6 +258,9 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                 playerAttackArray[playerTurnCount].GetComponentInChildren<AttackLogic>().UnitAttack(enemyBackwardUnits[exArray[randomArrayNum]]);
                 yield return new WaitUntil(() => isWaitAttack);
                 isWaitAttack = false;
+
+                if (playerAttackArray.All(x => x == null) && enemyAttackArray.All(x => x == null)) { PlayerBattleDraw(); }
+
                 // �ǰ� ���� ������ �迭���� ����
                 /*for (int i = 0; i < enemyAttackArray.Length; i++)
                 {
@@ -424,6 +427,8 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                 enemyAttackArray[enemyTurnCount].GetComponentInChildren<AttackLogic>().UnitAttack(playerBackwardUnits[exArray[randomArrayNum]]);
                 yield return new WaitUntil(() => isWaitAttack);
                 isWaitAttack = false;
+
+                if (playerAttackArray.All(x => x == null) && enemyAttackArray.All(x => x == null)) { PlayerBattleDraw(); }
 
                 // �ǰ� ���� �÷��̾� ������ �迭���� ����
                 /*for (int i = 0; i < playerAttackArray.Length; i++)
@@ -610,6 +615,8 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                 yield return new WaitUntil(() => isWaitAttack);
                 isWaitAttack = false;
 
+                if (playerAttackArray.All(x => x == null) && enemyAttackArray.All(x => x == null)) { PlayerBattleDraw(); }
+
                 // �ǰ� ���� �÷��̾� ������ �迭���� ����
                 /*for (int i = 0; i < playerAttackArray.Length; i++)
                 {
@@ -790,6 +797,8 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                 playerAttackArray[playerTurnCount].GetComponentInChildren<AttackLogic>().UnitAttack(enemyBackwardUnits[exArray[randomArrayNum]]);
                 yield return new WaitUntil(() => isWaitAttack);
                 isWaitAttack = false;
+
+                if (playerAttackArray.All(x => x == null) && enemyAttackArray.All(x => x == null)) { PlayerBattleDraw(); }
 
                 // �ǰ� ���� ������ �迭���� ����
                 /*for (int i = 0; i < enemyAttackArray.Length; i++)

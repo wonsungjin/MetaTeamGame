@@ -314,6 +314,7 @@ MonoBehaviour:
   curHP: 1
   curEXP: 0
   expSlider: {fileID: 7086704749162298161}
+  isSkillTiming: 1
   skillTarget: []
   batchPos: {x: 0, y: 0}
   targetPos: {x: 0, y: 0}

@@ -139,6 +139,7 @@ public partial class Card : MonoBehaviourPun
 
     public void SetSkillTiming() // 스킬을 언제 발동시키느냐에 따라서 각 델리게이트 이벤트에 추가시켜준다. 이벤트는 보따리의 개념으로써 이벤트를 실행하면 안에 추가한 모든 함수들이 실행되기 때문에 공통적으로 사용되는 부분에서만 사용하는 것이 응당 정당 타당 합당 마땅하다고 보는 부분적인 부분이라고 할 수 있는 부분이다.
     {
+        isSkillTiming = true; // 찬욱하다 = 배신 과 기만
         Debug.Log("SetSkillTiming 설정하는 함수로 들어왔다");
         switch (cardInfo.skillTiming)
         {
@@ -260,15 +261,21 @@ public partial class Card : MonoBehaviourPun
                     if (cardInfo.GetValue(1, level) < 0) // && skillTarget[i].curAttackValue > cardInfo.GetValue(1, level))
                     {
                         Debug.Log("공격력 감소 효과");
-                        if (skillTarget[i].curAttackValue + cardInfo.GetValue(1, level) < 1) skillTarget[i].ChangeValue(CardStatus.Attack, 1);
+                        if (skillTarget[i].curAttackValue + cardInfo.GetValue(1, level) < 1)
+                        {
+                            Debug.Log("감소한 값이 음수");
+                            skillTarget[i].ChangeValue(CardStatus.Attack, 1);
+                        }
                         else
                         {
+                            Debug.Log("감소한 값이 양수");
                             skillTarget[i].ChangeValue(CardStatus.Attack, cardInfo.GetValue(1, level), true);
                         }
                         atkText.text = curAttackValue.ToString();
                     }
                     else
                     {
+                        Debug.Log("공격력 증가 효과");
                         skillTarget[i].ChangeValue(CardStatus.Attack, cardInfo.GetValue(1, level), true);
                         atkText.text = curAttackValue.ToString();
                     }

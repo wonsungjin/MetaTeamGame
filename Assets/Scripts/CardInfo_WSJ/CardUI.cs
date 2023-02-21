@@ -60,7 +60,7 @@ public class CardUI : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler,
                 isWhiteLine = false;
                 image.sprite = Resources.Load<Sprite>($"Sprites/Nomal/{name}");
             } 
-            if (GameMGR.Instance.customDeckShop.AddTierList(cardInfo.tier, cardInfo.objName) > 8)
+            if (GameMGR.Instance.customDeckShop.AddTierList(cardInfo.tier, cardInfo.objName) > 1)
             {
                 isWhiteLine = false;
                 Debug.Log("8chrhk");
