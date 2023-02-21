@@ -78,7 +78,7 @@ public partial class GameMGR : Singleton<GameMGR>
         StartCoroutine(COR_Delay());
         yield return new WaitUntil(() => stayAPI[0]);
         yield return new WaitUntil(() => stayAPI[1]);
-        yield return new WaitUntil(() => GameMGR.Instance.metaTrendAPI.res_UserProfile.userProfile.public_address != null);
+       // yield return new WaitUntil(() => GameMGR.Instance.metaTrendAPI.res_UserProfile.userProfile.public_address != null);
         uiManager.Faid(uiManager.loginSystemUI, faidType.Out, 0.03f);
         dataBase.Login();
         PhotonNetwork.LocalPlayer.NickName = GameMGR.Instance.dataBase.userName;

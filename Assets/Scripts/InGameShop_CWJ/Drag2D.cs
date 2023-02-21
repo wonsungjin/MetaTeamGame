@@ -20,9 +20,9 @@ public partial class Drag2D : MonoBehaviour
 
     float timer = 0f;
     float distance = 10;
-    private bool isClickBool = false;
+    public bool isClickBool = false;
     public bool isFreezen = false;
-    bool isClickBattleMonster = false;
+    public bool isClickBattleMonster = false;
 
     private void OnEnable()
     {
