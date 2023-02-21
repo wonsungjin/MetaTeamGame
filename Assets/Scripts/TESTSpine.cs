@@ -5,9 +5,16 @@ using UnityEngine;
 
 public class TESTSpine : MonoBehaviour
 {
-    public AnimationReferenceAsset blink;
-    public float mini = 0.15f;
-    public float max = 3f;
+    SkeletonAnimation skeletonAnimation = null;
 
+    private void Start()
+    {
+        skeletonAnimation = gameObject.GetComponent<SkeletonAnimation>();
+    }
 
+    void TestAnim()
+    {
+        
+    }
+    
 }
