@@ -1,5 +1,4 @@
 using UnityEngine;
-using static Unity.VisualScripting.Dependencies.Sqlite.SQLite3;
 
 public class SpecialZone : MonoBehaviour
 {
