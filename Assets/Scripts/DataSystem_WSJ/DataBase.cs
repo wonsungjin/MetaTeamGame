@@ -98,6 +98,7 @@ public class DataBase : MonoBehaviour
         }
 
     }
+    public bool isFindUnit;
     public InventoryData inventoryData = new InventoryData();
     public UnitData unitData = new UnitData();
     public void FindUnitData()
@@ -126,6 +127,7 @@ public class DataBase : MonoBehaviour
             unitData.hashtable.Add("A" + tier, hashList);
             Debug.Log(hashList.Count + "???????zkdnsmdmdmxkedkek");
         }
+        isFindUnit = true;
 
 
 
