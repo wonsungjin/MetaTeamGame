@@ -10,7 +10,7 @@ public partial class AttackLogic : Skill
     Vector2 enemyTrans = Vector2.zero;
     Vector2 returnPosition = Vector2.zero;
 
-    bool isArrive = false;
+    public bool isArrive = false;
 
     float curTime = 0f;
     float goalTime = 1f;
@@ -28,6 +28,8 @@ public partial class AttackLogic : Skill
     {
         curTime = 0;
 
+        card.SetAnim("Walk");
+
         while (Vector2.Distance(gameObject.transform.parent.position, targetUint.transform.position) > 1)
         {
             curTime += Time.deltaTime;
@@ -39,19 +41,25 @@ public partial class AttackLogic : Skill
         }
 
         curTime = 0f;
+        card.SetAnim("Attack");
+        yield return new WaitForSeconds(1f);
         //is delvoewafafcajff
         card.Attack( card.curAttackValue, targetUint.GetComponentInChildren<Card>(), true, true );
         //GameMGR.Instance.objectPool.DestroyPrefab(targetUint);
+        yield return new  WaitUntil(() => isArrive);
+        isArrive = false;
 
         Debug.Log($"{card.curHP} 가 현재 나의 체력이다");
-        if(card.curHP > 0)
+        if(card.curHP > 0 && this.gameObject != null)
         {
+            card.SetAnim("Walk");
+
             while (Vector2.Distance(gameObject.transform.parent.position, returnPosition) > 0)
             {
                 curTime += Time.deltaTime;
 
                 // return position
-                gameObject.transform.parent.position = Vector2.Lerp(enemyTrans, returnPosition, curTime / goalTime);
+                gameObject.transform.parent.position = Vector2.Lerp(playerTrans, returnPosition, curTime / goalTime);
 
                 yield return waitForFixedUpdate;
             }
@@ -60,6 +68,8 @@ public partial class AttackLogic : Skill
         {
             yield return new WaitForSecondsRealtime(1f);
         }
+
+        card.SetAnim("Idle");
 
         GameMGR.Instance.battleLogic.isWaitAttack = true;
     }
@@ -72,7 +82,7 @@ public partial class AttackLogic : Skill
             return;
         }
 
-        Debug.Log($"{gameObject.name}이 {targetUnit}를 때린다다다다다");
+        Debug.LogError($"{gameObject.name}이 {targetUnit}를 때린다다다다다");
 
         playerTrans = gameObject.transform.parent.position;
         enemyTrans = targetUnit.transform.position;
@@ -80,9 +90,9 @@ public partial class AttackLogic : Skill
 
         StartCoroutine(COR_Delay(targetUnit.transform.gameObject));
     }
-
+/*
     public void OnDisable()
     {
         GameMGR.Instance.battleLogic.isWaitAttack = true;
-    }
+    }*/
 }
