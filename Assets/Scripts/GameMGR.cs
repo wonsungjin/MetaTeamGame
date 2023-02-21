@@ -23,6 +23,7 @@ public partial class GameMGR : Singleton<GameMGR>
     public TimerSound timerSound;
 
     public ChainBroken chainBroken;
+    public NodeCollider nodeCollider;
 
     private void Awake()
     {
@@ -110,6 +111,7 @@ public partial class GameMGR : Singleton<GameMGR>
             battleLogic = FindObjectOfType<BattleLogic>();
             timerSound = FindObjectOfType<TimerSound>();
             chainBroken = FindObjectOfType<ChainBroken>();
+            nodeCollider = FindObjectOfType<NodeCollider>();
             audioMGR.StoreSceneBGM(true);
 
             // lobby timerInit

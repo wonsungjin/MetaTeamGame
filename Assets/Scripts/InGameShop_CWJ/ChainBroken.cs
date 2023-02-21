@@ -15,19 +15,19 @@ public class ChainBroken : MonoBehaviour
         if (GameMGR.Instance.uiManager.shopLevel == 3)
         {
             num = 0;
-
+            GameMGR.Instance.nodeCollider.NodeCollOn();
             StartCoroutine(ChainBro(num));
         }
         if (GameMGR.Instance.uiManager.shopLevel == 4)
         {
             num = 1;
-
+            GameMGR.Instance.nodeCollider.NodeCollOn();
             StartCoroutine(ChainBro(num));
         }
         if (GameMGR.Instance.uiManager.shopLevel == 5)
         {
             num = 2;
-
+            GameMGR.Instance.nodeCollider.NodeCollOn();
             StartCoroutine(ChainBro(num));
         }
     }
