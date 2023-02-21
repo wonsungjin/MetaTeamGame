@@ -329,6 +329,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65fe8111d5fe90f429cfa313264e83f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  battleSceneUI: {fileID: 0}
   finalSceneUI: {fileID: 0}
   playerArrangement:
   - {fileID: 0}
@@ -402,6 +403,8 @@ MonoBehaviour:
   tournamentText: {fileID: 0}
   isLobby: 1
   packButton: {fileID: 0}
+  userName: {fileID: 0}
+  userImage: {fileID: 0}
   myContent: {fileID: 0}
   tier1: []
   tierCountText: []
@@ -1979,7 +1982,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 104937933}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3117cb13cbb7d08488a35e40de450eff, type: 3}
   m_Name: 
@@ -1988,7 +1991,7 @@ MonoBehaviour:
   enemyCardPosition: []
   CustomNumberList: 
   PlayerNameList: []
-  playerRanking: {fileID: 0}
+  playerRanking: {fileID: 1679714929164551376, guid: 2b2d6d483eb1d4b4db2562e63368908e, type: 3}
   playerRankingUi: {fileID: 0}
 --- !u!82 &104937940
 AudioSource:
@@ -4791,7 +4794,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 104937939}
+      - m_Target: {fileID: 1860292985}
         m_TargetAssemblyTypeName: Batch, Assembly-CSharp
         m_MethodName: OnClick_Set_PlayerBatch
         m_Mode: 3
@@ -5144,7 +5147,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 104937939}
+      - m_Target: {fileID: 1860292985}
         m_TargetAssemblyTypeName: Batch, Assembly-CSharp
         m_MethodName: OnClick_Set_PlayerBatch
         m_Mode: 3
@@ -8575,7 +8578,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 104937939}
+      - m_Target: {fileID: 1860292985}
         m_TargetAssemblyTypeName: Batch, Assembly-CSharp
         m_MethodName: OnClick_Set_PlayerBatch
         m_Mode: 3
@@ -11814,7 +11817,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 104937939}
+      - m_Target: {fileID: 1860292985}
         m_TargetAssemblyTypeName: Batch, Assembly-CSharp
         m_MethodName: OnClick_Set_PlayerBatch
         m_Mode: 3
@@ -16771,7 +16774,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 104937939}
+      - m_Target: {fileID: 1860292985}
         m_TargetAssemblyTypeName: Batch, Assembly-CSharp
         m_MethodName: OnClick_Set_PlayerBatch
         m_Mode: 3
@@ -17395,7 +17398,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 104937939}
+      - m_Target: {fileID: 1860292985}
         m_TargetAssemblyTypeName: Batch, Assembly-CSharp
         m_MethodName: OnClick_Set_PlayerBatch
         m_Mode: 3
@@ -17525,7 +17528,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 104937939}
+      - m_Target: {fileID: 1860292985}
         m_TargetAssemblyTypeName: Batch, Assembly-CSharp
         m_MethodName: OnClick_Set_PlayerBatch
         m_Mode: 3
@@ -23661,7 +23664,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 104937939}
+      - m_Target: {fileID: 1860292985}
         m_TargetAssemblyTypeName: Batch, Assembly-CSharp
         m_MethodName: OnClick_Set_PlayerBatch
         m_Mode: 3
@@ -24021,6 +24024,10 @@ PrefabInstance:
       propertyPath: sceneViewId
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 419179787228355094, guid: eb004e40a4d451940a57a8abe92e64b6, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2207527011903693928, guid: eb004e40a4d451940a57a8abe92e64b6, type: 3}
       propertyPath: m_Name
       value: BattleScene
@@ -24119,6 +24126,17 @@ PrefabInstance:
       objectReference: {fileID: 20203648}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eb004e40a4d451940a57a8abe92e64b6, type: 3}
+--- !u!114 &1860292985 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 419179787228355094, guid: eb004e40a4d451940a57a8abe92e64b6, type: 3}
+  m_PrefabInstance: {fileID: 1860292984}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3117cb13cbb7d08488a35e40de450eff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1861536562
 GameObject:
   m_ObjectHideFlags: 0

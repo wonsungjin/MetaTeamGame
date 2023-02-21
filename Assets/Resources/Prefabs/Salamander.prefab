@@ -235,6 +235,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillType: 
+  isArrive: 0
 --- !u!82 &3082001688442477110
 AudioSource:
   m_ObjectHideFlags: 0

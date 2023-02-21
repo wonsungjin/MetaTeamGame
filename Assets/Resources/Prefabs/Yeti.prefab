@@ -418,6 +418,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillType: 
+  isArrive: 0
 --- !u!114 &9131074198468090954
 MonoBehaviour:
   m_ObjectHideFlags: 0
