@@ -23,6 +23,7 @@ public partial class Card : MonoBehaviourPun
     public int curAttackValue;
     public int curHP;
     public int curEXP = 0;
+    bool isLoop = false;
     public Slider expSlider;
     SkeletonAnimation skeletonAnimation;
     AudioSource audioSource;
@@ -72,6 +73,25 @@ public partial class Card : MonoBehaviourPun
         else expSlider.value = card.curEXP * 0.33f;
         levelText.text = card.level.ToString();
     }
+
+    public void SetAnim(string state)
+    {
+        // skeletonAnimation.AnimationState
+        
+        switch(state)
+        {
+            case "Idle":
+                isLoop = true;
+                break;
+            case "Walk":
+                isLoop = true;
+                break;
+        }
+
+        skeletonAnimation.AnimationState.SetAnimation(0, state, isLoop);
+        isLoop = false;
+    }
+
     public void SetFlip(bool isSet)
     {
         skeletonAnimation.SetFlip(isSet);
@@ -136,7 +156,6 @@ public partial class Card : MonoBehaviourPun
                         StartCoroutine(COR_LevelUpMonsterEF());
                         ChangeValue(CardStatus.Level);
                         gameObject.tag = "BattleMonster3";
-                        gameObject.name = "Level3";
                         audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.Unit, "UnitLevelUP_sound");
                         audioSource.Play();
                        
