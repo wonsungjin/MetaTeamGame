@@ -93,7 +93,14 @@ public class DataBase : MonoBehaviour
             collection.UpdateOne(fillter, update2);
             isFindUnit = true;
 
-
+            BsonValue userNameValue = null;
+            BsonValue userProfileValue = null;
+            Debug.Log(userNameValue.ToString());
+            nullFillter.TryGetValue("username", out userNameValue);
+            nullFillter.TryGetValue("userprofile", out userProfileValue);
+            GameMGR.Instance.uiManager.userName.text = userName.ToString();
+            Debug.Log(userProfileValue.ToString());
+            GameMGR.Instance.uiManager.userImage.sprite = Resources.Load<Sprite>($"Sprites/Profile/{userProfileValue.ToString()}");
         }
         else
         {
@@ -101,7 +108,6 @@ public class DataBase : MonoBehaviour
             FindUnitData();
             GameMGR.Instance.dataBase.InsertInventoryData();
             GameMGR.Instance.uiManager.SetParentPackAddButton();
-        }
             BsonValue userNameValue = null;
             BsonValue userProfileValue = null;
             nullFillter.TryGetValue("username", out userNameValue);
@@ -109,6 +115,7 @@ public class DataBase : MonoBehaviour
             GameMGR.Instance.uiManager.userName.text = userName.ToString();
         Debug.Log(userProfileValue.ToString());
             GameMGR.Instance.uiManager.userImage.sprite = Resources.Load<Sprite>($"Sprites/Profile/{userProfileValue.ToString()}");
+        }
 
 
     }
