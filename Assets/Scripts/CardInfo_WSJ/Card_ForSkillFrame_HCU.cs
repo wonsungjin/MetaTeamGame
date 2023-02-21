@@ -160,26 +160,12 @@ public partial class Card : MonoBehaviourPun
                 GameMGR.Instance.callbackEvent_TurnEnd += SkillActive;
                 Debug.Log("턴종료시효과니까 이벤트에 추가");
                 break;
-            case SkillTiming.buy:
-                //GameMGR.Instance.callbackEvent_Buy += SkillActive2;
-                Debug.Log("구매시효과니까 이벤트에 추가");
-                break;
-            case SkillTiming.sell:
-                GameMGR.Instance.callbackEvent_Sell += SkillActive2;
-                Debug.Log("판매시효과니까 이벤트에 추가");
-                break;
             case SkillTiming.reroll:
                 GameMGR.Instance.callbackEvent_Reroll += SkillActive;
                 Debug.Log("리롤시효과니까 이벤트에 추가");
                 break;
-            case SkillTiming.kill:
-                GameMGR.Instance.callbackEvent_Kill += SkillActive;
-                break;
             case SkillTiming.hitEnemy:
                 GameMGR.Instance.callbackEvent_HitEnemy += SkillActive2;
-                break;
-            case SkillTiming.death:
-                GameMGR.Instance.callbackEvent_Death += SkillActive;
                 break;
             case SkillTiming.battleStart:
                 GameMGR.Instance.callbackEvent_BattleStart += SkillActive;
