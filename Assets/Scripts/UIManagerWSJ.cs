@@ -31,6 +31,12 @@ public partial class UIManager : MonoBehaviour
     private GameObject myPackList;
     private GameObject packAddButton;
     private ToggleGroup toggleGroup;
+    [Header("UserProfile")]
+    public TextMeshProUGUI userName;
+    public Image userImage;
+
+
+
     [Header("CardInfo")]
     private Image cardImage;
     private TextMeshProUGUI cardName;
@@ -46,6 +52,8 @@ public partial class UIManager : MonoBehaviour
     public TextMeshProUGUI[] tierCountText;
     public void Init_Scene1()
     {
+        userName = GameObject.Find("UserName").GetComponent<TextMeshProUGUI>();
+        userImage= GameObject.Find("UserImage").GetComponent<Image>();
         loginSystemUI = GameObject.Find("LoginSystem");
         blackUI = GameObject.Find("BlackUI");
         logoPannel = GameObject.Find("LogoPannel");

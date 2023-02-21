@@ -211,6 +211,7 @@ MonoBehaviour:
   curHP: 2
   curEXP: 0
   expSlider: {fileID: 282920462432760596}
+  isSkillTiming: 1
   skillTarget: []
   batchPos: {x: 0, y: 0}
   targetPos: {x: 0, y: 0}
@@ -219,6 +220,7 @@ MonoBehaviour:
   takeDamage: 0
   shopBatchEmptyIndex: 0
   isMine: 0
+  triggerOnCount: 0
   searchArea: []
 --- !u!114 &6459417391829833632
 MonoBehaviour:

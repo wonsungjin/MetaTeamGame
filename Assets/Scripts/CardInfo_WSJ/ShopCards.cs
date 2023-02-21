@@ -23,11 +23,13 @@ public class ShopCards : MonoBehaviour
     IEnumerator CreateInit()
     {
         yield return new WaitForSeconds(2f);
+        yield return new WaitUntil(() => GameMGR.Instance.dataBase.isFindUnit);
         CardUI obj = null;
         for (int tierNum = 1; tierNum < 7; tierNum++)
         {
             List<CardInfo> list = GetTierList(tierNum);
 
+                List<string> hashList = GameMGR.Instance.dataBase.unitData.hashtable["A" + tierNum] as List<string>;
             for (int i = 0; i < list.Count; i++)
             {
                 if (list[i].appear == "FALSE")
@@ -39,18 +41,19 @@ public class ShopCards : MonoBehaviour
                 Debug.Log("»ý¼º~~~~~~~~~~~~~~~~~~~" + list[i].objName);
 
                 obj = GameObject.Instantiate<CardUI>(card);
-                obj.transform.SetParent(GameMGR.Instance.uiManager.tier1[tierNum - 1].transform);
                 obj.transform.localScale = Vector3.one;
-                List<string> hashList = GameMGR.Instance.dataBase.unitData.hashtable["A" + tierNum] as List<string>;
                 Debug.Log(GameMGR.Instance.dataBase.unitData.hashtable["A" + tierNum] as List<string>);
-                for (int a = 0; a < hashList.Count; a++) Debug.Log(hashList[a]);
-                if (hashList.Contains(list[i].objName.Replace(" ", "")) == false)
-                {
-                    obj.DonHave();
-                }
+                    obj.transform.SetParent(GameMGR.Instance.uiManager.tier1[tierNum - 1].transform);
+                if (hashList != null)
+                    if (hashList.Contains(list[i].objName.Replace(" ", "")) == false)
+                    {
+                        obj.DonHave();
+                    }
+                    else obj.transform.SetAsFirstSibling();
                 obj.SetMyInfo(list[i].name);
                 obj.OffFrame();
                 clearList.Add(obj);
+                    
             }
         }
     }

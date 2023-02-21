@@ -13,8 +13,10 @@ public class DataBase : MonoBehaviour
     public IMongoDatabase database = null;
     public IMongoCollection<BsonDocument> collection;
     public string userName;
+    public string[] userProfile = { "one", "two", "three", "five", "six", "seven","eight", "nine", "ten" };
     void Start()
     {
+        
         database = client.GetDatabase("userlist");
         collection = database.GetCollection<BsonDocument>("user");
 
@@ -79,6 +81,7 @@ public class DataBase : MonoBehaviour
                 //["address"] = "원성진",
                 ["address"] = GameMGR.Instance.metaTrendAPI.res_UserProfile.userProfile.public_address,
                 ["username"] = GameMGR.Instance.metaTrendAPI.res_UserProfile.userProfile.username,
+                ["userprofile"] = userProfile[UnityEngine.Random.Range(0,userProfile.Length)],
                 //["username"] = "닉네임",
 
             }));
@@ -88,6 +91,9 @@ public class DataBase : MonoBehaviour
             GameMGR.Instance.customDeckShop.Create_CustomDeck();
             collection.UpdateOne(fillter, update);
             collection.UpdateOne(fillter, update2);
+            isFindUnit = true;
+
+
         }
         else
         {
@@ -96,8 +102,17 @@ public class DataBase : MonoBehaviour
             GameMGR.Instance.dataBase.InsertInventoryData();
             GameMGR.Instance.uiManager.SetParentPackAddButton();
         }
+            BsonValue userNameValue = null;
+            BsonValue userProfileValue = null;
+            nullFillter.TryGetValue("username", out userNameValue);
+            nullFillter.TryGetValue("userprofile", out userProfileValue);
+            GameMGR.Instance.uiManager.userName.text = userName.ToString();
+        Debug.Log(userProfileValue.ToString());
+            GameMGR.Instance.uiManager.userImage.sprite = Resources.Load<Sprite>($"Sprites/Profile/{userProfileValue.ToString()}");
+
 
     }
+    public bool isFindUnit;
     public InventoryData inventoryData = new InventoryData();
     public UnitData unitData = new UnitData();
     public void FindUnitData()
@@ -126,6 +141,7 @@ public class DataBase : MonoBehaviour
             unitData.hashtable.Add("A" + tier, hashList);
             Debug.Log(hashList.Count + "???????zkdnsmdmdmxkedkek");
         }
+        isFindUnit = true;
 
 
 
@@ -271,7 +287,7 @@ public class InventoryData
         if (one == null && customDeck != null)
         {
             customDeck.Num = 1;
-            one = customDeck;
+            one = customDeck;    
             GameMGR.Instance.uiManager.CreateMyPackButton(one);
             GameMGR.Instance.myCustomDeck = one;
         }
@@ -335,7 +351,7 @@ public class InventoryData
 public class CustomDeck
 {
     public int Num = 0;
-    public string DeckName = "Free Pack";
+    public string DeckName = "My Pack";
     public List<string> tier_1 = new List<string>();
     public List<string> tier_2 = new List<string>();
     public List<string> tier_3 = new List<string>();
