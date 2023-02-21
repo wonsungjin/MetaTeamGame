@@ -117,13 +117,6 @@ public class Spawner : MonoBehaviourPun
                 (int)PhotonNetwork.LocalPlayer.CustomProperties["Number"], "", 0, 0, 0, 0);
         }
         photonView.RPC("MatchingReady", RpcTarget.All);
-
-        //GameObject[] monster = GameObject.FindGameObjectsWithTag("Monster");
-        //GameMGR.Instance.uiManager.goldCount = 10;
-        //for (int i = 0; i < monster.Length; i++)
-        //{
-        //    GameMGR.Instance.objectPool.DestroyPrefab(monster[i]);
-        //}
     }
 
     public void TestButton()
@@ -234,7 +227,6 @@ public class Spawner : MonoBehaviourPun
             ChooseRandomCard();
 
             GameMGR.Instance.Event_Reroll();    // 리롤시 능력가진 카드들 효과 발동
-
         }
         else
         {
@@ -245,13 +237,6 @@ public class Spawner : MonoBehaviourPun
     // 돈이 없을때 버튼들 끄는 함수
     void Reset_NotMoney()
     {
-        //if (GameMGR.Instance.uiManager.goldCount <= 0)
-        //{
-        //    GameMGR.Instance.uiManager.reFreshButton.interactable = false;
-        //}
-        //else
-        //    GameMGR.Instance.uiManager.reFreshButton.interactable = true;
-
         if (GameMGR.Instance.uiManager.shopLevel > 5)
         {
             GameMGR.Instance.uiManager.levelUpButton.interactable = false;

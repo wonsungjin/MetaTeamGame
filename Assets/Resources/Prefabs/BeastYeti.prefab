@@ -51,6 +51,7 @@ GameObject:
   - component: {fileID: 9164710326843220191}
   - component: {fileID: 5353236591561014367}
   - component: {fileID: 278023235662490726}
+  - component: {fileID: 3721347043500545095}
   m_Layer: 0
   m_Name: BeastYeti
   m_TagString: Monster
@@ -244,14 +245,16 @@ MonoBehaviour:
   curHP: 0
   curEXP: 0
   expSlider: {fileID: 0}
+  isSkillTiming: 0
   skillTarget: []
   batchPos: {x: 0, y: 0}
   targetPos: {x: 0, y: 0}
   curPos: {fileID: 0}
   giveDamage: 0
   takeDamage: 0
-  isMine: 0
   shopBatchEmptyIndex: 0
+  isMine: 0
+  triggerOnCount: 0
   searchArea: []
 --- !u!114 &5353236591561014367
 MonoBehaviour:
@@ -362,6 +365,28 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &3721347043500545095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1102098178683434530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f21c9538588898a45a3da22bf4779ab3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rootMotionBoneName: root
+  transformPositionX: 1
+  transformPositionY: 1
+  rootMotionScaleX: 1
+  rootMotionScaleY: 1
+  rootMotionTranslateXPerY: 0
+  rootMotionTranslateYPerX: 0
+  rigidBody2D: {fileID: 7808467910106930777}
+  rigidBody: {fileID: 0}
+  animationTrackFlags: -1
 --- !u!1001 &710072227650986073
 PrefabInstance:
   m_ObjectHideFlags: 0

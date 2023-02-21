@@ -6,6 +6,8 @@ using MongoDB.Driver;
 using Unity.VisualScripting;
 
 using Photon.Pun;
+using UnityEditor.Experimental.GraphView;
+using System.Collections;
 
 public partial class Card : MonoBehaviourPun
 {
@@ -59,71 +61,11 @@ public partial class Card : MonoBehaviourPun
             Attacker.Hit(curAttackValue, this, true, false); // 니가 날 직접 때렸다면 나도 너를 때릴 것이다.
         curHP -= damage;
         hpText.text = curHP.ToString();
+        
 
         if (this.curHP <= 0)
         {
-            if (Attacker.cardInfo.skillTiming == SkillTiming.kill) Attacker.SkillActive(); // 내가 죽었는데 적이 처치시 효과가 있다면 적 효과 먼저 발동시켜준다.
-            if (cardInfo.skillTiming == SkillTiming.death) SkillActive(); // 사망시 효과 발동
-                                                                          //GameMGR.Instance.battleLogic.isWaitAttack = true;
-
-            if (isMine)
-            {
-                for (int i = 0; i < 6; i++)
-                {
-                    if (GameMGR.Instance.battleLogic.playerAttackArray[i] == null) continue;
-                    if (GameMGR.Instance.battleLogic.playerAttackArray[i].GetComponentInChildren<Card>() == this)
-                    {
-                        GameMGR.Instance.battleLogic.playerAttackArray[i] = null;
-                        break;
-                    }
-                }
-
-                for (int i = 0; i < 3; i++)
-                {
-                    if (GameMGR.Instance.battleLogic.playerForwardUnits[i] == null) continue;
-                    if (GameMGR.Instance.battleLogic.playerForwardUnits[i].GetComponentInChildren<Card>() == this)
-                    {
-                        GameMGR.Instance.battleLogic.playerForwardUnits[i] = null;
-                        break;
-                    }
-                    if (GameMGR.Instance.battleLogic.playerBackwardUnits[i] == null) continue;
-                    if (GameMGR.Instance.battleLogic.playerBackwardUnits[i].GetComponentInChildren<Card>() == this)
-                    {
-                        GameMGR.Instance.battleLogic.playerBackwardUnits[i] = null;
-                        break;
-                    }
-                }
-            }
-            else // 적인 경우
-            {
-                for (int i = 0; i < 6; i++)
-                {
-                    if (GameMGR.Instance.battleLogic.enemyAttackArray[i] == null) continue;
-                    if (GameMGR.Instance.battleLogic.enemyAttackArray[i].GetComponentInChildren<Card>() == this)
-                    {
-                        GameMGR.Instance.battleLogic.enemyAttackArray[i] = null;
-                        break;
-                    }
-                }
-
-                for (int i = 0; i < 3; i++)
-                {
-                    if (GameMGR.Instance.battleLogic.enemyForwardUnits[i] == null) continue;
-                    if (GameMGR.Instance.battleLogic.enemyForwardUnits[i].GetComponentInChildren<Card>() == this)
-                    {
-                        GameMGR.Instance.battleLogic.enemyForwardUnits[i] = null;
-                        break;
-                    }
-                    if (GameMGR.Instance.battleLogic.enemyBackwardUnits[i] == null) continue;
-                    if (GameMGR.Instance.battleLogic.enemyBackwardUnits[i].GetComponentInChildren<Card>() == this)
-                    {
-                        GameMGR.Instance.battleLogic.enemyBackwardUnits[i] = null;
-                        break;
-                    }
-                }
-            }
-            GameMGR.Instance.objectPool.DestroyPrefab(gameObject.transform.parent.gameObject);
-
+            StartCoroutine(COR_Dead(Attacker));
         }
 
         GameMGR.Instance.Event_HitEnemy(this);
@@ -132,10 +74,78 @@ public partial class Card : MonoBehaviourPun
         {
             SkillActive();
         }
-
+        GetComponent<AttackLogic>().isArrive = true;
     }
 
     #endregion
+    IEnumerator COR_Dead(Card Attacker)
+    {
+        SetAnim("Dead");
+        
+        if (Attacker.cardInfo.skillTiming == SkillTiming.kill) Attacker.SkillActive(); // 내가 죽었는데 적이 처치시 효과가 있다면 적 효과 먼저 발동시켜준다.
+        if (cardInfo.skillTiming == SkillTiming.death) SkillActive(); // 사망시 효과 발동
+                                                                      //GameMGR.Instance.battleLogic.isWaitAttack = true;
+
+        if (isMine)
+        {
+            for (int i = 0; i < 6; i++)
+            {
+                if (GameMGR.Instance.battleLogic.playerAttackArray[i] == null) continue;
+                if (GameMGR.Instance.battleLogic.playerAttackArray[i].GetComponentInChildren<Card>() == this)
+                {
+                    GameMGR.Instance.battleLogic.playerAttackArray[i] = null;
+                    break;
+                }
+            }
+
+            for (int i = 0; i < 3; i++)
+            {
+                if (GameMGR.Instance.battleLogic.playerForwardUnits[i] == null) continue;
+                if (GameMGR.Instance.battleLogic.playerForwardUnits[i].GetComponentInChildren<Card>() == this)
+                {
+                    GameMGR.Instance.battleLogic.playerForwardUnits[i] = null;
+                    break;
+                }
+                if (GameMGR.Instance.battleLogic.playerBackwardUnits[i] == null) continue;
+                if (GameMGR.Instance.battleLogic.playerBackwardUnits[i].GetComponentInChildren<Card>() == this)
+                {
+                    GameMGR.Instance.battleLogic.playerBackwardUnits[i] = null;
+                    break;
+                }
+            }
+        }
+        else // 적인 경우
+        {
+            for (int i = 0; i < 6; i++)
+            {
+                if (GameMGR.Instance.battleLogic.enemyAttackArray[i] == null) continue;
+                if (GameMGR.Instance.battleLogic.enemyAttackArray[i].GetComponentInChildren<Card>() == this)
+                {
+                    GameMGR.Instance.battleLogic.enemyAttackArray[i] = null;
+                    break;
+                }
+            }
+
+            for (int i = 0; i < 3; i++)
+            {
+                if (GameMGR.Instance.battleLogic.enemyForwardUnits[i] == null) continue;
+                if (GameMGR.Instance.battleLogic.enemyForwardUnits[i].GetComponentInChildren<Card>() == this)
+                {
+                    GameMGR.Instance.battleLogic.enemyForwardUnits[i] = null;
+                    break;
+                }
+                if (GameMGR.Instance.battleLogic.enemyBackwardUnits[i] == null) continue;
+                if (GameMGR.Instance.battleLogic.enemyBackwardUnits[i].GetComponentInChildren<Card>() == this)
+                {
+                    GameMGR.Instance.battleLogic.enemyBackwardUnits[i] = null;
+                    break;
+                }
+            }
+        }
+        yield return new WaitForSeconds(1.5f);
+
+        GameMGR.Instance.objectPool.DestroyPrefab(gameObject.transform.parent.gameObject);
+    }
 
     public void SetSkillTiming() // 스킬을 언제 발동시키느냐에 따라서 각 델리게이트 이벤트에 추가시켜준다. 이벤트는 보따리의 개념으로써 이벤트를 실행하면 안에 추가한 모든 함수들이 실행되기 때문에 공통적으로 사용되는 부분에서만 사용하는 것이 응당 정당 타당 합당 마땅하다고 보는 부분적인 부분이라고 할 수 있는 부분이다.
     {
