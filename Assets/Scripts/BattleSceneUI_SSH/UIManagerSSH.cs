@@ -179,26 +179,18 @@ public partial class UIManager : MonoBehaviour
 
         GameMGR.Instance.audioMGR.BattleSceneBGM(false);
 
+        GameMGR.Instance.uiManager.PlayerBattleWin(Win);
+        GameMGR.Instance.uiManager.PlayerBattleLose(Lose);
+        GameMGR.Instance.uiManager.PlayerBattleDraw(Draw);
+
         // win case
-        if (Win)
-        {
-            GameMGR.Instance.audioMGR.BattleRoundResult(Win);
-            GameMGR.Instance.uiManager.PlayerBattleWin(Win);
-        }
+        if (Win) { GameMGR.Instance.audioMGR.BattleRoundResult(Win); }
 
         // lose case
-        else if (!Win)
-        {
-            GameMGR.Instance.audioMGR.BattleRoundResult(Win);
-            GameMGR.Instance.uiManager.PlayerBattleLose(!Win);
-        }
+        else if (Lose) { GameMGR.Instance.audioMGR.BattleRoundResult(Lose); }
 
         // draw case
-        if (Draw)
-        {
-            GameMGR.Instance.audioMGR.BattleRoundResult(Win);
-            GameMGR.Instance.uiManager.PlayerBattleDraw(Draw);
-        }
+        else if (Draw) { GameMGR.Instance.audioMGR.BattleRoundResult(Draw); }
 
         yield return new WaitForSeconds(5f);
 
