@@ -94,12 +94,6 @@ public partial class UIManager : MonoBehaviour
         }
     }
 
-    IEnumerator COR_Timer()
-    {
-        while (true)
-        yield return wait;
-    }
-
     void timerSound()
     {
         GameMGR.Instance.timerSound.TimeSound();
