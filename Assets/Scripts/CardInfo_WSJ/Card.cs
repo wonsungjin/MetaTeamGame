@@ -29,6 +29,8 @@ public partial class Card : MonoBehaviourPun
 
     Vector3 vec = new Vector3(0, 0.6f, 0);
 
+    public bool isSkillTiming = false;
+
     private void Awake()
     {
         SetMyInfo(name);
@@ -57,6 +59,7 @@ public partial class Card : MonoBehaviourPun
         level = 1;
         levelText.text = level.ToString();
         skeletonAnimation = GetComponent<SkeletonAnimation>();
+        if(!isSkillTiming)
         SetSkillTiming();
         if (flip == true) SetFlip(false);
         transform.parent.gameObject.transform.localScale = Vector3.one;
