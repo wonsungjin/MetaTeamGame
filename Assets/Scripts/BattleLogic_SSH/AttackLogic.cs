@@ -70,6 +70,9 @@ public partial class AttackLogic : Skill
             GameMGR.Instance.battleLogic.isWaitAttack = true;
             return;
         }
+
+        Debug.Log($"{gameObject.name}이 {targetUnit}를 때린다다다다다");
+
         playerTrans = gameObject.transform.parent.position;
         enemyTrans = targetUnit.transform.position;
         returnPosition = playerTrans;
