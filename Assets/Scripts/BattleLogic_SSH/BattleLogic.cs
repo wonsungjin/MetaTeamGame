@@ -853,7 +853,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
 
         GameMGR.Instance.uiManager.PlayerSetArrangement();
         GameMGR.Instance.Init(4);
-        GameMGR.Instance.uiManager.PlayerBattleWin(true);
+
         StartCoroutine(GameMGR.Instance.uiManager.COR_MoveToResultScene(true, false, false));
     }
 
@@ -862,9 +862,9 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
     {
         // GameObject.Find("firstAttack").GetComponent<TextMeshProUGUI>().text = isFirstAttack.ToString();
         // GameObject.Find("resultText").GetComponent<TextMeshProUGUI>().text = "lose";
+        if (isDraw == true) return;
         Debug.LogError("Player Lose");
 
-        if (isDraw == true) return;
 
         curLife--;
         GameMGR.Instance.uiManager.ChangeLife(curLife);
@@ -873,7 +873,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
 
         GameMGR.Instance.uiManager.PlayerSetArrangement();
         GameMGR.Instance.Init(4);
-        GameMGR.Instance.uiManager.PlayerBattleLose(false);
+
         StartCoroutine(GameMGR.Instance.uiManager.COR_MoveToResultScene(false, true, false));
     }
 
@@ -887,7 +887,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
 
         GameMGR.Instance.uiManager.PlayerSetArrangement();
         GameMGR.Instance.Init(4);
-        GameMGR.Instance.uiManager.PlayerBattleLose(false);
+
 
         StartCoroutine(GameMGR.Instance.uiManager.COR_MoveToResultScene(false, false, true));
     }
