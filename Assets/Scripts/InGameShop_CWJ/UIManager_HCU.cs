@@ -7,7 +7,7 @@ public partial class UIManager : MonoBehaviour
 {
     public void ChangeShopLevelUpCost(int cost)
     {
-        TextMeshProUGUI shopLevelUpText = levelUpButton.transform.GetChild(4).GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI shopLevelUpText = levelUpButton.transform.GetChild(3).GetComponent<TextMeshProUGUI>();
         shopLevelUpText.text = cost.ToString();
     }
 }

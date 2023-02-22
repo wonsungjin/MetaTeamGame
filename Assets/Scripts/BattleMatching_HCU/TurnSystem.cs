@@ -535,6 +535,8 @@ public class TurnSystem : MonoBehaviourPunCallbacks
     }
     IEnumerator COR_DelayMove()
     {
+        GameMGR.Instance.Event_TurnEnd();   // 턴 종료시 호출
+
         GameMGR.Instance.uiManager.Faid(GameMGR.Instance.uiManager.blackUI, faidType.In, 0.02f);
         yield return new WaitForSeconds(1.5f);
         GameMGR.Instance.uiManager.Faid(GameMGR.Instance.uiManager.blackUI, faidType.Out, 0.02f);

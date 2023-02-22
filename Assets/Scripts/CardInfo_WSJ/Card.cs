@@ -27,6 +27,7 @@ public partial class Card : MonoBehaviourPun
     public Slider expSlider;
     SkeletonAnimation skeletonAnimation;
     AudioSource audioSource;
+    MeshRenderer spriteRenderer;
 
     Vector3 vec = new Vector3(0, 0.6f, 0);
 
@@ -51,6 +52,7 @@ public partial class Card : MonoBehaviourPun
         atkText = transform.parent.GetChild(1).GetChild(3).GetComponent<TextMeshPro>();
         levelText = transform.parent.GetChild(1).GetChild(5).GetComponent<TextMeshPro>();
         expSlider = transform.parent.GetChild(1).GetChild(8).GetChild(0).GetComponent<Slider>();
+        spriteRenderer = gameObject.GetComponent<MeshRenderer>();
         expSlider.value = 0;
         gameObject.tag = "Monster";
         curHP = cardInfo.hp;
@@ -59,7 +61,7 @@ public partial class Card : MonoBehaviourPun
         atkText.text = curAttackValue.ToString();
         level = 1;
         levelText.text = level.ToString();
-        gameObject.layer = 0;
+        spriteRenderer.sortingLayerName = "Default";
         skeletonAnimation = GetComponent<SkeletonAnimation>();
         if(!isSkillTiming)
         SetSkillTiming();

@@ -1587,7 +1587,7 @@ GameObject:
   - component: {fileID: 41134536}
   - component: {fileID: 41134537}
   - component: {fileID: 41134538}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: BattleZone5
   m_TagString: BattleZone
   m_Icon: {fileID: 0}
@@ -3787,7 +3787,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1457141671
   m_SortingLayer: 2
-  m_SortingOrder: 0
+  m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: 8d44159a77d104ab08307d8ee207b755, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -6678,7 +6678,7 @@ GameObject:
   - component: {fileID: 195171384}
   - component: {fileID: 195171385}
   - component: {fileID: 195171386}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: BattleZone6
   m_TagString: BattleZone
   m_Icon: {fileID: 0}
@@ -13197,9 +13197,17 @@ PrefabInstance:
       propertyPath: m_Materials.Array.size
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2471796543581639183, guid: 225602d14141cd646b2af8ac56bc8afc, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 6719456395866806951, guid: 225602d14141cd646b2af8ac56bc8afc, type: 3}
       propertyPath: m_Name
       value: Aura (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6719456395866806951, guid: 225602d14141cd646b2af8ac56bc8afc, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 6721969611137285421, guid: 225602d14141cd646b2af8ac56bc8afc, type: 3}
       propertyPath: m_RootOrder
@@ -17083,7 +17091,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1224630143
+  m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 90fd9a140a3854a52b6f13ef3ea72012, type: 3}
@@ -17105,7 +17113,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 605098783}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 9.2, y: 0.7, z: 0}
+  m_LocalPosition: {x: 9.2, y: 0.7, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -18366,9 +18374,17 @@ PrefabInstance:
       propertyPath: m_Materials.Array.size
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2471796543581639183, guid: 225602d14141cd646b2af8ac56bc8afc, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 6719456395866806951, guid: 225602d14141cd646b2af8ac56bc8afc, type: 3}
       propertyPath: m_Name
       value: Aura (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6719456395866806951, guid: 225602d14141cd646b2af8ac56bc8afc, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 6721969611137285421, guid: 225602d14141cd646b2af8ac56bc8afc, type: 3}
       propertyPath: m_RootOrder
@@ -18774,9 +18790,17 @@ PrefabInstance:
       propertyPath: m_Materials.Array.size
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2471796543581639183, guid: 225602d14141cd646b2af8ac56bc8afc, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 6719456395866806951, guid: 225602d14141cd646b2af8ac56bc8afc, type: 3}
       propertyPath: m_Name
       value: Aura (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6719456395866806951, guid: 225602d14141cd646b2af8ac56bc8afc, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 6721969611137285421, guid: 225602d14141cd646b2af8ac56bc8afc, type: 3}
       propertyPath: m_RootOrder
@@ -19305,7 +19329,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1224630143
+  m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: c720ee3652d84cf40910301d39aa2bce, type: 3}
@@ -19327,7 +19351,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 717212064}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 11.3, y: 0.67999995, z: 0}
+  m_LocalPosition: {x: 11.3, y: 0.67999995, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -23598,7 +23622,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1224630143
+  m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 90fd9a140a3854a52b6f13ef3ea72012, type: 3}
@@ -23620,7 +23644,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 899408581}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7.1, y: -1.8000001, z: 0}
+  m_LocalPosition: {x: 7.1, y: -1.8000001, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -30032,7 +30056,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1224630143
+  m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 90fd9a140a3854a52b6f13ef3ea72012, type: 3}
@@ -30054,7 +30078,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1217976071}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 9.2, y: -1.7900001, z: 0}
+  m_LocalPosition: {x: 9.2, y: -1.7900001, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -32266,7 +32290,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1224630143
+  m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 90fd9a140a3854a52b6f13ef3ea72012, type: 3}
@@ -32288,7 +32312,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1324765330}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7.1, y: 0.7, z: 0}
+  m_LocalPosition: {x: 7.1, y: 0.7, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -33286,9 +33310,17 @@ PrefabInstance:
       propertyPath: m_Materials.Array.size
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2471796543581639183, guid: 225602d14141cd646b2af8ac56bc8afc, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 6719456395866806951, guid: 225602d14141cd646b2af8ac56bc8afc, type: 3}
       propertyPath: m_Name
       value: Aura (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6719456395866806951, guid: 225602d14141cd646b2af8ac56bc8afc, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 6721969611137285421, guid: 225602d14141cd646b2af8ac56bc8afc, type: 3}
       propertyPath: m_RootOrder
@@ -40913,7 +40945,7 @@ GameObject:
   - component: {fileID: 1723697887}
   - component: {fileID: 1723697888}
   - component: {fileID: 1723697889}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: BattleZone2
   m_TagString: BattleZone
   m_Icon: {fileID: 0}
@@ -40980,7 +41012,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1723697883}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.32, y: 0.8499949, z: 0.000000029802322}
+  m_LocalPosition: {x: 3.32, y: 0.8499949, z: 0}
   m_LocalScale: {x: 0.35, y: 0.5706461, z: 0.05467201}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -41183,7 +41215,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1224630143
+  m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 90fd9a140a3854a52b6f13ef3ea72012, type: 3}
@@ -41205,7 +41237,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1726932546}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 13.4, y: 0.67999995, z: 0}
+  m_LocalPosition: {x: 13.4, y: 0.67999995, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -43170,7 +43202,7 @@ GameObject:
   - component: {fileID: 1810743070}
   - component: {fileID: 1810743071}
   - component: {fileID: 1810743072}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: BattleZone4
   m_TagString: BattleZone
   m_Icon: {fileID: 0}
@@ -43975,9 +44007,17 @@ PrefabInstance:
       propertyPath: m_Materials.Array.size
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2471796543581639183, guid: 225602d14141cd646b2af8ac56bc8afc, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 6719456395866806951, guid: 225602d14141cd646b2af8ac56bc8afc, type: 3}
       propertyPath: m_Name
       value: Aura
+      objectReference: {fileID: 0}
+    - target: {fileID: 6719456395866806951, guid: 225602d14141cd646b2af8ac56bc8afc, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 6721969611137285421, guid: 225602d14141cd646b2af8ac56bc8afc, type: 3}
       propertyPath: m_RootOrder
@@ -47433,9 +47473,17 @@ PrefabInstance:
       propertyPath: m_Materials.Array.size
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2471796543581639183, guid: 225602d14141cd646b2af8ac56bc8afc, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 6719456395866806951, guid: 225602d14141cd646b2af8ac56bc8afc, type: 3}
       propertyPath: m_Name
       value: Aura (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6719456395866806951, guid: 225602d14141cd646b2af8ac56bc8afc, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 6721969611137285421, guid: 225602d14141cd646b2af8ac56bc8afc, type: 3}
       propertyPath: m_RootOrder
@@ -49494,7 +49542,7 @@ GameObject:
   - component: {fileID: 2040472133}
   - component: {fileID: 2040472134}
   - component: {fileID: 2040472135}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: BattleZone1
   m_TagString: BattleZone
   m_Icon: {fileID: 0}
@@ -51181,7 +51229,7 @@ GameObject:
   - component: {fileID: 2107974387}
   - component: {fileID: 2107974388}
   - component: {fileID: 2107974389}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: BattleZone3
   m_TagString: BattleZone
   m_Icon: {fileID: 0}
