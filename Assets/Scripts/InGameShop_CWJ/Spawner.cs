@@ -26,7 +26,7 @@ public class Spawner : MonoBehaviourPun
     int randomNum;
     bool isFirstStart = false;
 
-    Vector3 vec = new Vector3(0, 0.6f, 0);
+    Vector3 vec = new Vector3(0, 0.6f, 1f);
 
 
 
@@ -465,7 +465,8 @@ public class Spawner : MonoBehaviourPun
         Debug.Log(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum]}"));
         Debug.Log(monsterNames[randomNum]);
         GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum]}"),
-            monsterTrans[randomTrans].transform.position - vec, Quaternion.identity);
+             monsterTrans[randomTrans].transform.position - vec, Quaternion.identity);
+
         monsterTrans[randomTrans].NullObj();
 
         randomTrans++;
