@@ -115,6 +115,9 @@ public partial class Card : MonoBehaviourPun
                     GameMGR.Instance.battleLogic.playerForwardUnits[i] = null;
                     break;
                 }
+            }
+            for (int i = 0; i < 3; i++)
+            {
                 if (GameMGR.Instance.battleLogic.playerBackwardUnits[i] == null) continue;
                 if (GameMGR.Instance.battleLogic.playerBackwardUnits[i].GetComponentInChildren<Card>() == this)
                 {
@@ -143,6 +146,9 @@ public partial class Card : MonoBehaviourPun
                     GameMGR.Instance.battleLogic.enemyForwardUnits[i] = null;
                     break;
                 }
+            }
+            for (int i = 0; i < 3; i++)
+            {
                 if (GameMGR.Instance.battleLogic.enemyBackwardUnits[i] == null) continue;
                 if (GameMGR.Instance.battleLogic.enemyBackwardUnits[i].GetComponentInChildren<Card>() == this)
                 {
