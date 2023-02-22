@@ -10,7 +10,7 @@ public partial class GameMGR : Singleton<GameMGR>
     public int[] matching = new int[2];
 
     // 서로가 동일한 랜덤값을 가지기 위한 것이다.
-    public int[] randomValue = new int[100];
+    public int[] randomValue;
     
     public int GetRandomValue(int minrange, int maxrange)
     {

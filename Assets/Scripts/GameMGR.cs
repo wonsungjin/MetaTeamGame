@@ -30,6 +30,7 @@ public partial class GameMGR : Singleton<GameMGR>
     {
         WaitForSeconds ww = new WaitForSeconds(1f);
         Init(1);
+        randomValue = new int[200];
     }
     private void Start()
     {
