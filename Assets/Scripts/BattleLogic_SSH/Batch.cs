@@ -33,6 +33,7 @@ public partial class Batch : MonoBehaviourPun
         Debug.Log(num);
         Debug.Log(PlayerNameList.Count);
         List<Card> cardList = null;
+        if (CustomNumberList.Count < num + 1) return;
         GameMGR.Instance.playerList.TryGetValue(CustomNumberList[num], out cardList);
         if (cardList==null) return;
         GameMGR.Instance.uiManager.playerBatchUI.SetActive(true);
