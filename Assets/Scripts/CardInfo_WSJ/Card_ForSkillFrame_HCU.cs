@@ -100,7 +100,7 @@ public partial class Card : MonoBehaviourPun
             for (int i = 0; i < 6; i++)
             {
                 if (GameMGR.Instance.battleLogic.playerAttackArray[i] == null) continue;
-                if (GameMGR.Instance.battleLogic.playerAttackArray[i] == gameObject.transform.parent)
+                if (GameMGR.Instance.battleLogic.playerAttackArray[i].GetComponentInChildren<Card>() == this)
                 {
                     GameMGR.Instance.battleLogic.playerAttackArray[i] = null;
                     break;
@@ -110,7 +110,7 @@ public partial class Card : MonoBehaviourPun
             for (int i = 0; i < 3; i++)
             {
                 if (GameMGR.Instance.battleLogic.playerForwardUnits[i] == null) continue;
-                if (GameMGR.Instance.battleLogic.playerForwardUnits[i] == gameObject.transform.parent)
+                if (GameMGR.Instance.battleLogic.playerForwardUnits[i].GetComponentInChildren<Card>() == this)
                 {
                     GameMGR.Instance.battleLogic.playerForwardUnits[i] = null;
                     break;
@@ -119,7 +119,7 @@ public partial class Card : MonoBehaviourPun
             for (int i = 0; i < 3; i++)
             {
                 if (GameMGR.Instance.battleLogic.playerBackwardUnits[i] == null) continue;
-                if (GameMGR.Instance.battleLogic.playerBackwardUnits[i] == gameObject.transform.parent)
+                if (GameMGR.Instance.battleLogic.playerBackwardUnits[i].GetComponentInChildren<Card>() == this)
                 {
                     GameMGR.Instance.battleLogic.playerBackwardUnits[i] = null;
                     break;
@@ -131,7 +131,7 @@ public partial class Card : MonoBehaviourPun
             for (int i = 0; i < 6; i++)
             {
                 if (GameMGR.Instance.battleLogic.enemyAttackArray[i] == null) continue;
-                if (GameMGR.Instance.battleLogic.enemyAttackArray[i] == gameObject.transform.parent)
+                if (GameMGR.Instance.battleLogic.enemyAttackArray[i].GetComponentInChildren<Card>() == this)
                 {
                     GameMGR.Instance.battleLogic.enemyAttackArray[i] = null;
                     break;
@@ -141,7 +141,7 @@ public partial class Card : MonoBehaviourPun
             for (int i = 0; i < 3; i++)
             {
                 if (GameMGR.Instance.battleLogic.enemyForwardUnits[i] == null) continue;
-                if (GameMGR.Instance.battleLogic.enemyForwardUnits[i] == gameObject.transform.parent)
+                if (GameMGR.Instance.battleLogic.enemyForwardUnits[i].GetComponentInChildren<Card>() == this)
                 {
                     GameMGR.Instance.battleLogic.enemyForwardUnits[i] = null;
                     break;
@@ -150,7 +150,7 @@ public partial class Card : MonoBehaviourPun
             for (int i = 0; i < 3; i++)
             {
                 if (GameMGR.Instance.battleLogic.enemyBackwardUnits[i] == null) continue;
-                if (GameMGR.Instance.battleLogic.enemyBackwardUnits[i] == gameObject.transform.parent)
+                if (GameMGR.Instance.battleLogic.enemyBackwardUnits[i].GetComponentInChildren<Card>() == this)
                 {
                     GameMGR.Instance.battleLogic.enemyBackwardUnits[i] = null;
                     break;
