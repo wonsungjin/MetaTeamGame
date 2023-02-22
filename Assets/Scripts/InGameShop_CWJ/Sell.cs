@@ -1,6 +1,4 @@
-using MongoDB.Driver;
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Sell : MonoBehaviour
@@ -11,17 +9,26 @@ public class Sell : MonoBehaviour
     Collider2D[] colliders;
     private void OnEnable()
     {
-
-
         for (int i = 0; i < 2; i++)
         {
-            specialZon[i].gameObject.SetActive(false);
+            colliders[i].enabled = false;
         }
-     
+    }
+
+    public void ColliderON()
+    {
+        for (int i = 0; i < 2; i++)
+        {
+            colliders[i].enabled = true;
+        }
     }
 
     private void Start()
     {
+        colliders = GetComponentsInChildren<Collider2D>();
+
+        colliders = new Collider2D[specialZon.Length];
+
         transform.GetChild(0).GetComponent<MeshRenderer>().sortingLayerName = "SellTXT";
         transform.GetChild(1).GetComponent<MeshRenderer>().sortingLayerName = "SellTXT";
     }

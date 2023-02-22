@@ -25,6 +25,8 @@ public partial class GameMGR : Singleton<GameMGR>
     public ChainBroken chainBroken;
     public NodeCollider nodeCollider;
 
+    public Sell sell;
+
     private void Awake()
     {
         WaitForSeconds ww = new WaitForSeconds(1f);
@@ -111,6 +113,7 @@ public partial class GameMGR : Singleton<GameMGR>
             battleLogic = FindObjectOfType<BattleLogic>();
             timerSound = FindObjectOfType<TimerSound>();
             chainBroken = FindObjectOfType<ChainBroken>();
+            sell = FindObjectOfType<Sell>();
             nodeCollider = FindObjectOfType<NodeCollider>();
             audioMGR.StoreSceneBGM(true);
 
