@@ -24,9 +24,8 @@ public partial class GameMGR : Singleton<GameMGR>
 
     public ChainBroken chainBroken;
     public NodeCollider nodeCollider;
-
-    public Sell sell;
-
+    public BattleZone battleZone;
+    public SellInCollider sellInCollider;
     private void Awake()
     {
         WaitForSeconds ww = new WaitForSeconds(1f);
@@ -80,7 +79,7 @@ public partial class GameMGR : Singleton<GameMGR>
         StartCoroutine(COR_Delay());
         yield return new WaitUntil(() => stayAPI[0]);
         yield return new WaitUntil(() => stayAPI[1]);
-       // yield return new WaitUntil(() => GameMGR.Instance.metaTrendAPI.res_UserProfile.userProfile.public_address != null);
+        yield return new WaitUntil(() => GameMGR.Instance.metaTrendAPI.res_UserProfile.userProfile.public_address != null);
         uiManager.Faid(uiManager.loginSystemUI, faidType.Out, 0.03f);
         dataBase.Login();
         PhotonNetwork.LocalPlayer.NickName = GameMGR.Instance.dataBase.userName;
@@ -113,8 +112,9 @@ public partial class GameMGR : Singleton<GameMGR>
             battleLogic = FindObjectOfType<BattleLogic>();
             timerSound = FindObjectOfType<TimerSound>();
             chainBroken = FindObjectOfType<ChainBroken>();
-            sell = FindObjectOfType<Sell>();
             nodeCollider = FindObjectOfType<NodeCollider>();
+            sellInCollider = FindObjectOfType<SellInCollider>();
+            battleZone = FindObjectOfType<BattleZone>();
             audioMGR.StoreSceneBGM(true);
 
             // lobby timerInit

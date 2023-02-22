@@ -1,34 +1,13 @@
 using System.Collections;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class Sell : MonoBehaviour
 {
     Card card;  // Sell 콜라이더에 닿은 유닛의 데이터를 담기 위한 멤버 변수
 
-    [SerializeField] GameObject[] specialZon;
-    Collider2D[] colliders;
-    private void OnEnable()
-    {
-        for (int i = 0; i < 2; i++)
-        {
-            colliders[i].enabled = false;
-        }
-    }
-
-    public void ColliderON()
-    {
-        for (int i = 0; i < 2; i++)
-        {
-            colliders[i].enabled = true;
-        }
-    }
-
     private void Start()
     {
-        colliders = GetComponentsInChildren<Collider2D>();
-
-        colliders = new Collider2D[specialZon.Length];
-
         transform.GetChild(0).GetComponent<MeshRenderer>().sortingLayerName = "SellTXT";
         transform.GetChild(1).GetComponent<MeshRenderer>().sortingLayerName = "SellTXT";
     }
