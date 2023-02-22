@@ -18,6 +18,9 @@ public partial class Drag2D : MonoBehaviour
     Vector3 monsterPos = new Vector3(0, -0.6f, 0);
     Vector3 monsterPos1 = new Vector3(0, 0.6f, 0);
 
+    Vector3 vecs = new Vector3(0, -0.6f, 1f);
+    Vector3 vecs1 = new Vector3(0, 1.4f, 1f);
+
     float timer = 0f;
     float distance = 100;
     private bool isClickBool = false;
@@ -66,7 +69,7 @@ public partial class Drag2D : MonoBehaviour
                         if (timer > 1f)
                         {
                             GameObject vec = GameObject.FindGameObjectWithTag("BattleZone");
-                            hit.collider.gameObject.transform.parent.position = vec.transform.position + Vector3.down;
+                            hit.collider.gameObject.transform.parent.position = vec.transform.position + Vector3.down + new Vector3(0,-0.4f);
                             vec.GetComponent<BattleZone>().myObj = hit.collider.gameObject.transform.parent.gameObject;
                         }
                     }
@@ -298,17 +301,19 @@ public partial class Drag2D : MonoBehaviour
     {
         yield return wait;
 
+        Debug.Log("아넝훙낳");
+
         if (CompareTag("BattleMonster") || CompareTag("BattleMonster2") || CompareTag("BattleMonster3"))
         {
             if (pos.myObj != null)
             {
                 GameObject vec = GameObject.FindGameObjectWithTag("BattleZone");
                 if (vec != null)
-                    gameObject.transform.parent.position = vec.transform.position + Vector3.down;
+                    gameObject.transform.parent.position = vec.transform.position - vecs;
             }
             else
             {
-                this.transform.parent.position = pos.gameObject.transform.position + Vector3.down;
+                this.transform.parent.position = pos.gameObject.transform.position - vecs1;
                 pos.myObj = gameObject.transform.parent.gameObject;
             }
         }

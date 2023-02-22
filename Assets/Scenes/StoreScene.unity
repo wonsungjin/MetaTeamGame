@@ -4864,7 +4864,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_RaycastPadding: {x: 90, y: 123.13, z: 93.3, w: 117.97}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -10454,6 +10454,10 @@ PrefabInstance:
     - target: {fileID: 3443243560377545630, guid: 19bcfa3f6aa862a4b93a699b184e433f, type: 3}
       propertyPath: m_Name
       value: ResultScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 3443243560377545630, guid: 19bcfa3f6aa862a4b93a699b184e433f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3443243560579142123, guid: 19bcfa3f6aa862a4b93a699b184e433f, type: 3}
       propertyPath: m_AnchorMax.y
@@ -35875,7 +35879,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3897042271202429095, guid: 6e207be7f70e17f4487b3b08f34d3f81, type: 3}
       propertyPath: m_RootOrder
-      value: 47
+      value: 48
       objectReference: {fileID: 0}
     - target: {fileID: 3897042271202429095, guid: 6e207be7f70e17f4487b3b08f34d3f81, type: 3}
       propertyPath: m_AnchorMax.x
@@ -43223,6 +43227,10 @@ PrefabInstance:
     - target: {fileID: 2207527011903693928, guid: eb004e40a4d451940a57a8abe92e64b6, type: 3}
       propertyPath: m_Name
       value: BattleScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 2207527011903693928, guid: eb004e40a4d451940a57a8abe92e64b6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2441655291202346568, guid: eb004e40a4d451940a57a8abe92e64b6, type: 3}
       propertyPath: m_RootOrder
