@@ -48,6 +48,7 @@ public class ObjectPool : Singleton<ObjectPool>
             Debug.LogError("Not Found" + Prefab.name);
             return;
         }
+        if(Prefab.transform.childCount!=0)
         if (Prefab.transform.GetChild(0) != null)
         {
             Prefab.transform.GetChild(0).TryGetComponent(out Card card);

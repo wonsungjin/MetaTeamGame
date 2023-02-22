@@ -27886,6 +27886,9 @@ MonoBehaviour:
   goldTXT: {fileID: 0}
   hpTXT: {fileID: 0}
   shopLevelTXT: {fileID: 0}
+  PlayerLifeTXT: {fileID: 0}
+  userProfile: {fileID: 0}
+  userProfileImage: []
   unitSprite: []
   playerBatchUI: {fileID: 0}
   playerName: {fileID: 0}
