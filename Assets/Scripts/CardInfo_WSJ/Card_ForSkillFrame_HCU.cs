@@ -705,11 +705,12 @@ public partial class Card : MonoBehaviourPun
 
             case TargetType.forward:      // 穿伸じしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじしじし
                 Debug.Log("企雌精 穿伸");
+                
                 random = GameMGR.Instance.GetRandomValue(0, 3);
                 bool isAllDead = true;
                 for (int i = 0; i < 3; i++)
                 {
-                    if (searchArea[i].GetComponent<Card>().curHP >= 0)
+                    if (searchArea[i].GetComponentInChildren<Card>().curHP >= 0)
                     {
                         isAllDead = false;
                         break;
@@ -727,11 +728,11 @@ public partial class Card : MonoBehaviourPun
                 else // 廃誤戚虞亀 詞焼赤陥檎
                 {
                     random = GameMGR.Instance.GetRandomValue(0, 3);
-                    while (searchArea[random].GetComponent<Card>().curHP <= 0 && searchArea[random] == this) // 宋精 焼浦戚 焼諌 凶猿走 沓棋葵聖 宜形
+                    while (searchArea[random].GetComponentInChildren<Card>().curHP <= 0 && searchArea[random] == this) // 宋精 焼浦戚 焼諌 凶猿走 沓棋葵聖 宜形
                     {
                         random = GameMGR.Instance.GetRandomValue(0, 3);
                     }
-                    skillTarget.Add(searchArea[random].GetComponent<Card>());
+                    skillTarget.Add(searchArea[random].GetComponentInChildren<Card>());
                 }
                 break;
 
@@ -741,7 +742,7 @@ public partial class Card : MonoBehaviourPun
                 isAllDead = true;
                 for (int i = 3; i < 6; i++)
                 {
-                    if (searchArea[i].GetComponent<Card>().curHP >= 0)
+                    if (searchArea[i].GetComponentInChildren<Card>().curHP >= 0)
                     {
                         isAllDead = false;
                         break;
@@ -755,22 +756,22 @@ public partial class Card : MonoBehaviourPun
                 else // 廃誤戚虞亀 詞焼赤陥檎
                 {
                     random = GameMGR.Instance.GetRandomValue(0, 3);
-                    while (searchArea[random].GetComponent<Card>().curHP <= 0 && searchArea[random] == this) // 宋精 焼浦戚 焼諌 凶猿走 沓棋葵聖 宜形
+                    while (searchArea[random].GetComponentInChildren<Card>().curHP <= 0 && searchArea[random] == this) // 宋精 焼浦戚 焼諌 凶猿走 沓棋葵聖 宜形
                     {
                         random = GameMGR.Instance.GetRandomValue(0, 3);
                     }
-                    skillTarget.Add(searchArea[random].GetComponent<Card>());
+                    skillTarget.Add(searchArea[random].GetComponentInChildren<Card>());
                 }
                 break;
 
             case TargetType.front:  // 鎧 蒋
                 for (int i = 3; i < 6; i++)
                 {
-                    if (searchArea[i].GetComponent<Card>() == this)
+                    if (searchArea[i].GetComponentInChildren<Card>() == this)
                     {
-                        if (searchArea[i - 3].GetComponent<Card>() != null)
+                        if (searchArea[i - 3].GetComponentInChildren<Card>() != null)
                         {
-                            skillTarget.Add(searchArea[i - 3].GetComponent<Card>());
+                            skillTarget.Add(searchArea[i - 3].GetComponentInChildren<Card>());
                         }
                     }
                 }
@@ -779,11 +780,11 @@ public partial class Card : MonoBehaviourPun
             case TargetType.back:   // 鎧 及
                 for (int i = 3; i < 6; i++)
                 {
-                    if (searchArea[i].GetComponent<Card>() == this)
+                    if (searchArea[i].GetComponentInChildren<Card>() == this)
                     {
-                        if (searchArea[i + 3].GetComponent<Card>() != null)
+                        if (searchArea[i + 3].GetComponentInChildren<Card>() != null)
                         {
-                            skillTarget.Add(searchArea[i + 3].GetComponent<Card>());
+                            skillTarget.Add(searchArea[i + 3].GetComponentInChildren<Card>());
                         }
                     }
                 }
@@ -792,35 +793,35 @@ public partial class Card : MonoBehaviourPun
             case TargetType.near:   //昔羨
                 for (int i = 0; i < 6; i++)
                 {
-                    if (searchArea[i].GetComponent<Card>() == this)
+                    if (searchArea[i].GetComponentInChildren<Card>() == this)
                     {
                         switch (i)
                         {
                             case 0:
-                                skillTarget.Add(searchArea[1].GetComponent<Card>());
-                                skillTarget.Add(searchArea[3].GetComponent<Card>());
+                                skillTarget.Add(searchArea[1].GetComponentInChildren<Card>());
+                                skillTarget.Add(searchArea[3].GetComponentInChildren<Card>());
                                 break;
                             case 1:
-                                skillTarget.Add(searchArea[0].GetComponent<Card>());
-                                skillTarget.Add(searchArea[2].GetComponent<Card>());
-                                skillTarget.Add(searchArea[4].GetComponent<Card>());
+                                skillTarget.Add(searchArea[0].GetComponentInChildren<Card>());
+                                skillTarget.Add(searchArea[2].GetComponentInChildren<Card>());
+                                skillTarget.Add(searchArea[4].GetComponentInChildren<Card>());
                                 break;
                             case 2:
-                                skillTarget.Add(searchArea[1].GetComponent<Card>());
-                                skillTarget.Add(searchArea[5].GetComponent<Card>());
+                                skillTarget.Add(searchArea[1].GetComponentInChildren<Card>());
+                                skillTarget.Add(searchArea[5].GetComponentInChildren<Card>());
                                 break;
                             case 3:
-                                skillTarget.Add(searchArea[0].GetComponent<Card>());
-                                skillTarget.Add(searchArea[4].GetComponent<Card>());
+                                skillTarget.Add(searchArea[0].GetComponentInChildren<Card>());
+                                skillTarget.Add(searchArea[4].GetComponentInChildren<Card>());
                                 break;
                             case 4:
-                                skillTarget.Add(searchArea[1].GetComponent<Card>());
-                                skillTarget.Add(searchArea[3].GetComponent<Card>());
-                                skillTarget.Add(searchArea[5].GetComponent<Card>());
+                                skillTarget.Add(searchArea[1].GetComponentInChildren<Card>());
+                                skillTarget.Add(searchArea[3].GetComponentInChildren<Card>());
+                                skillTarget.Add(searchArea[5].GetComponentInChildren<Card>());
                                 break;
                             case 5:
-                                skillTarget.Add(searchArea[2].GetComponent<Card>());
-                                skillTarget.Add(searchArea[4].GetComponent<Card>());
+                                skillTarget.Add(searchArea[2].GetComponentInChildren<Card>());
+                                skillTarget.Add(searchArea[4].GetComponentInChildren<Card>());
                                 break;
                         }
                     }
@@ -832,7 +833,7 @@ public partial class Card : MonoBehaviourPun
                 int myPosNum = System.Array.IndexOf(GameMGR.Instance.battleLogic.playerAttackArray, this);
                 if (GameMGR.Instance.battleLogic.enemyAttackArray[myPosNum] != null)
                 {
-                    skillTarget.Add(searchArea[myPosNum].GetComponent<Card>());
+                    skillTarget.Add(searchArea[myPosNum].GetComponentInChildren<Card>());
                 }
                 break;
 
@@ -844,21 +845,21 @@ public partial class Card : MonoBehaviourPun
                 int validIndex = 0; // 政反葵戚 赤聖 凶原陥 臣虞亜澗 昔畿什 朝錘闘 痕呪
                 for (int i = 0; i < 6; i++) // 亜舌 因維径戚 碍精 政間聖 達澗 引舛
                 {
-                    if (searchArea[i].GetComponent<Card>().curHP <= 0) continue; // 宋精 橿汐精 企雌拭辞 薦須廃陥.
+                    if (searchArea[i].GetComponentInChildren<Card>().curHP <= 0) continue; // 宋精 橿汐精 企雌拭辞 薦須廃陥.
                     if (leastAtk == -1) //焼巷依亀 蒸聖 凶拭澗 置段稽 級嬢紳 橿汐戚 葵聖 閤澗陥. 
                     {
                         leastAtk = i;
-                        atkArray[validIndex] = transform.parent.transform.GetChild(i).gameObject.GetComponent<Card>().curAttackValue;
+                        atkArray[validIndex] = transform.parent.transform.GetChild(i).gameObject.GetComponentInChildren<Card>().curAttackValue;
                         validIndex++;
                     }
                     else
                     {
-                        atkArray[validIndex] = transform.parent.transform.GetChild(validIndex).gameObject.GetComponent<Card>().curAttackValue;
+                        atkArray[validIndex] = transform.parent.transform.GetChild(validIndex).gameObject.GetComponentInChildren<Card>().curAttackValue;
                         validIndex++;
                     }
                     if (validIndex != 0) if (atkArray[validIndex] < atkArray[0]) leastAtk = i;
                 }
-                skillTarget.Add(searchArea[leastAtk].gameObject.GetComponent<Card>());
+                skillTarget.Add(searchArea[leastAtk].gameObject.GetComponentInChildren<Card>());
                 break;
 
             case TargetType.mostATK:
@@ -868,21 +869,21 @@ public partial class Card : MonoBehaviourPun
                 validIndex = 0; // 政反葵戚 赤聖 凶原陥 臣虞亜澗 昔畿什 朝錘闘 痕呪
                 for (int i = 0; i < 6; i++) // 亜舌 因維径戚 碍精 政間聖 達澗 引舛
                 {
-                    if (searchArea[i].GetComponent<Card>().curHP <= 0) continue;
+                    if (searchArea[i].GetComponentInChildren<Card>().curHP <= 0) continue;
                     if (mostAtk == -1) //焼巷依亀 蒸聖 凶拭澗 置段稽 級嬢紳 橿汐戚 葵聖 閤澗陥. 
                     {
                         mostAtk = i;
-                        atkArray[validIndex] = transform.parent.transform.GetChild(i).gameObject.GetComponent<Card>().curAttackValue;
+                        atkArray[validIndex] = transform.parent.transform.GetChild(i).gameObject.GetComponentInChildren<Card>().curAttackValue;
                         validIndex++;
                     }
                     else
                     {
-                        atkArray[validIndex] = transform.parent.transform.GetChild(validIndex).gameObject.GetComponent<Card>().curAttackValue;
+                        atkArray[validIndex] = transform.parent.transform.GetChild(validIndex).gameObject.GetComponentInChildren<Card>().curAttackValue;
                         validIndex++;
                     }
                     if (validIndex != 0) if (atkArray[validIndex] > atkArray[0]) mostAtk = i;
                 }
-                skillTarget.Add(searchArea[mostAtk].GetComponent<Card>());
+                skillTarget.Add(searchArea[mostAtk].GetComponentInChildren<Card>());
                 break;
 
             case TargetType.leastHP:
@@ -892,21 +893,21 @@ public partial class Card : MonoBehaviourPun
                 validIndex = 0; // 政反葵戚 赤聖 凶原陥 臣虞亜澗 昔畿什 朝錘闘 痕呪
                 for (int i = 0; i < 6; i++) // 亜舌 因維径戚 碍精 政間聖 達澗 引舛
                 {
-                    if (searchArea[i].GetComponent<Card>().curHP <= 0) continue;
+                    if (searchArea[i].GetComponentInChildren<Card>().curHP <= 0) continue;
                     if (leastHp == -1) //焼巷依亀 蒸聖 凶拭澗 置段稽 級嬢紳 橿汐戚 葵聖 閤澗陥. 
                     {
                         leastHp = i;
-                        hpArray[validIndex] = transform.parent.transform.GetChild(i).gameObject.GetComponent<Card>().curHP;
+                        hpArray[validIndex] = transform.parent.transform.GetChild(i).gameObject.GetComponentInChildren<Card>().curHP;
                         validIndex++;
                     }
                     else
                     {
-                        hpArray[validIndex] = transform.parent.transform.GetChild(validIndex).gameObject.GetComponent<Card>().curHP;
+                        hpArray[validIndex] = transform.parent.transform.GetChild(validIndex).gameObject.GetComponentInChildren<Card>().curHP;
                         validIndex++;
                     }
                     if (validIndex != 0) if (hpArray[validIndex] < hpArray[0]) leastHp = i;
                 }
-                skillTarget.Add(searchArea[leastHp].gameObject.GetComponent<Card>());
+                skillTarget.Add(searchArea[leastHp].gameObject. GetComponentInChildren<Card>());
                 break;
 
             case TargetType.mostHP:
@@ -930,7 +931,7 @@ public partial class Card : MonoBehaviourPun
                     }
                     if (validIndex != 0) if (hpArray[validIndex] > hpArray[0]) mostHp = i;
                 }
-                skillTarget.Add(searchArea[mostHp].GetComponent<Card>());
+                skillTarget.Add(searchArea[mostHp].GetComponentInChildren<Card>());
                 break;
 
 
