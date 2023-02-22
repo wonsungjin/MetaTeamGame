@@ -856,6 +856,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
     private void PlayerBattleWin()
     {
         if (isDraw == true) return;
+        playerTurnCount = 0;
         // GameObject.Find("firstAttack").GetComponent<TextMeshProUGUI>().text = isFirstAttack.ToString();
         // GameObject.Find("resultText").GetComponent<TextMeshProUGUI>().text = "win";
         Debug.LogError("Player Win");
@@ -872,6 +873,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
         // GameObject.Find("firstAttack").GetComponent<TextMeshProUGUI>().text = isFirstAttack.ToString();
         // GameObject.Find("resultText").GetComponent<TextMeshProUGUI>().text = "lose";
         if (isDraw == true) return;
+        playerTurnCount = 0;
         Debug.LogError("Player Lose");
 
 
@@ -889,6 +891,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
     private void PlayerBattleDraw()
     {
         Debug.LogError("Player Draw");
+        playerTurnCount = 0;
 
         isDraw = true;
 
