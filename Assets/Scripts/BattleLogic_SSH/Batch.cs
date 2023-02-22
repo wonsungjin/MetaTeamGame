@@ -10,7 +10,7 @@ public partial class Batch : MonoBehaviourPun
     public Transform[] enemyCardPosition = null;
     [SerializeField] List<int> CustomNumberList = new List<int>();
     [SerializeField] List<string> PlayerNameList = new List<string>();
-    [SerializeField] List<string> PlayerProfileList = new List<string>();
+    public List<string> PlayerProfileList = new List<string>();
     bool isMinePlayerNum = true;
     [SerializeField] GameObject playerRanking;
     [SerializeField] Transform playerRankingUi;
@@ -38,6 +38,15 @@ public partial class Batch : MonoBehaviourPun
         GameMGR.Instance.uiManager.playerBatchUI.SetActive(true);
         GameMGR.Instance.uiManager.playerName.text = PlayerNameList[num];
         GameMGR.Instance.uiManager.userProfile.sprite = Resources.Load<Sprite>($"Sprites/Profile/{PlayerProfileList[num]}");
+        for(int i =0; i < PhotonNetwork.PlayerList.Length;i++)
+        {
+            if ((int)PhotonNetwork.PlayerList[i].CustomProperties["Number"] == CustomNumberList[num])
+            {
+                GameMGR.Instance.uiManager.PlayerLifeTXT.text = PhotonNetwork.PlayerList[i].CustomProperties["Life"].ToString();
+            }
+        }
+
+
 
         for (int j = 0; j < cardList.Count; j++)
         {

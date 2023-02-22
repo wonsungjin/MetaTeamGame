@@ -16,7 +16,9 @@ public partial class UIManager : MonoBehaviour
     public TextMeshProUGUI goldTXT = null;
     public TextMeshProUGUI hpTXT = null;
     public TextMeshProUGUI shopLevelTXT = null;
+    public TextMeshProUGUI PlayerLifeTXT = null;
     public Image userProfile = null;
+    public Image[] userProfileImage = null;
     public Image[] unitSprite = null;
     public GameObject playerBatchUI = null;
     public TextMeshProUGUI playerName = null;
@@ -40,6 +42,7 @@ public partial class UIManager : MonoBehaviour
     public void Init_Scene2()
     {
         unitSprite = new Image[7];
+        userProfileImage = new Image[8];
         blackUI = GameObject.Find("BlackUI");
         storePannel = GameObject.Find("StorePannel");
         skillExplantion2 = GameObject.Find("Explantion");
@@ -55,6 +58,7 @@ public partial class UIManager : MonoBehaviour
         levelUpButton = GameObject.Find("LevelUPButton").GetComponent<Button>();
         optionButton = GameObject.Find("OptionButton").GetComponent<Button>();
         NowShopLevelTXT = GameObject.Find("NowShopLevelTXT").GetComponent<TextMeshProUGUI>();
+        PlayerLifeTXT = GameObject.Find("PlayerLife").GetComponent<TextMeshProUGUI>();
         goldTXT = GameObject.Find("GoldTXT").GetComponent<TextMeshProUGUI>();
         hpTXT = GameObject.Find("HpTXT").GetComponent<TextMeshProUGUI>();
         shopLevelTXT = GameObject.Find("ShopLevelUpTXT").GetComponent<TextMeshProUGUI>();
@@ -68,11 +72,29 @@ public partial class UIManager : MonoBehaviour
         unitSprite[3] = GameObject.Find("Unit4").GetComponent<Image>();
         unitSprite[4] = GameObject.Find("Unit5").GetComponent<Image>();
         unitSprite[5] = GameObject.Find("Unit6").GetComponent<Image>();
+        userProfileImage[0] = GameObject.Find("UserImage1").GetComponent<Image>();
+        userProfileImage[1] = GameObject.Find("UserImage2").GetComponent<Image>();
+        userProfileImage[2] = GameObject.Find("UserImage3").GetComponent<Image>();
+        userProfileImage[3] = GameObject.Find("UserImage4").GetComponent<Image>();
+        userProfileImage[4] = GameObject.Find("UserImage5").GetComponent<Image>();
+        userProfileImage[5] = GameObject.Find("UserImage6").GetComponent<Image>();
+        userProfileImage[6] = GameObject.Find("UserImage7").GetComponent<Image>();
+        userProfileImage[7] = GameObject.Find("UserImage8").GetComponent<Image>();
 
         finalSceneUI.SetActive(false);
         playerBatchUI.SetActive(false);
-        Faid(blackUI, faidType.Out, 0.03f);
         InitUI();
+        StartCoroutine(COR_DelayBlackUI());
+    }
+    IEnumerator COR_DelayBlackUI()
+    {
+        yield return new WaitForSeconds(2f);
+        Faid(blackUI, faidType.Out, 0.03f);
+        for (int i = 0; i < userProfileImage.Length; i++)
+        {
+            if (GameMGR.Instance.batch.PlayerProfileList.Count < i+1) break;
+        userProfileImage[i].sprite = Resources.Load<Sprite>($"Sprites/Profile/{GameMGR.Instance.batch.PlayerProfileList[i]}");
+    }
     }
 
     private void Update()

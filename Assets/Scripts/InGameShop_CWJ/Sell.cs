@@ -13,10 +13,10 @@ public class Sell : MonoBehaviour
     {
 
 
-        for (int i = 0; i < 2; i++)
-        {
-            specialZon[i].gameObject.SetActive(false);
-        }
+        //for (int i = 0; i < 2; i++)
+        //{
+        //    specialZon[i].gameObject.SetActive(false);
+        //}
      
     }
 
