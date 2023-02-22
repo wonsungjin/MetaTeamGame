@@ -33,7 +33,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
 
     public int curLife = 20;
 
-    private int[] exArray = new int[100];
+    private int[] exArray = new int[200];
 
     private int playerCurRound = 0;
     private int enemyCurRound = 0;
@@ -604,7 +604,8 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
             {
                 isPlayerAliveCount = 0;
                 isEnemyAliveCount = 0;
-
+                Debug.Log(randomArrayNum);
+                Debug.Log(exArray[randomArrayNum]);
                 while (playerBackwardUnits[exArray[randomArrayNum]] == null) { randomArrayNum++; }
 
                 if (enemyAttackArray.Length <= enemyTurnCount) { enemyTurnCount = 0; }
