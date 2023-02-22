@@ -7,14 +7,10 @@ public class BattleZone : MonoBehaviour
     [SerializeField] GameObject aura;
     public GameObject myObj = null;
 
-    Vector3 zPos = new Vector3(0,0,5f);
-
-
     private void Start()
     {
         aura.SetActive(true);
     }
-
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -28,7 +24,6 @@ public class BattleZone : MonoBehaviour
             GameMGR.Instance.spawner.cardBatch[myNum] = collision.gameObject;
         }
     }
-
 
     private void OnTriggerExit2D(Collider2D collision)
     {

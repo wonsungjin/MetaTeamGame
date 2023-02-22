@@ -9,11 +9,6 @@ public class NodeCollider : MonoBehaviour
 
     private void Start()
     {
-        
-
-        Debug.Log(node[0]);
-        Debug.Log(node[0].GetComponent<CircleCollider2D>());
-        Debug.Log(node[0].GetComponent<Collider2D>());
         nodeColl = new Collider2D[node.Length];
 
         for (int i = 0; i < node.Length; i++)
