@@ -196,11 +196,10 @@ public partial class Card : MonoBehaviourPun
 
     public void SkillActive() // 스킬 효과 발동 // FindTargetType 함수를 통해 구체적인 스킬 적용 대상이 정해지고 난 이후에 발동하는 게 맞다고 볼 수 있는 부분적인 부분
     {
-        if (triggerOnCount < 1)
-        {
-            Debug.Log("트리거 카운트가 없어서 발동 불가");
-            return;
-        }
+        if (triggerOnCount < 1) return;
+        
+        if (cardInfo.skillTiming == SkillTiming.hitEnemy || cardInfo.skillTiming == SkillTiming.battleStart)
+            if (isBattle == false) return;
 
         Debug.Log("Skill Active");
 
@@ -227,6 +226,8 @@ public partial class Card : MonoBehaviourPun
     public void SkillActive2(Card card)
     {
         if (triggerOnCount < 1) return;
+        if (cardInfo.skillTiming == SkillTiming.hitEnemy || cardInfo.skillTiming == SkillTiming.battleStart)
+            if (isBattle == false) return;
 
         if (cardInfo.skillTiming == SkillTiming.hitEnemy)
         {
@@ -407,7 +408,7 @@ public partial class Card : MonoBehaviourPun
                         }
                         if (curExistBatch.Count == 0) break;
 
-                        int curTargetNum = Random.Range(0, curExistBatch.Count);
+                        int curTargetNum = GameMGR.Instance.GetRandomValue(0, curExistBatch.Count);
 
                         Attack(excessDamage, curExistBatch[curTargetNum].GetComponentInChildren<Card>(), false, false);
                     }
@@ -636,7 +637,7 @@ public partial class Card : MonoBehaviourPun
 
             case TargetType.random:
                 Debug.Log("대상은 랜덤");
-                int random = Random.Range(0, searchArea.Count);
+                int random = GameMGR.Instance.GetRandomValue(0, searchArea.Count);
 
                 List<Card> targetArray1 = new List<Card>();
                 for (int i = 0; i < searchArea.Count; i++)
@@ -649,7 +650,7 @@ public partial class Card : MonoBehaviourPun
 
                 for (int i = 0; i < cardInfo.GetMaxTarget(cardInfo.level); i++)
                 {
-                    random = Random.Range(0, targetArray1.Count);
+                    random = GameMGR.Instance.GetRandomValue(0, targetArray1.Count);
 
                     if (targetArray1.Count != 0)
                     {
@@ -683,7 +684,7 @@ public partial class Card : MonoBehaviourPun
 
                 for (int i = 0; i < cardInfo.GetMaxTarget(cardInfo.level); i++)
                 {
-                    random = Random.Range(0, targetArray.Count);
+                    random = GameMGR.Instance.GetRandomValue(0, targetArray.Count);
                     if (targetArray.Count == 0) break;
                     if (skillTarget.Contains(targetArray[random])) // 죽은 아군이 아닐 때까지 랜덤값을 돌려
                     {
@@ -698,7 +699,7 @@ public partial class Card : MonoBehaviourPun
 
             case TargetType.forward:      // 전열ㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇ
                 Debug.Log("대상은 전열");
-                random = Random.Range(0, 3);
+                random = GameMGR.Instance.GetRandomValue(0, 3);
                 bool isAllDead = true;
                 for (int i = 0; i < 3; i++)
                 {
@@ -719,10 +720,10 @@ public partial class Card : MonoBehaviourPun
                 }
                 else // 한명이라도 살아있다면
                 {
-                    random = Random.Range(0, 3);
+                    random = GameMGR.Instance.GetRandomValue(0, 3);
                     while (searchArea[random].GetComponent<Card>().curHP <= 0 && searchArea[random] == this) // 죽은 아군이 아닐 때까지 랜덤값을 돌려
                     {
-                        random = Random.Range(0, 3);
+                        random = GameMGR.Instance.GetRandomValue(0, 3);
                     }
                     skillTarget.Add(searchArea[random].GetComponent<Card>());
                 }
@@ -730,7 +731,7 @@ public partial class Card : MonoBehaviourPun
 
             case TargetType.backward:       // 후열 ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇ
                 Debug.Log("대상은 후열");
-                random = Random.Range(0, 3);
+                random = GameMGR.Instance.GetRandomValue(0, 3);
                 isAllDead = true;
                 for (int i = 3; i < 6; i++)
                 {
@@ -747,10 +748,10 @@ public partial class Card : MonoBehaviourPun
                 }
                 else // 한명이라도 살아있다면
                 {
-                    random = UnityEngine.Random.Range(0, 3);
+                    random = GameMGR.Instance.GetRandomValue(0, 3);
                     while (searchArea[random].GetComponent<Card>().curHP <= 0 && searchArea[random] == this) // 죽은 아군이 아닐 때까지 랜덤값을 돌려
                     {
-                        random = Random.Range(0, 3);
+                        random = GameMGR.Instance.GetRandomValue(0, 3);
                     }
                     skillTarget.Add(searchArea[random].GetComponent<Card>());
                 }
