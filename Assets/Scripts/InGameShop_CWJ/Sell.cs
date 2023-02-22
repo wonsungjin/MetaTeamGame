@@ -6,19 +6,6 @@ public class Sell : MonoBehaviour
 {
     Card card;  // Sell �ݶ��̴��� ���� ������ �����͸� ��� ���� ��� ����
 
-    [SerializeField] GameObject[] specialZon;
-    Collider2D[] colliders;
-    private void OnEnable()
-    {
-
-
-        //for (int i = 0; i < 2; i++)
-        //{
-        //    specialZon[i].gameObject.SetActive(false);
-        //}
-     
-    }
-
     private void Start()
     {
         transform.GetChild(0).GetComponent<MeshRenderer>().sortingLayerName = "SellTXT";
@@ -75,6 +62,5 @@ public class Sell : MonoBehaviour
             card.SkillActive2(card);
             Debug.Log("Sell Skill Trigger On");
         }
-        //GameMGR.Instance.Event_Sell(coll.gameObject.GetComponent<Card>());
     }
 }
