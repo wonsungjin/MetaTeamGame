@@ -11,7 +11,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 858ed67e0d64b72429e8c773f1903334, type: 3}
   m_Name: StoneGolem
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   ID: 3
   objName: Stone Golem
   level: 1
@@ -20,16 +20,16 @@ MonoBehaviour:
   atk: 1
   description: Increase own HP +1. Increase own HP +2. Increase own HP +3.
   skillTiming: 8
-  targetType: 0
-  effectTarget: 1
+  targetType: 15
+  effectTarget: 3
   minTarget: 1
   maxTarget: 1
   triggerCondition: 0
   effectType: 2
   value1: 1.2.3
   value2: 
-  value3: 
+  value3: 0
   sumom_Unit: 
-  num_Triggers: 1
+  num_Triggers: 2.4.6
   duration: 1
   appear: TRUE

@@ -13,7 +13,7 @@ using TMPro;
 public class TurnSystem : MonoBehaviourPunCallbacks
 {
     private bool isGameOver;
-    private int []  readyCount = new int[2];
+    private int[] readyCount = new int[2];
 
     [SerializeField] private GameObject Me;
     [SerializeField] private GameObject enemyDeck;
@@ -25,19 +25,20 @@ public class TurnSystem : MonoBehaviourPunCallbacks
 
     [SerializeField] public InputField inputField; // 닉네임 입력칸
 
-    public int[] setRandom = new int[100]; // 공격할 대상을 랜덤으로 지정한다. 
+    public int[] setRandom = new int[200]; // 공격할 대상을 랜덤으로 지정한다. 
 
     public Player[] savePlayers = null;
 
     public int matchingDone;
 
-
     public int userID = 0;
 
     // 플레이어 라이프 관련
     public int[] life = null;
-    public int myLife = 10;
-    [SerializeField] public int startLife = 10;
+    // 핵심
+    public int myLife = 20;
+
+    public int startLife = 20;
 
     // 전투 승패 관련
     public bool isWin = false;
@@ -90,9 +91,9 @@ public class TurnSystem : MonoBehaviourPunCallbacks
         //matchingList.Remove((int)otherPlayer.CustomProperties["Number"]);
         //exitPlayerList.Add((int)otherPlayer.CustomProperties["Nunber"]);
         //if (PhotonNetwork.PlayerList.Length == 2) 
-        
-            cloneOpponent = -1;
-            cloneOpponentsOpponent = -1;
+
+        cloneOpponent = -1;
+        cloneOpponentsOpponent = -1;
         Debug.Log(otherPlayer + "가 나갔다");
         if (otherPlayer.IsInactive) Debug.Log(" IsInactive");
         else Debug.Log("NotInactive");
@@ -161,16 +162,16 @@ public class TurnSystem : MonoBehaviourPunCallbacks
     public void SetFirstAttack()
     {
 
-        for(int i = 0; i < matchNum.Length; i+=2) 
+        for (int i = 0; i < matchNum.Length; i += 2)
         {
             // 내 덱 수가 상대 덱 수보다 많을 때
-            if(GameMGR.Instance.batch.GetBatch(matchNum[i]).Count > GameMGR.Instance.batch.GetBatch(matchNum[i+1]).Count)
+            if (GameMGR.Instance.batch.GetBatch(matchNum[i]).Count > GameMGR.Instance.batch.GetBatch(matchNum[i + 1]).Count)
             {
                 isFirst[matchNum[i]] = true;
                 isFirst[matchNum[i + 1]] = false;
             }
 
-            else if(GameMGR.Instance.batch.GetBatch(matchNum[i]).Count < GameMGR.Instance.batch.GetBatch(matchNum[i + 1]).Count)
+            else if (GameMGR.Instance.batch.GetBatch(matchNum[i]).Count < GameMGR.Instance.batch.GetBatch(matchNum[i + 1]).Count)
             {
                 isFirst[matchNum[i + 1]] = true;
                 isFirst[matchNum[i]] = false;
@@ -178,10 +179,10 @@ public class TurnSystem : MonoBehaviourPunCallbacks
             // 서로 덱 수가 같다면
             else
             {
-                int randomPoint = UnityEngine.Random.Range(0, 10);
-                int randomPoint2 = UnityEngine.Random.Range(0, 10);
+                int randomPoint = UnityEngine.Random.Range(0, 5);
+                int randomPoint2 = UnityEngine.Random.Range(0, 5);
                 firstPoint[matchNum[i]] += randomPoint;
-                firstPoint[matchNum[i+1]] += randomPoint2;
+                firstPoint[matchNum[i + 1]] += randomPoint2;
 
                 if (firstPoint[matchNum[i]] > firstPoint[matchNum[i + 1]])
                 {
@@ -199,7 +200,7 @@ public class TurnSystem : MonoBehaviourPunCallbacks
                 {
                     // 같을 때
                     int a = UnityEngine.Random.Range(0, 2);
-                    if(a == 0)
+                    if (a == 0)
                     {
                         isFirst[matchNum[i]] = true;
                         isFirst[matchNum[i + 1]] = false;
@@ -210,6 +211,9 @@ public class TurnSystem : MonoBehaviourPunCallbacks
                         isFirst[matchNum[i]] = false;
                     }
                 }
+
+                if (isFirst[matchNum[i]]) { firstPoint[matchNum[i]] -= 15; }
+                if (isFirst[matchNum[i + 1]]) { firstPoint[matchNum[i + 1]] -= 15; }
             }
         }
         //GameMGR.Instance.battleLogic.isFirstAttack = isFirst[me];
@@ -223,7 +227,7 @@ public class TurnSystem : MonoBehaviourPunCallbacks
         //공격 랜덤값 지정 - 매 스테이지마다 랜덤 값을 받아온다
         for (int i = 0; i < setRandom.Length; i++)
         {
-            setRandom[i] = UnityEngine.Random.Range(0, 3);
+            setRandom[i] = UnityEngine.Random.Range(0, 6);
         }
 
         int n = -1; // 플레이어리스트 배열의 랜덤 인덱스 값
@@ -531,12 +535,21 @@ public class TurnSystem : MonoBehaviourPunCallbacks
     }
     IEnumerator COR_DelayMove()
     {
-        yield return new WaitForSeconds(1f);
-        Camera.main.gameObject.transform.position = new Vector3(20, 0, -10);
+        GameMGR.Instance.Event_TurnEnd();   // 턴 종료시 호출
+
+        GameMGR.Instance.uiManager.Faid(GameMGR.Instance.uiManager.blackUI, faidType.In, 0.02f);
+        yield return new WaitForSeconds(1.5f);
+        GameMGR.Instance.uiManager.Faid(GameMGR.Instance.uiManager.blackUI, faidType.Out, 0.02f);
+        readyCount[0] = 0;
+        GameMGR.Instance.spawner.isClick = false;
+
+
         GameMGR.Instance.uiManager.storePannel.SetActive(false);
+        Camera.main.gameObject.transform.position = new Vector3(20, 0, -10);
         GameMGR.Instance.batch.UnitPlacement();
-        GameMGR.Instance.battleLogic.AttackLogic();
+        yield return new WaitForSeconds(1.5f);
         GameMGR.Instance.uiManager.OnBattleUI();
+        GameMGR.Instance.battleLogic.AttackLogic();
 
         GameMGR.Instance.Init(3); // Move to Battle Scene
     }
@@ -575,9 +588,9 @@ public class TurnSystem : MonoBehaviourPunCallbacks
         }
     }
 
-    public void LifeDown()
+    public void LifeDown(int value) // 각 로컬들이 이 함수에 접근해서 자기 라이프인 myLife 값을 실시간으로 동기화한다고 할 수 있는 부분적인 부분적인 파트 오브 파트
     {
-        myLife--;
+        myLife -= value;
         PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "Life", $"{myLife}" } });
     }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class AudioMGR : MonoBehaviour
 {
@@ -19,8 +20,11 @@ public class AudioMGR : MonoBehaviour
     AudioSource StoreAudioSource = null;
     AudioSource StoreBGM = null;
 
-    AudioSource BattleBGM = null;
-    AudioSource BattleAudio = null;
+    [field: SerializeField] AudioMixerGroup SFXAudioMixer;
+    [field: SerializeField] AudioMixerGroup BGMAudioMixer;
+
+    public AudioSource BattleBGM = null;
+    public AudioSource BattleAudio = null;
 
     // AudioClip Name, AudioClip���� Dictionary ����
     Dictionary<string, AudioClip> BackgroundDic = new Dictionary<string, AudioClip>();
@@ -40,6 +44,7 @@ public class AudioMGR : MonoBehaviour
         StoreBGM = gameObject.GetComponent<AudioSource>();
         BattleBGM = gameObject.GetComponent<AudioSource>();
         BattleAudio = gameObject.GetComponent<AudioSource>();
+
 
         for (int i = 0; i < BackGroundClip.Length; i++) { BackgroundDic.Add(BackGroundClip[i].name, BackGroundClip[i]); }
         for (int i = 0; i < UnitSFXClip.Length; i++) { UnitSFXDic.Add(UnitSFXClip[i].name, UnitSFXClip[i]); }
@@ -71,18 +76,21 @@ public class AudioMGR : MonoBehaviour
     #region storeScene Audio
     public void SoundMouseClick()
     {
+        StoreAudioSource.outputAudioMixerGroup = SFXAudioMixer;
         StoreAudioSource.clip = ReturnAudioClip(Type.UI, "sweeping_sound");
         StoreAudioSource.Play();
     }
 
     public void SoundButton()
     {
+        StoreAudioSource.outputAudioMixerGroup = SFXAudioMixer;
         StoreAudioSource.clip = ReturnAudioClip(Type.UI, "button_sound");
         StoreAudioSource.Play();
     }
 
     public void SoundMonsterClick()
     {
+        StoreAudioSource.outputAudioMixerGroup = SFXAudioMixer;
         StoreAudioSource.clip = ReturnAudioClip(Type.Unit, "pick_sound");
         StoreAudioSource.Play();
     }
@@ -94,20 +102,46 @@ public class AudioMGR : MonoBehaviour
         StoreBGM.playOnAwake = isStoreScene;
         StoreBGM.loop = isStoreScene;
 
+        StoreBGM.outputAudioMixerGroup = BGMAudioMixer;
+
         if (isStoreScene) { StoreBGM.Play(); }
         else if (!isStoreScene) { StoreBGM.Pause(); }
     }
     public void SoundSell()
     {
+        StoreAudioSource.outputAudioMixerGroup = SFXAudioMixer;
         StoreAudioSource.clip = ReturnAudioClip(Type.UI, "gold +1");
         StoreAudioSource.Play();
     }
 
     public void SoundBuy()
     {
+        StoreAudioSource.outputAudioMixerGroup = SFXAudioMixer;
         StoreAudioSource.clip = ReturnAudioClip(Type.UI, "gold -1");
         StoreAudioSource.Play();
     }
+
+    public void SoundLevelUpButtonFail()
+    {
+        StoreAudioSource.outputAudioMixerGroup = SFXAudioMixer;
+        StoreAudioSource.clip = ReturnAudioClip(Type.UI, "fail_sound");
+        StoreAudioSource.Play();
+    }
+
+    public void SoundLevelUpButton()
+    {
+        StoreAudioSource.outputAudioMixerGroup = SFXAudioMixer;
+        StoreAudioSource.clip = ReturnAudioClip(Type.UI, "StoreLevelup_sound");
+        StoreAudioSource.Play();
+    }
+
+    public void SoundRefreshButton()
+    {
+        StoreAudioSource.outputAudioMixerGroup = SFXAudioMixer;
+        StoreAudioSource.clip = ReturnAudioClip(Type.UI, "Refresh");
+        StoreAudioSource.Play();
+    }
+
     #endregion
 
 
@@ -126,8 +160,12 @@ public class AudioMGR : MonoBehaviour
         BattleBGM.clip = ReturnAudioClip(Type.Background, "BattleBgm");
         BattleBGM.playOnAwake = isBattleScene;
         BattleBGM.loop = isBattleScene;
+        BattleBGM.outputAudioMixerGroup = BGMAudioMixer;
 
-        if (isBattleScene) { BattleBGM.Play(); }
+        if (isBattleScene)
+        {
+            BattleBGM.Play();
+        }
         else if (!isBattleScene) { BattleBGM.Pause(); }
     }
 
@@ -136,12 +174,14 @@ public class AudioMGR : MonoBehaviour
     {
         if (isResult)
         {
+            BattleAudio.outputAudioMixerGroup = SFXAudioMixer;
             BattleAudio.clip = ReturnAudioClip(Type.Effect, "GameWin");
             BattleAudio.Play();
         }
 
         else if (!isResult)
         {
+            BattleAudio.outputAudioMixerGroup = SFXAudioMixer;
             BattleAudio.clip = ReturnAudioClip(Type.Effect, "GameLose");
             BattleAudio.Play();
         }
@@ -151,12 +191,14 @@ public class AudioMGR : MonoBehaviour
     {
         if (Damage >= 15)
         {
+            BattleAudio.outputAudioMixerGroup = SFXAudioMixer;
             BattleAudio.clip = ReturnAudioClip(Type.Unit, "Big_Attack");
             BattleAudio.Play();
         }
 
         else if (Damage < 15)
         {
+            BattleAudio.outputAudioMixerGroup = SFXAudioMixer;
             BattleAudio.clip = ReturnAudioClip(Type.Unit, "SmallAttack");
             BattleAudio.Play();
         }
@@ -164,12 +206,14 @@ public class AudioMGR : MonoBehaviour
 
     public void BattleUnitDeath()
     {
+        BattleAudio.outputAudioMixerGroup = SFXAudioMixer;
         BattleAudio.clip = ReturnAudioClip(Type.Unit, "Dead");
         BattleAudio.Play();
     }
 
     public void BattleUnitHit()
     {
+        BattleAudio.outputAudioMixerGroup = SFXAudioMixer;
         BattleAudio.clip = ReturnAudioClip(Type.Unit, "UnitSummoning");
         BattleAudio.Play();
     }

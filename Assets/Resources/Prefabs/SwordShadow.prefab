@@ -413,16 +413,20 @@ MonoBehaviour:
   atkText: {fileID: 7252062213936032906}
   levelText: {fileID: 7252062215411811788}
   level: 1
-  curAttackValue: 3
-  curHP: 1
-  curEXP: 0
+  curAttackValue: 4
+  curHP: 2
+  curEXP: 1
   expSlider: {fileID: 9011612605386480728}
+  isBattle: 0
   skillTarget: []
   batchPos: {x: 0, y: 0}
   targetPos: {x: 0, y: 0}
   curPos: {fileID: 0}
   giveDamage: 0
   takeDamage: 0
+  shopBatchEmptyIndex: 0
+  isMine: 0
+  triggerOnCount: 0
   searchArea: []
 --- !u!114 &4928726740127134378
 MonoBehaviour:
@@ -437,6 +441,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillType: 
+  isArrive: 0
 --- !u!114 &4928726740127134383
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -449,7 +454,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cda88de653f299840b5c51af7dbe0bd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pos: {fileID: 0}
   isFreezen: 0
+  isClickBattleMonster: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   outlineSize: 5
 --- !u!4 &4929662035143735367 stripped

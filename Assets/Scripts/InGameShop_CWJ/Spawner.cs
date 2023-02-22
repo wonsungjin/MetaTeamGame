@@ -1,17 +1,18 @@
 using Photon.Pun;
 using System.Collections.Generic;
 using System.Net.NetworkInformation;
+using System.Threading;
 using UnityEngine;
 
 
 public class Spawner : MonoBehaviourPun
 {
-    AudioSource audioSource;
-
     [SerializeField] Node[] monsterTrans;
     [SerializeField] public Transform[] shopBatchPos;
 
     public GameObject[] trans = null;
+    public GameObject[] removeUnit = null;
+
 
     [Header("몬스터 프리팹")]
     public List<string> monsterNames = new List<string>();
@@ -25,7 +26,7 @@ public class Spawner : MonoBehaviourPun
     int randomNum;
     bool isFirstStart = false;
 
-    Vector3 vec = new Vector3(0, 0.6f, 0);
+    Vector3 vec = new Vector3(0, 0.6f, 1f);
 
 
 
@@ -66,7 +67,6 @@ public class Spawner : MonoBehaviourPun
     }
     private void Start()
     {
-        audioSource = GetComponent<AudioSource>();
         GameMGR.Instance.Init(2);
         SetMyDeckSetting();
         // 처음에 카드 생성
@@ -99,8 +99,12 @@ public class Spawner : MonoBehaviourPun
 
     // 레디 버튼 누르면 이루어짐 몬스터 삭제 , 시간 초기화 , 머니 초기화
     Card card;
+    public bool isClick;
     public void OnCLick_ReadyButton()
     {
+        if (isClick) return;
+        isClick = true;
+        GameMGR.Instance.batch.gameObject.GetPhotonView().RPC("ClearBatch", RpcTarget.All, (int)PhotonNetwork.LocalPlayer.CustomProperties["Number"]);
         for (int i = 0; i < cardBatch.Length; i++)
         {
             if (cardBatch[i] != null)
@@ -113,13 +117,6 @@ public class Spawner : MonoBehaviourPun
                 (int)PhotonNetwork.LocalPlayer.CustomProperties["Number"], "", 0, 0, 0, 0);
         }
         photonView.RPC("MatchingReady", RpcTarget.All);
-
-        //GameObject[] monster = GameObject.FindGameObjectsWithTag("Monster");
-        //GameMGR.Instance.uiManager.goldCount = 10;
-        //for (int i = 0; i < monster.Length; i++)
-        //{
-        //    GameMGR.Instance.objectPool.DestroyPrefab(monster[i]);
-        //}
     }
 
     public void TestButton()
@@ -145,24 +142,31 @@ public class Spawner : MonoBehaviourPun
     // 샵 레벨업 버튼
     public void OnClick_ShopLevelUp()
     {
-        if (GameMGR.Instance.uiManager.shopMoney <= GameMGR.Instance.uiManager.goldCount)
+        if (GameMGR.Instance.uiManager.shopLevel >= 6)
         {
-            GameMGR.Instance.uiManager.shopLevel++;
-            GameMGR.Instance.uiManager.NowShopLevelTXT.text = "" + GameMGR.Instance.uiManager.shopLevel.ToString();
-            GameMGR.Instance.uiManager.goldCount -= GameMGR.Instance.uiManager.shopMoney;
-            GameMGR.Instance.uiManager.goldTXT.text = "" + GameMGR.Instance.uiManager.goldCount.ToString();
-            GameMGR.Instance.uiManager.shopLevelTXT.text = "" + GameMGR.Instance.uiManager.shopMoney.ToString();
-
-            // 함수 호출 레벨 업 후 돈?
-            ShopLevelUp();
+            GameMGR.Instance.audioMGR.SoundLevelUpButtonFail();
+            return;
         }
-        else if (GameMGR.Instance.uiManager.shopMoney > GameMGR.Instance.uiManager.goldCount)
+
+        else
         {
-            audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.UI, "fail_sound");
-            audioSource.Play();
+            if (GameMGR.Instance.uiManager.shopMoney <= GameMGR.Instance.uiManager.goldCount)
+            {
+                GameMGR.Instance.uiManager.shopLevel++;
+                GameMGR.Instance.uiManager.NowShopLevelTXT.text = "" + GameMGR.Instance.uiManager.shopLevel.ToString();
+                GameMGR.Instance.uiManager.goldCount -= GameMGR.Instance.uiManager.shopMoney;
+                GameMGR.Instance.uiManager.goldTXT.text = "" + GameMGR.Instance.uiManager.goldCount.ToString();
+                GameMGR.Instance.uiManager.shopLevelTXT.text = "" + GameMGR.Instance.uiManager.shopMoney.ToString();
+
+                // 함수 호출 레벨 업 후 돈?
+                ShopLevelUp();
+            }
+            else if (GameMGR.Instance.uiManager.shopMoney > GameMGR.Instance.uiManager.goldCount)
+            {
+                GameMGR.Instance.audioMGR.SoundLevelUpButtonFail();
+            }
         }
     }
-
     // 용병고용소의 레벨 업 할때마다 머니 
     void ShopLevelUp()
     {
@@ -171,28 +175,38 @@ public class Spawner : MonoBehaviourPun
             case 2:
                 GameMGR.Instance.uiManager.shopMoney = 8;
                 GameMGR.Instance.uiManager.shopLevelTXT.text = "" + GameMGR.Instance.uiManager.shopMoney.ToString();
-                audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.UI, "StoreLevelup_sound");
-                audioSource.Play();
+                GameMGR.Instance.audioMGR.SoundLevelUpButton();
                 break;
             case 3:
                 GameMGR.Instance.uiManager.shopMoney = 9;
                 GameMGR.Instance.uiManager.shopLevelTXT.text = "" + GameMGR.Instance.uiManager.shopMoney.ToString();
-                audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.UI, "StoreLevelup_sound");
-                audioSource.Play();
+                GameMGR.Instance.audioMGR.SoundLevelUpButton();
+                GameMGR.Instance.chainBroken.ChainsBroken();
                 break;
             case 4:
                 GameMGR.Instance.uiManager.shopMoney = 10;
                 GameMGR.Instance.uiManager.shopLevelTXT.text = "" + GameMGR.Instance.uiManager.shopMoney.ToString();
-                audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.UI, "StoreLevelup_sound");
-                audioSource.Play();
+                GameMGR.Instance.audioMGR.SoundLevelUpButton();
+                GameMGR.Instance.chainBroken.ChainsBroken();
                 break;
             case 5:
                 GameMGR.Instance.uiManager.shopMoney = 11;
                 GameMGR.Instance.uiManager.shopLevelTXT.text = "" + GameMGR.Instance.uiManager.shopMoney.ToString();
-                audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.UI, "StoreLevelup_sound");
-                audioSource.Play();
+                GameMGR.Instance.audioMGR.SoundLevelUpButton();
+                GameMGR.Instance.chainBroken.ChainsBroken();
                 break;
         }
+    }
+
+    public void ResetStore()
+    {
+        GameObject[] removeUnit = GameObject.FindGameObjectsWithTag("Monster"); ;
+
+        for (int i = 0; i < removeUnit.Length; i++)
+        {
+            GameMGR.Instance.objectPool.DestroyPrefab(removeUnit[i].transform.parent.gameObject);
+        }
+        ChooseRandomCard();
     }
 
     // 리롤
@@ -203,9 +217,7 @@ public class Spawner : MonoBehaviourPun
             GameObject[] monster = GameObject.FindGameObjectsWithTag("Monster");
             GameMGR.Instance.uiManager.goldCount--;
             GameMGR.Instance.uiManager.goldTXT.text = "" + GameMGR.Instance.uiManager.goldCount.ToString();
-            audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.UI, "Refresh");
-            audioSource.Play();
-
+            GameMGR.Instance.audioMGR.SoundRefreshButton();
 
             for (int i = 0; i < monster.Length; i++)
             {
@@ -215,25 +227,16 @@ public class Spawner : MonoBehaviourPun
             ChooseRandomCard();
 
             GameMGR.Instance.Event_Reroll();    // 리롤시 능력가진 카드들 효과 발동
-            
         }
         else
         {
-            audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.UI, "fail_sound");
-            audioSource.Play();
+            GameMGR.Instance.audioMGR.SoundLevelUpButtonFail();
         }
     }
 
     // 돈이 없을때 버튼들 끄는 함수
     void Reset_NotMoney()
     {
-        //if (GameMGR.Instance.uiManager.goldCount <= 0)
-        //{
-        //    GameMGR.Instance.uiManager.reFreshButton.interactable = false;
-        //}
-        //else
-        //    GameMGR.Instance.uiManager.reFreshButton.interactable = true;
-
         if (GameMGR.Instance.uiManager.shopLevel > 5)
         {
             GameMGR.Instance.uiManager.levelUpButton.interactable = false;
@@ -462,45 +465,120 @@ public class Spawner : MonoBehaviourPun
         Debug.Log(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum]}"));
         Debug.Log(monsterNames[randomNum]);
         GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum]}"),
-            monsterTrans[randomTrans].transform.position - vec, Quaternion.identity);
+             monsterTrans[randomTrans].transform.position - vec, Quaternion.identity);
+
         monsterTrans[randomTrans].NullObj();
 
         randomTrans++;
     }
     public void SpecialMonster()
     {
+        Debug.Log("스페셜몬스터 생성");
+
         trans = GameObject.FindGameObjectsWithTag("SpecialZone");
 
-        if (trans != null)
+        if (trans.Length <= 0)
         {
+            Debug.Log("트랜스 랭스 값이 0아더");
+            return;
+        }
+
+        if (trans.Length == 2)
+        {
+            Debug.Log("트랜스랭스 2");
             switch (GameMGR.Instance.uiManager.shopLevel)
             {
                 case 1:
                     int randomNum1 = Random.Range(customDeck.tier_1.Count, customDeck.tier_1.Count + customDeck.tier_2.Count);
-                    GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum1]}"), trans[0].transform.position, Quaternion.identity);
-                    mon.transform.position -= vec;
+
+                    if (trans[0].transform.position.x < trans[1].transform.position.x)
+                    {
+                        GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum1]}"), trans[0].transform.position - vec, Quaternion.identity);
+                    }
+                    else
+                    {
+                        GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum1]}"), trans[1].transform.position - vec, Quaternion.identity);
+                    }
                     break;
                 case 2:
-
                     int randomNum2 = Random.Range(customDeck.tier_1.Count + customDeck.tier_2.Count, customDeck.tier_1.Count + customDeck.tier_2.Count + customDeck.tier_3.Count);
-                    GameObject mon2 = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum2]}"), trans[0].transform.position, Quaternion.identity);
-                    mon2.transform.position -= vec;
+                    if (trans[0].transform.position.x < trans[1].transform.position.x)
+                    {
+                        GameObject mon2 = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum2]}"), trans[0].transform.position - vec, Quaternion.identity);
+                    }
+                    else
+                    {
+                        GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum2]}"), trans[1].transform.position - vec, Quaternion.identity);
+                    }
+                    break;
+                case 3:
+                    int randomNum3 = Random.Range(customDeck.tier_1.Count + customDeck.tier_2.Count + customDeck.tier_3.Count, customDeck.tier_1.Count + customDeck.tier_2.Count + customDeck.tier_3.Count + customDeck.tier_4.Count);
+                    if (trans[0].transform.position.x < trans[1].transform.position.x)
+                    {
+                        GameObject mon3 = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum3]}"), trans[0].transform.position - vec, Quaternion.identity);
+                    }
+                    else
+                    {
+                        GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum3]}"), trans[1].transform.position - vec, Quaternion.identity);
+                    }
+                    break; ;
+                case 4:
+                    int randomNum4 = Random.Range(customDeck.tier_1.Count + customDeck.tier_2.Count + customDeck.tier_3.Count + customDeck.tier_4.Count, customDeck.tier_1.Count + customDeck.tier_2.Count + customDeck.tier_3.Count + customDeck.tier_4.Count + customDeck.tier_5.Count);
+                    if (trans[0].transform.position.x < trans[1].transform.position.x)
+                    {
+                        GameObject mon4 = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum4]}"), trans[0].transform.position - vec, Quaternion.identity);
+                    }
+                    else
+                    {
+                        GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum4]}"), trans[1].transform.position - vec, Quaternion.identity);
+                    }
+                    break; ;
+                case 5:
+                    int randomNum5 = Random.Range(customDeck.tier_1.Count + customDeck.tier_2.Count + customDeck.tier_3.Count + customDeck.tier_4.Count + customDeck.tier_5.Count, customDeck.tier_1.Count + customDeck.tier_2.Count + customDeck.tier_3.Count + customDeck.tier_4.Count + customDeck.tier_5.Count + customDeck.tier_6.Count);
+                    if (trans[0].transform.position.x < trans[1].transform.position.x)
+                    {
+                        GameObject mon5 = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum5]}"), trans[0].transform.position - vec, Quaternion.identity);
+                    }
+                    else
+                    {
+                        GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum5]}"), trans[1].transform.position - vec, Quaternion.identity);
+                    }
+                    break; ;
+            }
+        }
+
+        if (trans.Length == 1)
+        {
+            Debug.Log("트랜스랭스 1");
+            switch (GameMGR.Instance.uiManager.shopLevel)
+            {
+                case 1:
+                    int randomNum1 = Random.Range(customDeck.tier_1.Count, customDeck.tier_1.Count + customDeck.tier_2.Count);
+                    GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum1]}"), trans[0].transform.position - vec, Quaternion.identity);
+                    break;
+                case 2:
+                    int randomNum2 = Random.Range(customDeck.tier_1.Count + customDeck.tier_2.Count, customDeck.tier_1.Count + customDeck.tier_2.Count + customDeck.tier_3.Count);
+
+                    GameObject mon2 = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum2]}"), trans[0].transform.position - vec, Quaternion.identity);
+
                     break;
                 case 3:
                     int randomNum3 = Random.Range(customDeck.tier_1.Count + customDeck.tier_2.Count + customDeck.tier_3.Count, customDeck.tier_1.Count + customDeck.tier_2.Count + customDeck.tier_3.Count + customDeck.tier_4.Count);
 
-                    GameObject mon3 = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum3]}"), trans[0].transform.position, Quaternion.identity);
-                    mon3.transform.position -= vec;
+                    GameObject mon3 = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum3]}"), trans[0].transform.position - vec, Quaternion.identity);
+
                     break; ;
                 case 4:
                     int randomNum4 = Random.Range(customDeck.tier_1.Count + customDeck.tier_2.Count + customDeck.tier_3.Count + customDeck.tier_4.Count, customDeck.tier_1.Count + customDeck.tier_2.Count + customDeck.tier_3.Count + customDeck.tier_4.Count + customDeck.tier_5.Count);
-                    GameObject mon4 = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum4]}"), trans[0].transform.position, Quaternion.identity);
-                    mon4.transform.position -= vec;
+
+                    GameObject mon4 = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum4]}"), trans[0].transform.position - vec, Quaternion.identity);
+
                     break; ;
                 case 5:
                     int randomNum5 = Random.Range(customDeck.tier_1.Count + customDeck.tier_2.Count + customDeck.tier_3.Count + customDeck.tier_4.Count + customDeck.tier_5.Count, customDeck.tier_1.Count + customDeck.tier_2.Count + customDeck.tier_3.Count + customDeck.tier_4.Count + customDeck.tier_5.Count + customDeck.tier_6.Count);
-                    GameObject mon5 = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum5]}"), trans[0].transform.position, Quaternion.identity);
-                    mon5.transform.position -= vec;
+
+                    GameObject mon5 = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{monsterNames[randomNum5]}"), trans[0].transform.position - vec, Quaternion.identity);
+
                     break; ;
             }
         }

@@ -272,6 +272,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillType: 
+  isArrive: 0
 --- !u!50 &989870966826497406
 Rigidbody2D:
   serializedVersion: 4
@@ -314,6 +315,17 @@ MonoBehaviour:
   curHP: 1
   curEXP: 0
   expSlider: {fileID: 7086704749162298161}
+  isSkillTiming: 1
+  skillTarget: []
+  batchPos: {x: 0, y: 0}
+  targetPos: {x: 0, y: 0}
+  curPos: {fileID: 0}
+  giveDamage: 0
+  takeDamage: 0
+  shopBatchEmptyIndex: 0
+  isMine: 0
+  triggerOnCount: 0
+  searchArea: []
 --- !u!82 &3272275253484546860
 AudioSource:
   m_ObjectHideFlags: 0

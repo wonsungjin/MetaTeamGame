@@ -141,6 +141,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pos: {fileID: 0}
   isFreezen: 0
+  isClickBattleMonster: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   outlineSize: 5
 --- !u!50 &7635413485443113404
@@ -211,6 +212,17 @@ MonoBehaviour:
   curHP: 4
   curEXP: 0
   expSlider: {fileID: 6447656630198035574}
+  isBattle: 0
+  skillTarget: []
+  batchPos: {x: 0, y: 0}
+  targetPos: {x: 0, y: 0}
+  curPos: {fileID: 0}
+  giveDamage: 0
+  takeDamage: 0
+  shopBatchEmptyIndex: 0
+  isMine: 0
+  triggerOnCount: 0
+  searchArea: []
 --- !u!114 &6087694543895898707
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -224,6 +236,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillType: 
+  isArrive: 0
 --- !u!82 &7872189721231975709
 AudioSource:
   m_ObjectHideFlags: 0

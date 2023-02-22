@@ -1,23 +1,42 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum faidType
+{
+    Out,
+    In,
+}
 public partial class UIManager : MonoBehaviour
 {
     [Header("Pannel")]
+    public GameObject cardPannel;
     private GameObject lobbyPannel;
     private GameObject myDeckPannel;
     private GameObject packChoicePannel;
     private GameObject customPannel;
-    public GameObject cardPannel;
     private GameObject menuPannel;
     private GameObject nameMakeUI;
     private GameObject deleteWarringUI;
+    public GameObject loginSystemUI;
+    public GameObject blackUI;
+    private GameObject logoPannel;
+
+    public TextMeshProUGUI tournamentText;
+    public bool isLobby = true;
+
     [Header("PackList")]
     [SerializeField] private MyDeck packButton;
     private GameObject myPackList;
     private GameObject packAddButton;
     private ToggleGroup toggleGroup;
+    [Header("UserProfile")]
+    public TextMeshProUGUI userName;
+    public Image userImage;
+
+
+
     [Header("CardInfo")]
     private Image cardImage;
     private TextMeshProUGUI cardName;
@@ -33,6 +52,11 @@ public partial class UIManager : MonoBehaviour
     public TextMeshProUGUI[] tierCountText;
     public void Init_Scene1()
     {
+        userName = GameObject.Find("UserName").GetComponent<TextMeshProUGUI>();
+        userImage= GameObject.Find("UserImage").GetComponent<Image>();
+        loginSystemUI = GameObject.Find("LoginSystem");
+        blackUI = GameObject.Find("BlackUI");
+        logoPannel = GameObject.Find("LogoPannel");
         lobbyPannel = GameObject.Find("LobbyPannel");
         myDeckPannel = GameObject.Find("MyDeckPannel");
         customPannel = GameObject.Find("CustomPannel");
@@ -74,15 +98,30 @@ public partial class UIManager : MonoBehaviour
         tierCountText[3] = GameObject.Find("4").transform.GetChild(2).GetComponent<TextMeshProUGUI>();
         tierCountText[4] = GameObject.Find("5").transform.GetChild(2).GetComponent<TextMeshProUGUI>();
         tierCountText[5] = GameObject.Find("6").transform.GetChild(2).GetComponent<TextMeshProUGUI>();
+        tournamentText = GameObject.Find("MonthlyTime").GetComponent<TextMeshProUGUI>();
         toggleGroup = FindObjectOfType<ToggleGroup>();
         deleteWarringUI.SetActive(false);
         customPannel.SetActive(false);
+        loginSystemUI.SetActive(false);
         packChoicePannel.SetActive(false);
+        lobbyPannel.SetActive(false);
         cardPannel.SetActive(false);
         myDeckPannel.SetActive(false);
         nameMakeUI.SetActive(false);
         menuPannel.SetActive(false);
+        blackUI.SetActive(false);
         SetFalseStar(0);
+        StartCoroutine(COR_FaidDelay());
+
+        isLobby = true;
+        StartCoroutine(GameMGR.Instance.metaTrendAPI.processRequestGetDummy());
+    }
+    IEnumerator COR_FaidDelay()
+    {
+        Faid(logoPannel, faidType.Out, 0.02f);
+        yield return new WaitForSeconds(2f);
+        Faid(lobbyPannel, faidType.In, 0.03f);
+
     }
     public void SetFalseStar(int set)
     {
@@ -110,6 +149,7 @@ public partial class UIManager : MonoBehaviour
     {
         MyDeck obj = GameObject.Instantiate<MyDeck>(packButton);
         obj.transform.GetChild(3).GetComponent<Toggle>().group = toggleGroup;
+        if(customDeck.DeckName=="Free Pack")obj.transform.GetChild(1).GetComponent<Image>().sprite = Resources.Load<Sprite>($"FreePack");
         obj.transform.GetChild(2).transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = customDeck.DeckName;
         obj.SetMyDeck(customDeck);
         obj.transform.SetParent(myPackList.transform);
@@ -199,4 +239,41 @@ public partial class UIManager : MonoBehaviour
         GameMGR.Instance.dataBase.inventoryData.DeleteCustomDeck(myDeckNum);
         Destroy(myDeck);
     }
+    
+    public void Faid(GameObject obj, faidType type,float time)
+    {
+        obj.SetActive(true);
+        faidTime = new WaitForSeconds(time);
+        if (type == faidType.In) StartCoroutine(COR_FaidIn(obj));
+        else if(type == faidType.Out) StartCoroutine(COR_FaidOut(obj));
+    }
+    WaitForSeconds faidTime = new WaitForSeconds(0.02f);
+    IEnumerator COR_FaidIn(GameObject obj)
+    {
+        obj.TryGetComponent(out CanvasGroup canvasGroup);
+        if (canvasGroup == null) canvasGroup = obj.AddComponent<CanvasGroup>();
+        canvasGroup.alpha = 0;
+        while(canvasGroup.alpha<1)
+        {
+            canvasGroup.alpha += 0.03f;
+            yield return faidTime;
+        }
+
+    }
+    IEnumerator COR_FaidOut(GameObject obj)
+    {
+        obj.TryGetComponent(out CanvasGroup canvasGroup);
+        if (canvasGroup == null) canvasGroup = obj.AddComponent<CanvasGroup>();
+        canvasGroup.alpha = 1;
+        while (canvasGroup.alpha > 0)
+        {
+            canvasGroup.alpha -= 0.03f;
+            yield return faidTime;
+        }
+        obj.SetActive(false);
+
+    }
+
+
+
 }

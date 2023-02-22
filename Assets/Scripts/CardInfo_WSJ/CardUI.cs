@@ -9,6 +9,7 @@ public class CardUI : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler,
     public CardInfo cardInfo;
     private Image image;
     bool isWhiteLine;
+    public bool isNonePointer;
 
     /*자신의 오브젝트 이름과 같은 스크립터블 데이터를 읽어와서 설정한다
     스프라이트 랜더러도 같은 원리로 설정*/
@@ -21,8 +22,22 @@ public class CardUI : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler,
         Debug.Log(cardInfo.objName);
         image.sprite = Resources.Load<Sprite>($"Sprites/Nomal/{name}");
     }
+    public void SpriteNone()
+    {
+        if(image==null) image = transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>();
+        image.color = FrameColor;
+
+    }
+    public void ResetColor()
+    {
+        if (image == null) image = transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>();
+        transform.GetChild(0).GetComponent<Image>().color = resetColor;
+        image.color = resetColor;
+
+    }
 
     Color FrameColor = new Color(1f, 1f, 1f, 1/255f);
+    Color resetColor = new Color(1f, 1f, 1f, 1);
     /*커스텀덱 설정할 때 클릭하면 실행되는 함수*/
     public void OffFrame()
     {
@@ -30,6 +45,7 @@ public class CardUI : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler,
     }
     public void OnPointerClick(PointerEventData eventData)
     {
+        if (isDonHave) return;
         if (GameMGR.Instance.customDeckShop.isJoinShop)
         {
             // Debug.Log(GameMGR.Instance.customDeckShop.AddTierList(cardInfo.tier, cardInfo.objName));
@@ -44,7 +60,7 @@ public class CardUI : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler,
                 isWhiteLine = false;
                 image.sprite = Resources.Load<Sprite>($"Sprites/Nomal/{name}");
             } 
-            if (GameMGR.Instance.customDeckShop.AddTierList(cardInfo.tier, cardInfo.objName) > 8)
+            if (GameMGR.Instance.customDeckShop.AddTierList(cardInfo.tier, cardInfo.objName) > 1)
             {
                 isWhiteLine = false;
                 Debug.Log("8chrhk");
@@ -58,13 +74,20 @@ public class CardUI : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler,
         image.sprite = Resources.Load<Sprite>($"Sprites/Nomal/{name}");
     }
 
+   bool isDonHave;
+    public void DonHave()
+    {
+        if (image == null) image = transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>();
+        isDonHave = true;
+        image.color = new Color(0.3f, 0.3f, 0.3f);
+    }
     public void OnPointerExit(PointerEventData eventData)
     {
 
     }
-
     public void OnPointerEnter(PointerEventData eventData)
     {
+        if (isNonePointer) return;
         GameMGR.Instance.uiManager.OnPointerEnter_CardInfo(cardInfo);
     }
 }

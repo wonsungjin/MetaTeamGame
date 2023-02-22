@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,8 +10,19 @@ public partial class GameMGR : Singleton<GameMGR>
     public int[] matching = new int[2];
 
     // 서로가 동일한 랜덤값을 가지기 위한 것이다.
-    public int[] randomValue = new int[100];
-    public Dictionary<int, List<GameObject>> playerList = new Dictionary<int, List<GameObject>>();
+    public int[] randomValue;
+    
+    public int GetRandomValue(int minrange, int maxrange)
+    {
+        for(int i = 0; i < randomValue.Length; i++)
+        {
+            if (randomValue[i] >= minrange && randomValue[i] < maxrange)
+                return randomValue[i];
+        }
+        return 0;
+    }
+    
+    public Dictionary<int, List<Card>> playerList = new Dictionary<int, List<Card>>();
 
     public bool isBattleNow = false; // 현재 전투씬인지 비전투씬인지를 구분하는 불값.
 
@@ -28,7 +40,7 @@ public partial class GameMGR : Singleton<GameMGR>
     public event _callback_SkillTiming callbackEvent_AfterAttack;
     public event _callback_SkillTiming callbackEvent_Kill;
     public event _callback_SkillTiming callbackEvent_Hit;
-    public event _callback_SkillTiming callbackEvent_HitEnemy;
+    public event _callback_SkillTiming2 callbackEvent_HitEnemy;
     public event _callback_SkillTiming callbackEvent_Death;
     public event _callback_SkillTiming callbackEvent_Summon;
 
@@ -37,10 +49,14 @@ public partial class GameMGR : Singleton<GameMGR>
 
     public void Event_TurnStart()
     {
-        callbackEvent_TurnStart();
+        if (callbackEvent_TurnStart != null)
+            callbackEvent_TurnStart();
+        else
+            Debug.Log("아니 지금 턴스타트가 비었다는 말인가");
     }
     public void Event_TurnEnd()
     {
+        if (callbackEvent_TurnEnd != null)
         callbackEvent_TurnEnd();
     }
     public void Event_Buy(Card card)
@@ -60,15 +76,23 @@ public partial class GameMGR : Singleton<GameMGR>
     }
     public void Event_BattleStart()
     {
-        callbackEvent_BattleStart();
+        if (callbackEvent_BattleStart != null)
+        {
+            Debug.Log("전투시작시 불린다");
+            callbackEvent_BattleStart();
+        }
+        else
+            Debug.Log("아니 지금 전투시작시가 비었다는 말인가");
     }
     public void Event_Summon()
     {
+        if (callbackEvent_Summon != null)
         callbackEvent_Summon();
     }
-    public void Event_HitEnemy()
+    public void Event_HitEnemy(Card card)
     {
-        callbackEvent_HitEnemy();
+        if(callbackEvent_HitEnemy != null)
+            callbackEvent_HitEnemy(card);
     }
     
     #endregion

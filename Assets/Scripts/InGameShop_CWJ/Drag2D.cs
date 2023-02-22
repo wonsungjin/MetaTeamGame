@@ -16,12 +16,16 @@ public partial class Drag2D : MonoBehaviour
     public BattleZone pos;
     Vector2 selectZonePos;
     Vector3 monsterPos = new Vector3(0, -0.6f, 0);
+    Vector3 monsterPos1 = new Vector3(0, 0.6f, 0);
+
+    Vector3 vecs = new Vector3(0, -0.6f, 1f);
+    Vector3 vecs1 = new Vector3(0, 1.4f, 1f);
 
     float timer = 0f;
-    float distance = 10;
+    float distance = 100;
     private bool isClickBool = false;
     public bool isFreezen = false;
-    bool isClickBattleMonster = false;
+    public bool isClickBattleMonster = false;
 
     private void OnEnable()
     {
@@ -29,6 +33,7 @@ public partial class Drag2D : MonoBehaviour
         spriteRenderer = GetComponent<MeshRenderer>();
         pol = GetComponent<BoxCollider2D>();
         card = GetComponent<Card>();
+        if(this.transform.parent!=null)
         this.selectZonePos = this.transform.parent.position;
     }
 
@@ -64,7 +69,7 @@ public partial class Drag2D : MonoBehaviour
                         if (timer > 1f)
                         {
                             GameObject vec = GameObject.FindGameObjectWithTag("BattleZone");
-                            hit.collider.gameObject.transform.parent.position = vec.transform.position + Vector3.down;
+                            hit.collider.gameObject.transform.parent.position = vec.transform.position + Vector3.down + new Vector3(0,-0.4f);
                             vec.GetComponent<BattleZone>().myObj = hit.collider.gameObject.transform.parent.gameObject;
                         }
                     }
@@ -141,6 +146,7 @@ public partial class Drag2D : MonoBehaviour
                         Vector2 monTras = gameObject.transform.parent.localScale;
                         gameObject.transform.parent.localScale = monTras * 2;
                         BackMeltBuy(collision);
+                        StartCoroutine(COR_BuyMonsterEF());
                     }
                 }
             }
@@ -167,9 +173,9 @@ public partial class Drag2D : MonoBehaviour
                         Vector2 monTras = gameObject.transform.parent.localScale;
                         gameObject.transform.parent.localScale = monTras * 2;
                         pos = collision.GetComponent<BattleZone>();
+                        StartCoroutine(COR_BuyMonsterEF());
 
-
-                        if(card.cardInfo.skillTiming == SkillTiming.buy)
+                        if (card.cardInfo.skillTiming == SkillTiming.buy)
                         {
                             card.SkillActive2(card);
                         }
@@ -201,31 +207,38 @@ public partial class Drag2D : MonoBehaviour
 
             if (gameObject.name == collision.gameObject.name)
             {
+                if (gameObject.CompareTag("BattleMonster2") && collision.gameObject.CompareTag("BattleMonster2"))
+                {
+                    if (collision.transform.position.y > transform.position.y)
+                    {
+                        ShopCardLevelUp(collision.gameObject);
+                    }
+                }
+
                 if (gameObject.CompareTag("BattleMonster") || gameObject.CompareTag("BattleMonster2"))
                 {
-                    if (gameObject.CompareTag("BattleMonster2") && collision.gameObject.CompareTag("BattleMonster2"))
-                    {
-                        if (collision.transform.position.y > transform.position.y)
-                        {
-                            ShopCardLevelUp(collision.gameObject);
-
-                        }
-                    }
-
-                    else if (gameObject.name == collision.gameObject.name && collision.gameObject.CompareTag("BattleMonster") || collision.gameObject.CompareTag("BattleMonster2"))
+                    if (collision.gameObject.CompareTag("BattleMonster") || collision.gameObject.CompareTag("BattleMonster2"))
                     {
                         ShopCardLevelUp(collision.gameObject);
                     }
                 }
             }
 
-            if (collision.gameObject.CompareTag("BattleMonster3"))
+            if (collision.gameObject.CompareTag("BattleMonster3") || gameObject.CompareTag("BattleMonster3"))
             {
                 return;
             }
         }
     }
 
+    IEnumerator COR_BuyMonsterEF()
+    {
+        GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>("Heart"), gameObject.transform.position + monsterPos1, Quaternion.identity);
+        mon.layer = 2;
+        yield return new WaitForSeconds(0.3f);
+        GameMGR.Instance.objectPool.DestroyPrefab(mon.transform.gameObject);
+    }
+ 
     void ShopCardLevelUp(GameObject collision)
     {
         int colAttack = collision.gameObject.GetComponentInChildren<Card>().curAttackValue;
@@ -269,7 +282,7 @@ public partial class Drag2D : MonoBehaviour
             thisExp += 3;
             collision.gameObject.GetComponentInChildren<Card>().ChangeValue(CardStatus.Exp, thisExp);
         }
-
+        
         GameMGR.Instance.objectPool.DestroyPrefab(this.gameObject.transform.parent.gameObject);
         GameMGR.Instance.uiManager.sell.gameObject.SetActive(false);
     }
@@ -277,8 +290,10 @@ public partial class Drag2D : MonoBehaviour
     // 판매버튼 ON OFF
     IEnumerator COR_SellButton()
     {
+        GameMGR.Instance.sellInCollider.SellOn();
         yield return new WaitForSeconds(0.12f);
         GameMGR.Instance.uiManager.sell.gameObject.SetActive(false);
+        GameMGR.Instance.sellInCollider.SellOn();
     }
 
     // 원래 위치로 돌리는 함수
@@ -286,18 +301,19 @@ public partial class Drag2D : MonoBehaviour
     {
         yield return wait;
 
+        Debug.Log("아넝훙낳");
+
         if (CompareTag("BattleMonster") || CompareTag("BattleMonster2") || CompareTag("BattleMonster3"))
         {
             if (pos.myObj != null)
             {
                 GameObject vec = GameObject.FindGameObjectWithTag("BattleZone");
                 if (vec != null)
-                    gameObject.transform.parent.position = vec.transform.position + Vector3.down;
-
+                    gameObject.transform.parent.position = vec.transform.position - vecs;
             }
             else
             {
-                this.transform.parent.position = pos.gameObject.transform.position + Vector3.down;
+                this.transform.parent.position = pos.gameObject.transform.position - vecs1;
                 pos.myObj = gameObject.transform.parent.gameObject;
             }
         }

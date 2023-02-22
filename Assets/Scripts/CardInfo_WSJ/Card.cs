@@ -1,4 +1,6 @@
+using Photon.Pun;
 using Spine.Unity;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Animations;
@@ -11,7 +13,7 @@ public enum CardStatus
     Exp,
     Level,
 }
-public partial class Card : MonoBehaviour
+public partial class Card : MonoBehaviourPun
 {
     [SerializeField] public CardInfo cardInfo;
     public TextMeshPro hpText;
@@ -21,9 +23,16 @@ public partial class Card : MonoBehaviour
     public int curAttackValue;
     public int curHP;
     public int curEXP = 0;
+    bool isLoop = false;
     public Slider expSlider;
     SkeletonAnimation skeletonAnimation;
     AudioSource audioSource;
+    MeshRenderer spriteRenderer;
+
+    Vector3 vec = new Vector3(0, 0.6f, 0);
+    [SerializeField] bool isBattle = false;
+    bool isSkillTiming = false;
+
     private void Awake()
     {
         SetMyInfo(name);
@@ -32,8 +41,9 @@ public partial class Card : MonoBehaviour
 
     /*자신의 오브젝트 이름과 같은 스크립터블 데이터를 읽어와서 설정한다
     스프라이트 랜더러도 같은 원리로 설정*/
-    public void SetMyInfo(string myname)
+    public void SetMyInfo(string myname, bool flip = true)
     {
+        if (transform.parent == null) return;
         name = myname;
         Debug.Log(name);
         curEXP = 0;
@@ -42,6 +52,7 @@ public partial class Card : MonoBehaviour
         atkText = transform.parent.GetChild(1).GetChild(3).GetComponent<TextMeshPro>();
         levelText = transform.parent.GetChild(1).GetChild(5).GetComponent<TextMeshPro>();
         expSlider = transform.parent.GetChild(1).GetChild(8).GetChild(0).GetComponent<Slider>();
+        spriteRenderer = gameObject.GetComponent<MeshRenderer>();
         expSlider.value = 0;
         gameObject.tag = "Monster";
         curHP = cardInfo.hp;
@@ -50,10 +61,45 @@ public partial class Card : MonoBehaviour
         atkText.text = curAttackValue.ToString();
         level = 1;
         levelText.text = level.ToString();
+        spriteRenderer.sortingLayerName = "Default";
         skeletonAnimation = GetComponent<SkeletonAnimation>();
+        isBattle = false;
+        if (!isSkillTiming)
         SetSkillTiming();
+        if (flip == true) SetFlip(false);
         transform.parent.gameObject.transform.localScale = Vector3.one;
     }
+    public void SetIsBattle(bool set)
+    {
+        isBattle = set;
+    }
+    public void ChangeCard(Card card)
+    {
+        ChangeValue(CardStatus.Hp, card.curHP);
+        ChangeValue(CardStatus.Attack, card.curAttackValue);
+        if (level == 2) expSlider.value = card.curEXP * 0.5f;
+        else expSlider.value = card.curEXP * 0.33f;
+        levelText.text = card.level.ToString();
+    }
+
+    public void SetAnim(string state)
+    {
+        // skeletonAnimation.AnimationState
+        
+        switch(state)
+        {
+            case "Idle":
+                isLoop = true;
+                break;
+            case "Walk":
+                isLoop = true;
+                break;
+        }
+
+        skeletonAnimation.AnimationState.SetAnimation(0, state, isLoop);
+        isLoop = false;
+    }
+
     public void SetFlip(bool isSet)
     {
         skeletonAnimation.SetFlip(isSet);
@@ -62,7 +108,7 @@ public partial class Card : MonoBehaviour
     {
         skeletonAnimation.AnimationState.SetAnimation(0, ani, isSet);
     }
-    public void ChangeValue(CardStatus key, int value = 0,bool plus = false)
+    public void ChangeValue(CardStatus key, int value = 0, bool plus = false)
     {
         switch (key)
         {
@@ -72,30 +118,31 @@ public partial class Card : MonoBehaviour
                 {
                     curHP += value;
                 }
-                
+
                 hpText.text = curHP.ToString();
                 break;
 
             case CardStatus.Attack:
-                if(plus == false) curAttackValue = value;
+                if (plus == false) curAttackValue = value;
                 else
                 {
                     curAttackValue += value;
                 }
-                    
+
                 atkText.text = curAttackValue.ToString();
                 break;
 
             case CardStatus.Exp:
                 if (level == 1)
                 {
-                    Debug.Log("1레벨에서 렙업");
                     audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.Unit, "Merge_sound");
                     audioSource.Play();
+                    StartCoroutine(COR_ComBineMonsterEF());
 
                     curEXP += value;
                     if (curEXP >= 2)
                     {
+                        StartCoroutine(COR_LevelUpMonsterEF());
                         ChangeValue(CardStatus.Level);
                         gameObject.tag = "BattleMonster2";
                         audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.Unit, "UnitLevelUP_sound");
@@ -110,13 +157,16 @@ public partial class Card : MonoBehaviour
                     curEXP += value;
                     audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.Unit, "Merge_sound");
                     audioSource.Play();
+                    StartCoroutine(COR_ComBineMonsterEF());
+
                     if (curEXP >= 3)
                     {
+                        StartCoroutine(COR_LevelUpMonsterEF());
                         ChangeValue(CardStatus.Level);
                         gameObject.tag = "BattleMonster3";
-                        gameObject.name = "Level3";
                         audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.Unit, "UnitLevelUP_sound");
                         audioSource.Play();
+                       
                     }
                     else expSlider.value = curEXP * 0.33f;
                 }
@@ -132,5 +182,20 @@ public partial class Card : MonoBehaviour
                 break;
         }
     }
+
+    IEnumerator COR_ComBineMonsterEF()
+    {
+        GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>("skillAttack2"), gameObject.transform.position + vec, Quaternion.identity);
+        yield return new WaitForSeconds(0.3f);
+        GameMGR.Instance.objectPool.DestroyPrefab(mon.transform.gameObject);
+    }
+
+    IEnumerator COR_LevelUpMonsterEF()
+    {
+        GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>("skillAttack"), gameObject.transform.position + vec, Quaternion.identity);
+        yield return new WaitForSeconds(0.3f);
+        GameMGR.Instance.objectPool.DestroyPrefab(mon.transform.gameObject);
+    }
+
 }
 

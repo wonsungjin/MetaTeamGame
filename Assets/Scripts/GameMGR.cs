@@ -1,6 +1,7 @@
 using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public partial class GameMGR : Singleton<GameMGR>
@@ -9,7 +10,7 @@ public partial class GameMGR : Singleton<GameMGR>
     public DataBase dataBase;
     public ObjectPool objectPool;
     public AudioMGR audioMGR;
-    
+
     public CustomDeckShop customDeckShop;
     public ShopCards shopCards;
 
@@ -21,25 +22,30 @@ public partial class GameMGR : Singleton<GameMGR>
     public Batch batch;
     public TimerSound timerSound;
 
+    public ChainBroken chainBroken;
+    public NodeCollider nodeCollider;
+    public BattleZone battleZone;
+    public SellInCollider sellInCollider;
     private void Awake()
     {
         WaitForSeconds ww = new WaitForSeconds(1f);
         Init(1);
+        randomValue = new int[200];
     }
     private void Start()
     {
         metaTrendAPI.GetUserProfile();
         metaTrendAPI.GetSessionID();
+        metaTrendAPI.GetDummyPool();
         StartCoroutine(COR_GetCoin());
         DontDestroyOnLoad(Instance);
 
     }
-    CustomDeck lookCustomDeck;//
-    CustomDeck myCustomDeck;//
+
+    public CustomDeck myCustomDeck;//
     public void Save_MyCustomDeck(CustomDeck customDeck)
     {
-        lookCustomDeck = customDeck;
-        myCustomDeck = lookCustomDeck;
+        myCustomDeck = customDeck;
     }
     public CustomDeck Get_CustomDeck()
     {
@@ -50,20 +56,36 @@ public partial class GameMGR : Singleton<GameMGR>
         if (myCustomDeck != null)
         {
             photonLauncher.OnClick_Join_Room();
-           // SceneManager.LoadScene("StoreScene");
+            // SceneManager.LoadScene("StoreScene");
         }
         else Debug.Log("덱선택");
     }
 
     public bool[] stayAPI = new bool[2];
+    IEnumerator COR_Delay()
+    {
+        yield return new WaitForSeconds(2f);
+        if (stayAPI[0] == false && stayAPI[1] == false) uiManager.loginSystemUI.SetActive(true);
+        while (stayAPI[0] == false && stayAPI[1] == false)
+        {
+            yield return new WaitForSeconds(2f);
+            metaTrendAPI.GetUserProfile();
+            metaTrendAPI.GetSessionID();
+        }
+    }
     IEnumerator COR_GetCoin()
     {
         //   metaTrendAPI.GetCoin(100);
-        yield return null;
-        //yield return new WaitUntil(() => stayAPI[0]);
-        //yield return new WaitUntil(() => stayAPI[1]);
+        //yield return null;
+        StartCoroutine(COR_Delay());
+        yield return new WaitUntil(() => stayAPI[0]);
+        yield return new WaitUntil(() => stayAPI[1]);
+        yield return new WaitUntil(() => GameMGR.Instance.metaTrendAPI.res_UserProfile.userProfile.public_address != null);
+        uiManager.Faid(uiManager.loginSystemUI, faidType.Out, 0.03f);
         dataBase.Login();
-        Debug.Log("???"+metaTrendAPI.GetZera());
+        PhotonNetwork.LocalPlayer.NickName = GameMGR.Instance.dataBase.userName;
+        Debug.Log("???" + metaTrendAPI.GetZera());
+        yield break;
     }
     public void Init(int num)
     {
@@ -80,37 +102,72 @@ public partial class GameMGR : Singleton<GameMGR>
             uiManager.Init_Scene1();
             shopCards.Init();
         }
-        else if (num==2)
+        else if (num == 2)
         {
             spawner = FindObjectOfType<Spawner>();
             uiManager = FindObjectOfType<UIManager>();
+            batch = FindObjectOfType<Batch>();
+            batch.Init();
             uiManager.Init_Scene2();
             spawner.gameObject.GetPhotonView().RPC("StartSetting", RpcTarget.MasterClient);
-            batch = FindObjectOfType<Batch>();
             battleLogic = FindObjectOfType<BattleLogic>();
             timerSound = FindObjectOfType<TimerSound>();
-
+            chainBroken = FindObjectOfType<ChainBroken>();
+            nodeCollider = FindObjectOfType<NodeCollider>();
+            sellInCollider = FindObjectOfType<SellInCollider>();
+            battleZone = FindObjectOfType<BattleZone>();
             audioMGR.StoreSceneBGM(true);
 
+            // lobby timerInit
+            uiManager.isLobby = false;
+
             // battle Scene
+            uiManager.BattleUIInit();
+
             // result Scene
             uiManager.ResultSceneInit();
+            uiManager.PlayerBattleWin(false);
+            uiManager.PlayerBattleLose(false);
+            uiManager.PlayerBattleDraw(false);
         }
 
         // BattleScene
         else if (num == 3)
         {
-            GameMGR.Instance.uiManager.BattleUIInit();
+            GameMGR.Instance.isBattleNow = true;
+
+            uiManager.OnBattleUI();
+            uiManager.curRound++;
 
             uiManager.ResultUnitPosition();
+            uiManager.battleSceneUI.SetActive(true);
             audioMGR.StoreSceneBGM(false);
             audioMGR.BattleSceneBGM(true);
+
         }
 
         // RoundScene
         else if (num == 4)
         {
-            GameMGR.Instance.uiManager.PlayerSetArrangement();
+            // battle Scene
+            // uiManager.BattleUIInit();
+            audioMGR.BattleSceneBGM(false);
+            uiManager.battleSceneUI.SetActive(false);
+            uiManager.OnResultUI();
+        }
+
+        // RoundScene
+        else if (num == 5)
+        {
+            GameMGR.Instance.isBattleNow = false;
+            GameMGR.Instance.spawner.ResetStore();
+
+            GameMGR.Instance.Event_TurnStart();
+
+            // result Scene
+            uiManager.PlayerBattleWin(false);
+            uiManager.PlayerBattleLose(false);
+            uiManager.PlayerBattleDraw(false);
         }
     }
 }

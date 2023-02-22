@@ -165,6 +165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cda88de653f299840b5c51af7dbe0bd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pos: {fileID: 0}
   isFreezen: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   outlineSize: 5
@@ -216,6 +217,10 @@ MonoBehaviour:
   curPos: {fileID: 0}
   giveDamage: 0
   takeDamage: 0
+  shopBatchEmptyIndex: 0
+  isMine: 0
+  triggerOnCount: 0
+  searchArea: []
 --- !u!114 &2264910210179185033
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -238,7 +243,7 @@ AudioSource:
   m_GameObject: {fileID: 1518945737397009689}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -3061437003081056062, guid: 2c12bcf17943adb44beee154fe69321a, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1

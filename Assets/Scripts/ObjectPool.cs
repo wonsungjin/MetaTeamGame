@@ -20,7 +20,7 @@ public class ObjectPool : Singleton<ObjectPool>
         if (list.Count == 0)
         {
             instance = GameObject.Instantiate(prefab, position, rotation);
-        Debug.Log(prefab.name.Replace("(Clone)", ""));
+            Debug.Log(prefab.name.Replace("(Clone)", ""));
         }
         else if (list.Count > 0)
         {
@@ -48,7 +48,13 @@ public class ObjectPool : Singleton<ObjectPool>
             Debug.LogError("Not Found" + Prefab.name);
             return;
         }
-        Prefab.GetComponentInChildren<Card>().SetMyInfo(prefabld);
+        if(Prefab.transform.childCount!=0)
+        if (Prefab.transform.GetChild(0) != null)
+        {
+            Prefab.transform.GetChild(0).TryGetComponent(out Card card);
+            if (card != null)
+                Prefab.GetComponentInChildren<Card>().SetMyInfo(prefabld);
+        }
         Prefab.SetActive(false);
         list.Add(Prefab);
     }

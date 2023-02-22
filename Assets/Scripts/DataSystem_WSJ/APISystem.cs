@@ -3,6 +3,9 @@
 //sessionID가 유효한지 여부를 인증
 //현재 Odin이 실행중인지 확인, Osiris Multi Wallet을 통해 Odin에 연결하도록 함
 //(a)
+using JetBrains.Annotations;
+//using UnityEditor.VersionControl;
+
 [System.Serializable]
 public class Res_UserProfile
 {
@@ -27,7 +30,60 @@ public class Res_UserProfile
         return $"Status : {Status} StatusCode: {StatusCode} Message : {Message}";
     }
 }
+//---------------------------
 
+[System.Serializable]
+public class Res_DummyPool
+{
+    public string status;
+    public string message;
+    [System.Serializable]
+    public class Data
+    {
+        public string redirectionURL;
+        public Records[] records;
+
+        public override string ToString()
+        {
+            string str = null;
+            for (int i = 0; i < records.Length; i++)
+            {
+                str += records[i] + " ";
+
+            }
+
+            return $"redirectionURL : {redirectionURL} records: {str} ";
+        }
+    }
+    public Data data;
+
+
+    public override string ToString()
+    {
+        return $"status : {status} message: {message} ";
+    }
+}
+[System.Serializable]
+public class Records
+{
+    public string _id;
+    public string title;
+    public int amount;
+    public int totalCollectedAmount;
+    public string startTime;
+    public string endTime;
+    public string createdAt;
+    public string updatedAt;
+    public int __v;
+
+    public override string ToString()
+    {
+        return $"_id : {_id} title: {title} amount : {amount} totalCollectedAmount : {totalCollectedAmount} startTime : {startTime} endTime : {endTime} createdAt : {createdAt}" +
+             $"updatedAt : {updatedAt} __v : {__v}";
+    }
+}
+
+//----------------------------
 //유저의 sessionID 가져오기 
 //사용자가 Osiris Multi Wallet 로그인 시마다 생성되는 새 ID를 받아옴 
 //Osiris Multi Wallet 에 연결되어 있으므로 /getsessionid API로 sessionId 받아옴

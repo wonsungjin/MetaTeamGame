@@ -18,7 +18,7 @@ MonoBehaviour:
   tier: 2
   hp: 2
   atk: 3
-  description: Gives +1 Health +1 Attack Damage to a random friendly unit. Grants +1 Health +1 Attack Damage to two random friendly units Grants +1 Health +1 Attack Damage to three random friendly units.
+  description: Gives +1 Health +1 Attack Damage to a random friendly unit. Grants +1 Health +1 Attack Damage to two random friendly units. Grants +1 Health +1 Attack Damage to three random friendly units.
   skillTiming: 2
   targetType: 3
   effectTarget: 3
@@ -28,7 +28,7 @@ MonoBehaviour:
   effectType: 4
   value1: 1
   value2: 1
-  value3: 
+  value3: 0
   sumom_Unit: 
   num_Triggers: 1
   duration: 0

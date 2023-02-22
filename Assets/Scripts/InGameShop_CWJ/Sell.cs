@@ -1,11 +1,10 @@
-using MongoDB.Driver;
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Sell : MonoBehaviour
 {
-    Card card;  // Sell ÄÝ¶óÀÌ´õ¿¡ ´êÀº À¯´ÖÀÇ µ¥ÀÌÅÍ¸¦ ´ã±â À§ÇÑ ¸â¹ö º¯¼ö
+    Card card;  // Sell ï¿½Ý¶ï¿½ï¿½Ì´ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+
     private void Start()
     {
         transform.GetChild(0).GetComponent<MeshRenderer>().sortingLayerName = "SellTXT";
@@ -17,30 +16,24 @@ public class Sell : MonoBehaviour
         if (collision.CompareTag("BattleMonster") || collision.CompareTag("BattleMonster2") || collision.CompareTag("BattleMonster3"))
         {
             Selld(collision);
-
-            if(collision.GetComponentInChildren<Card>().cardInfo.skillTiming == SkillTiming.sell)
-            {
-                StartCoroutine(COR_SellActive(collision));
-            }
-            else
-            {
-                GameMGR.Instance.objectPool.DestroyPrefab(collision.gameObject.transform.parent.gameObject);
-                GameMGR.Instance.uiManager.OnEnter_Set_SkillExplantion(false, Vector3.zero);
-                gameObject.SetActive(false);
-            }
+            GameMGR.Instance.objectPool.DestroyPrefab(collision.gameObject.transform.parent.gameObject);
+            GameMGR.Instance.uiManager.OnEnter_Set_SkillExplantion(false, Vector3.zero);
+            gameObject.SetActive(false);
         }
     }
 
-    IEnumerator COR_SellActive(Collider2D collision)
+    IEnumerator COR_ComBineMonsterEF(Collider2D coll)
     {
-        yield return new WaitForSecondsRealtime(0.5f);
-        GameMGR.Instance.objectPool.DestroyPrefab(collision.gameObject.transform.parent.gameObject);
-        GameMGR.Instance.uiManager.OnEnter_Set_SkillExplantion(false, Vector3.zero);
-        gameObject.SetActive(false);
+        GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>("CFX3_Hit_SmokePuff"), coll.gameObject.transform.position, Quaternion.identity);
+        yield return new WaitForSeconds(0.3f);
+        GameMGR.Instance.objectPool.DestroyPrefab(mon.transform.gameObject);
     }
+
 
     void Selld(Collider2D coll)
     {
+        StartCoroutine(COR_ComBineMonsterEF(coll));
+
         if (coll.CompareTag("BattleMonster"))
         {
             GameMGR.Instance.uiManager.goldCount += 1;
@@ -58,7 +51,7 @@ public class Sell : MonoBehaviour
             GameMGR.Instance.uiManager.goldCount += 3;
             GameMGR.Instance.uiManager.goldTXT.text = "" + GameMGR.Instance.uiManager.goldCount.ToString();
         }
-        // ¿Àµð¿À ¸Å´ÏÀú¿¡¼­ ½ÇÇàÇÑ´Ù (¿©±â¼­ ÇÏ¸é »ç¶óÁö±â¿¡)
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Å´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½ (ï¿½ï¿½ï¿½â¼­ ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½â¿¡)
         GameMGR.Instance.audioMGR.SoundSell();
         Debug.Log("sell Something");
         if (coll.GetComponentInChildren<Card>().cardInfo.skillTiming == SkillTiming.sell)
@@ -68,6 +61,5 @@ public class Sell : MonoBehaviour
             card.SkillActive2(card);
             Debug.Log("Sell Skill Trigger On");
         }
-        //GameMGR.Instance.Event_Sell(coll.gameObject.GetComponent<Card>());
     }
 }

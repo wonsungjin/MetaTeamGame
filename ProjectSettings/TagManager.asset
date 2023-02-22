@@ -24,6 +24,7 @@ TagManager:
   - Option
   - AllButton
   - RefreshButton
+  - SpecialMonster
   layers:
   - Default
   - TransparentFX
@@ -34,7 +35,7 @@ TagManager:
   - 
   - Node
   - FreezeMonster
-  - 
+  - Test
   - 
   - 
   - 
