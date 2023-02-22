@@ -16,6 +16,7 @@ public partial class UIManager : MonoBehaviour
     public TextMeshProUGUI goldTXT = null;
     public TextMeshProUGUI hpTXT = null;
     public TextMeshProUGUI shopLevelTXT = null;
+    public Image userProfile = null;
     public Image[] unitSprite = null;
     public GameObject playerBatchUI = null;
     public TextMeshProUGUI playerName = null;
@@ -49,6 +50,7 @@ public partial class UIManager : MonoBehaviour
         skillExplantionText[3] = GameObject.Find("level3").GetComponent<TextMeshProUGUI>();
         unitSprite[6] = GameObject.Find("CardImage").GetComponent<Image>();
         timerSlider = GameObject.Find("ImageFill").GetComponent<Image>();
+        userProfile = GameObject.Find("UserProfileImage").GetComponent<Image>();
         reFreshButton = GameObject.Find("ReFreshButton").GetComponent<Button>();
         levelUpButton = GameObject.Find("LevelUPButton").GetComponent<Button>();
         optionButton = GameObject.Find("OptionButton").GetComponent<Button>();

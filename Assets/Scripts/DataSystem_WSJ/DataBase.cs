@@ -69,11 +69,12 @@ public class DataBase : MonoBehaviour
         await collection.InsertOneAsync(document);
     }*/
     BsonDocument nullFillter;
+    public string myProfile;
     public void Login()
     {
         var fillter = Builders<BsonDocument>.Filter.Eq("address", GameMGR.Instance.metaTrendAPI.res_UserProfile.userProfile.public_address);//찾을 도큐먼트의 Name이 아디인것
         nullFillter = collection.Find(fillter).FirstOrDefault();//if null 이면 찾지 못함
-        string a = userProfile[UnityEngine.Random.Range(0, userProfile.Length)];
+        myProfile= userProfile[UnityEngine.Random.Range(0, userProfile.Length)];
         if (nullFillter == null)
         {
             Debug.Log("회원가입");
@@ -82,7 +83,7 @@ public class DataBase : MonoBehaviour
                 //["address"] = "원성진",
                 ["address"] = GameMGR.Instance.metaTrendAPI.res_UserProfile.userProfile.public_address,
                 ["username"] = GameMGR.Instance.metaTrendAPI.res_UserProfile.userProfile.username,
-                ["userprofile"] = a,
+                ["userprofile"] = myProfile,
                 //["username"] = "닉네임",
 
             }));
@@ -96,7 +97,7 @@ public class DataBase : MonoBehaviour
 
 
             GameMGR.Instance.uiManager.userName.text = GameMGR.Instance.metaTrendAPI.res_UserProfile.userProfile.username;
-            GameMGR.Instance.uiManager.userImage.sprite = Resources.Load<Sprite>($"Sprites/Profile/{a}");
+            GameMGR.Instance.uiManager.userImage.sprite = Resources.Load<Sprite>($"Sprites/Profile/{myProfile}");
         }
         else
         {
@@ -109,8 +110,8 @@ public class DataBase : MonoBehaviour
             nullFillter.TryGetValue("username", out userNameValue);
             nullFillter.TryGetValue("userprofile", out userProfileValue);
             GameMGR.Instance.uiManager.userName.text = userName.ToString();
-        Debug.Log(userProfileValue.ToString());
-            GameMGR.Instance.uiManager.userImage.sprite = Resources.Load<Sprite>($"Sprites/Profile/{userProfileValue.ToString()}");
+            myProfile = userProfileValue.ToString();
+            GameMGR.Instance.uiManager.userImage.sprite = Resources.Load<Sprite>($"Sprites/Profile/{myProfile}");
         }
 
 
