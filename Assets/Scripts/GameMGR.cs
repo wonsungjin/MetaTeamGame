@@ -131,7 +131,6 @@ public partial class GameMGR : Singleton<GameMGR>
         else if (num == 3)
         {
             GameMGR.Instance.isBattleNow = true;
-            GameMGR.Instance.Event_BattleStart();
 
             uiManager.OnBattleUI();
             uiManager.curRound++;
@@ -140,6 +139,7 @@ public partial class GameMGR : Singleton<GameMGR>
             uiManager.battleSceneUI.SetActive(true);
             audioMGR.StoreSceneBGM(false);
             audioMGR.BattleSceneBGM(true);
+
         }
 
         // RoundScene
