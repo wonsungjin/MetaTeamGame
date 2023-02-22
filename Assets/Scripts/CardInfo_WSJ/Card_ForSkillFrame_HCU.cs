@@ -198,7 +198,7 @@ public partial class Card : MonoBehaviourPun
     {
         if (triggerOnCount < 1) return;
         
-        if (cardInfo.skillTiming == SkillTiming.turnEnd || cardInfo.skillTiming == SkillTiming.turnStart || cardInfo.skillTiming == SkillTiming.reroll)
+        if (cardInfo.skillTiming == SkillTiming.hitEnemy || cardInfo.skillTiming == SkillTiming.battleStart)
             if (isBattle == false) return;
 
         Debug.Log("Skill Active");
@@ -226,8 +226,8 @@ public partial class Card : MonoBehaviourPun
     public void SkillActive2(Card card)
     {
         if (triggerOnCount < 1) return;
-        if(cardInfo.skillTiming == SkillTiming.turnEnd|| cardInfo.skillTiming == SkillTiming.turnStart|| cardInfo.skillTiming == SkillTiming.reroll)
-        if (isBattle == false) return;
+        if (cardInfo.skillTiming == SkillTiming.hitEnemy || cardInfo.skillTiming == SkillTiming.battleStart)
+            if (isBattle == false) return;
 
         if (cardInfo.skillTiming == SkillTiming.hitEnemy)
         {

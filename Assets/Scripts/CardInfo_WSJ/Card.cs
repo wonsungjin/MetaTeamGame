@@ -30,7 +30,7 @@ public partial class Card : MonoBehaviourPun
     MeshRenderer spriteRenderer;
 
     Vector3 vec = new Vector3(0, 0.6f, 0);
-    bool isBattle = false;
+    [SerializeField] bool isBattle = false;
     bool isSkillTiming = false;
 
     private void Awake()
