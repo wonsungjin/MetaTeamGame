@@ -10,6 +10,7 @@ public partial class Batch : MonoBehaviourPun
     public Transform[] enemyCardPosition = null;
     [SerializeField] List<int> CustomNumberList = new List<int>();
     [SerializeField] List<string> PlayerNameList = new List<string>();
+    public List<string> PlayerProfileList = new List<string>();
     bool isMinePlayerNum = true;
     [SerializeField] GameObject playerRanking;
     [SerializeField] Transform playerRankingUi;
@@ -22,17 +23,31 @@ public partial class Batch : MonoBehaviourPun
     {
         if (Input.GetKeyDown(KeyCode.A)) FinalCardUi();
     }
+    public void OnClick_Exit_UI()
+    {
+        GameMGR.Instance.uiManager.playerBatchUI.SetActive(false);
+
+    }
     public void OnClick_Set_PlayerBatch(int num)
     {
         Debug.Log(num);
         Debug.Log(PlayerNameList.Count);
-        Debug.Log(PlayerNameList[num]);
-        GameMGR.Instance.uiManager.playerBatchUI.SetActive(true);
-        GameMGR.Instance.uiManager.playerName.text = PlayerNameList[num];
-
         List<Card> cardList = null;
         GameMGR.Instance.playerList.TryGetValue(CustomNumberList[num], out cardList);
-        if (cardList.Count == 0) return;
+        if (cardList==null) return;
+        GameMGR.Instance.uiManager.playerBatchUI.SetActive(true);
+        GameMGR.Instance.uiManager.playerName.text = PlayerNameList[num];
+        GameMGR.Instance.uiManager.userProfile.sprite = Resources.Load<Sprite>($"Sprites/Profile/{PlayerProfileList[num]}");
+        for(int i =0; i < PhotonNetwork.PlayerList.Length;i++)
+        {
+            if ((int)PhotonNetwork.PlayerList[i].CustomProperties["Number"] == CustomNumberList[num])
+            {
+                GameMGR.Instance.uiManager.PlayerLifeTXT.text = PhotonNetwork.PlayerList[i].CustomProperties["Life"].ToString();
+            }
+        }
+
+
+
         for (int j = 0; j < cardList.Count; j++)
         {
             CardUI get = GameMGR.Instance.uiManager.unitSprite[j].GetComponentInParent<CardUI>();
@@ -45,8 +60,6 @@ public partial class Batch : MonoBehaviourPun
             Debug.Log(cardList[j].name);
             get.ResetColor();
             GameMGR.Instance.uiManager.unitSprite[j].sprite = Resources.Load<Sprite>($"Sprites/Nomal/{cardList[j].name}");
-
-
         }
 
         //
@@ -71,6 +84,7 @@ public partial class Batch : MonoBehaviourPun
                     continue;
                 }
                 get.SetMyInfo(cardList[j].name.Replace("(Clone)", ""));
+                get.isNonePointer = true;
                 get.GetComponent<CardUI>().ResetColor();
                 get.GetComponent<CardUI>().OffFrame();
 
@@ -88,15 +102,15 @@ public partial class Batch : MonoBehaviourPun
     }
     IEnumerator COR_SetCustomDelay()
     {
+        PhotonNetwork.NickName = GameMGR.Instance.dataBase.userName+","+GameMGR.Instance.dataBase.myProfile;
         yield return new WaitForSeconds(2f);
         for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
         {
-            yield return new WaitForSeconds(2f);
             Debug.Log((int)PhotonNetwork.PlayerList[i].CustomProperties["Number"]);
             Debug.Log(PhotonNetwork.PlayerList[i].NickName);
             CustomNumberList.Add((int)PhotonNetwork.PlayerList[i].CustomProperties["Number"]);
-            PlayerNameList.Add(PhotonNetwork.PlayerList[i].NickName);
-
+            PlayerNameList.Add(PhotonNetwork.PlayerList[i].NickName.Split(',')[0]);
+            PlayerProfileList.Add(PhotonNetwork.PlayerList[i].NickName.Split(',')[1]);
         }
         Debug.Log(PlayerNameList.Count);
         Debug.Log(CustomNumberList.Count);

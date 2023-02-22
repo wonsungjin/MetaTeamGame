@@ -44,8 +44,7 @@ public partial class GameMGR : Singleton<GameMGR>
     }
     public void Event_TurnEnd()
     {
-        if (callbackEvent_TurnEnd != null)
-            callbackEvent_TurnEnd();
+        callbackEvent_TurnEnd();
     }
     public void Event_Buy(Card card)
     {
@@ -60,8 +59,7 @@ public partial class GameMGR : Singleton<GameMGR>
     }
     public void Event_Reroll()
     {
-        if(callbackEvent_Reroll != null) 
-            callbackEvent_Reroll();
+        if(callbackEvent_Reroll != null) callbackEvent_Reroll();
     }
     public void Event_BattleStart()
     {
@@ -75,8 +73,7 @@ public partial class GameMGR : Singleton<GameMGR>
     }
     public void Event_Summon()
     {
-        if (callbackEvent_Summon != null)
-            callbackEvent_Summon();
+        callbackEvent_Summon();
     }
     public void Event_HitEnemy(Card card)
     {

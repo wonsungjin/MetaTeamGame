@@ -209,4 +209,8 @@ public class PhotonLauncher : MonoBehaviourPunCallbacks
         yield return new WaitForSeconds(2f); 
         PhotonNetwork.LoadLevel("StoreScene");
     }
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.A)) PhotonNetwork.LoadLevel("StoreScene");
+    }
 }

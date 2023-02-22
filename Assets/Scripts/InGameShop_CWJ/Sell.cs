@@ -6,6 +6,20 @@ using UnityEngine;
 public class Sell : MonoBehaviour
 {
     Card card;  // Sell 콜라이더에 닿은 유닛의 데이터를 담기 위한 멤버 변수
+
+    [SerializeField] GameObject[] specialZon;
+    Collider2D[] colliders;
+    private void OnEnable()
+    {
+
+
+        //for (int i = 0; i < 2; i++)
+        //{
+        //    specialZon[i].gameObject.SetActive(false);
+        //}
+     
+    }
+
     private void Start()
     {
         transform.GetChild(0).GetComponent<MeshRenderer>().sortingLayerName = "SellTXT";
