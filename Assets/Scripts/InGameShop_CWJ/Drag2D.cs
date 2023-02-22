@@ -22,7 +22,7 @@ public partial class Drag2D : MonoBehaviour
     float distance = 100;
     private bool isClickBool = false;
     public bool isFreezen = false;
-    bool isClickBattleMonster = false;
+    public bool isClickBattleMonster = false;
 
     private void OnEnable()
     {
