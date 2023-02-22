@@ -6,7 +6,6 @@ using MongoDB.Driver;
 using Unity.VisualScripting;
 
 using Photon.Pun;
-using UnityEditor.Experimental.GraphView;
 using System.Collections;
 
 public partial class Card : MonoBehaviourPun
@@ -56,12 +55,23 @@ public partial class Card : MonoBehaviourPun
 
     public void Hit(int damage, Card Attacker, bool isDirect, bool isFirst) // 자신이 피격시 호출되는 함수 // 받은 데미지, 날 때린 사람
     {
+        if(cardInfo.effectType == EffectType.changeDamage)
+        {
+            if(damage + cardInfo.GetValue(1, level) > 1)
+            {
+                damage = damage + cardInfo.GetValue(1, level);
+            }
+            else
+            {
+                damage = 1;
+            }
+        }
         Debug.Log($"{gameObject.name}이 {Attacker.name}에게 {damage}만큼 맞았다. 직접공격 : {isDirect}, 첫공격 : {isFirst}");
         if (isDirect && isFirst == true) // 처음 직접 공격을 받았을 때만 응수를 하는 것이 응당 정당 타당 합당 마땅하다.
             Attacker.Hit(curAttackValue, this, true, false); // 니가 날 직접 때렸다면 나도 너를 때릴 것이다.
         curHP -= damage;
         hpText.text = curHP.ToString();
-        
+
 
         if (this.curHP <= 0)
         {
@@ -81,10 +91,6 @@ public partial class Card : MonoBehaviourPun
     IEnumerator COR_Dead(Card Attacker)
     {
         SetAnim("Dead");
-        
-        if (Attacker.cardInfo.skillTiming == SkillTiming.kill) Attacker.SkillActive(); // 내가 죽었는데 적이 처치시 효과가 있다면 적 효과 먼저 발동시켜준다.
-        if (cardInfo.skillTiming == SkillTiming.death) SkillActive(); // 사망시 효과 발동
-                                                                      //GameMGR.Instance.battleLogic.isWaitAttack = true;
 
         if (isMine)
         {
@@ -142,7 +148,13 @@ public partial class Card : MonoBehaviourPun
                 }
             }
         }
+
+        if (Attacker.cardInfo.skillTiming == SkillTiming.kill) Attacker.SkillActive(); // 내가 죽었는데 적이 처치시 효과가 있다면 적 효과 먼저 발동시켜준다.
+        if (cardInfo.skillTiming == SkillTiming.death) SkillActive(); // 사망시 효과 발동
+                                                                      //GameMGR.Instance.battleLogic.isWaitAttack = true;
         yield return new WaitForSeconds(1.5f);
+
+        SetAnim("Idle");
 
         GameMGR.Instance.objectPool.DestroyPrefab(gameObject.transform.parent.gameObject);
     }
@@ -161,26 +173,12 @@ public partial class Card : MonoBehaviourPun
                 GameMGR.Instance.callbackEvent_TurnEnd += SkillActive;
                 Debug.Log("턴종료시효과니까 이벤트에 추가");
                 break;
-            case SkillTiming.buy:
-                //GameMGR.Instance.callbackEvent_Buy += SkillActive2;
-                Debug.Log("구매시효과니까 이벤트에 추가");
-                break;
-            case SkillTiming.sell:
-                GameMGR.Instance.callbackEvent_Sell += SkillActive2;
-                Debug.Log("판매시효과니까 이벤트에 추가");
-                break;
             case SkillTiming.reroll:
                 GameMGR.Instance.callbackEvent_Reroll += SkillActive;
                 Debug.Log("리롤시효과니까 이벤트에 추가");
                 break;
-            case SkillTiming.kill:
-                GameMGR.Instance.callbackEvent_Kill += SkillActive;
-                break;
             case SkillTiming.hitEnemy:
                 GameMGR.Instance.callbackEvent_HitEnemy += SkillActive2;
-                break;
-            case SkillTiming.death:
-                GameMGR.Instance.callbackEvent_Death += SkillActive;
                 break;
             case SkillTiming.battleStart:
                 GameMGR.Instance.callbackEvent_BattleStart += SkillActive;
@@ -194,10 +192,25 @@ public partial class Card : MonoBehaviourPun
     public void SkillActive() // 스킬 효과 발동 // FindTargetType 함수를 통해 구체적인 스킬 적용 대상이 정해지고 난 이후에 발동하는 게 맞다고 볼 수 있는 부분적인 부분
     {
         if (triggerOnCount < 1) return;
+
         Debug.Log("Skill Active");
-        FindTargetType();
-        SkillEffect();
-        triggerOnCount--;
+
+        if (cardInfo.effectType == EffectType.damage) // 데미지는 연속으로 때리는 경우가 있기 때문에 특수 처리를 해준다
+        {
+            for (int i = 0; i < cardInfo.GetValue(3, level); i++)
+            {
+                FindTargetType();
+                SkillEffect();
+                triggerOnCount--;
+            }
+        }
+        else
+        {
+            FindTargetType();
+            SkillEffect();
+            triggerOnCount--;
+        }
+
     }
 
     public void SkillActive2(Card card)
