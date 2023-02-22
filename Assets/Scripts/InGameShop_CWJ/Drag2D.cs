@@ -19,8 +19,8 @@ public partial class Drag2D : MonoBehaviour
     Vector3 monsterPos1 = new Vector3(0, 0.6f, 0);
 
     float timer = 0f;
-    float distance = 10;
-    public bool isClickBool = false;
+    float distance = 100;
+    private bool isClickBool = false;
     public bool isFreezen = false;
     public bool isClickBattleMonster = false;
 
