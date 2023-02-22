@@ -31,7 +31,7 @@ public partial class Card : MonoBehaviourPun
 
     Vector3 vec = new Vector3(0, 0.6f, 0);
 
-    public bool isSkillTiming = false;
+    bool isSkillTiming = false;
 
     private void Awake()
     {

@@ -419,7 +419,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pos: {fileID: 0}
-  isClickBool: 0
   isFreezen: 0
   isClickBattleMonster: 0
   color: {r: 1, g: 0, b: 0, a: 1}
@@ -445,7 +444,6 @@ MonoBehaviour:
   curHP: 1
   curEXP: 0
   expSlider: {fileID: 7803170560863288597}
-  isSkillTiming: 1
   skillTarget: []
   batchPos: {x: 0, y: 0}
   targetPos: {x: 0, y: 0}

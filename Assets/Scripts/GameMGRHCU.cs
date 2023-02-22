@@ -37,10 +37,14 @@ public partial class GameMGR : Singleton<GameMGR>
 
     public void Event_TurnStart()
     {
-        callbackEvent_TurnStart();
+        if (callbackEvent_TurnStart != null)
+            callbackEvent_TurnStart();
+        else
+            Debug.Log("아니 지금 턴스타트가 비었다는 말인가");
     }
     public void Event_TurnEnd()
     {
+        if (callbackEvent_TurnEnd != null)
         callbackEvent_TurnEnd();
     }
     public void Event_Buy(Card card)
@@ -60,10 +64,17 @@ public partial class GameMGR : Singleton<GameMGR>
     }
     public void Event_BattleStart()
     {
-        callbackEvent_BattleStart();
+        if (callbackEvent_BattleStart != null)
+        {
+            Debug.Log("전투시작시 불린다");
+            callbackEvent_BattleStart();
+        }
+        else
+            Debug.Log("아니 지금 전투시작시가 비었다는 말인가");
     }
     public void Event_Summon()
     {
+        if (callbackEvent_Summon != null)
         callbackEvent_Summon();
     }
     public void Event_HitEnemy(Card card)

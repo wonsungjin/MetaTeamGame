@@ -28,7 +28,7 @@ MonoBehaviour:
   effectType: 5
   value1: 1
   value2: 1.2.3
-  value3: 
+  value3: 0
   sumom_Unit: Yeti
   num_Triggers: 1
   duration: 1
