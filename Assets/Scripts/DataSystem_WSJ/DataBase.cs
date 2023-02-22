@@ -13,7 +13,7 @@ public class DataBase : MonoBehaviour
     public IMongoDatabase database = null;
     public IMongoCollection<BsonDocument> collection;
     public string userName;
-    public string[] userProfile = { "one", "two", "three", "five", "six", "seven","eight", "nine", "ten" };
+    public string[] userProfile = { "one", "two", "three", "five", "six", "seven" };
     void Start()
     {
         
@@ -73,6 +73,7 @@ public class DataBase : MonoBehaviour
     {
         var fillter = Builders<BsonDocument>.Filter.Eq("address", GameMGR.Instance.metaTrendAPI.res_UserProfile.userProfile.public_address);//찾을 도큐먼트의 Name이 아디인것
         nullFillter = collection.Find(fillter).FirstOrDefault();//if null 이면 찾지 못함
+        string a = userProfile[UnityEngine.Random.Range(0, userProfile.Length)];
         if (nullFillter == null)
         {
             Debug.Log("회원가입");
@@ -81,26 +82,21 @@ public class DataBase : MonoBehaviour
                 //["address"] = "원성진",
                 ["address"] = GameMGR.Instance.metaTrendAPI.res_UserProfile.userProfile.public_address,
                 ["username"] = GameMGR.Instance.metaTrendAPI.res_UserProfile.userProfile.username,
-                ["userprofile"] = userProfile[UnityEngine.Random.Range(0,userProfile.Length)],
+                ["userprofile"] = a,
                 //["username"] = "닉네임",
 
             }));
             var update = Builders<BsonDocument>.Update.Set("inventory", inventoryData);//찾은거 바꾸기
             var update2 = Builders<BsonDocument>.Update.Set("unitData", unitData);//찾은거 바꾸기
-            unitData.RandomAdd();
+            unitData.RandomAdd(4);
             GameMGR.Instance.customDeckShop.Create_CustomDeck();
             collection.UpdateOne(fillter, update);
             collection.UpdateOne(fillter, update2);
             isFindUnit = true;
 
-            BsonValue userNameValue = null;
-            BsonValue userProfileValue = null;
-            Debug.Log(userNameValue.ToString());
-            nullFillter.TryGetValue("username", out userNameValue);
-            nullFillter.TryGetValue("userprofile", out userProfileValue);
-            GameMGR.Instance.uiManager.userName.text = userName.ToString();
-            Debug.Log(userProfileValue.ToString());
-            GameMGR.Instance.uiManager.userImage.sprite = Resources.Load<Sprite>($"Sprites/Profile/{userProfileValue.ToString()}");
+
+            GameMGR.Instance.uiManager.userName.text = GameMGR.Instance.metaTrendAPI.res_UserProfile.userProfile.username;
+            GameMGR.Instance.uiManager.userImage.sprite = Resources.Load<Sprite>($"Sprites/Profile/{a}");
         }
         else
         {
@@ -239,6 +235,13 @@ public class DataBase : MonoBehaviour
             Debug.Log("?");
         }
     }
+    public void InsertUnitData()
+    {
+        var fillter = Builders<BsonDocument>.Filter.Eq("address", GameMGR.Instance.metaTrendAPI.res_UserProfile.userProfile.public_address);//찾을 도큐먼트의 Name이 아디인것
+        var update = Builders<BsonDocument>.Update.Set("unitData", unitData);//찾은거 바꾸기
+        collection.UpdateOne(fillter, update);
+
+    }
     public void InsertInventoryData()
     {
         var fillter = Builders<BsonDocument>.Filter.Eq("address", GameMGR.Instance.metaTrendAPI.res_UserProfile.userProfile.public_address);//찾을 도큐먼트의 Name이 아디인것
@@ -369,24 +372,44 @@ public class CustomDeck
 public class UnitData
 {
     public Hashtable hashtable = new Hashtable();
-    public void RandomAdd()
+    public void RandomAdd(int num,bool set=false)
     {
         List<CardInfo> list = null;
+        List<string> hashList = null;
+        int ran;
+        int count=0;
         for (int tier = 1; tier < 7; tier++)
         {
-        List<string> hashList = new List<string>();
+            if (set) tier = UnityEngine.Random.Range(1, 7);
+            if (hashtable["A" + tier] == null)
+            {
+                hashList = new List<string>();
+            }
+            else hashList=hashtable["A" + tier] as List<string>;
             GameMGR.Instance.shopCards.customDeckList.TryGetValue(tier, out list);
-        int ran= UnityEngine.Random.Range(0, list.Count);
-            for(int i = 0; i < 4;i++)
+        ran= UnityEngine.Random.Range(0, list.Count);
+            for(int i = 0; i < num;i++)
             {
                 while (hashList.Contains(list[ran].objName.Replace(" ","")))
                 {
                     ran = UnityEngine.Random.Range(0, list.Count);
+                    if (hashList.Count == list.Count)
+                    {
+                        count++;
+                        tier++;
+                        if (tier == 7) tier = 1;
+                    }
+                    if (count == 6) break;
                 }
-                hashList.Add(list[ran].objName.Replace(" ", ""));
+                if(!hashList.Contains(list[ran].objName.Replace(" ", ""))) hashList.Add(list[ran].objName.Replace(" ", ""));
             }
-                hashtable.Add("A"+tier, hashList);
+            if (count == 6) break;
+            Debug.Log(tier + "유닛" + list[ran]);
+            if (hashtable.ContainsKey("A" + tier)) hashtable["A" + tier] = hashList;
+            else hashtable.Add("A" + tier, hashList);
+            if (set) break;
         }
+        GameMGR.Instance.dataBase.InsertUnitData();
     }
 }
 
