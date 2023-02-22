@@ -18,6 +18,8 @@ public partial class Drag2D : MonoBehaviour
     Vector3 monsterPos = new Vector3(0, -0.6f, 0);
     Vector3 monsterPos1 = new Vector3(0, 0.6f, 0);
 
+    Vector3 vecs = new Vector3(0, -0.6f, 1f);
+
     float timer = 0f;
     float distance = 100;
     private bool isClickBool = false;
@@ -304,7 +306,7 @@ public partial class Drag2D : MonoBehaviour
             {
                 GameObject vec = GameObject.FindGameObjectWithTag("BattleZone");
                 if (vec != null)
-                    gameObject.transform.parent.position = vec.transform.position + Vector3.down;
+                    gameObject.transform.parent.position = vec.transform.position - vecs;
             }
             else
             {

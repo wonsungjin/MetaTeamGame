@@ -41,6 +41,7 @@ public partial class AttackLogic : Skill
         }
 
         curTime = 0f;
+        card.SetAnim("Attack");
         StartCoroutine(COR_AttackEFF(targetUint.transform.position));
         // 
         /////////////////////////////
@@ -96,11 +97,13 @@ public partial class AttackLogic : Skill
 
     IEnumerator COR_AttackEFF(Vector3 targetUint)
     {
-        card.SetAnim("Attack");
+        yield return new WaitForSeconds(0.3f);
+        GameObject eff = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>("CFX_Hit_C White"), targetUint, Quaternion.identity);
         yield return new WaitForSeconds(0.1f);
-        GameObject eff = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>("CFX3_Hit_SmokePuff"), targetUint, Quaternion.identity);
-        yield return new WaitForSeconds(0.1f);
-        GameMGR.Instance.objectPool.DestroyPrefab(eff.transform.gameObject);
+        GameMGR.Instance.objectPool.DestroyPrefab(eff);
+
+
+      //  GameObject summonCard = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{cardInfo.sumom_Unit}"), targetPos + new Vector2(0, -0.6f), Quaternion.identity);
     }
 
 /*

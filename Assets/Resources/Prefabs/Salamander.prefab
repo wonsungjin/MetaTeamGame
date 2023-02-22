@@ -141,6 +141,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pos: {fileID: 0}
   isFreezen: 0
+  isClickBattleMonster: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   outlineSize: 5
 --- !u!50 &1598698671173716744
