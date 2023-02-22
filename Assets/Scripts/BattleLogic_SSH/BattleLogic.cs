@@ -86,6 +86,8 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
         // enemy first attack
         else if (!isFirstAttack) { StartCoroutine(SubordinatedAttack()); }
         else { Debug.Log("none first attack"); }
+
+        GameMGR.Instance.Event_BattleStart();
     }
     #endregion
 
