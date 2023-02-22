@@ -98,7 +98,7 @@ public partial class AttackLogic : Skill
     IEnumerator COR_AttackEFF(Vector3 targetUint)
     {
         yield return new WaitForSeconds(0.3f);
-        GameObject eff = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>("CFX_Hit_C White"), targetUint + new Vector3(0,0,-2f), Quaternion.identity);
+        GameObject eff = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>("CFX2_RockHit"), targetUint + new Vector3(0,0,-2f), Quaternion.identity);
         yield return new WaitForSeconds(0.1f);
         GameMGR.Instance.objectPool.DestroyPrefab(eff);
 
