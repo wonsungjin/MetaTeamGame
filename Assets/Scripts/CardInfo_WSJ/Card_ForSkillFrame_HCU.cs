@@ -380,6 +380,7 @@ public partial class Card : MonoBehaviourPun
                         }
                     }
                     break;
+
                 case TriggerCondition.damageEcess:
                     if (curAttackValue > target.curHP)
                     {
@@ -400,6 +401,7 @@ public partial class Card : MonoBehaviourPun
                         Attack(excessDamage, curExistBatch[curTargetNum].GetComponentInChildren<Card>(), false, false);
                     }
                     break;
+
                 case TriggerCondition.losePlayerHP:
                     int curLoseLife = 20 - (int)PhotonNetwork.LocalPlayer.CustomProperties["Life"];
                     curHP += curLoseLife * cardInfo.GetValue(1, level);
