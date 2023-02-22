@@ -87,7 +87,6 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
         else if (!isFirstAttack) { StartCoroutine(SubordinatedAttack()); }
         else { Debug.Log("none first attack"); }
 
-        GameMGR.Instance.Event_BattleStart();
     }
     #endregion
 
@@ -121,6 +120,8 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
         AliveUnit();
         Debug.Log("player PreemptiveAttack");
         for (int i = 0; i < GameMGR.Instance.randomValue.Length; i++) exArray[i] = GameMGR.Instance.randomValue[i];
+
+        GameMGR.Instance.Event_BattleStart();
 
         while (true)
         {
@@ -485,6 +486,8 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
         AliveUnit();
 
         for (int i = 0; i < GameMGR.Instance.randomValue.Length; i++) exArray[i] = GameMGR.Instance.randomValue[i];
+
+        GameMGR.Instance.Event_BattleStart();
 
         while (true)
         {

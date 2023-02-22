@@ -82,7 +82,7 @@ public partial class AttackLogic : Skill
             return;
         }
 
-        Debug.LogError($"{gameObject.name}이 {targetUnit}를 때린다다다다다");
+        Debug.Log($"{gameObject.name}이 {targetUnit}를 때린다다다다다");
 
         playerTrans = gameObject.transform.parent.position;
         enemyTrans = targetUnit.transform.position;

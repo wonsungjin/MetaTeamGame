@@ -66,7 +66,10 @@ public partial class Card : MonoBehaviourPun
                 damage = 1;
             }
         }
-        Debug.Log($"{gameObject.name}이 {Attacker.name}에게 {damage}만큼 맞았다. 직접공격 : {isDirect}, 첫공격 : {isFirst}");
+        if (!isDirect)
+            Debug.Log($"{gameObject.name}이 {Attacker.name}에게 {damage}만큼 맞았다. 스킬피해");
+        else
+            Debug.Log($"{gameObject.name}이 {Attacker.name}에게 {damage}만큼 맞았다. 직접공격 : {isDirect}, 첫공격 : {isFirst}");
         if (isDirect && isFirst == true) // 처음 직접 공격을 받았을 때만 응수를 하는 것이 응당 정당 타당 합당 마땅하다.
             Attacker.Hit(curAttackValue, this, true, false); // 니가 날 직접 때렸다면 나도 너를 때릴 것이다.
         curHP -= damage;
@@ -161,7 +164,7 @@ public partial class Card : MonoBehaviourPun
 
     public void SetSkillTiming() // 스킬을 언제 발동시키느냐에 따라서 각 델리게이트 이벤트에 추가시켜준다. 이벤트는 보따리의 개념으로써 이벤트를 실행하면 안에 추가한 모든 함수들이 실행되기 때문에 공통적으로 사용되는 부분에서만 사용하는 것이 응당 정당 타당 합당 마땅하다고 보는 부분적인 부분이라고 할 수 있는 부분이다.
     {
-        isSkillTiming = true; // 찬욱하다 = 배신 과 기만
+         
         Debug.Log("SetSkillTiming 설정하는 함수로 들어왔다");
         switch (cardInfo.skillTiming)
         {
@@ -182,23 +185,30 @@ public partial class Card : MonoBehaviourPun
                 break;
             case SkillTiming.battleStart:
                 GameMGR.Instance.callbackEvent_BattleStart += SkillActive;
+                Debug.Log("전투시작시효과니까 이벤트에 추가" + gameObject.name);
                 break;
                 /*case SkillTiming.summon:
                     GameMGR.Instance.callbackEvent_Summon += SkillActive;
                     break;*/
         }
+        isSkillTiming = true; //
     }
 
     public void SkillActive() // 스킬 효과 발동 // FindTargetType 함수를 통해 구체적인 스킬 적용 대상이 정해지고 난 이후에 발동하는 게 맞다고 볼 수 있는 부분적인 부분
     {
-        if (triggerOnCount < 1) return;
+        if (triggerOnCount < 1)
+        {
+            Debug.Log("트리거 카운트가 없어서 발동 불가");
+            return;
+        }
 
         Debug.Log("Skill Active");
 
-        if (cardInfo.effectType == EffectType.damage) // 데미지는 연속으로 때리는 경우가 있기 때문에 특수 처리를 해준다
+        if (cardInfo.effectType == EffectType.damage && cardInfo.GetValue(3, level) != 0) // 데미지는 연속으로 때리는 경우가 있기 때문에 특수 처리를 해준다
         {
             for (int i = 0; i < cardInfo.GetValue(3, level); i++)
             {
+                Debug.Log("연속 타격");
                 FindTargetType();
                 SkillEffect();
                 triggerOnCount--;
@@ -206,6 +216,7 @@ public partial class Card : MonoBehaviourPun
         }
         else
         {
+            Debug.Log("단발 타격");
             FindTargetType();
             SkillEffect();
             triggerOnCount--;
@@ -455,7 +466,7 @@ public partial class Card : MonoBehaviourPun
             switch (cardInfo.effectTarget) // 스킬 효과 적용 대상에 따른 탐색 범위 지정
             {
                 case EffectTarget.ally:
-                    Debug.Log("아군");
+                    Debug.Log($"{gameObject.name} 이 사용 : 아군");
                     for (int i = 0; i < myArea.Length; i++)
                     {
                         if (myArea[i] != null)

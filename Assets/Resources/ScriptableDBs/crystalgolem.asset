@@ -28,7 +28,7 @@ MonoBehaviour:
   effectType: 4
   value1: 2.3.4
   value2: 2.3.4
-  value3: 
+  value3: 0
   sumom_Unit: 
   num_Triggers: 1
   duration: 0

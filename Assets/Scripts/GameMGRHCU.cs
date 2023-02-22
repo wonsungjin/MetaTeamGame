@@ -39,6 +39,8 @@ public partial class GameMGR : Singleton<GameMGR>
     {
         if (callbackEvent_TurnStart != null)
             callbackEvent_TurnStart();
+        else
+            Debug.Log("아니 지금 턴스타트가 비었다는 말인가");
     }
     public void Event_TurnEnd()
     {
@@ -64,7 +66,12 @@ public partial class GameMGR : Singleton<GameMGR>
     public void Event_BattleStart()
     {
         if (callbackEvent_BattleStart != null)
+        {
+            Debug.Log("전투시작시 불린다");
             callbackEvent_BattleStart();
+        }
+        else
+            Debug.Log("아니 지금 전투시작시가 비었다는 말인가");
     }
     public void Event_Summon()
     {
