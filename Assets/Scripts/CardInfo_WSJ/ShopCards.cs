@@ -15,7 +15,7 @@ public class ShopCards : MonoBehaviour
         {
             Debug.Log(cards[i].tier + "~~~~~~~~Ãß°¡~~~~~~~~~~~" + cards[i].objName);
 
-            AddTierList(cards[i].tier, cards[i]);
+            if(cards[i].appear=="TRUE") AddTierList(cards[i].tier, cards[i]);
         }
         StartCoroutine(CreateInit());
         

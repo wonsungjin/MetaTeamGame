@@ -144,9 +144,9 @@ public class DataBase : MonoBehaviour
             for (int j = 0; j < valueSplit.Length; j++)
             {
                 hashList.Add(valueSplit[j]);
+                Debug.Log(valueSplit[j] + "리스트");
             }
             unitData.hashtable.Add("A" + tier, hashList);
-            Debug.Log(hashList.Count + "???????zkdnsmdmdmxkedkek");
         }
         isFindUnit = true;
 
