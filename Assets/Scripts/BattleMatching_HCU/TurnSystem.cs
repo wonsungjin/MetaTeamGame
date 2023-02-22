@@ -227,7 +227,7 @@ public class TurnSystem : MonoBehaviourPunCallbacks
         //공격 랜덤값 지정 - 매 스테이지마다 랜덤 값을 받아온다
         for (int i = 0; i < setRandom.Length; i++)
         {
-            setRandom[i] = UnityEngine.Random.Range(0, 3);
+            setRandom[i] = UnityEngine.Random.Range(0, 6);
         }
 
         int n = -1; // 플레이어리스트 배열의 랜덤 인덱스 값

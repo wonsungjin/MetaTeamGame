@@ -30,7 +30,7 @@ public partial class Card : MonoBehaviourPun
     MeshRenderer spriteRenderer;
 
     Vector3 vec = new Vector3(0, 0.6f, 0);
-
+    [SerializeField] bool isBattle = false;
     bool isSkillTiming = false;
 
     private void Awake()
@@ -63,10 +63,15 @@ public partial class Card : MonoBehaviourPun
         levelText.text = level.ToString();
         spriteRenderer.sortingLayerName = "Default";
         skeletonAnimation = GetComponent<SkeletonAnimation>();
-        if(!isSkillTiming)
+        isBattle = false;
+        if (!isSkillTiming)
         SetSkillTiming();
         if (flip == true) SetFlip(false);
         transform.parent.gameObject.transform.localScale = Vector3.one;
+    }
+    public void SetIsBattle(bool set)
+    {
+        isBattle = set;
     }
     public void ChangeCard(Card card)
     {

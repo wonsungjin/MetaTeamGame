@@ -417,7 +417,6 @@ MonoBehaviour:
   curHP: 1
   curEXP: 0
   expSlider: {fileID: 9011612605386480728}
-  isSkillTiming: 1
   skillTarget: []
   batchPos: {x: 0, y: 0}
   targetPos: {x: 0, y: 0}
@@ -456,6 +455,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pos: {fileID: 0}
   isFreezen: 0
+  isClickBattleMonster: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   outlineSize: 5
 --- !u!4 &4929662035143735367 stripped
