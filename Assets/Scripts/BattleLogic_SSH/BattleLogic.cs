@@ -85,10 +85,18 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
             else
                 exArray[i] = GameMGR.Instance.randomValue[i];
         }
-        if (isFirstAttack) { StartCoroutine(PreemptiveAttack()); }
+        if (isFirstAttack) 
+        {
+            //StartCoroutine(PreemptiveAttack());
+            StartCoroutine(InBattleLogic(true));
+        }
 
         // enemy first attack
-        else if (!isFirstAttack) { StartCoroutine(SubordinatedAttack()); }
+        else if (!isFirstAttack) 
+        {
+            //StartCoroutine(SubordinatedAttack());
+            StartCoroutine(InBattleLogic(false));
+        }
         else { Debug.Log("none first attack"); }
 
     }

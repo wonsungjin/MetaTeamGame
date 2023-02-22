@@ -74,15 +74,18 @@ public partial class GameMGR : Singleton<GameMGR>
     {
         if(callbackEvent_Reroll != null) callbackEvent_Reroll();
     }
-    public void Event_BattleStart()
+    public bool Event_BattleStart()
     {
         if (callbackEvent_BattleStart != null)
         {
+            
             Debug.Log("전투시작시 불린다");
             callbackEvent_BattleStart();
+            return true;
         }
         else
             Debug.Log("아니 지금 전투시작시가 비었다는 말인가");
+            return false;
     }
     public void Event_Summon()
     {
