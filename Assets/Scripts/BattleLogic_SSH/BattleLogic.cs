@@ -238,7 +238,11 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
 
                 Debug.Log("enemyBackwardUnits[exArray[randomArrayNum]] " + enemyBackwardUnits[exArray[randomArrayNum]]);
                 Debug.Log("[exArray[randomArrayNum] " + exArray[randomArrayNum]);
-                while (enemyBackwardUnits[exArray[randomArrayNum]] == null) { randomArrayNum++; }
+                while (enemyBackwardUnits[exArray[randomArrayNum]] == null) 
+                {
+                    randomArrayNum++;
+                    Debug.Log(randomArrayNum);
+                }
 
                 if (playerAttackArray.Length <= playerTurnCount) { playerTurnCount = 0; }
 
@@ -424,7 +428,8 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                 Debug.Log(randomArrayNum);
                 Debug.Log(exArray[randomArrayNum]);
                 Debug.Log(playerBackwardUnits[exArray[randomArrayNum]]);
-                while (playerBackwardUnits[exArray[randomArrayNum]] == null) { randomArrayNum++; }
+                while (playerBackwardUnits[exArray[randomArrayNum]] == null) 
+                { randomArrayNum++; }
 
                 if (enemyAttackArray.Length <= enemyTurnCount) { enemyTurnCount = 0; }
 
