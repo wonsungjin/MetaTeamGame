@@ -30,7 +30,7 @@ public partial class AttackLogic : Skill
 
         card.SetAnim("Walk");
 
-        while (Vector2.Distance(gameObject.transform.parent.position, targetUint.transform.position) > 1)
+        while (Vector2.Distance(gameObject.transform.parent.position, targetUint.transform.position) > 2)
         {
             curTime += Time.deltaTime;
 
