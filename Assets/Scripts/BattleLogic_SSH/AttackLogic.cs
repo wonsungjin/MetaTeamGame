@@ -41,7 +41,10 @@ public partial class AttackLogic : Skill
         }
 
         curTime = 0f;
-        card.SetAnim("Attack");
+        StartCoroutine(COR_AttackEFF(targetUint.transform.position));
+        // 
+        /////////////////////////////
+
         yield return new WaitForSeconds(1f);
         //is delvoewafafcajff
         card.Attack( card.curAttackValue, targetUint.GetComponentInChildren<Card>(), true, true );
@@ -90,6 +93,16 @@ public partial class AttackLogic : Skill
 
         StartCoroutine(COR_Delay(targetUnit.transform.gameObject));
     }
+
+    IEnumerator COR_AttackEFF(Vector3 targetUint)
+    {
+        card.SetAnim("Attack");
+        yield return new WaitForSeconds(0.1f);
+        GameObject eff = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>("CFX3_Hit_SmokePuff"), targetUint, Quaternion.identity);
+        yield return new WaitForSeconds(0.1f);
+        GameMGR.Instance.objectPool.DestroyPrefab(eff.transform.gameObject);
+    }
+
 /*
     public void OnDisable()
     {
