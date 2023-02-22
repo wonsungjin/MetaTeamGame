@@ -4,7 +4,20 @@ using UnityEngine;
 
 public class Sell : MonoBehaviour
 {
-    Card card;  // Sell ÄÝ¶óÀÌ´õ¿¡ ´êÀº À¯´ÖÀÇ µ¥ÀÌÅÍ¸¦ ´ã±â À§ÇÑ ¸â¹ö º¯¼ö
+    Card card;  // Sell ï¿½Ý¶ï¿½ï¿½Ì´ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+
+    [SerializeField] GameObject[] specialZon;
+    Collider2D[] colliders;
+    private void OnEnable()
+    {
+
+
+        //for (int i = 0; i < 2; i++)
+        //{
+        //    specialZon[i].gameObject.SetActive(false);
+        //}
+     
+    }
 
     private void Start()
     {
@@ -52,7 +65,7 @@ public class Sell : MonoBehaviour
             GameMGR.Instance.uiManager.goldCount += 3;
             GameMGR.Instance.uiManager.goldTXT.text = "" + GameMGR.Instance.uiManager.goldCount.ToString();
         }
-        // ¿Àµð¿À ¸Å´ÏÀú¿¡¼­ ½ÇÇàÇÑ´Ù (¿©±â¼­ ÇÏ¸é »ç¶óÁö±â¿¡)
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Å´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½ (ï¿½ï¿½ï¿½â¼­ ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½â¿¡)
         GameMGR.Instance.audioMGR.SoundSell();
         Debug.Log("sell Something");
         if (coll.GetComponentInChildren<Card>().cardInfo.skillTiming == SkillTiming.sell)

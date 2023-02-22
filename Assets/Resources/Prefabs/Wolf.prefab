@@ -272,6 +272,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillType: 
+  isArrive: 0
 --- !u!50 &989870966826497406
 Rigidbody2D:
   serializedVersion: 4

@@ -9,7 +9,7 @@ public class CardUI : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler,
     public CardInfo cardInfo;
     private Image image;
     bool isWhiteLine;
-    [SerializeField] bool isNonePointer;
+    public bool isNonePointer;
 
     /*자신의 오브젝트 이름과 같은 스크립터블 데이터를 읽어와서 설정한다
     스프라이트 랜더러도 같은 원리로 설정*/

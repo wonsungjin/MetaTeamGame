@@ -105,9 +105,9 @@ public class PhotonLauncher : MonoBehaviourPunCallbacks
                 ExitGames.Client.Photon.Hashtable myCustomProperty = new ExitGames.Client.Photon.Hashtable();
                 myCustomProperty = PhotonNetwork.LocalPlayer.CustomProperties;
                 PhotonNetwork.PlayerList[i].CustomProperties["Number"] = i;
-                PhotonNetwork.PlayerList[i].CustomProperties["Life"] = 10;
+                PhotonNetwork.PlayerList[i].CustomProperties["Life"] = 20;
                 PhotonNetwork.PlayerList[i].SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "Number", $"{i}" } });
-                PhotonNetwork.PlayerList[i].SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "Life", $"{10}" } });
+                PhotonNetwork.PlayerList[i].SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "Life", $"{20}" } });
                 PhotonNetwork.PlayerList[i].SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "Opponent", -1 } });                
 
 
@@ -208,5 +208,9 @@ public class PhotonLauncher : MonoBehaviourPunCallbacks
     {
         yield return new WaitForSeconds(2f); 
         PhotonNetwork.LoadLevel("StoreScene");
+    }
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.A)) PhotonNetwork.LoadLevel("StoreScene");
     }
 }
