@@ -287,8 +287,10 @@ public partial class Drag2D : MonoBehaviour
     // 판매버튼 ON OFF
     IEnumerator COR_SellButton()
     {
+        GameMGR.Instance.sellInCollider.SellOn();
         yield return new WaitForSeconds(0.12f);
         GameMGR.Instance.uiManager.sell.gameObject.SetActive(false);
+        GameMGR.Instance.sellInCollider.SellOn();
     }
 
     // 원래 위치로 돌리는 함수
