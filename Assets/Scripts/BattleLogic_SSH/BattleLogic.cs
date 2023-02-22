@@ -1,11 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using Photon.Pun;
+using System.Collections;
 using System.Linq;
-using Unity.VisualScripting;
-using System.Data;
-using TMPro;
+using UnityEngine;
 
 public partial class BattleLogic : MonoBehaviourPunCallbacks
 {
@@ -33,7 +29,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
 
     public int curLife = 20;
 
-    private int[] exArray = new int[200];
+    public int[] exArray = new int[200];
 
     private int playerCurRound = 0;
     private int enemyCurRound = 0;
@@ -48,6 +44,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
 
     private void Init()
     {
+        exArray = new int[200];
         playerForwardUnits = new GameObject[3];
         playerBackwardUnits = new GameObject[3];
         enemyForwardUnits = new GameObject[3];
@@ -83,8 +80,8 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
         // player first attack
         for (int i = 0; i < GameMGR.Instance.randomValue.Length; i++)
         {
-            if (GameMGR.Instance.randomValue[i]>=3)
-                exArray[i] = GameMGR.Instance.randomValue[i]-3;
+            if (GameMGR.Instance.randomValue[i] >= 3)
+                exArray[i] = GameMGR.Instance.randomValue[i] - 3;
             else
                 exArray[i] = GameMGR.Instance.randomValue[i];
         }
@@ -516,6 +513,8 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                 // �ǰ� ������ Player�� ���ö����� ���� �� �� ����
                 while (playerForwardUnits[exArray[randomArrayNum]] == null)
                 {
+                    if (playerForwardUnits[0] == null && playerForwardUnits[1] == null && playerForwardUnits[2] == null) break;
+
                     randomArrayNum++;
                     isPlayerAliveCount = 0;
 
@@ -612,10 +611,11 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
             {
                 isPlayerAliveCount = 0;
                 isEnemyAliveCount = 0;
-                Debug.Log(randomArrayNum);
-                Debug.Log(exArray[randomArrayNum]);
-                Debug.Log(playerBackwardUnits[exArray[randomArrayNum]]);
-                while (playerBackwardUnits[exArray[randomArrayNum]] == null) { randomArrayNum++; }
+                while (playerBackwardUnits[exArray[randomArrayNum]] == null)
+                {
+                    if (playerBackwardUnits[0] == null && playerBackwardUnits[1] == null && playerBackwardUnits[2] == null) break;
+                    randomArrayNum++;
+                }
 
                 if (enemyAttackArray.Length <= enemyTurnCount) { enemyTurnCount = 0; }
 
@@ -687,11 +687,9 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                 isEnemyAliveCount = 0;
 
                 // �ǰ� ������ ���� ���ö����� randomArray ��ȸ
-                Debug.Log(randomArrayNum);
-                Debug.Log(exArray[randomArrayNum]);
-                Debug.Log(enemyForwardUnits[exArray[randomArrayNum]]);
                 while (enemyForwardUnits[exArray[randomArrayNum]] == null)
                 {
+                    if (enemyForwardUnits[0] == null && enemyForwardUnits[1] == null && enemyForwardUnits[2] == null) break;
                     randomArrayNum++;
                     isEnemyAliveCount = 0;
 
@@ -713,6 +711,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                 // ���� ������ �÷��̾ ���ö� ���� playerturnCount ����
                 while (playerAttackArray[playerTurnCount] == null)
                 {
+
                     playerTurnCount++;
                     isPlayerAliveCount = 0;
 
@@ -788,7 +787,11 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                 Debug.Log(randomArrayNum);
                 Debug.Log(exArray[randomArrayNum]);
                 Debug.Log(enemyBackwardUnits[exArray[randomArrayNum]]);
-                while (enemyBackwardUnits[exArray[randomArrayNum]] == null) { randomArrayNum++; }
+                while (enemyBackwardUnits[exArray[randomArrayNum]] == null)
+                {
+                    if (enemyBackwardUnits[0] == null && enemyBackwardUnits[1] == null && enemyBackwardUnits[2] == null) break;
+                    randomArrayNum++;
+                }
 
                 if (playerAttackArray.Length <= playerTurnCount) { playerTurnCount = 0; }
 
