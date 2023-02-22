@@ -140,6 +140,8 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                 isEnemyAliveCount = 0;
 
 
+                Debug.Log("enemyForwardUnits[exArray[randomArrayNum]] " + enemyForwardUnits[exArray[randomArrayNum]]);
+                Debug.Log("[exArray[randomArrayNum] " + exArray[randomArrayNum]);
                 while (enemyForwardUnits[exArray[randomArrayNum]] == null)
                 {
                     randomArrayNum++;
@@ -188,7 +190,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                 isWaitAttack = false;
 
                 // null check for playerAttackArray, enemyAttackArray
-                if (playerAttackArray.All(x => x == null) && enemyAttackArray.All(x => x == null)) { PlayerBattleDraw(); }
+                if (playerAttackArray.All(x => x == null) && enemyAttackArray.All(x => x == null)) { PlayerBattleDraw(); yield break; }
 
                 /*for (int i = 0; i < enemyAttackArray.Length; i++)
                 {
@@ -234,6 +236,8 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                 isPlayerAliveCount = 0;
                 isEnemyAliveCount = 0;
 
+                Debug.Log("enemyBackwardUnits[exArray[randomArrayNum]] " + enemyBackwardUnits[exArray[randomArrayNum]]);
+                Debug.Log("[exArray[randomArrayNum] " + exArray[randomArrayNum]);
                 while (enemyBackwardUnits[exArray[randomArrayNum]] == null) { randomArrayNum++; }
 
                 if (playerAttackArray.Length <= playerTurnCount) { playerTurnCount = 0; }
@@ -269,7 +273,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                 yield return new WaitUntil(() => isWaitAttack);
                 isWaitAttack = false;
 
-                if (playerAttackArray.All(x => x == null) && enemyAttackArray.All(x => x == null)) { PlayerBattleDraw(); }
+                if (playerAttackArray.All(x => x == null) && enemyAttackArray.All(x => x == null)) { PlayerBattleDraw(); yield break; }
 
                 // �ǰ� ���� ������ �迭���� ����
                 /*for (int i = 0; i < enemyAttackArray.Length; i++)
@@ -372,7 +376,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                 yield return new WaitUntil(() => isWaitAttack);
                 isWaitAttack = false;
                 // null check for playerAttackArray, enemyAttackArray
-                if (playerAttackArray.All(x => x == null) && enemyAttackArray.All(x => x == null)) { PlayerBattleDraw(); }
+                if (playerAttackArray.All(x => x == null) && enemyAttackArray.All(x => x == null)) { PlayerBattleDraw(); yield break; }
 
                 // �ǰ� ���� ������ ���� ����Ʈ���� ����
                 /*for (int i = 0; i < playerAttackArray.Length; i++)
@@ -417,7 +421,9 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
             {
                 isPlayerAliveCount = 0;
                 isEnemyAliveCount = 0;
-
+                Debug.Log(randomArrayNum);
+                Debug.Log(exArray[randomArrayNum]);
+                Debug.Log(playerBackwardUnits[exArray[randomArrayNum]]);
                 while (playerBackwardUnits[exArray[randomArrayNum]] == null) { randomArrayNum++; }
 
                 if (enemyAttackArray.Length <= enemyTurnCount) { enemyTurnCount = 0; }
@@ -438,7 +444,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                 yield return new WaitUntil(() => isWaitAttack);
                 isWaitAttack = false;
 
-                if (playerAttackArray.All(x => x == null) && enemyAttackArray.All(x => x == null)) { PlayerBattleDraw(); }
+                if (playerAttackArray.All(x => x == null) && enemyAttackArray.All(x => x == null)) { PlayerBattleDraw(); yield break; }
 
                 // �ǰ� ���� �÷��̾� ������ �迭���� ����
                 /*for (int i = 0; i < playerAttackArray.Length; i++)
@@ -504,7 +510,9 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
             {
                 isPlayerAliveCount = 0;
                 isEnemyAliveCount = 0;
-
+                Debug.Log(randomArrayNum);
+                Debug.Log(exArray[randomArrayNum]);
+                Debug.Log(playerForwardUnits[exArray[randomArrayNum]]);
                 // �ǰ� ������ Player�� ���ö����� ���� �� �� ����
                 while (playerForwardUnits[exArray[randomArrayNum]] == null)
                 {
@@ -559,7 +567,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                 isWaitAttack = false;
 
                 // null check for playerAttackArray, enemyAttackArray
-                if (playerAttackArray.All(x => x == null) && enemyAttackArray.All(x => x == null)) { PlayerBattleDraw(); }
+                if (playerAttackArray.All(x => x == null) && enemyAttackArray.All(x => x == null)) { PlayerBattleDraw(); yield break; }
 
                 // �ǰ� ���� ������ ���� ����Ʈ���� ����
                 /*for (int i = 0; i < playerAttackArray.Length; i++)
@@ -606,6 +614,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                 isEnemyAliveCount = 0;
                 Debug.Log(randomArrayNum);
                 Debug.Log(exArray[randomArrayNum]);
+                Debug.Log(playerBackwardUnits[exArray[randomArrayNum]]);
                 while (playerBackwardUnits[exArray[randomArrayNum]] == null) { randomArrayNum++; }
 
                 if (enemyAttackArray.Length <= enemyTurnCount) { enemyTurnCount = 0; }
@@ -626,7 +635,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                 yield return new WaitUntil(() => isWaitAttack);
                 isWaitAttack = false;
 
-                if (playerAttackArray.All(x => x == null) && enemyAttackArray.All(x => x == null)) { PlayerBattleDraw(); }
+                if (playerAttackArray.All(x => x == null) && enemyAttackArray.All(x => x == null)) { PlayerBattleDraw(); yield break; }
 
                 // �ǰ� ���� �÷��̾� ������ �迭���� ����
                 /*for (int i = 0; i < playerAttackArray.Length; i++)
@@ -678,6 +687,9 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                 isEnemyAliveCount = 0;
 
                 // �ǰ� ������ ���� ���ö����� randomArray ��ȸ
+                Debug.Log(randomArrayNum);
+                Debug.Log(exArray[randomArrayNum]);
+                Debug.Log(enemyForwardUnits[exArray[randomArrayNum]]);
                 while (enemyForwardUnits[exArray[randomArrayNum]] == null)
                 {
                     randomArrayNum++;
@@ -727,7 +739,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                 isWaitAttack = false;
 
                 // null check for playerAttackArray, enemyAttackArray
-                if (playerAttackArray.All(x => x == null) && enemyAttackArray.All(x => x == null)) { PlayerBattleDraw(); }
+                if (playerAttackArray.All(x => x == null) && enemyAttackArray.All(x => x == null)) { PlayerBattleDraw(); yield break; }
 
                 // �ǰ� ���� ������ �迭���� ����
                 /*for (int i = 0; i < enemyAttackArray.Length; i++)
@@ -773,7 +785,9 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
             {
                 isPlayerAliveCount = 0;
                 isEnemyAliveCount = 0;
-
+                Debug.Log(randomArrayNum);
+                Debug.Log(exArray[randomArrayNum]);
+                Debug.Log(enemyBackwardUnits[exArray[randomArrayNum]]);
                 while (enemyBackwardUnits[exArray[randomArrayNum]] == null) { randomArrayNum++; }
 
                 if (playerAttackArray.Length <= playerTurnCount) { playerTurnCount = 0; }
@@ -809,7 +823,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                 yield return new WaitUntil(() => isWaitAttack);
                 isWaitAttack = false;
 
-                if (playerAttackArray.All(x => x == null) && enemyAttackArray.All(x => x == null)) { PlayerBattleDraw(); }
+                if (playerAttackArray.All(x => x == null) && enemyAttackArray.All(x => x == null)) { PlayerBattleDraw(); yield break; }
 
                 // �ǰ� ���� ������ �迭���� ����
                 /*for (int i = 0; i < enemyAttackArray.Length; i++)
