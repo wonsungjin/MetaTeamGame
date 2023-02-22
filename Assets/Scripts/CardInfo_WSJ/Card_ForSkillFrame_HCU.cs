@@ -196,11 +196,10 @@ public partial class Card : MonoBehaviourPun
 
     public void SkillActive() // 스킬 효과 발동 // FindTargetType 함수를 통해 구체적인 스킬 적용 대상이 정해지고 난 이후에 발동하는 게 맞다고 볼 수 있는 부분적인 부분
     {
-        if (triggerOnCount < 1)
-        {
-            Debug.Log("트리거 카운트가 없어서 발동 불가");
-            return;
-        }
+        if (triggerOnCount < 1) return;
+        
+        if (cardInfo.skillTiming == SkillTiming.turnEnd || cardInfo.skillTiming == SkillTiming.turnStart || cardInfo.skillTiming == SkillTiming.reroll)
+            if (isBattle == false) return;
 
         Debug.Log("Skill Active");
 
@@ -227,6 +226,8 @@ public partial class Card : MonoBehaviourPun
     public void SkillActive2(Card card)
     {
         if (triggerOnCount < 1) return;
+        if(cardInfo.skillTiming == SkillTiming.turnEnd|| cardInfo.skillTiming == SkillTiming.turnStart|| cardInfo.skillTiming == SkillTiming.reroll)
+        if (isBattle == false) return;
 
         if (cardInfo.skillTiming == SkillTiming.hitEnemy)
         {

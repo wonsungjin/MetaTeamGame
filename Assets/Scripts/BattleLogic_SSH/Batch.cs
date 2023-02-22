@@ -204,7 +204,9 @@ public partial class Batch : MonoBehaviourPun
             if (myCard == true)
             {
                 Debug.Log(i);
-                unitCard.GetComponentInChildren<Card>().isMine = true;
+                Card card = unitCard.GetComponentInChildren<Card>();
+                card.isMine = true;
+                card.SetIsBattle(true);
                 unitCard.transform.position = myCardPosition[i + 1].position;
                 if (i < 3) { GameMGR.Instance.battleLogic.playerForwardUnits[i] = unitCard.gameObject; }
                 else { GameMGR.Instance.battleLogic.playerBackwardUnits[i - 3] = unitCard.gameObject; }
@@ -216,9 +218,11 @@ public partial class Batch : MonoBehaviourPun
             // enemy Unit ��ġ ����
             else if (myCard == false)
             {
-                unitCard.GetComponentInChildren<Card>().isMine = false;
+                Card card = unitCard.GetComponentInChildren<Card>();
+                card.isMine = false;
+                card.SetIsBattle(true);
                 unitCard.transform.position = enemyCardPosition[i + 1].position;
-                unitCard.GetComponentInChildren<Card>().SetFlip(true);
+                card.SetFlip(true);
                 if (i < 3) { GameMGR.Instance.battleLogic.enemyForwardUnits[i] = unitCard.gameObject; }
                 else { GameMGR.Instance.battleLogic.enemyBackwardUnits[i - 3] = unitCard.gameObject; }
             }
