@@ -405,6 +405,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillType: 
+  isArrive: 0
 --- !u!114 &6134915860036294628
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -418,7 +419,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pos: {fileID: 0}
+  isClickBool: 0
   isFreezen: 0
+  isClickBattleMonster: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   outlineSize: 5
 --- !u!114 &6134915860036294631
@@ -438,7 +441,7 @@ MonoBehaviour:
   atkText: {fileID: 8494144633956486599}
   levelText: {fileID: 8494144632481096833}
   level: 1
-  curAttackValue: 2
+  curAttackValue: 1
   curHP: 1
   curEXP: 0
   expSlider: {fileID: 7803170560863288597}
