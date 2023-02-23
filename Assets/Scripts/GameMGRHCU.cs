@@ -1,8 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public partial class GameMGR : Singleton<GameMGR>
 {
@@ -11,17 +8,29 @@ public partial class GameMGR : Singleton<GameMGR>
 
     // 서로가 동일한 랜덤값을 가지기 위한 것이다.
     public int[] randomValue;
-    
-    public int GetRandomValue(int minrange, int maxrange)
+
+    int i = 0;
+    public int GetRandomValue(int minrange, int maxrange,bool set =false)
     {
-        for(int i = 0; i < randomValue.Length; i++)
+        i++;
+        if (randomValue.Length <= i) i = 0;
+        if (set == true)
         {
-            if (randomValue[i] >= minrange && randomValue[i] < maxrange)
-                return randomValue[i];
+            if (randomValue[i] >= 3) return randomValue[i] - 3;
+            else return randomValue[i];
         }
-        return 0;
+        else if (randomValue[i] >= minrange && randomValue[i] < maxrange) return randomValue[i];
+        else
+        {
+            while(randomValue[i] < minrange && randomValue[i] > maxrange)
+            {
+                i++;
+                if (randomValue.Length <= i) i = 0;
+            }
+            return randomValue[i];
+        }
     }
-    
+
     public Dictionary<int, List<Card>> playerList = new Dictionary<int, List<Card>>();
 
     public bool isBattleNow = false; // 현재 전투씬인지 비전투씬인지를 구분하는 불값.
@@ -36,12 +45,7 @@ public partial class GameMGR : Singleton<GameMGR>
     public event _callback_SkillTiming2 callbackEvent_Sell;
     public event _callback_SkillTiming callbackEvent_Reroll;
     public event _callback_SkillTiming callbackEvent_BattleStart;
-    public event _callback_SkillTiming callbackEvent_BeforeAttack;
-    public event _callback_SkillTiming callbackEvent_AfterAttack;
-    public event _callback_SkillTiming callbackEvent_Kill;
-    public event _callback_SkillTiming callbackEvent_Hit;
     public event _callback_SkillTiming2 callbackEvent_HitEnemy;
-    public event _callback_SkillTiming callbackEvent_Death;
     public event _callback_SkillTiming callbackEvent_Summon;
 
 
@@ -57,7 +61,7 @@ public partial class GameMGR : Singleton<GameMGR>
     public void Event_TurnEnd()
     {
         if (callbackEvent_TurnEnd != null)
-        callbackEvent_TurnEnd();
+            callbackEvent_TurnEnd();
     }
     public void Event_Buy(Card card)
     {
@@ -72,7 +76,7 @@ public partial class GameMGR : Singleton<GameMGR>
     }
     public void Event_Reroll()
     {
-        if(callbackEvent_Reroll != null) callbackEvent_Reroll();
+        if (callbackEvent_Reroll != null) callbackEvent_Reroll();
     }
     public bool Event_BattleStart()
     {
@@ -83,21 +87,21 @@ public partial class GameMGR : Singleton<GameMGR>
             callbackEvent_BattleStart();
             return true;
         }
-        else
+        else return false;
             Debug.Log("아니 지금 전투시작시가 비었다는 말인가");
             return false;
     }
     public void Event_Summon()
     {
         if (callbackEvent_Summon != null)
-        callbackEvent_Summon();
+            callbackEvent_Summon();
     }
     public void Event_HitEnemy(Card card)
     {
-        if(callbackEvent_HitEnemy != null)
+        if (callbackEvent_HitEnemy != null)
             callbackEvent_HitEnemy(card);
     }
-    
+
     #endregion
 
 }
