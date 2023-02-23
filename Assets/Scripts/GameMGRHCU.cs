@@ -22,7 +22,7 @@ public partial class GameMGR : Singleton<GameMGR>
         else if (randomValue[i] >= minrange && randomValue[i] < maxrange) return randomValue[i];
         else
         {
-            while(randomValue[i] < minrange && randomValue[i] > maxrange)
+            while(randomValue[i] < minrange && randomValue[i] >= maxrange)
             {
                 i++;
                 if (randomValue.Length <= i) i = 0;
