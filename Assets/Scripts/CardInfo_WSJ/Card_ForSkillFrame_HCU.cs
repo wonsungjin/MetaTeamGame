@@ -672,6 +672,9 @@ public partial class Card : MonoBehaviourPun
                 for (int i = 0; i < cardInfo.GetMaxTarget(cardInfo.level); i++)
                 {
                     random = GameMGR.Instance.GetRandomValue(0, targetArray1.Count);
+                    Debug.Log(random);
+                    Debug.Log(targetArray1.Count);
+                    
 
                     if (targetArray1.Count != 0)
                     {
@@ -706,6 +709,8 @@ public partial class Card : MonoBehaviourPun
                 for (int i = 0; i < cardInfo.GetMaxTarget(cardInfo.level); i++)
                 {
                     random = GameMGR.Instance.GetRandomValue(0, targetArray.Count);
+                    Debug.Log(random);
+                    Debug.Log(targetArray.Count);
                     if (targetArray.Count == 0) break;
                     if (skillTarget.Contains(targetArray[random])) // Á×Àº ¾Æ±ºÀÌ ¾Æ´Ò ¶§±îÁö ·£´ý°ªÀ» µ¹·Á
                     {

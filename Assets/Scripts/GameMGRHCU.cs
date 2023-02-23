@@ -16,18 +16,24 @@ public partial class GameMGR : Singleton<GameMGR>
         if (randomValue.Length <= i) i = 0;
         if (set == true)
         {
-            if (randomValue[i] >= 3) return randomValue[i] - 3;
-            else return randomValue[i];
+            if (randomValue[i] >= 3) { Debug.LogError(randomValue[i]); return randomValue[i] - 3; }
+            else
+            {
+                Debug.LogError(randomValue[i]); return randomValue[i];
+            }
         }
-        else if (randomValue[i] >= minrange && randomValue[i] < maxrange) return randomValue[i];
+        else if (randomValue[i] >= minrange && randomValue[i] < maxrange)
+        {
+            Debug.LogError(randomValue[i]); return randomValue[i];
+        }
         else
         {
-            while(randomValue[i] < minrange && randomValue[i] >= maxrange)
+            while (randomValue[i] < minrange || randomValue[i] >= maxrange)
             {
                 i++;
                 if (randomValue.Length <= i) i = 0;
             }
-            return randomValue[i];
+            Debug.LogError(randomValue[i]); return randomValue[i];
         }
     }
 
