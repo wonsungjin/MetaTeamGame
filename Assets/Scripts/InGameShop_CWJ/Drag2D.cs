@@ -20,11 +20,13 @@ public partial class Drag2D : MonoBehaviour
 
     Vector3 vecs = new Vector3(0, -0.6f, 1f);
     Vector3 vecs1 = new Vector3(0, 1.4f, 1f);
+    Vector3 vec = new Vector3(0, 0.6f, 0);
 
     float timer = 0f;
     float distance = 100;
     private bool isClickBool = false;
     private bool isDestroy = false;
+    private bool isLevelUp = false;
     public bool isFreezen = false;
     public bool isClickBattleMonster = false;
 
@@ -160,7 +162,7 @@ public partial class Drag2D : MonoBehaviour
                         Vector2 monTras = gameObject.transform.parent.localScale;
                         gameObject.transform.parent.localScale = monTras * 2;
                         BackMeltBuy(collision);
-                        StartCoroutine(COR_BuyMonsterEF());
+                        GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>("Heart"), gameObject.transform.position + monsterPos1, Quaternion.identity);
                     }
                 }
             }
@@ -180,14 +182,15 @@ public partial class Drag2D : MonoBehaviour
                     if (GameMGR.Instance.uiManager.goldCount >= 3)
                     {
                         GameMGR.Instance.audioMGR.SoundBuy();
+                        GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>("Heart"), gameObject.transform.position + monsterPos1, Quaternion.identity);
                         spriteRenderer.sortingLayerName = "SellTXT";
                         gameObject.tag = "BattleMonster";
                         GameMGR.Instance.uiManager.goldCount -= 3;
                         GameMGR.Instance.uiManager.goldTXT.text = "" + GameMGR.Instance.uiManager.goldCount.ToString();
                         Vector2 monTras = gameObject.transform.parent.localScale;
                         gameObject.transform.parent.localScale = monTras * 2;
+
                         pos = collision.GetComponent<BattleZone>();
-                        StartCoroutine(COR_BuyMonsterEF());
 
                         if (card.cardInfo.skillTiming == SkillTiming.buy)
                         {
@@ -239,7 +242,7 @@ public partial class Drag2D : MonoBehaviour
                     {
                         if (collision.transform.position.y > transform.position.y)
                         {
-                            ShopCardLevelUp(collision.gameObject);         
+                            ShopCardLevelUp(collision.gameObject);
                         }
 
                         else if (collision.transform.position.y < transform.position.y)
@@ -257,24 +260,19 @@ public partial class Drag2D : MonoBehaviour
         }
     }
 
-    IEnumerator COR_BuyMonsterEF()
-    {
-        GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>("Heart"), gameObject.transform.position + monsterPos1, Quaternion.identity);
-        yield return new WaitForSeconds(0.3f);
-        GameMGR.Instance.objectPool.DestroyPrefab(mon.transform.gameObject);
-    }
-
     void ShopCardLevelUp(GameObject collision)
     {
         int colAttack = collision.gameObject.GetComponentInChildren<Card>().curAttackValue;
         int colHP = collision.gameObject.GetComponentInChildren<Card>().curHP;
+        int otherExp = collision.gameObject.GetComponentInChildren<Card>().curEXP;
+
         int attack = card.curAttackValue;
         int hP = card.curHP;
+        int thisExp = card.curEXP;
+        int thisLevel = card.level;
+
         int plusAttack = 0;
         int plusHp = 0;
-        int thisExp = gameObject.GetComponent<Card>().curEXP;
-        int otherExp = collision.gameObject.GetComponent<Card>().curEXP;
-        int thisLevel = gameObject.GetComponent<Card>().level;
         int allExp = 0;
 
 
@@ -296,10 +294,18 @@ public partial class Drag2D : MonoBehaviour
             plusHp = hP;
         }
 
-        allExp = otherExp + thisExp;
-    
+
+
+        allExp += otherExp + thisExp;
+
         collision.gameObject.GetComponentInChildren<Card>().ChangeValue(CardStatus.Attack, plusAttack + 1);
         collision.gameObject.GetComponentInChildren<Card>().ChangeValue(CardStatus.Hp, plusHp + 1);
+
+
+        if (isDestroy == true)
+        {
+            GameMGR.Instance.objectPool.DestroyPrefab(gameObject.transform.parent.gameObject);
+        }
 
         if (thisLevel == 1)
         {
@@ -312,11 +318,6 @@ public partial class Drag2D : MonoBehaviour
             allExp += 3;
             collision.gameObject.GetComponentInChildren<Card>().ChangeValue(CardStatus.Exp, allExp);
         }
-        if(isDestroy == true)
-        {
-            GameMGR.Instance.objectPool.DestroyPrefab(gameObject.transform.parent.gameObject);
-        }
-
         GameMGR.Instance.uiManager.sell.gameObject.SetActive(false);
     }
 
@@ -332,10 +333,7 @@ public partial class Drag2D : MonoBehaviour
     // 원래 위치로 돌리는 함수
     private IEnumerator COR_BackAgain()
     {
-
         yield return wait;
-
-        Debug.Log("아넝훙낳");
 
         if (CompareTag("BattleMonster") || CompareTag("BattleMonster2") || CompareTag("BattleMonster3"))
         {

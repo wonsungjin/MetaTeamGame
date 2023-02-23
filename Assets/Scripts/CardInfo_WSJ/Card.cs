@@ -136,52 +136,67 @@ public partial class Card : MonoBehaviourPun
             case CardStatus.Exp:
                 if (level == 1)
                 {
-                    audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.Unit, "Merge_sound");
-                    audioSource.Play();
-                    StartCoroutine(COR_ComBineMonsterEF());
-
-                    if(value > 3)
+                    if (value >= 2)
                     {
                         minusEXP = value - 3;
-                        StartCoroutine(COR_LevelUpMonsterEF());
-                        ChangeValue(CardStatus.Level);
+                        curEXP += minusEXP;
+                        GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>("skillAttack"), gameObject.transform.position + vec, Quaternion.identity);
                         gameObject.tag = "BattleMonster2";
                         audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.Unit, "UnitLevelUP_sound");
                         audioSource.Play();
+                        ChangeValue(CardStatus.Level);
                     }
-                    else if(value <= 3)
-                    curEXP += value;
 
-                    else expSlider.value = curEXP * 0.5f;
+                    else if(value < 2)
+                    {
+                        curEXP += value;
+                        GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>("skillAttack2"), gameObject.transform.position + vec, Quaternion.identity);
+                        expSlider.value = curEXP * 0.5f;
 
-                    //if (curEXP >= 2)
-                    //{
-                    //    StartCoroutine(COR_LevelUpMonsterEF());
-                    //    ChangeValue(CardStatus.Level);
-                    //    gameObject.tag = "BattleMonster2";
-                    //    audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.Unit, "UnitLevelUP_sound");
-                    //    audioSource.Play();
-                    //}
-                    //else expSlider.value = curEXP * 0.5f;
+                        Debug.Log(curEXP);
 
+                        if (curEXP == 2)
+                        {
+                            Debug.Log("2°æÇèÄ¡È¹µæ");
+                            ChangeValue(CardStatus.Level);
+                              gameObject.tag = "BattleMonster2";
+                            GameObject mons = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>("skillAttack"), gameObject.transform.position + vec, Quaternion.identity);
+                            audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.Unit, "UnitLevelUP_sound");
+                                audioSource.Play();
+                        }
+                   
+                    }
                 }
+
                 else if (level == 2)
                 {
-                    Debug.Log("2·¹º§¿¡¼­ ·¾¾÷");
-                    curEXP += value;
-                    audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.Unit, "Merge_sound");
-                    audioSource.Play();
-                    StartCoroutine(COR_ComBineMonsterEF());
-
-                    if (curEXP >= 3)
+                    if (value >= 3)
                     {
-                        StartCoroutine(COR_LevelUpMonsterEF());
+                        GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>("skillAttack"), gameObject.transform.position + vec, Quaternion.identity);
                         ChangeValue(CardStatus.Level);
                         gameObject.tag = "BattleMonster3";
                         audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.Unit, "UnitLevelUP_sound");
                         audioSource.Play();
                     }
-                    else expSlider.value = curEXP * 0.33f;
+
+                    else if (value < 3)
+                    {
+                        curEXP += value;
+                        audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.Unit, "Merge_sound");
+                        audioSource.Play();
+                        GameObject monEFF = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>("skillAttack2"), gameObject.transform.position + vec, Quaternion.identity);
+
+                        if(curEXP >= 3)
+                        {
+                            GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>("skillAttack"), gameObject.transform.position + vec, Quaternion.identity);
+                            ChangeValue(CardStatus.Level);
+                            gameObject.tag = "BattleMonster3";
+                            audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.Unit, "UnitLevelUP_sound");
+                            audioSource.Play();
+                        }
+
+                        expSlider.value = curEXP * 0.33f;
+                    }
                 }
                 break;
 
@@ -205,20 +220,5 @@ public partial class Card : MonoBehaviourPun
                 break;
         }
     }
-
-    IEnumerator COR_ComBineMonsterEF()
-    {
-        GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>("skillAttack2"), gameObject.transform.position + vec, Quaternion.identity);
-        yield return new WaitForSeconds(0.3f);
-        GameMGR.Instance.objectPool.DestroyPrefab(mon.transform.gameObject);
-    }
-
-    IEnumerator COR_LevelUpMonsterEF()
-    {
-        GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>("skillAttack"), gameObject.transform.position + vec, Quaternion.identity);
-        yield return new WaitForSeconds(0.3f);
-        GameMGR.Instance.objectPool.DestroyPrefab(mon.transform.gameObject);
-    }
-
 }
 
