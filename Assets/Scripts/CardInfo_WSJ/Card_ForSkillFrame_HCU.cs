@@ -353,6 +353,7 @@ public partial class Card : MonoBehaviourPun
                 GameObject summonCard = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{cardInfo.sumom_Unit}"), targetPos + new Vector2(0, -0.6f), Quaternion.identity);
                 summonCard.transform.GetChild(0).tag = "BattleMonster";
                 summonCard.transform.localScale = summonCard.transform.localScale * 2;
+                summonCard.GetComponentInChildren<Card>().spriteRenderer.sortingLayerName = "SellTXT";
 
                 GameMGR.Instance.spawner.cardBatch[shopBatchEmptyIndex] = summonCard;
                 //summoncard 이름 디버그 띄울것

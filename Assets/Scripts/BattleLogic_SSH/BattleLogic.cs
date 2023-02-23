@@ -80,11 +80,12 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
         // player first attack
         for (int i = 0; i < GameMGR.Instance.randomValue.Length; i++)
         {
-            if (GameMGR.Instance.randomValue[i] >= 3)
+            /*if (GameMGR.Instance.randomValue[i] >= 3)
                 exArray[i] = GameMGR.Instance.randomValue[i] - 3;
-            else
+            else*/
                 exArray[i] = GameMGR.Instance.randomValue[i];
         }
+
         if (isFirstAttack) 
         {
             //StartCoroutine(PreemptiveAttack());
