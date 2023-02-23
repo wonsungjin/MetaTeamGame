@@ -148,6 +148,8 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
     // Player Attack
     IEnumerator BattleStart(bool first)
     {
+        GameMGR.Instance.i = 0;
+
         bool eventExist = GameMGR.Instance.Event_BattleStart();
         if(eventExist) yield return new WaitForSeconds(1f);
         // enemy backward unit attack possible
