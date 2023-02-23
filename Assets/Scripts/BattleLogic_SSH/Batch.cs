@@ -1,6 +1,7 @@
 using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public partial class Batch : MonoBehaviourPun
@@ -21,7 +22,7 @@ public partial class Batch : MonoBehaviourPun
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.A)) FinalCardUi();
+        if (Input.GetKeyDown(KeyCode.A)) StartCoroutine(FinalCardUi());
     }
     public void OnClick_Exit_UI()
     {
@@ -35,11 +36,11 @@ public partial class Batch : MonoBehaviourPun
         List<Card> cardList = null;
         if (CustomNumberList.Count < num + 1) return;
         GameMGR.Instance.playerList.TryGetValue(CustomNumberList[num], out cardList);
-        if (cardList==null) return;
+        if (cardList == null) return;
         GameMGR.Instance.uiManager.playerBatchUI.SetActive(true);
         GameMGR.Instance.uiManager.playerName.text = PlayerNameList[num];
         GameMGR.Instance.uiManager.userProfile.sprite = Resources.Load<Sprite>($"Sprites/Profile/{PlayerProfileList[num]}");
-        for(int i =0; i < PhotonNetwork.PlayerList.Length;i++)
+        for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
         {
             if ((int)PhotonNetwork.PlayerList[i].CustomProperties["Number"] == CustomNumberList[num])
             {
@@ -65,8 +66,9 @@ public partial class Batch : MonoBehaviourPun
 
         //
     }
-    public void FinalCardUi()
+    public IEnumerator FinalCardUi()
     {
+        Camera.main.gameObject.transform.position = new Vector3(60, 0, -10);
         GameMGR.Instance.uiManager.finalSceneUI.SetActive(true);
         for (int i = 0; i < CustomNumberList.Count; i++)
         {
@@ -88,10 +90,14 @@ public partial class Batch : MonoBehaviourPun
                 get.isNonePointer = true;
                 get.GetComponent<CardUI>().ResetColor();
                 get.GetComponent<CardUI>().OffFrame();
-
             }
         }
+
+        yield return new WaitForSeconds(5f);
+
+        GameMGR.Instance.uiManager.ExitGame();
     }
+
     public void Init()
     {
         StartCoroutine(COR_SetCustomDelay());
@@ -103,7 +109,7 @@ public partial class Batch : MonoBehaviourPun
     }
     IEnumerator COR_SetCustomDelay()
     {
-        PhotonNetwork.NickName = GameMGR.Instance.dataBase.userName+","+GameMGR.Instance.dataBase.myProfile;
+        PhotonNetwork.NickName = GameMGR.Instance.dataBase.userName + "," + GameMGR.Instance.dataBase.myProfile;
         yield return new WaitForSeconds(2f);
         for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
         {
