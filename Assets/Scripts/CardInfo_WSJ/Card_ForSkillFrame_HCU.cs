@@ -300,7 +300,7 @@ public partial class Card : MonoBehaviourPun
                 break;
             case EffectType.changeDamage:
                 Debug.Log("데미지 증감 효과 발동");
-                for (int i = 0; i < skillTarget.Count; i++)
+               /* for (int i = 0; i < skillTarget.Count; i++)
                 {
                     if (skillTarget[i].curAttackValue > 0 && skillTarget[i].curAttackValue > cardInfo.GetValue(1, level))
                     {
@@ -308,7 +308,7 @@ public partial class Card : MonoBehaviourPun
                         skillTarget[i].takeDamage += cardInfo.GetValue(2, level);
                     }
 
-                }
+                }*/
                 break;
             case EffectType.changeATK:
                 Debug.Log("공격력 효과 발동");
@@ -760,11 +760,11 @@ public partial class Card : MonoBehaviourPun
 
             case TargetType.backward:       // 후열 ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇ
                 Debug.Log("대상은 후열");
-                random = GameMGR.Instance.GetRandomValue(0, 3);
+                random = GameMGR.Instance.GetRandomValue(3, 6);
                 isAllDead = true;
                 for (int i = 3; i < 6; i++)
                 {
-                    if (searchArea[i].GetComponentInChildren<Card>().curHP >= 0)
+                    if (searchArea[i] != null)
                     {
                         isAllDead = false;
                         break;
@@ -777,12 +777,19 @@ public partial class Card : MonoBehaviourPun
                 }
                 else // 한명이라도 살아있다면
                 {
-                    random = GameMGR.Instance.GetRandomValue(0, 3);
-                    while (searchArea[random].GetComponentInChildren<Card>().curHP <= 0 && searchArea[random] == this) // 죽은 아군이 아닐 때까지 랜덤값을 돌려
+                    for(int i = 0; i < cardInfo.GetMaxTarget(level); i++)
                     {
-                        random = GameMGR.Instance.GetRandomValue(0, 3);
+                        random = GameMGR.Instance.GetRandomValue(3, 6);
+                        while (searchArea[random] == null || searchArea[random] == this) // 죽은 아군이 아닐 때까지 랜덤값을 돌려
+                        {
+                            if (skillTarget.Count != 0 && skillTarget.Contains(searchArea[random].GetComponentInChildren<Card>()))
+                                random = GameMGR.Instance.GetRandomValue(0, 3);
+                            else
+                                random = GameMGR.Instance.GetRandomValue(0, 3);
+                        }
+                        skillTarget.Add(searchArea[random].GetComponentInChildren<Card>());
                     }
-                    skillTarget.Add(searchArea[random].GetComponentInChildren<Card>());
+                    
                 }
                 break;
 
