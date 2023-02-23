@@ -116,6 +116,10 @@ public class DataBase : MonoBehaviour
 
 
     }
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.S)) unitData.RandomAdd(1,true);
+    }
     public bool isFindUnit;
     public InventoryData inventoryData = new InventoryData();
     public UnitData unitData = new UnitData();
