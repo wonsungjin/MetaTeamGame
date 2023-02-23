@@ -25,7 +25,7 @@ public class TurnSystem : MonoBehaviourPunCallbacks
 
     [SerializeField] public InputField inputField; // 닉네임 입력칸
 
-    public int[] setRandom = new int[100]; // 공격할 대상을 랜덤으로 지정한다. 
+    public int[] setRandom = new int[200]; // 공격할 대상을 랜덤으로 지정한다. 
 
     public Player[] savePlayers = null;
 

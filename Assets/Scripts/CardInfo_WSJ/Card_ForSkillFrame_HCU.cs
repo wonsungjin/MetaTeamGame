@@ -115,6 +115,9 @@ public partial class Card : MonoBehaviourPun
                     GameMGR.Instance.battleLogic.playerForwardUnits[i] = null;
                     break;
                 }
+            }
+            for (int i = 0; i < 3; i++)
+            {
                 if (GameMGR.Instance.battleLogic.playerBackwardUnits[i] == null) continue;
                 if (GameMGR.Instance.battleLogic.playerBackwardUnits[i].GetComponentInChildren<Card>() == this)
                 {
@@ -143,6 +146,9 @@ public partial class Card : MonoBehaviourPun
                     GameMGR.Instance.battleLogic.enemyForwardUnits[i] = null;
                     break;
                 }
+            }
+            for (int i = 0; i < 3; i++)
+            {
                 if (GameMGR.Instance.battleLogic.enemyBackwardUnits[i] == null) continue;
                 if (GameMGR.Instance.battleLogic.enemyBackwardUnits[i].GetComponentInChildren<Card>() == this)
                 {
@@ -155,7 +161,7 @@ public partial class Card : MonoBehaviourPun
         if (Attacker.cardInfo.skillTiming == SkillTiming.kill) Attacker.SkillActive(); // 내가 죽었는데 적이 처치시 효과가 있다면 적 효과 먼저 발동시켜준다.
         if (cardInfo.skillTiming == SkillTiming.death) SkillActive(); // 사망시 효과 발동
                                                                       //GameMGR.Instance.battleLogic.isWaitAttack = true;
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(2f);
 
         SetAnim("Idle");
 
@@ -699,11 +705,12 @@ public partial class Card : MonoBehaviourPun
 
             case TargetType.forward:      // 전열ㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇ
                 Debug.Log("대상은 전열");
+                
                 random = GameMGR.Instance.GetRandomValue(0, 3);
                 bool isAllDead = true;
                 for (int i = 0; i < 3; i++)
                 {
-                    if (searchArea[i].GetComponent<Card>().curHP >= 0)
+                    if (searchArea[i].GetComponentInChildren<Card>().curHP >= 0)
                     {
                         isAllDead = false;
                         break;
@@ -721,11 +728,11 @@ public partial class Card : MonoBehaviourPun
                 else // 한명이라도 살아있다면
                 {
                     random = GameMGR.Instance.GetRandomValue(0, 3);
-                    while (searchArea[random].GetComponent<Card>().curHP <= 0 && searchArea[random] == this) // 죽은 아군이 아닐 때까지 랜덤값을 돌려
+                    while (searchArea[random].GetComponentInChildren<Card>().curHP <= 0 && searchArea[random] == this) // 죽은 아군이 아닐 때까지 랜덤값을 돌려
                     {
                         random = GameMGR.Instance.GetRandomValue(0, 3);
                     }
-                    skillTarget.Add(searchArea[random].GetComponent<Card>());
+                    skillTarget.Add(searchArea[random].GetComponentInChildren<Card>());
                 }
                 break;
 
@@ -735,7 +742,7 @@ public partial class Card : MonoBehaviourPun
                 isAllDead = true;
                 for (int i = 3; i < 6; i++)
                 {
-                    if (searchArea[i].GetComponent<Card>().curHP >= 0)
+                    if (searchArea[i].GetComponentInChildren<Card>().curHP >= 0)
                     {
                         isAllDead = false;
                         break;
@@ -749,22 +756,22 @@ public partial class Card : MonoBehaviourPun
                 else // 한명이라도 살아있다면
                 {
                     random = GameMGR.Instance.GetRandomValue(0, 3);
-                    while (searchArea[random].GetComponent<Card>().curHP <= 0 && searchArea[random] == this) // 죽은 아군이 아닐 때까지 랜덤값을 돌려
+                    while (searchArea[random].GetComponentInChildren<Card>().curHP <= 0 && searchArea[random] == this) // 죽은 아군이 아닐 때까지 랜덤값을 돌려
                     {
                         random = GameMGR.Instance.GetRandomValue(0, 3);
                     }
-                    skillTarget.Add(searchArea[random].GetComponent<Card>());
+                    skillTarget.Add(searchArea[random].GetComponentInChildren<Card>());
                 }
                 break;
 
             case TargetType.front:  // 내 앞
                 for (int i = 3; i < 6; i++)
                 {
-                    if (searchArea[i].GetComponent<Card>() == this)
+                    if (searchArea[i].GetComponentInChildren<Card>() == this)
                     {
-                        if (searchArea[i - 3].GetComponent<Card>() != null)
+                        if (searchArea[i - 3].GetComponentInChildren<Card>() != null)
                         {
-                            skillTarget.Add(searchArea[i - 3].GetComponent<Card>());
+                            skillTarget.Add(searchArea[i - 3].GetComponentInChildren<Card>());
                         }
                     }
                 }
@@ -773,11 +780,11 @@ public partial class Card : MonoBehaviourPun
             case TargetType.back:   // 내 뒤
                 for (int i = 3; i < 6; i++)
                 {
-                    if (searchArea[i].GetComponent<Card>() == this)
+                    if (searchArea[i].GetComponentInChildren<Card>() == this)
                     {
-                        if (searchArea[i + 3].GetComponent<Card>() != null)
+                        if (searchArea[i + 3].GetComponentInChildren<Card>() != null)
                         {
-                            skillTarget.Add(searchArea[i + 3].GetComponent<Card>());
+                            skillTarget.Add(searchArea[i + 3].GetComponentInChildren<Card>());
                         }
                     }
                 }
@@ -786,35 +793,35 @@ public partial class Card : MonoBehaviourPun
             case TargetType.near:   //인접
                 for (int i = 0; i < 6; i++)
                 {
-                    if (searchArea[i].GetComponent<Card>() == this)
+                    if (searchArea[i].GetComponentInChildren<Card>() == this)
                     {
                         switch (i)
                         {
                             case 0:
-                                skillTarget.Add(searchArea[1].GetComponent<Card>());
-                                skillTarget.Add(searchArea[3].GetComponent<Card>());
+                                skillTarget.Add(searchArea[1].GetComponentInChildren<Card>());
+                                skillTarget.Add(searchArea[3].GetComponentInChildren<Card>());
                                 break;
                             case 1:
-                                skillTarget.Add(searchArea[0].GetComponent<Card>());
-                                skillTarget.Add(searchArea[2].GetComponent<Card>());
-                                skillTarget.Add(searchArea[4].GetComponent<Card>());
+                                skillTarget.Add(searchArea[0].GetComponentInChildren<Card>());
+                                skillTarget.Add(searchArea[2].GetComponentInChildren<Card>());
+                                skillTarget.Add(searchArea[4].GetComponentInChildren<Card>());
                                 break;
                             case 2:
-                                skillTarget.Add(searchArea[1].GetComponent<Card>());
-                                skillTarget.Add(searchArea[5].GetComponent<Card>());
+                                skillTarget.Add(searchArea[1].GetComponentInChildren<Card>());
+                                skillTarget.Add(searchArea[5].GetComponentInChildren<Card>());
                                 break;
                             case 3:
-                                skillTarget.Add(searchArea[0].GetComponent<Card>());
-                                skillTarget.Add(searchArea[4].GetComponent<Card>());
+                                skillTarget.Add(searchArea[0].GetComponentInChildren<Card>());
+                                skillTarget.Add(searchArea[4].GetComponentInChildren<Card>());
                                 break;
                             case 4:
-                                skillTarget.Add(searchArea[1].GetComponent<Card>());
-                                skillTarget.Add(searchArea[3].GetComponent<Card>());
-                                skillTarget.Add(searchArea[5].GetComponent<Card>());
+                                skillTarget.Add(searchArea[1].GetComponentInChildren<Card>());
+                                skillTarget.Add(searchArea[3].GetComponentInChildren<Card>());
+                                skillTarget.Add(searchArea[5].GetComponentInChildren<Card>());
                                 break;
                             case 5:
-                                skillTarget.Add(searchArea[2].GetComponent<Card>());
-                                skillTarget.Add(searchArea[4].GetComponent<Card>());
+                                skillTarget.Add(searchArea[2].GetComponentInChildren<Card>());
+                                skillTarget.Add(searchArea[4].GetComponentInChildren<Card>());
                                 break;
                         }
                     }
@@ -826,7 +833,7 @@ public partial class Card : MonoBehaviourPun
                 int myPosNum = System.Array.IndexOf(GameMGR.Instance.battleLogic.playerAttackArray, this);
                 if (GameMGR.Instance.battleLogic.enemyAttackArray[myPosNum] != null)
                 {
-                    skillTarget.Add(searchArea[myPosNum].GetComponent<Card>());
+                    skillTarget.Add(searchArea[myPosNum].GetComponentInChildren<Card>());
                 }
                 break;
 
@@ -838,21 +845,21 @@ public partial class Card : MonoBehaviourPun
                 int validIndex = 0; // 유효값이 있을 때마다 올라가는 인덱스 카운트 변수
                 for (int i = 0; i < 6; i++) // 가장 공격력이 낮은 유닛을 찾는 과정
                 {
-                    if (searchArea[i].GetComponent<Card>().curHP <= 0) continue; // 죽은 녀석은 대상에서 제외한다.
+                    if (searchArea[i].GetComponentInChildren<Card>().curHP <= 0) continue; // 죽은 녀석은 대상에서 제외한다.
                     if (leastAtk == -1) //아무것도 없을 때에는 최초로 들어온 녀석이 값을 받는다. 
                     {
                         leastAtk = i;
-                        atkArray[validIndex] = transform.parent.transform.GetChild(i).gameObject.GetComponent<Card>().curAttackValue;
+                        atkArray[validIndex] = transform.parent.transform.GetChild(i).gameObject.GetComponentInChildren<Card>().curAttackValue;
                         validIndex++;
                     }
                     else
                     {
-                        atkArray[validIndex] = transform.parent.transform.GetChild(validIndex).gameObject.GetComponent<Card>().curAttackValue;
+                        atkArray[validIndex] = transform.parent.transform.GetChild(validIndex).gameObject.GetComponentInChildren<Card>().curAttackValue;
                         validIndex++;
                     }
                     if (validIndex != 0) if (atkArray[validIndex] < atkArray[0]) leastAtk = i;
                 }
-                skillTarget.Add(searchArea[leastAtk].gameObject.GetComponent<Card>());
+                skillTarget.Add(searchArea[leastAtk].gameObject.GetComponentInChildren<Card>());
                 break;
 
             case TargetType.mostATK:
@@ -862,21 +869,21 @@ public partial class Card : MonoBehaviourPun
                 validIndex = 0; // 유효값이 있을 때마다 올라가는 인덱스 카운트 변수
                 for (int i = 0; i < 6; i++) // 가장 공격력이 낮은 유닛을 찾는 과정
                 {
-                    if (searchArea[i].GetComponent<Card>().curHP <= 0) continue;
+                    if (searchArea[i].GetComponentInChildren<Card>().curHP <= 0) continue;
                     if (mostAtk == -1) //아무것도 없을 때에는 최초로 들어온 녀석이 값을 받는다. 
                     {
                         mostAtk = i;
-                        atkArray[validIndex] = transform.parent.transform.GetChild(i).gameObject.GetComponent<Card>().curAttackValue;
+                        atkArray[validIndex] = transform.parent.transform.GetChild(i).gameObject.GetComponentInChildren<Card>().curAttackValue;
                         validIndex++;
                     }
                     else
                     {
-                        atkArray[validIndex] = transform.parent.transform.GetChild(validIndex).gameObject.GetComponent<Card>().curAttackValue;
+                        atkArray[validIndex] = transform.parent.transform.GetChild(validIndex).gameObject.GetComponentInChildren<Card>().curAttackValue;
                         validIndex++;
                     }
                     if (validIndex != 0) if (atkArray[validIndex] > atkArray[0]) mostAtk = i;
                 }
-                skillTarget.Add(searchArea[mostAtk].GetComponent<Card>());
+                skillTarget.Add(searchArea[mostAtk].GetComponentInChildren<Card>());
                 break;
 
             case TargetType.leastHP:
@@ -886,21 +893,21 @@ public partial class Card : MonoBehaviourPun
                 validIndex = 0; // 유효값이 있을 때마다 올라가는 인덱스 카운트 변수
                 for (int i = 0; i < 6; i++) // 가장 공격력이 낮은 유닛을 찾는 과정
                 {
-                    if (searchArea[i].GetComponent<Card>().curHP <= 0) continue;
+                    if (searchArea[i].GetComponentInChildren<Card>().curHP <= 0) continue;
                     if (leastHp == -1) //아무것도 없을 때에는 최초로 들어온 녀석이 값을 받는다. 
                     {
                         leastHp = i;
-                        hpArray[validIndex] = transform.parent.transform.GetChild(i).gameObject.GetComponent<Card>().curHP;
+                        hpArray[validIndex] = transform.parent.transform.GetChild(i).gameObject.GetComponentInChildren<Card>().curHP;
                         validIndex++;
                     }
                     else
                     {
-                        hpArray[validIndex] = transform.parent.transform.GetChild(validIndex).gameObject.GetComponent<Card>().curHP;
+                        hpArray[validIndex] = transform.parent.transform.GetChild(validIndex).gameObject.GetComponentInChildren<Card>().curHP;
                         validIndex++;
                     }
                     if (validIndex != 0) if (hpArray[validIndex] < hpArray[0]) leastHp = i;
                 }
-                skillTarget.Add(searchArea[leastHp].gameObject.GetComponent<Card>());
+                skillTarget.Add(searchArea[leastHp].gameObject. GetComponentInChildren<Card>());
                 break;
 
             case TargetType.mostHP:
@@ -924,7 +931,7 @@ public partial class Card : MonoBehaviourPun
                     }
                     if (validIndex != 0) if (hpArray[validIndex] > hpArray[0]) mostHp = i;
                 }
-                skillTarget.Add(searchArea[mostHp].GetComponent<Card>());
+                skillTarget.Add(searchArea[mostHp].GetComponentInChildren<Card>());
                 break;
 
 
