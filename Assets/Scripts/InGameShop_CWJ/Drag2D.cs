@@ -195,7 +195,6 @@ public partial class Drag2D : MonoBehaviour
                         }
 
                         //GameMGR.Instance.Event_Buy(gameObject.GetComponent<Card>()); //구매한 카드가 구매시 효과가 있다면 스킬 발동
-
                     }
                 }
 

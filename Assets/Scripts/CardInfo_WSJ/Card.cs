@@ -139,21 +139,30 @@ public partial class Card : MonoBehaviourPun
                     audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.Unit, "Merge_sound");
                     audioSource.Play();
                     StartCoroutine(COR_ComBineMonsterEF());
+
                     if(value > 3)
-                    minusEXP = value - 3;
-
-                    else if(value <= 3)
-                    curEXP += value;
-
-                    if (curEXP >= 2)
                     {
+                        minusEXP = value - 3;
                         StartCoroutine(COR_LevelUpMonsterEF());
                         ChangeValue(CardStatus.Level);
                         gameObject.tag = "BattleMonster2";
                         audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.Unit, "UnitLevelUP_sound");
                         audioSource.Play();
                     }
+                    else if(value <= 3)
+                    curEXP += value;
+
                     else expSlider.value = curEXP * 0.5f;
+
+                    //if (curEXP >= 2)
+                    //{
+                    //    StartCoroutine(COR_LevelUpMonsterEF());
+                    //    ChangeValue(CardStatus.Level);
+                    //    gameObject.tag = "BattleMonster2";
+                    //    audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.Unit, "UnitLevelUP_sound");
+                    //    audioSource.Play();
+                    //}
+                    //else expSlider.value = curEXP * 0.5f;
 
                 }
                 else if (level == 2)
