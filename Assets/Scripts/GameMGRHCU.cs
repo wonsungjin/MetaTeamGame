@@ -16,18 +16,24 @@ public partial class GameMGR : Singleton<GameMGR>
         if (randomValue.Length <= i) i = 0;
         if (set == true)
         {
-            if (randomValue[i] >= 3) return randomValue[i] - 3;
-            else return randomValue[i];
+            if (randomValue[i] >= 3) { Debug.LogError(randomValue[i]); return randomValue[i] - 3; }
+            else
+            {
+                Debug.LogError(randomValue[i]); return randomValue[i];
+            }
         }
-        else if (randomValue[i] >= minrange && randomValue[i] < maxrange) return randomValue[i];
+        else if (randomValue[i] >= minrange && randomValue[i] < maxrange)
+        {
+            Debug.LogError(randomValue[i]); return randomValue[i];
+        }
         else
         {
-            while(randomValue[i] < minrange || randomValue[i] >= maxrange)
+            while (randomValue[i] < minrange || randomValue[i] >= maxrange)
             {
                 i++;
                 if (randomValue.Length <= i) i = 0;
             }
-            return randomValue[i];
+            Debug.LogError(randomValue[i]); return randomValue[i];
         }
     }
 
@@ -82,14 +88,12 @@ public partial class GameMGR : Singleton<GameMGR>
     {
         if (callbackEvent_BattleStart != null)
         {
-            
             Debug.Log("전투시작시 불린다");
             callbackEvent_BattleStart();
             return true;
         }
         else return false;
             Debug.Log("아니 지금 전투시작시가 비었다는 말인가");
-            return false;
     }
     public void Event_Summon()
     {

@@ -190,12 +190,11 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
         else
             while (PlayerUnit() != null && EnemyUnit() != null)
             {
-                Debug.LogError(playerAttackList.Count + "이고 " + enemyAttackList.Count);
+                
                 if (playerAttackList.Count == 0)
                 {
-                    Debug.LogError("들어왔이고 ");
 
-                    for (int i = 0; i < playerForwardUnits.Length; i++) { Debug.LogError("들어왔 "); if (playerForwardUnits[i] != null) { Debug.LogError("들고 "); playerAttackList.Add(playerForwardUnits[i]); } }
+                    for (int i = 0; i < playerForwardUnits.Length; i++) {  if (playerForwardUnits[i] != null) {  playerAttackList.Add(playerForwardUnits[i]); } }
                     for (int i = 0; i < playerBackwardUnits.Length; i++) if (playerBackwardUnits[i] != null) playerAttackList.Add(playerBackwardUnits[i]);
                 }
                 if (enemyAttackList.Count == 0)

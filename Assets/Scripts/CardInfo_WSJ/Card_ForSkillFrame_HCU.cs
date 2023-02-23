@@ -368,7 +368,6 @@ public partial class Card : MonoBehaviourPun
                 GameObject summonCard = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{cardInfo.sumom_Unit}"), targetPos + new Vector2(0, -0.6f), Quaternion.identity);
                 summonCard.transform.GetChild(0).tag = "BattleMonster";
                 summonCard.transform.localScale = summonCard.transform.localScale * 2;
-                summonCard.GetComponentInChildren<Card>().spriteRenderer.sortingLayerName = "SellTXT";
 
                 GameMGR.Instance.spawner.cardBatch[shopBatchEmptyIndex] = summonCard;
                 //summoncard 이름 디버그 띄울것
@@ -673,6 +672,9 @@ public partial class Card : MonoBehaviourPun
                 for (int i = 0; i < cardInfo.GetMaxTarget(cardInfo.level); i++)
                 {
                     random = GameMGR.Instance.GetRandomValue(0, targetArray1.Count);
+                    Debug.Log(random);
+                    Debug.Log(targetArray1.Count);
+                    
 
                     if (targetArray1.Count != 0)
                     {
@@ -707,10 +709,8 @@ public partial class Card : MonoBehaviourPun
                 for (int i = 0; i < cardInfo.GetMaxTarget(cardInfo.level); i++)
                 {
                     random = GameMGR.Instance.GetRandomValue(0, targetArray.Count);
-
                     Debug.Log(random);
-                    Debug.Log(targetArray[random]);
-
+                    Debug.Log(targetArray.Count);
                     if (targetArray.Count == 0) break;
                     if (skillTarget.Contains(targetArray[random])) // 죽은 아군이 아닐 때까지 랜덤값을 돌려
                     {
