@@ -9,25 +9,31 @@ public partial class GameMGR : Singleton<GameMGR>
     // 서로가 동일한 랜덤값을 가지기 위한 것이다.
     public int[] randomValue;
 
-    int i = 0;
+    public int i = 0;
     public int GetRandomValue(int minrange, int maxrange,bool set =false)
     {
         i++;
         if (randomValue.Length <= i) i = 0;
         if (set == true)
         {
-            if (randomValue[i] >= 3) return randomValue[i] - 3;
-            else return randomValue[i];
+            if (randomValue[i] >= 3) { Debug.LogError(randomValue[i]); return randomValue[i] - 3; }
+            else
+            {
+                Debug.LogError(randomValue[i]); return randomValue[i];
+            }
         }
-        else if (randomValue[i] >= minrange && randomValue[i] < maxrange) return randomValue[i];
+        else if (randomValue[i] >= minrange && randomValue[i] < maxrange)
+        {
+            Debug.LogError(randomValue[i]); return randomValue[i];
+        }
         else
         {
-            while(randomValue[i] < minrange && randomValue[i] >= maxrange)
+            while (randomValue[i] < minrange || randomValue[i] >= maxrange)
             {
                 i++;
                 if (randomValue.Length <= i) i = 0;
             }
-            return randomValue[i];
+            Debug.LogError(randomValue[i]); return randomValue[i];
         }
     }
 
