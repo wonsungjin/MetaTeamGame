@@ -77,7 +77,7 @@ public partial class AttackLogic : Skill
 
         GameMGR.Instance.battleLogic.isWaitAttack = true;
     }
-    public void UnitAttack(GameObject targetUnit)
+    public void UnitAttack(GameObject targetUnit,bool player)
     {
         if (targetUnit == null)
         {
@@ -91,7 +91,14 @@ public partial class AttackLogic : Skill
         playerTrans = gameObject.transform.parent.position;
         enemyTrans = targetUnit.transform.position;
         returnPosition = playerTrans;
-
+        if (player == true)
+        {
+            if (GameMGR.Instance.battleLogic.playerAttackList.Count != 0) GameMGR.Instance.battleLogic.playerAttackList.RemoveAt(0);
+        }
+        if(player == false)
+        {
+            if (GameMGR.Instance.battleLogic.enemyAttackList.Count != 0) GameMGR.Instance.battleLogic.enemyAttackList.RemoveAt(0);
+        }
         StartCoroutine(COR_Delay(targetUnit.transform.gameObject));
     }
 
