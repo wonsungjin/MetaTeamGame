@@ -24,6 +24,7 @@ public partial class Drag2D : MonoBehaviour
     float timer = 0f;
     float distance = 100;
     private bool isClickBool = false;
+    private bool isDestroy = false;
     public bool isFreezen = false;
     public bool isClickBattleMonster = false;
 
@@ -33,8 +34,8 @@ public partial class Drag2D : MonoBehaviour
         spriteRenderer = GetComponent<MeshRenderer>();
         pol = GetComponent<BoxCollider2D>();
         card = GetComponent<Card>();
-        if(this.transform.parent!=null)
-        this.selectZonePos = this.transform.parent.position;
+        if (this.transform.parent != null)
+            this.selectZonePos = this.transform.parent.position;
     }
 
     Camera mainCam = null;
@@ -69,7 +70,7 @@ public partial class Drag2D : MonoBehaviour
                         if (timer > 1f)
                         {
                             GameObject vec = GameObject.FindGameObjectWithTag("BattleZone");
-                            hit.collider.gameObject.transform.parent.position = vec.transform.position + Vector3.down + new Vector3(0,-0.4f);
+                            hit.collider.gameObject.transform.parent.position = vec.transform.position + Vector3.down + new Vector3(0, -0.4f);
                             vec.GetComponent<BattleZone>().myObj = hit.collider.gameObject.transform.parent.gameObject;
                         }
                     }
@@ -85,12 +86,15 @@ public partial class Drag2D : MonoBehaviour
         UpdateOutline(true);
         isClickBool = false;
         pol.enabled = false;
+        isDestroy = true;
 
         GameMGR.Instance.uiManager.OnEnter_Set_SkillExplantion(false, Vector3.zero);
         GameMGR.Instance.uiManager.SetisExplantionActive(true);
 
         if (this.gameObject.CompareTag("BattleMonster") || this.gameObject.CompareTag("BattleMonster2") || this.gameObject.CompareTag("BattleMonster3"))
         {
+            gameObject.transform.position += new Vector3(0, 0, 1);
+
             GameMGR.Instance.uiManager.sell.gameObject.SetActive(true);
 
             isClickBattleMonster = true;
@@ -120,7 +124,17 @@ public partial class Drag2D : MonoBehaviour
         {
             StartCoroutine(COR_SellButton());
             StartCoroutine(COR_BackAgain());
+            GameMGR.Instance.sellInCollider.NomalCollOn();
+            GameMGR.Instance.sellInCollider.CollOn();
+
+            StartCoroutine(COR_Destroy());
         }
+    }
+
+    IEnumerator COR_Destroy()
+    {
+        yield return new WaitForSeconds(0.2f);
+        isDestroy = false;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -213,13 +227,26 @@ public partial class Drag2D : MonoBehaviour
                     {
                         ShopCardLevelUp(collision.gameObject);
                     }
+
+                    else if (collision.transform.position.y < transform.position.y)
+                    {
+                        ShopCardLevelUp(gameObject);
+                    }
                 }
 
                 if (gameObject.CompareTag("BattleMonster") || gameObject.CompareTag("BattleMonster2"))
                 {
                     if (collision.gameObject.CompareTag("BattleMonster") || collision.gameObject.CompareTag("BattleMonster2"))
                     {
-                        ShopCardLevelUp(collision.gameObject);
+                        if (collision.transform.position.y > transform.position.y)
+                        {
+                            ShopCardLevelUp(collision.gameObject);         
+                        }
+
+                        else if (collision.transform.position.y < transform.position.y)
+                        {
+                            ShopCardLevelUp(gameObject);
+                        }
                     }
                 }
             }
@@ -234,11 +261,10 @@ public partial class Drag2D : MonoBehaviour
     IEnumerator COR_BuyMonsterEF()
     {
         GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>("Heart"), gameObject.transform.position + monsterPos1, Quaternion.identity);
-        mon.layer = 2;
         yield return new WaitForSeconds(0.3f);
         GameMGR.Instance.objectPool.DestroyPrefab(mon.transform.gameObject);
     }
- 
+
     void ShopCardLevelUp(GameObject collision)
     {
         int colAttack = collision.gameObject.GetComponentInChildren<Card>().curAttackValue;
@@ -248,7 +274,10 @@ public partial class Drag2D : MonoBehaviour
         int plusAttack = 0;
         int plusHp = 0;
         int thisExp = gameObject.GetComponent<Card>().curEXP;
+        int otherExp = collision.gameObject.GetComponent<Card>().curEXP;
         int thisLevel = gameObject.GetComponent<Card>().level;
+        int allExp = 0;
+
 
         if (colAttack > attack)
         {
@@ -268,22 +297,27 @@ public partial class Drag2D : MonoBehaviour
             plusHp = hP;
         }
 
+        allExp = otherExp + thisExp;
+    
         collision.gameObject.GetComponentInChildren<Card>().ChangeValue(CardStatus.Attack, plusAttack + 1);
         collision.gameObject.GetComponentInChildren<Card>().ChangeValue(CardStatus.Hp, plusHp + 1);
 
         if (thisLevel == 1)
         {
-            thisExp += 1;
-            collision.gameObject.GetComponentInChildren<Card>().ChangeValue(CardStatus.Exp, thisExp);
+            allExp += 1;
+            collision.gameObject.GetComponentInChildren<Card>().ChangeValue(CardStatus.Exp, allExp);
         }
 
         else if (thisLevel == 2)
         {
-            thisExp += 3;
-            collision.gameObject.GetComponentInChildren<Card>().ChangeValue(CardStatus.Exp, thisExp);
+            allExp += 3;
+            collision.gameObject.GetComponentInChildren<Card>().ChangeValue(CardStatus.Exp, allExp);
         }
-        
-        GameMGR.Instance.objectPool.DestroyPrefab(this.gameObject.transform.parent.gameObject);
+        if(isDestroy == true)
+        {
+            GameMGR.Instance.objectPool.DestroyPrefab(gameObject.transform.parent.gameObject);
+        }
+
         GameMGR.Instance.uiManager.sell.gameObject.SetActive(false);
     }
 
@@ -299,6 +333,7 @@ public partial class Drag2D : MonoBehaviour
     // 원래 위치로 돌리는 함수
     private IEnumerator COR_BackAgain()
     {
+
         yield return wait;
 
         Debug.Log("아넝훙낳");
