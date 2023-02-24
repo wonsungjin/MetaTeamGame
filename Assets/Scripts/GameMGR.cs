@@ -97,7 +97,7 @@ public partial class GameMGR : Singleton<GameMGR>
             uiManager = FindObjectOfType<UIManager>();
             metaTrendAPI = GetComponent<MetaTrendAPI>();
             shopCards = GetComponent<ShopCards>();
-            customDeckShop = GetComponent<CustomDeckShop>();
+            customDeckShop = FindObjectOfType<CustomDeckShop>();
             dataBase = GetComponent<DataBase>();
             objectPool = GetComponent<ObjectPool>();
             photonLauncher = FindObjectOfType<PhotonLauncher>();
