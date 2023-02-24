@@ -111,9 +111,9 @@ public partial class UIManager : MonoBehaviour
             if (timer <= 15f && timer >= 1f) timerSound();
             else if (timer <= 0f)
             {
-                Debug.Log("0이됐다 시간이");
                 GameMGR.Instance.timerSound.TimeSoundEnd();
                 isTimeOEnd = true;
+                GameMGR.Instance.spawner.OnCLick_ReadyButton();
             }
         }
     }

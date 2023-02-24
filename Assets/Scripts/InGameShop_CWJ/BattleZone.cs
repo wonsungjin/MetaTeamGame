@@ -18,9 +18,7 @@ public class BattleZone : MonoBehaviour
         if (collision.gameObject.CompareTag("BattleMonster") || collision.gameObject.CompareTag("BattleMonster2") || collision.gameObject.CompareTag("BattleMonster3"))
         {
             aura.gameObject.SetActive(false);
-            Debug.Log(collision.gameObject.transform.parent.position);
             collision.gameObject.transform.parent.position = gameObject.transform.position - vecs;
-            Debug.Log(collision.gameObject.transform.parent.position);
             collision.gameObject.GetComponent<Drag2D>().pos = this;
             this.isHere = true;
             this.gameObject.tag = "FullZone";

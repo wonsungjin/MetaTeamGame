@@ -24,6 +24,7 @@ public partial class Card : MonoBehaviourPun
     public int curHP;
     public int curEXP = 0;
     int minusEXP = 0;
+    bool isFirst = false;
     bool isLoop = false;
     public Slider expSlider;
     SkeletonAnimation skeletonAnimation;
@@ -55,7 +56,6 @@ public partial class Card : MonoBehaviourPun
         expSlider = transform.parent.GetChild(1).GetChild(8).GetChild(0).GetComponent<Slider>();
         spriteRenderer = gameObject.GetComponent<MeshRenderer>();
         expSlider.value = 0;
-        gameObject.tag = "Monster";
         curHP = cardInfo.hp;
         hpText.text = curHP.ToString();
         curAttackValue = cardInfo.atk;
@@ -69,6 +69,10 @@ public partial class Card : MonoBehaviourPun
             SetSkillTiming();
         if (flip == true) SetFlip(false);
         transform.parent.gameObject.transform.localScale = Vector3.one;
+        if(isFirst == true)
+        transform.parent.gameObject.transform.position += new Vector3(100f, 100f, 0);
+        gameObject.tag = "Monster";
+        isFirst = true;
     }
     public void SetIsBattle(bool set)
     {
@@ -136,10 +140,21 @@ public partial class Card : MonoBehaviourPun
             case CardStatus.Exp:
                 if (level == 1)
                 {
-                    if (value >= 2)
+                    if (value >= 3)
                     {
                         minusEXP = value - 3;
                         curEXP += minusEXP;
+                        GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>("skillAttack"), gameObject.transform.position + vec, Quaternion.identity);
+                        gameObject.tag = "BattleMonster2";
+                        audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.Unit, "UnitLevelUP_sound");
+                        audioSource.Play();
+                        ChangeValue(CardStatus.Level);
+                    }
+
+                    if (value >= 2)
+                    {
+                        minusEXP = value - 2;
+                        curEXP += value;
                         GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>("skillAttack"), gameObject.transform.position + vec, Quaternion.identity);
                         gameObject.tag = "BattleMonster2";
                         audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.Unit, "UnitLevelUP_sound");
@@ -164,7 +179,6 @@ public partial class Card : MonoBehaviourPun
                             audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.Unit, "UnitLevelUP_sound");
                                 audioSource.Play();
                         }
-                   
                     }
                 }
 
@@ -185,8 +199,9 @@ public partial class Card : MonoBehaviourPun
                         audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.Unit, "Merge_sound");
                         audioSource.Play();
                         GameObject monEFF = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>("skillAttack2"), gameObject.transform.position + vec, Quaternion.identity);
+                        expSlider.value = curEXP * 0.33f;
 
-                        if(curEXP >= 3)
+                        if (curEXP >= 3)
                         {
                             GameObject mon = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>("skillAttack"), gameObject.transform.position + vec, Quaternion.identity);
                             ChangeValue(CardStatus.Level);
@@ -194,28 +209,56 @@ public partial class Card : MonoBehaviourPun
                             audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.Unit, "UnitLevelUP_sound");
                             audioSource.Play();
                         }
-
-                        expSlider.value = curEXP * 0.33f;
                     }
                 }
                 break;
 
             case CardStatus.Level:
+                if (level == 1 && minusEXP > 0)
+                {
+                    curEXP = minusEXP;
+                    if (curEXP >= 2)
+                    {
+                        level++;
+                        levelText.text = level.ToString();
+                        GameMGR.Instance.sellInCollider.CollOn();
+                        GameMGR.Instance.spawner.SpecialMonster();
+                    }
+
+                    expSlider.value = curEXP * 0.5f;
+                }
+
                 if (level == 2 && minusEXP > 0)
                 {
                     curEXP = minusEXP;
+                    if(curEXP >= 3)
+                    {
+                        level++;
+                        levelText.text = level.ToString();
+                        GameMGR.Instance.sellInCollider.CollOn();
+                        GameMGR.Instance.spawner.SpecialMonster();
+                    }
 
                     expSlider.value = curEXP * 0.33f;
                 }
                 else if (minusEXP <= 0)
                 {
-                    curEXP = value;
+                    curEXP = 0;
                     expSlider.value = 0;
+                    level++;
+                    levelText.text = level.ToString();
+                    GameMGR.Instance.sellInCollider.CollOn();
+                    GameMGR.Instance.spawner.SpecialMonster();
                 }
+
+                else
+                {
+
                 level++;
                 levelText.text = level.ToString();
                 GameMGR.Instance.sellInCollider.CollOn();
                 GameMGR.Instance.spawner.SpecialMonster();
+                }
 
                 break;
         }

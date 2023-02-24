@@ -30,6 +30,9 @@ public partial class Drag2D : MonoBehaviour
     public bool isFreezen = false;
     public bool isClickBattleMonster = false;
 
+    bool isTriggerTouch = false;
+    GameObject touchCollider = null;
+
     private void OnEnable()
     {
         mainCam = Camera.main;
@@ -111,8 +114,30 @@ public partial class Drag2D : MonoBehaviour
         isClickBattleMonster = false;
         GameMGR.Instance.uiManager.SetisExplantionActive(false);
 
+        if (this.gameObject.CompareTag("BattleMonster") || this.gameObject.CompareTag("BattleMonster2") || this.gameObject.CompareTag("BattleMonster3"))
+        {
+            StartCoroutine(COR_SellButton());
+            GameMGR.Instance.sellInCollider.NomalCollOn();
+            GameMGR.Instance.sellInCollider.CollOn();
+
+            if (isTriggerTouch && touchCollider != null)
+            {
+                ShopCardLevelUp(touchCollider);
+                StartCoroutine(COR_BackAgain());
+            }
+            else
+            {
+
+            }
+            
+            
+            
+
+            StartCoroutine(COR_Destroy());
+        }
+
         // 용병들 잡고 놓았을 때 원래 위치로 돌아간다
-        if (this.gameObject.CompareTag("Monster"))
+        else if (this.gameObject.CompareTag("Monster"))
         {
             StartCoroutine(COR_BackAgain());
         }
@@ -122,15 +147,7 @@ public partial class Drag2D : MonoBehaviour
             StartCoroutine(COR_BackAgain());
         }
 
-        else if (this.gameObject.CompareTag("BattleMonster") || this.gameObject.CompareTag("BattleMonster2") || this.gameObject.CompareTag("BattleMonster3"))
-        {
-            StartCoroutine(COR_SellButton());
-            StartCoroutine(COR_BackAgain());
-            GameMGR.Instance.sellInCollider.NomalCollOn();
-            GameMGR.Instance.sellInCollider.CollOn();
-
-            StartCoroutine(COR_Destroy());
-        }
+        
     }
 
     IEnumerator COR_Destroy()
@@ -220,37 +237,31 @@ public partial class Drag2D : MonoBehaviour
                 }
             }
 
-
-            if (gameObject.name == collision.gameObject.name)
+            if(gameObject.CompareTag("BattleMonster")||  gameObject.CompareTag("BattleMonster2"))
             {
-                if (gameObject.CompareTag("BattleMonster2") && collision.gameObject.CompareTag("BattleMonster2"))
+                if (gameObject.name == collision.gameObject.name)
                 {
-                    if (collision.transform.position.y > transform.position.y)
-                    {
-                        ShopCardLevelUp(collision.gameObject);
-                    }
+                    isTriggerTouch = true;
+                    touchCollider = collision.gameObject;
 
-                    else if (collision.transform.position.y < transform.position.y)
-                    {
-                        ShopCardLevelUp(gameObject);
-                    }
+                    /*  if (collision.gameObject.CompareTag("BattleMonster") || collision.gameObject.CompareTag("BattleMonster2"))
+                      {
+                              if (!isDestroy)
+                              {
+                                  bool isDone = ShopCardLevelUp(collision.gameObject);
+                                  while (!isDone)
+                                  { }
+                                  isDone = false;
+                                  //ShopCardLevelUp(collision.gameObject);
+                                  GameMGR.Instance.objectPool.DestroyPrefab(collision.gameObject.transform.parent.gameObject);
+                              }
+                      }*/
                 }
-
-                if (gameObject.CompareTag("BattleMonster") || gameObject.CompareTag("BattleMonster2"))
-                {
-                    if (collision.gameObject.CompareTag("BattleMonster") || collision.gameObject.CompareTag("BattleMonster2"))
-                    {
-                        if (collision.transform.position.y > transform.position.y)
-                        {
-                            ShopCardLevelUp(collision.gameObject);
-                        }
-
-                        else if (collision.transform.position.y < transform.position.y)
-                        {
-                            ShopCardLevelUp(gameObject);
-                        }
-                    }
-                }
+            }
+            else
+            {
+                isTriggerTouch = false;
+                touchCollider = null;
             }
 
             if (collision.gameObject.CompareTag("BattleMonster3") || gameObject.CompareTag("BattleMonster3"))
@@ -265,6 +276,7 @@ public partial class Drag2D : MonoBehaviour
         int colAttack = collision.gameObject.GetComponentInChildren<Card>().curAttackValue;
         int colHP = collision.gameObject.GetComponentInChildren<Card>().curHP;
         int otherExp = collision.gameObject.GetComponentInChildren<Card>().curEXP;
+        int ohterLevel = collision.gameObject.GetComponentInChildren<Card>().level;
 
         int attack = card.curAttackValue;
         int hP = card.curHP;
@@ -296,29 +308,29 @@ public partial class Drag2D : MonoBehaviour
 
 
 
-        allExp += otherExp + thisExp;
+        allExp = otherExp + thisExp;
 
         collision.gameObject.GetComponentInChildren<Card>().ChangeValue(CardStatus.Attack, plusAttack + 1);
         collision.gameObject.GetComponentInChildren<Card>().ChangeValue(CardStatus.Hp, plusHp + 1);
 
 
-        if (isDestroy == true)
-        {
-            GameMGR.Instance.objectPool.DestroyPrefab(gameObject.transform.parent.gameObject);
-        }
+        
 
-        if (thisLevel == 1)
+        if (thisLevel == 1 || otherExp == 1)
         {
             allExp += 1;
             collision.gameObject.GetComponentInChildren<Card>().ChangeValue(CardStatus.Exp, allExp);
         }
 
-        else if (thisLevel == 2)
+        else if (thisLevel == 2 || otherExp == 2)
         {
             allExp += 3;
             collision.gameObject.GetComponentInChildren<Card>().ChangeValue(CardStatus.Exp, allExp);
         }
+
         GameMGR.Instance.uiManager.sell.gameObject.SetActive(false);
+
+        GameMGR.Instance.objectPool.DestroyPrefab(gameObject.transform.parent.gameObject);
     }
 
     // 판매버튼 ON OFF
