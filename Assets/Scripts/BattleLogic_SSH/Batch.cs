@@ -47,9 +47,9 @@ public partial class Batch : MonoBehaviourPun
                 GameMGR.Instance.uiManager.PlayerLifeTXT.text = PhotonNetwork.PlayerList[i].CustomProperties["Life"].ToString();
             }
         }
-
-
-
+        
+        
+        
         for (int j = 0; j < cardList.Count; j++)
         {
             CardUI get = GameMGR.Instance.uiManager.unitSprite[j].GetComponentInParent<CardUI>();
@@ -95,7 +95,15 @@ public partial class Batch : MonoBehaviourPun
 
         yield return new WaitForSeconds(5f);
 
-        GameMGR.Instance.uiManager.ExitGame();
+
+
+        PhotonNetwork.LeaveRoom();
+        PhotonNetwork.AutomaticallySyncScene = false;
+        Destroy(GameMGR.Instance.gameObject);
+        yield return new WaitForSeconds(1f);
+        PhotonNetwork.LoadLevel("LobbyScene");
+
+        // GameMGR.Instance.uiManager.ExitGame();
     }
 
     public void Init()
