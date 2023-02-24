@@ -31,6 +31,7 @@ public partial class GameMGR : Singleton<GameMGR>
         WaitForSeconds ww = new WaitForSeconds(1f);
         Init(1);
         randomValue = new int[200];
+        for(int i = 0; i < randomValue.Length; i++) randomValue[i] = Random.Range(0,6);
     }
     private void Start()
     {
