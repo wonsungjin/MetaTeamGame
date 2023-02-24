@@ -25,8 +25,8 @@ public class MetaTrendAPI : MonoBehaviour
     DateTime ServerTime;
     TimeSpan spanTime;
 
-    string APIProfilePort = "http://localhost:8544/api/getuserprofile";
-    string APIIdPort = "http://localhost:8544/api/getsessionid";
+    string APIProfilePort = "http://localhost:8546/api/getuserprofile";
+    string APIIdPort = "http://localhost:8546/api/getsessionid";
 
     WaitForSeconds waitTime = new WaitForSeconds(1f);
 
@@ -37,8 +37,8 @@ public class MetaTrendAPI : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.U))
         {
             Debug.LogError("포트번호 변경");
-            APIProfilePort = "http://localhost:8546/api/getuserprofile";
-            APIIdPort = "http://localhost:8546/api/getsessionid";
+            APIProfilePort = "http://localhost:8544/api/getuserprofile";
+            APIIdPort = "http://localhost:8544/api/getsessionid";
         }
     }
 
