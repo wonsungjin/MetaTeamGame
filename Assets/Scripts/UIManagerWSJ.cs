@@ -123,6 +123,15 @@ public partial class UIManager : MonoBehaviour
         Faid(lobbyPannel, faidType.In, 0.03f);
 
     }
+    public void OnClick_Move_Matching()
+    {
+        if (GameMGR.Instance.myCustomDeck != null)
+        {
+            GameMGR.Instance.photonLauncher.OnClick_Join_Room();
+            // SceneManager.LoadScene("StoreScene");
+        }
+        else Debug.Log("µ¶º±≈√");
+    }
     public void SetFalseStar(int set)
     {
         for (int i = 0; i < star.Length; i++)

@@ -39,7 +39,7 @@ public partial class GameMGR : Singleton<GameMGR>
         metaTrendAPI.GetSessionID();
         metaTrendAPI.GetDummyPool();
         StartCoroutine(COR_GetCoin());
-        DontDestroyOnLoad(Instance);
+        DontDestroyOnLoad(gameObject);
 
     }
 
@@ -84,6 +84,7 @@ public partial class GameMGR : Singleton<GameMGR>
         yield return new WaitUntil(() => GameMGR.Instance.metaTrendAPI.res_UserProfile.userProfile.public_address != null);
         uiManager.Faid(uiManager.loginSystemUI, faidType.Out, 0.03f);
         dataBase.Login();
+        shopCards.Init();
         PhotonNetwork.LocalPlayer.NickName = GameMGR.Instance.dataBase.userName;
         Debug.Log("???" + metaTrendAPI.GetZera());
         yield break;
@@ -101,7 +102,7 @@ public partial class GameMGR : Singleton<GameMGR>
             objectPool = GetComponent<ObjectPool>();
             photonLauncher = FindObjectOfType<PhotonLauncher>();
             uiManager.Init_Scene1();
-            shopCards.Init();
+            
         }
         else if (num == 2)
         {

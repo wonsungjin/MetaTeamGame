@@ -92,11 +92,11 @@ public partial class Batch : MonoBehaviourPun
             }
         }
 
+        PhotonNetwork.LeaveRoom();
         yield return new WaitForSeconds(5f);
 
 
 
-        PhotonNetwork.LeaveRoom();
         PhotonNetwork.AutomaticallySyncScene = false;
         Destroy(GameMGR.Instance.gameObject);
         yield return new WaitForSeconds(1f);
