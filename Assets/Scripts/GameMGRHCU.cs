@@ -37,7 +37,7 @@ public partial class GameMGR : Singleton<GameMGR>
         }
     }
 
-    public Dictionary<int, List<Card>> playerList = new Dictionary<int, List<Card>>();
+    public Dictionary<int, List<string>> playerList = new Dictionary<int, List<string>>();
 
     public bool isBattleNow = false; // 현재 전투씬인지 비전투씬인지를 구분하는 불값.
 
@@ -93,7 +93,6 @@ public partial class GameMGR : Singleton<GameMGR>
             return true;
         }
         else return false;
-            Debug.Log("아니 지금 전투시작시가 비었다는 말인가");
     }
     public void Event_Summon()
     {

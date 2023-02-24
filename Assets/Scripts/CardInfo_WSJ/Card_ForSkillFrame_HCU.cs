@@ -300,15 +300,15 @@ public partial class Card : MonoBehaviourPun
                 break;
             case EffectType.changeDamage:
                 Debug.Log("데미지 증감 효과 발동");
-                for (int i = 0; i < skillTarget.Count; i++)
-                {
-                    if (skillTarget[i].curAttackValue > 0 && skillTarget[i].curAttackValue > cardInfo.GetValue(1, level))
-                    {
-                        skillTarget[i].giveDamage += cardInfo.GetValue(1, level);
-                        skillTarget[i].takeDamage += cardInfo.GetValue(2, level);
-                    }
+                //for (int i = 0; i < skillTarget.Count; i++)
+                //{
+                //    if (skillTarget[i].curAttackValue > 0 && skillTarget[i].curAttackValue > cardInfo.GetValue(1, level))
+                //    {
+                //        skillTarget[i].giveDamage += cardInfo.GetValue(1, level);
+                //        skillTarget[i].takeDamage += cardInfo.GetValue(2, level);
+                //    }
 
-                }
+                //}
                 break;
             case EffectType.changeATK:
                 Debug.Log("공격력 효과 발동");
