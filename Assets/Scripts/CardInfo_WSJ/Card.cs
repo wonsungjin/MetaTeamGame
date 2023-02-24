@@ -23,6 +23,7 @@ public partial class Card : MonoBehaviourPun
     public int curAttackValue;
     public int curHP;
     public int curEXP = 0;
+    int minusEXP = 0;
     bool isLoop = false;
     public Slider expSlider;
     SkeletonAnimation skeletonAnimation;
@@ -65,7 +66,7 @@ public partial class Card : MonoBehaviourPun
         skeletonAnimation = GetComponent<SkeletonAnimation>();
         isBattle = false;
         if (!isSkillTiming)
-        SetSkillTiming();
+            SetSkillTiming();
         if (flip == true) SetFlip(false);
         transform.parent.gameObject.transform.localScale = Vector3.one;
     }
@@ -73,20 +74,21 @@ public partial class Card : MonoBehaviourPun
     {
         isBattle = set;
     }
-    public void ChangeCard(Card card)
+    public void ChangeCard(string[] unit)
     {
-        ChangeValue(CardStatus.Hp, card.curHP);
-        ChangeValue(CardStatus.Attack, card.curAttackValue);
-        if (level == 2) expSlider.value = card.curEXP * 0.5f;
-        else expSlider.value = card.curEXP * 0.33f;
-        levelText.text = card.level.ToString();
+        SetMyInfo(unit[0]);
+        ChangeValue(CardStatus.Hp, int.Parse(unit[1]));
+        ChangeValue(CardStatus.Attack, int.Parse(unit[2]));
+        if (level == 2) expSlider.value = int.Parse(unit[3]) * 0.5f;
+        else expSlider.value = int.Parse(unit[3]) * 0.33f;
+        levelText.text = unit[4];
     }
 
     public void SetAnim(string state)
     {
         // skeletonAnimation.AnimationState
-        
-        switch(state)
+
+        switch (state)
         {
             case "Idle":
                 isLoop = true;
@@ -138,8 +140,12 @@ public partial class Card : MonoBehaviourPun
                     audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.Unit, "Merge_sound");
                     audioSource.Play();
                     StartCoroutine(COR_ComBineMonsterEF());
+                    if(value > 3)
+                    minusEXP = value - 3;
 
+                    else if(value <= 3)
                     curEXP += value;
+
                     if (curEXP >= 2)
                     {
                         StartCoroutine(COR_LevelUpMonsterEF());
@@ -166,17 +172,26 @@ public partial class Card : MonoBehaviourPun
                         gameObject.tag = "BattleMonster3";
                         audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.Unit, "UnitLevelUP_sound");
                         audioSource.Play();
-                       
                     }
                     else expSlider.value = curEXP * 0.33f;
                 }
                 break;
 
             case CardStatus.Level:
-                curEXP = 0;
-                expSlider.value = 0;
+                if (level == 2 && minusEXP > 0)
+                {
+                    curEXP = minusEXP;
+
+                    expSlider.value = curEXP * 0.33f;
+                }
+                else if (minusEXP <= 0)
+                {
+                    curEXP = value;
+                    expSlider.value = 0;
+                }
                 level++;
                 levelText.text = level.ToString();
+                GameMGR.Instance.sellInCollider.CollOn();
                 GameMGR.Instance.spawner.SpecialMonster();
 
                 break;

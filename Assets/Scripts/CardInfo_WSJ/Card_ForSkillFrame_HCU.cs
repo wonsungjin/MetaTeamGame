@@ -99,14 +99,21 @@ public partial class Card : MonoBehaviourPun
         {
             for (int i = 0; i < 6; i++)
             {
-                if (GameMGR.Instance.battleLogic.playerAttackArray[i] == null) continue;
-                if (GameMGR.Instance.battleLogic.playerAttackArray[i].GetComponentInChildren<Card>() == this)
+                if (GameMGR.Instance.battleLogic.playerUnits[i] == null) continue;
+                if (GameMGR.Instance.battleLogic.playerUnits[i].GetComponentInChildren<Card>() == this)
                 {
-                    GameMGR.Instance.battleLogic.playerAttackArray[i] = null;
+                    GameMGR.Instance.battleLogic.playerUnits[i] = null;
                     break;
                 }
             }
-
+            for (int i = 0; i < GameMGR.Instance.battleLogic.playerAttackList.Count; i++)
+            {
+                if (GameMGR.Instance.battleLogic.playerAttackList[i].GetComponentInChildren<Card>() == this)
+                {
+                    GameMGR.Instance.battleLogic.playerAttackList.RemoveAt(i);
+                    break;
+                }
+            }
             for (int i = 0; i < 3; i++)
             {
                 if (GameMGR.Instance.battleLogic.playerForwardUnits[i] == null) continue;
@@ -130,10 +137,18 @@ public partial class Card : MonoBehaviourPun
         {
             for (int i = 0; i < 6; i++)
             {
-                if (GameMGR.Instance.battleLogic.enemyAttackArray[i] == null) continue;
-                if (GameMGR.Instance.battleLogic.enemyAttackArray[i].GetComponentInChildren<Card>() == this)
+                if (GameMGR.Instance.battleLogic.enemyUnits[i] == null) continue;
+                if (GameMGR.Instance.battleLogic.enemyUnits[i].GetComponentInChildren<Card>() == this)
                 {
-                    GameMGR.Instance.battleLogic.enemyAttackArray[i] = null;
+                    GameMGR.Instance.battleLogic.enemyUnits[i] = null;
+                    break;
+                }
+            }
+            for (int i = 0; i < GameMGR.Instance.battleLogic.enemyAttackList.Count; i++)
+            {
+                if (GameMGR.Instance.battleLogic.enemyAttackList[i].GetComponentInChildren<Card>() == this)
+                {
+                    GameMGR.Instance.battleLogic.enemyAttackList.RemoveAt(i);
                     break;
                 }
             }
@@ -285,15 +300,15 @@ public partial class Card : MonoBehaviourPun
                 break;
             case EffectType.changeDamage:
                 Debug.Log("데미지 증감 효과 발동");
-                for (int i = 0; i < skillTarget.Count; i++)
-                {
-                    if (skillTarget[i].curAttackValue > 0 && skillTarget[i].curAttackValue > cardInfo.GetValue(1, level))
-                    {
-                        skillTarget[i].giveDamage += cardInfo.GetValue(1, level);
-                        skillTarget[i].takeDamage += cardInfo.GetValue(2, level);
-                    }
+                //for (int i = 0; i < skillTarget.Count; i++)
+                //{
+                //    if (skillTarget[i].curAttackValue > 0 && skillTarget[i].curAttackValue > cardInfo.GetValue(1, level))
+                //    {
+                //        skillTarget[i].giveDamage += cardInfo.GetValue(1, level);
+                //        skillTarget[i].takeDamage += cardInfo.GetValue(2, level);
+                //    }
 
-                }
+                //}
                 break;
             case EffectType.changeATK:
                 Debug.Log("공격력 효과 발동");
@@ -441,21 +456,21 @@ public partial class Card : MonoBehaviourPun
 
         if (isMine)
         {
-            myArea = GameMGR.Instance.battleLogic.playerAttackArray;
+            myArea = GameMGR.Instance.battleLogic.playerUnits;
             myAreaFront = GameMGR.Instance.battleLogic.playerForwardUnits;
             myAreaBack = GameMGR.Instance.battleLogic.playerBackwardUnits;
 
-            enemyArea = GameMGR.Instance.battleLogic.enemyAttackArray;
+            enemyArea = GameMGR.Instance.battleLogic.enemyUnits;
             enemyAreaFront = GameMGR.Instance.battleLogic.enemyForwardUnits;
             enemyAreaBack = GameMGR.Instance.battleLogic.enemyBackwardUnits;
         }
         else
         {
-            enemyArea = GameMGR.Instance.battleLogic.playerAttackArray;
+            enemyArea = GameMGR.Instance.battleLogic.playerUnits;
             enemyAreaFront = GameMGR.Instance.battleLogic.playerForwardUnits;
             enemyAreaBack = GameMGR.Instance.battleLogic.playerBackwardUnits;
 
-            myArea = GameMGR.Instance.battleLogic.enemyAttackArray;
+            myArea = GameMGR.Instance.battleLogic.enemyUnits;
             myAreaFront = GameMGR.Instance.battleLogic.enemyForwardUnits;
             myAreaBack = GameMGR.Instance.battleLogic.enemyBackwardUnits;
         }
@@ -656,7 +671,11 @@ public partial class Card : MonoBehaviourPun
 
                 for (int i = 0; i < cardInfo.GetMaxTarget(cardInfo.level); i++)
                 {
+                    if (targetArray1.Count == 0) break;
                     random = GameMGR.Instance.GetRandomValue(0, targetArray1.Count);
+                    Debug.Log(random);
+                    Debug.Log(targetArray1.Count);
+                    
 
                     if (targetArray1.Count != 0)
                     {
@@ -690,8 +709,11 @@ public partial class Card : MonoBehaviourPun
 
                 for (int i = 0; i < cardInfo.GetMaxTarget(cardInfo.level); i++)
                 {
-                    random = GameMGR.Instance.GetRandomValue(0, targetArray.Count);
                     if (targetArray.Count == 0) break;
+                    random = GameMGR.Instance.GetRandomValue(0, targetArray.Count);
+                    Debug.Log(random);
+                    Debug.Log(targetArray.Count);
+                    
                     if (skillTarget.Contains(targetArray[random])) // 죽은 아군이 아닐 때까지 랜덤값을 돌려
                     {
                         i--;
@@ -830,8 +852,8 @@ public partial class Card : MonoBehaviourPun
 
             case TargetType.otherSide:
                 Debug.Log("대상은 내 반대편");
-                int myPosNum = System.Array.IndexOf(GameMGR.Instance.battleLogic.playerAttackArray, this);
-                if (GameMGR.Instance.battleLogic.enemyAttackArray[myPosNum] != null)
+                int myPosNum = System.Array.IndexOf(GameMGR.Instance.battleLogic.playerUnits, this);
+                if (GameMGR.Instance.battleLogic.enemyUnits[myPosNum] != null)
                 {
                     skillTarget.Add(searchArea[myPosNum].GetComponentInChildren<Card>());
                 }
