@@ -28,7 +28,6 @@ public class PhotonLauncher : MonoBehaviourPunCallbacks
         matchingPannel = GameObject.Find("MatchingPannel");
         matchingPannel.SetActive(false);
 
-
         // 룸 생성 옵션 : MaxPlayer
         roomOptions.MaxPlayers = maxPlayer;
 

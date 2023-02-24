@@ -93,7 +93,6 @@ public partial class GameMGR : Singleton<GameMGR>
             return true;
         }
         else return false;
-            Debug.Log("아니 지금 전투시작시가 비었다는 말인가");
     }
     public void Event_Summon()
     {

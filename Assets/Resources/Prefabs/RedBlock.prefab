@@ -139,7 +139,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cda88de653f299840b5c51af7dbe0bd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pos: {fileID: 0}
   isFreezen: 0
+  isClickBattleMonster: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   outlineSize: 5
 --- !u!50 &6850762689820966012
@@ -201,21 +203,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2435f21eb5008146b871a8c0fa54c9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardInfo: {fileID: 0}
-  hpText: {fileID: 0}
-  atkText: {fileID: 0}
-  levelText: {fileID: 0}
-  level: 0
-  curAttackValue: 0
-  curHP: 0
+  cardInfo: {fileID: 11400000, guid: c13145f8d6095f24ea321eb38e70ee70, type: 2}
+  hpText: {fileID: 1235290503736190236}
+  atkText: {fileID: 1235290505264129076}
+  levelText: {fileID: 1235290503520030066}
+  level: 1
+  curAttackValue: 3
+  curHP: 1
   curEXP: 0
-  expSlider: {fileID: 0}
+  expSlider: {fileID: 616869905456731366}
+  isBattle: 0
   skillTarget: []
   batchPos: {x: 0, y: 0}
   targetPos: {x: 0, y: 0}
   curPos: {fileID: 0}
   giveDamage: 0
   takeDamage: 0
+  shopBatchEmptyIndex: 0
+  isMine: 0
+  triggerOnCount: 0
+  searchArea: []
 --- !u!114 &1562346805787754960
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -229,6 +236,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillType: 
+  isArrive: 0
 --- !u!82 &6536483589612483375
 AudioSource:
   m_ObjectHideFlags: 0
@@ -377,6 +385,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: InfoText
       objectReference: {fileID: 0}
+    - target: {fileID: 2360689887713349569, guid: 306e3f38cec157842b453c50aac32a45, type: 3}
+      propertyPath: m_text
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4137109519686450963, guid: 306e3f38cec157842b453c50aac32a45, type: 3}
+      propertyPath: m_Value
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8359877118856600461, guid: 306e3f38cec157842b453c50aac32a45, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -423,6 +439,50 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 306e3f38cec157842b453c50aac32a45, type: 3}
+--- !u!114 &616869905456731366 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4137109519686450963, guid: 306e3f38cec157842b453c50aac32a45, type: 3}
+  m_PrefabInstance: {fileID: 3595694227896183797}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1235290503520030066 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2360689889727817351, guid: 306e3f38cec157842b453c50aac32a45, type: 3}
+  m_PrefabInstance: {fileID: 3595694227896183797}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1235290503736190236 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2360689889277071081, guid: 306e3f38cec157842b453c50aac32a45, type: 3}
+  m_PrefabInstance: {fileID: 3595694227896183797}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1235290505264129076 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2360689887713349569, guid: 306e3f38cec157842b453c50aac32a45, type: 3}
+  m_PrefabInstance: {fileID: 3595694227896183797}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &5035665583462527096 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8359877118856600461, guid: 306e3f38cec157842b453c50aac32a45, type: 3}
