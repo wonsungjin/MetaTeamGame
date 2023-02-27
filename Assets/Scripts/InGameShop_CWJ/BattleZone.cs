@@ -6,7 +6,7 @@ public class BattleZone : MonoBehaviour
     [SerializeField] int myNum; // 상점 유닛 배치 순서 (0~5)
     [SerializeField] GameObject aura;
     public GameObject myObj = null;
-    Vector3 vecs = new Vector3(0, 1f, 1f);
+    Vector3 vecs = new Vector3(0, 0.6f, 1f);
 
     private void Start()
     {
@@ -18,9 +18,6 @@ public class BattleZone : MonoBehaviour
         if (collision.gameObject.CompareTag("BattleMonster") || collision.gameObject.CompareTag("BattleMonster2") || collision.gameObject.CompareTag("BattleMonster3"))
         {
             aura.gameObject.SetActive(false);
-            Debug.Log(collision.gameObject.transform.parent.position);
-            collision.gameObject.transform.parent.position = gameObject.transform.position - vecs;
-            Debug.Log(collision.gameObject.transform.parent.position);
             collision.gameObject.GetComponent<Drag2D>().pos = this;
             this.isHere = true;
             this.gameObject.tag = "FullZone";

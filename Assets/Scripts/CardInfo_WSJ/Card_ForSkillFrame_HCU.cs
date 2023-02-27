@@ -657,9 +657,10 @@ public partial class Card : MonoBehaviourPun
 
             case TargetType.random:
                 Debug.Log("대상은 랜덤");
-                int random = GameMGR.Instance.GetRandomValue(0, searchArea.Count);
+                int random;
 
                 List<Card> targetArray1 = new List<Card>();
+
                 for (int i = 0; i < searchArea.Count; i++)
                 {
                     if (searchArea[i] != null)
@@ -729,9 +730,9 @@ public partial class Card : MonoBehaviourPun
                 
                 random = GameMGR.Instance.GetRandomValue(0, 3);
                 bool isAllDead = true;
-                for (int i = 0; i < 3; i++)
+                for (int i = 0; i < searchArea.Count; i++)
                 {
-                    if (searchArea[i].GetComponentInChildren<Card>().curHP >= 0)
+                    if (searchArea[i].GetComponentInChildren<Card>() != null)
                     {
                         isAllDead = false;
                         break;
@@ -759,11 +760,11 @@ public partial class Card : MonoBehaviourPun
 
             case TargetType.backward:       // 후열 ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇ
                 Debug.Log("대상은 후열");
-                random = GameMGR.Instance.GetRandomValue(0, 3);
+                random = GameMGR.Instance.GetRandomValue(0, searchArea.Count);
                 isAllDead = true;
-                for (int i = 3; i < 6; i++)
+                for (int i = 0; i < searchArea.Count; i++)
                 {
-                    if (searchArea[i].GetComponentInChildren<Card>().curHP >= 0)
+                    if (searchArea[i].GetComponentInChildren<Card>() != null)
                     {
                         isAllDead = false;
                         break;
@@ -776,36 +777,50 @@ public partial class Card : MonoBehaviourPun
                 }
                 else // 한명이라도 살아있다면
                 {
-                    random = GameMGR.Instance.GetRandomValue(0, 3);
-                    while (searchArea[random].GetComponentInChildren<Card>().curHP <= 0 && searchArea[random] == this) // 죽은 아군이 아닐 때까지 랜덤값을 돌려
+                    List<Card> realExist = new List<Card>();
+
+                    for(int i = 0; i < searchArea.Count; i++)
                     {
-                        random = GameMGR.Instance.GetRandomValue(0, 3);
+                        if (searchArea[i] != null)
+                            realExist.Add(searchArea[i].GetComponentInChildren<Card>());
                     }
-                    skillTarget.Add(searchArea[random].GetComponentInChildren<Card>());
+
+                    for(int i = 0; i < cardInfo.GetMaxTarget(level); i++)
+                    {
+                        random = GameMGR.Instance.GetRandomValue(0, searchArea.Count);
+                        if (skillTarget.Contains(searchArea[random].GetComponentInChildren<Card>()))
+                        {
+                            i--;
+                            continue;
+                        }
+                        skillTarget.Add(searchArea[random].GetComponentInChildren<Card>());
+                        if (skillTarget.Count >= realExist.Count) break;
+                    }
+                    
                 }
                 break;
 
             case TargetType.front:  // 내 앞
                 for (int i = 3; i < 6; i++)
                 {
-                    if (searchArea[i].GetComponentInChildren<Card>() == this)
+                    if (myArea[i].GetComponentInChildren<Card>() == this)
                     {
-                        if (searchArea[i - 3].GetComponentInChildren<Card>() != null)
+                        if (myArea[i - 3].GetComponentInChildren<Card>() != null)
                         {
-                            skillTarget.Add(searchArea[i - 3].GetComponentInChildren<Card>());
+                            skillTarget.Add(myArea[i - 3].GetComponentInChildren<Card>());
                         }
                     }
                 }
                 break;
 
             case TargetType.back:   // 내 뒤
-                for (int i = 3; i < 6; i++)
+                for (int i = 0; i < 3; i++)
                 {
-                    if (searchArea[i].GetComponentInChildren<Card>() == this)
+                    if (myArea[i].GetComponentInChildren<Card>() == this)
                     {
-                        if (searchArea[i + 3].GetComponentInChildren<Card>() != null)
+                        if (myArea[i + 3].GetComponentInChildren<Card>() != null)
                         {
-                            skillTarget.Add(searchArea[i + 3].GetComponentInChildren<Card>());
+                            skillTarget.Add(myArea[i + 3].GetComponentInChildren<Card>());
                         }
                     }
                 }
