@@ -15,6 +15,7 @@ public partial class Drag2D : MonoBehaviour
     MeshRenderer spriteRenderer;
     public BattleZone pos;
     Vector2 selectZonePos;
+    Vector3 battleZonePos;
     Vector3 monsterPos = new Vector3(0, -0.6f, 0);
     Vector3 monsterPos1 = new Vector3(0, 0.6f, 0);
 
@@ -30,8 +31,8 @@ public partial class Drag2D : MonoBehaviour
     public bool isFreezen = false;
     public bool isClickBattleMonster = false;
 
-    bool isTriggerTouch = false;
-    GameObject touchCollider = null;
+    public bool isTriggerTouch = false;
+    public GameObject touchCollider = null;
 
     private void OnEnable()
     {
@@ -117,22 +118,19 @@ public partial class Drag2D : MonoBehaviour
         if (this.gameObject.CompareTag("BattleMonster") || this.gameObject.CompareTag("BattleMonster2") || this.gameObject.CompareTag("BattleMonster3"))
         {
             StartCoroutine(COR_SellButton());
+            StartCoroutine(COR_BackAgain());
             GameMGR.Instance.sellInCollider.NomalCollOn();
             GameMGR.Instance.sellInCollider.CollOn();
 
-            if (isTriggerTouch && touchCollider != null)
+            if (isDestroy)
             {
-                ShopCardLevelUp(touchCollider);
-                StartCoroutine(COR_BackAgain());
+                isTriggerTouch = true;
+                StartCoroutine(COR_TriggerTouchOFF());
             }
             else
             {
-
+                StartCoroutine(COR_BackAgain());
             }
-            
-            
-            
-
             StartCoroutine(COR_Destroy());
         }
 
@@ -146,8 +144,12 @@ public partial class Drag2D : MonoBehaviour
         {
             StartCoroutine(COR_BackAgain());
         }
+    }
 
-        
+    IEnumerator COR_TriggerTouchOFF()
+    {
+        yield return wait;
+        isTriggerTouch = false;
     }
 
     IEnumerator COR_Destroy()
@@ -196,6 +198,7 @@ public partial class Drag2D : MonoBehaviour
                 // 몬스터가 배틀 존에 닿으면 골드가 차감 되고 배틀몬스터 태그로 바뀐다
                 if (collision.gameObject.CompareTag("BattleZone"))
                 {
+                    battleZonePos = gameObject.transform.parent.transform.position;
                     if (GameMGR.Instance.uiManager.goldCount >= 3)
                     {
                         GameMGR.Instance.audioMGR.SoundBuy();
@@ -237,31 +240,21 @@ public partial class Drag2D : MonoBehaviour
                 }
             }
 
-            if(gameObject.CompareTag("BattleMonster")||  gameObject.CompareTag("BattleMonster2"))
+            if (gameObject.CompareTag("BattleMonster") || gameObject.CompareTag("BattleMonster2"))
             {
                 if (gameObject.name == collision.gameObject.name)
                 {
-                    isTriggerTouch = true;
-                    touchCollider = collision.gameObject;
+                    if (card.level == 3 || collision.GetComponent<Card>().level == 3)
+                    {
+                        transform.parent.transform.position = battleZonePos;
+                        return;
+                    }
+                    if (isTriggerTouch)
+                    {
 
-                    /*  if (collision.gameObject.CompareTag("BattleMonster") || collision.gameObject.CompareTag("BattleMonster2"))
-                      {
-                              if (!isDestroy)
-                              {
-                                  bool isDone = ShopCardLevelUp(collision.gameObject);
-                                  while (!isDone)
-                                  { }
-                                  isDone = false;
-                                  //ShopCardLevelUp(collision.gameObject);
-                                  GameMGR.Instance.objectPool.DestroyPrefab(collision.gameObject.transform.parent.gameObject);
-                              }
-                      }*/
+                        ShopCardLevelUp(collision.transform.parent.gameObject);
+                    }
                 }
-            }
-            else
-            {
-                isTriggerTouch = false;
-                touchCollider = null;
             }
 
             if (collision.gameObject.CompareTag("BattleMonster3") || gameObject.CompareTag("BattleMonster3"))
@@ -306,30 +299,28 @@ public partial class Drag2D : MonoBehaviour
             plusHp = hP;
         }
 
-
-
-        allExp = otherExp + thisExp;
-
         collision.gameObject.GetComponentInChildren<Card>().ChangeValue(CardStatus.Attack, plusAttack + 1);
         collision.gameObject.GetComponentInChildren<Card>().ChangeValue(CardStatus.Hp, plusHp + 1);
 
-
-        
-
-        if (thisLevel == 1 || otherExp == 1)
+        if (thisLevel == 1)
         {
-            allExp += 1;
-            collision.gameObject.GetComponentInChildren<Card>().ChangeValue(CardStatus.Exp, allExp);
+            collision.gameObject.GetComponentInChildren<Card>().ChangeValue(CardStatus.Exp, thisExp + 1);
         }
-
-        else if (thisLevel == 2 || otherExp == 2)
+        else if (thisLevel == 2)
         {
-            allExp += 3;
-            collision.gameObject.GetComponentInChildren<Card>().ChangeValue(CardStatus.Exp, allExp);
+            collision.gameObject.GetComponentInChildren<Card>().ChangeValue(CardStatus.Exp, thisExp + 3);
         }
 
         GameMGR.Instance.uiManager.sell.gameObject.SetActive(false);
+        isTriggerTouch = false;
+        transform.parent.gameObject.transform.position = new Vector2(100, 100);
+        GameMGR.Instance.battleZone.myObj = null;
+        StartCoroutine((COR_MovePos()));
+    }
 
+    IEnumerator COR_MovePos()
+    {
+        yield return wait;
         GameMGR.Instance.objectPool.DestroyPrefab(gameObject.transform.parent.gameObject);
     }
 
@@ -346,7 +337,7 @@ public partial class Drag2D : MonoBehaviour
     private IEnumerator COR_BackAgain()
     {
         yield return wait;
-
+       
         if (CompareTag("BattleMonster") || CompareTag("BattleMonster2") || CompareTag("BattleMonster3"))
         {
             if (pos.myObj != null)
@@ -357,7 +348,7 @@ public partial class Drag2D : MonoBehaviour
             }
             else
             {
-                this.transform.parent.position = pos.gameObject.transform.position - vecs1;
+                this.transform.parent.position = pos.gameObject.transform.position - vecs;
                 pos.myObj = gameObject.transform.parent.gameObject;
             }
         }
@@ -377,8 +368,6 @@ public partial class Drag2D : MonoBehaviour
     {
         gameObject.tag = "BattleMonster";
         GameMGR.Instance.audioMGR.SoundSell();
-        //Vector2 monTras = gameObject.transform.parent.localScale;
-        //gameObject.transform.parent.localScale = monTras;
         pos = collision.GetComponent<BattleZone>();
         spriteRenderer.sortingOrder = 3;
         GameMGR.Instance.uiManager.goldCount -= 3;
@@ -388,6 +377,5 @@ public partial class Drag2D : MonoBehaviour
         {
             card.SkillActive2(card);
         }
-        //GameMGR.Instance.Event_Buy(gameObject.GetComponent<Card>());
     }
 }

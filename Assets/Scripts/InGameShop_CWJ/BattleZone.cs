@@ -6,7 +6,7 @@ public class BattleZone : MonoBehaviour
     [SerializeField] int myNum; // 상점 유닛 배치 순서 (0~5)
     [SerializeField] GameObject aura;
     public GameObject myObj = null;
-    Vector3 vecs = new Vector3(0, 1f, 1f);
+    Vector3 vecs = new Vector3(0, 0.6f, 1f);
 
     private void Start()
     {
