@@ -7,6 +7,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using UnityEditor;
+using Photon.Pun;
 
 public partial class UIManager : MonoBehaviour
 {
@@ -130,7 +131,8 @@ public partial class UIManager : MonoBehaviour
         {
             if (playerArrangement[i] != null)
             {
-                playerArrangement[i].transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+                playerArrangement[i].transform.localScale = Vector3.one * 2;
+
                 playerArrangement[i].transform.position = playerPosition[i + 1].position;
             }
         }
@@ -194,21 +196,29 @@ public partial class UIManager : MonoBehaviour
 
         yield return new WaitForSeconds(5f);
 
-        GameMGR.Instance.uiManager.ResetPlayerUnit(); // Unit Reset
-        yield return new WaitForSeconds(0.1f);
-        GameMGR.Instance.spawner.TestButton();
+        if (PhotonNetwork.PlayerList.Length == 1)
+        {
+            StartCoroutine(GameMGR.Instance.batch.FinalCardUi());
+        }
+        else
+        {
 
-        // Move the camera position to the store scene
-        Camera.main.gameObject.transform.position = new Vector3(0, 0, -10);
+            GameMGR.Instance.uiManager.ResetPlayerUnit(); // Unit Reset
+            yield return new WaitForSeconds(0.1f);
+            GameMGR.Instance.spawner.TestButton();
 
-        if (winUI.activeSelf == true) { winUI.SetActive(false); }
-        if (loseUI.activeSelf == true) { loseUI.SetActive(false); }
-        if (drawUI.activeSelf == true) { drawUI.SetActive(false); }
-        if (ResultSceneUI.activeSelf == true) { ResultSceneUI.SetActive(false); }
-        GameMGR.Instance.uiManager.storePannel.SetActive(true);
-        GameMGR.Instance.uiManager.hpTXT.text = lifeText.text;
+            // Move the camera position to the store scene
+            Camera.main.gameObject.transform.position = new Vector3(0, 0, -10);
 
-        GameMGR.Instance.Init(5);
+            if (winUI.activeSelf == true) { winUI.SetActive(false); }
+            if (loseUI.activeSelf == true) { loseUI.SetActive(false); }
+            if (drawUI.activeSelf == true) { drawUI.SetActive(false); }
+            if (ResultSceneUI.activeSelf == true) { ResultSceneUI.SetActive(false); }
+            GameMGR.Instance.uiManager.storePannel.SetActive(true);
+            GameMGR.Instance.uiManager.hpTXT.text = lifeText.text;
+
+            GameMGR.Instance.Init(5);
+        }
     }
 
     // Exit program

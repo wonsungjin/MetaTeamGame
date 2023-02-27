@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class PhotonLauncher : MonoBehaviourPunCallbacks
 {
-    byte maxPlayer = 2;
+    byte maxPlayer = 3;
 
     [SerializeField] TextMeshProUGUI playerCount = null;
 
@@ -206,11 +206,12 @@ public class PhotonLauncher : MonoBehaviourPunCallbacks
     #endregion
     IEnumerator COR_SceneDelay()
     {
-        yield return new WaitForSeconds(2f); 
+        yield return new WaitForSeconds(2f);
+        Debug.Log("내가 이동");
         PhotonNetwork.LoadLevel("StoreScene");
     }
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.A)) PhotonNetwork.LoadLevel("StoreScene");
+        if (Input.GetKeyDown(KeyCode.A)) { Debug.Log("내가 이동");  PhotonNetwork.LoadLevel("StoreScene"); }
     }
 }
