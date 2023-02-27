@@ -40,7 +40,7 @@ public partial class Batch : MonoBehaviourPun
         GameMGR.Instance.uiManager.playerName.text = PlayerNameList[num];
         GameMGR.Instance.uiManager.userProfile.sprite = Resources.Load<Sprite>($"Sprites/Profile/{PlayerProfileList[num]}");
 
-        GameMGR.Instance.uiManager.PlayerLifeTXT.text = GameMGR.Instance.userLife[num].ToString();
+        GameMGR.Instance.uiManager.PlayerLifeTXT.text = GameMGR.Instance.userLife[CustomNumberList[num]].ToString();
 
 
 
@@ -77,7 +77,7 @@ public partial class Batch : MonoBehaviourPun
                 GameMGR.Instance.uiManager.playerName.text = PlayerNameList[i];
             }
         }
-        GameMGR.Instance.uiManager.PlayerLifeTXT.text = GameMGR.Instance.userLife[num].ToString();
+        GameMGR.Instance.uiManager.PlayerLifeTXT.text = GameMGR.Instance.userLife[GameMGR.Instance.matching[num]].ToString();
 
 
 
