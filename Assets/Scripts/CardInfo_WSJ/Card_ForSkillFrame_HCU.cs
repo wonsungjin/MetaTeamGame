@@ -367,6 +367,7 @@ public partial class Card : MonoBehaviourPun
                 GameObject summonCard = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{cardInfo.sumom_Unit}"), targetPos + new Vector2(0, -0.6f), Quaternion.identity);
                 summonCard.transform.GetChild(0).tag = "BattleMonster";
                 summonCard.transform.localScale = summonCard.transform.localScale * 2;
+                summonCard.transform.position += new Vector3(0, -1.2f, -1f);    // 소환하는 대상의 위치값을 설정하는 부분
 
                 GameMGR.Instance.spawner.cardBatch[shopBatchEmptyIndex] = summonCard;
                 //summoncard 이름 디버그 띄울것
@@ -726,42 +727,10 @@ public partial class Card : MonoBehaviourPun
                 break;
 
             case TargetType.forward:      // 전열ㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇ
-                Debug.Log("대상은 전열");
-                
-                random = GameMGR.Instance.GetRandomValue(0, 3);
-                bool isAllDead = true;
-                for (int i = 0; i < searchArea.Count; i++)
-                {
-                    if (searchArea[i].GetComponentInChildren<Card>() != null)
-                    {
-                        isAllDead = false;
-                        break;
-                    }
-                }
-                if (isAllDead)
-                {
-                    //대상이 없으므로 스킬 무효 
-                    skillTarget.Clear();
-                }
-                if (searchArea.Count == 0)
-                {
-                    skillTarget.Clear();
-                }
-                else // 한명이라도 살아있다면
-                {
-                    random = GameMGR.Instance.GetRandomValue(0, 3);
-                    while (searchArea[random].GetComponentInChildren<Card>().curHP <= 0 && searchArea[random] == this) // 죽은 아군이 아닐 때까지 랜덤값을 돌려
-                    {
-                        random = GameMGR.Instance.GetRandomValue(0, 3);
-                    }
-                    skillTarget.Add(searchArea[random].GetComponentInChildren<Card>());
-                }
-                break;
-
             case TargetType.backward:       // 후열 ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇ
                 Debug.Log("대상은 후열");
                 random = GameMGR.Instance.GetRandomValue(0, searchArea.Count);
-                isAllDead = true;
+                bool isAllDead = true;
                 for (int i = 0; i < searchArea.Count; i++)
                 {
                     if (searchArea[i].GetComponentInChildren<Card>() != null)
