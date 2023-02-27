@@ -367,6 +367,7 @@ public partial class Card : MonoBehaviourPun
                 GameObject summonCard = GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>($"Prefabs/{cardInfo.sumom_Unit}"), targetPos + new Vector2(0, -0.6f), Quaternion.identity);
                 summonCard.transform.GetChild(0).tag = "BattleMonster";
                 summonCard.transform.localScale = summonCard.transform.localScale * 2;
+                summonCard.transform.position += new Vector3(0, -1.2f, -1f);    // 소환하는 대상의 위치값을 설정하는 부분
 
                 GameMGR.Instance.spawner.cardBatch[shopBatchEmptyIndex] = summonCard;
                 //summoncard 이름 디버그 띄울것
@@ -657,9 +658,10 @@ public partial class Card : MonoBehaviourPun
 
             case TargetType.random:
                 Debug.Log("대상은 랜덤");
-                int random = GameMGR.Instance.GetRandomValue(0, searchArea.Count);
+                int random;
 
                 List<Card> targetArray1 = new List<Card>();
+
                 for (int i = 0; i < searchArea.Count; i++)
                 {
                     if (searchArea[i] != null)
@@ -725,45 +727,13 @@ public partial class Card : MonoBehaviourPun
                 break;
 
             case TargetType.forward:      // 전열ㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇ
-                Debug.Log("대상은 전열");
-                
-                random = GameMGR.Instance.GetRandomValue(0, 3);
-                bool isAllDead = true;
-                for (int i = 0; i < 3; i++)
-                {
-                    if (searchArea[i].GetComponentInChildren<Card>().curHP >= 0)
-                    {
-                        isAllDead = false;
-                        break;
-                    }
-                }
-                if (isAllDead)
-                {
-                    //대상이 없으므로 스킬 무효 
-                    skillTarget.Clear();
-                }
-                if (searchArea.Count == 0)
-                {
-                    skillTarget.Clear();
-                }
-                else // 한명이라도 살아있다면
-                {
-                    random = GameMGR.Instance.GetRandomValue(0, 3);
-                    while (searchArea[random].GetComponentInChildren<Card>().curHP <= 0 && searchArea[random] == this) // 죽은 아군이 아닐 때까지 랜덤값을 돌려
-                    {
-                        random = GameMGR.Instance.GetRandomValue(0, 3);
-                    }
-                    skillTarget.Add(searchArea[random].GetComponentInChildren<Card>());
-                }
-                break;
-
             case TargetType.backward:       // 후열 ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇ
                 Debug.Log("대상은 후열");
-                random = GameMGR.Instance.GetRandomValue(0, 3);
-                isAllDead = true;
-                for (int i = 3; i < 6; i++)
+                random = GameMGR.Instance.GetRandomValue(0, searchArea.Count);
+                bool isAllDead = true;
+                for (int i = 0; i < searchArea.Count; i++)
                 {
-                    if (searchArea[i].GetComponentInChildren<Card>().curHP >= 0)
+                    if (searchArea[i].GetComponentInChildren<Card>() != null)
                     {
                         isAllDead = false;
                         break;
@@ -776,36 +746,50 @@ public partial class Card : MonoBehaviourPun
                 }
                 else // 한명이라도 살아있다면
                 {
-                    random = GameMGR.Instance.GetRandomValue(0, 3);
-                    while (searchArea[random].GetComponentInChildren<Card>().curHP <= 0 && searchArea[random] == this) // 죽은 아군이 아닐 때까지 랜덤값을 돌려
+                    List<Card> realExist = new List<Card>();
+
+                    for(int i = 0; i < searchArea.Count; i++)
                     {
-                        random = GameMGR.Instance.GetRandomValue(0, 3);
+                        if (searchArea[i] != null)
+                            realExist.Add(searchArea[i].GetComponentInChildren<Card>());
                     }
-                    skillTarget.Add(searchArea[random].GetComponentInChildren<Card>());
+
+                    for(int i = 0; i < cardInfo.GetMaxTarget(level); i++)
+                    {
+                        random = GameMGR.Instance.GetRandomValue(0, searchArea.Count);
+                        if (skillTarget.Contains(searchArea[random].GetComponentInChildren<Card>()))
+                        {
+                            i--;
+                            continue;
+                        }
+                        skillTarget.Add(searchArea[random].GetComponentInChildren<Card>());
+                        if (skillTarget.Count >= realExist.Count) break;
+                    }
+                    
                 }
                 break;
 
             case TargetType.front:  // 내 앞
                 for (int i = 3; i < 6; i++)
                 {
-                    if (searchArea[i].GetComponentInChildren<Card>() == this)
+                    if (myArea[i].GetComponentInChildren<Card>() == this)
                     {
-                        if (searchArea[i - 3].GetComponentInChildren<Card>() != null)
+                        if (myArea[i - 3].GetComponentInChildren<Card>() != null)
                         {
-                            skillTarget.Add(searchArea[i - 3].GetComponentInChildren<Card>());
+                            skillTarget.Add(myArea[i - 3].GetComponentInChildren<Card>());
                         }
                     }
                 }
                 break;
 
             case TargetType.back:   // 내 뒤
-                for (int i = 3; i < 6; i++)
+                for (int i = 0; i < 3; i++)
                 {
-                    if (searchArea[i].GetComponentInChildren<Card>() == this)
+                    if (myArea[i].GetComponentInChildren<Card>() == this)
                     {
-                        if (searchArea[i + 3].GetComponentInChildren<Card>() != null)
+                        if (myArea[i + 3].GetComponentInChildren<Card>() != null)
                         {
-                            skillTarget.Add(searchArea[i + 3].GetComponentInChildren<Card>());
+                            skillTarget.Add(myArea[i + 3].GetComponentInChildren<Card>());
                         }
                     }
                 }

@@ -47,8 +47,8 @@ public enum TargetType // 스킬이 어떤 타입을 노리는지(ex - 공격력 높은 유닛)
     back,
     near,
     otherSide,
-    forward,
     backward,
+    forward,
     self,
     empty,
 
