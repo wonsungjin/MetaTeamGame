@@ -64,6 +64,7 @@ public partial class Card : MonoBehaviourPun
         levelText.text = level.ToString();
         spriteRenderer.sortingLayerName = "Default";
         skeletonAnimation = GetComponent<SkeletonAnimation>();
+        SetAnim("Idle");
         isBattle = false;
         if (!isSkillTiming)
             SetSkillTiming();
