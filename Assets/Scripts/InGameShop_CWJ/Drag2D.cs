@@ -19,15 +19,12 @@ public partial class Drag2D : MonoBehaviour
     Vector3 monsterPos = new Vector3(0, -0.6f, 0);
     Vector3 monsterPos1 = new Vector3(0, 0.6f, 0);
 
-    Vector3 vecs = new Vector3(0, -0.6f, 1f);
-    Vector3 vecs1 = new Vector3(0, 1.4f, 1f);
-    Vector3 vec = new Vector3(0, 0.6f, 0);
+    Vector3 vecs = new Vector3(0, -1.2f, -1f);
 
     float timer = 0f;
     float distance = 100;
     private bool isClickBool = false;
     private bool isDestroy = false;
-    private bool isLevelUp = false;
     public bool isFreezen = false;
     public bool isClickBattleMonster = false;
 
@@ -45,6 +42,8 @@ public partial class Drag2D : MonoBehaviour
     }
 
     Camera mainCam = null;
+
+
 
     private void OnMouseDrag()
     {
@@ -337,18 +336,20 @@ public partial class Drag2D : MonoBehaviour
     private IEnumerator COR_BackAgain()
     {
         yield return wait;
-       
+        Debug.Log("back1");
         if (CompareTag("BattleMonster") || CompareTag("BattleMonster2") || CompareTag("BattleMonster3"))
         {
             if (pos.myObj != null)
             {
+                Debug.Log("back2");
                 GameObject vec = GameObject.FindGameObjectWithTag("BattleZone");
                 if (vec != null)
-                    gameObject.transform.parent.position = vec.transform.position - vecs;
+                    gameObject.transform.parent.position = vec.transform.position + vecs;
             }
             else
             {
-                this.transform.parent.position = pos.gameObject.transform.position - vecs;
+                Debug.Log("back3");
+                this.transform.parent.position = pos.gameObject.transform.position + vecs;
                 pos.myObj = gameObject.transform.parent.gameObject;
             }
         }
