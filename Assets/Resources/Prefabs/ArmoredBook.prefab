@@ -280,6 +280,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillType: 
+  isArrive: 0
 --- !u!114 &8169547127287847137
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -294,6 +295,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pos: {fileID: 0}
   isFreezen: 0
+  isClickBattleMonster: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   outlineSize: 5
 --- !u!114 &8169547127287847138
@@ -317,14 +319,16 @@ MonoBehaviour:
   curHP: 0
   curEXP: 0
   expSlider: {fileID: 0}
+  isBattle: 0
   skillTarget: []
   batchPos: {x: 0, y: 0}
   targetPos: {x: 0, y: 0}
   curPos: {fileID: 0}
   giveDamage: 0
   takeDamage: 0
-  isMine: 0
   shopBatchEmptyIndex: 0
+  isMine: 0
+  triggerOnCount: 0
   searchArea: []
 --- !u!1001 &8169547128213089039
 PrefabInstance:
