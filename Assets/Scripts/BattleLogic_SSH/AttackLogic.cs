@@ -73,7 +73,6 @@ public partial class AttackLogic : Skill
             yield return new WaitForSecondsRealtime(1f);
         }
 
-        card.SetAnim("Idle");
 
         GameMGR.Instance.battleLogic.isWaitAttack = true;
     }
