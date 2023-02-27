@@ -259,15 +259,24 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
         Debug.LogError("Player Lose");
 
 
-        curLife--;
+        curLife -= 10;
         GameMGR.Instance.uiManager.ChangeLife(curLife);
 
         PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "Life", curLife } });
 
-        GameMGR.Instance.uiManager.PlayerSetArrangement();
-        GameMGR.Instance.Init(4);
+        if (curLife == 0)
+        {
+            GameMGR.Instance.uiManager.battleSceneUI.SetActive(false);
+            StartCoroutine(GameMGR.Instance.batch.FinalCardUi());
+        }
 
-        StartCoroutine(GameMGR.Instance.uiManager.COR_MoveToResultScene(false, true, false));
+        else if (curLife >= 1)
+        {
+            StartCoroutine(GameMGR.Instance.uiManager.COR_MoveToResultScene(false, true, false));
+
+            GameMGR.Instance.uiManager.PlayerSetArrangement();
+            GameMGR.Instance.Init(4);
+        }
     }
 
     private void PlayerBattleDraw()

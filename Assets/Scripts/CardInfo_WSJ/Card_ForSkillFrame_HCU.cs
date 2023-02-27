@@ -300,15 +300,15 @@ public partial class Card : MonoBehaviourPun
                 break;
             case EffectType.changeDamage:
                 Debug.Log("데미지 증감 효과 발동");
-               /* for (int i = 0; i < skillTarget.Count; i++)
-                {
-                    if (skillTarget[i].curAttackValue > 0 && skillTarget[i].curAttackValue > cardInfo.GetValue(1, level))
-                    {
-                        skillTarget[i].giveDamage += cardInfo.GetValue(1, level);
-                        skillTarget[i].takeDamage += cardInfo.GetValue(2, level);
-                    }
+                //for (int i = 0; i < skillTarget.Count; i++)
+                //{
+                //    if (skillTarget[i].curAttackValue > 0 && skillTarget[i].curAttackValue > cardInfo.GetValue(1, level))
+                //    {
+                //        skillTarget[i].giveDamage += cardInfo.GetValue(1, level);
+                //        skillTarget[i].takeDamage += cardInfo.GetValue(2, level);
+                //    }
 
-                }*/
+                //}
                 break;
             case EffectType.changeATK:
                 Debug.Log("공격력 효과 발동");
@@ -658,7 +658,6 @@ public partial class Card : MonoBehaviourPun
 
             case TargetType.random:
                 Debug.Log("대상은 랜덤");
-                if (searchArea.Count == 0) break;
                 int random = GameMGR.Instance.GetRandomValue(0, searchArea.Count);
 
                 List<Card> targetArray1 = new List<Card>();
@@ -672,13 +671,15 @@ public partial class Card : MonoBehaviourPun
 
                 for (int i = 0; i < cardInfo.GetMaxTarget(cardInfo.level); i++)
                 {
-                    if (targetArray1.Count == 0 || searchArea.Count == 0) break;
+                    if (targetArray1.Count == 0) break;
                     random = GameMGR.Instance.GetRandomValue(0, targetArray1.Count);
                     Debug.Log(random);
                     Debug.Log(targetArray1.Count);
                     
 
-                        if (targetArray1.Count >= 1 && skillTarget.Contains(targetArray1[random])) // 1개 이상 들어있다면 거기에 중복 체크 
+                    if (targetArray1.Count != 0)
+                    {
+                        if (skillTarget.Contains(targetArray1[random])) // 죽은 아군이 아닐 때까지 랜덤값을 돌려
                         {
                             i--;
                             continue;
@@ -686,6 +687,7 @@ public partial class Card : MonoBehaviourPun
                         skillTarget.Add(targetArray1[random]);
                         if (targetArray1.Count < cardInfo.GetMaxTarget(cardInfo.level)) break;
                         Debug.Log("skillTarget에 Add함");
+                    }
                 }
 
                 //skillTarget.Add(GameMGR.Instance.battleLogic.)
@@ -747,31 +749,22 @@ public partial class Card : MonoBehaviourPun
                 }
                 else // 한명이라도 살아있다면
                 {
-                    for (int i = 0; i < cardInfo.GetMaxTarget(level); i++)
+                    random = GameMGR.Instance.GetRandomValue(0, 3);
+                    while (searchArea[random].GetComponentInChildren<Card>().curHP <= 0 && searchArea[random] == this) // 죽은 아군이 아닐 때까지 랜덤값을 돌려
                     {
-                        if (i >= searchArea.Count) break;
-                        random = GameMGR.Instance.GetRandomValue(0, searchArea.Count);
-                        while (searchArea[random] == null || searchArea[random] == this) // 죽은 아군이 아닐 때까지 랜덤값을 돌려
-                        {
-                            random = GameMGR.Instance.GetRandomValue(0, searchArea.Count);
-                        }
-
-                        if (skillTarget.Count != 0 && skillTarget.Contains(searchArea[random].GetComponentInChildren<Card>()))
-                        {
-                            i--; continue;
-                        }
-                        skillTarget.Add(searchArea[random].GetComponentInChildren<Card>());
+                        random = GameMGR.Instance.GetRandomValue(0, 3);
                     }
+                    skillTarget.Add(searchArea[random].GetComponentInChildren<Card>());
                 }
                 break;
 
             case TargetType.backward:       // 후열 ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇ
                 Debug.Log("대상은 후열");
-                random = GameMGR.Instance.GetRandomValue(0, searchArea.Count);
+                random = GameMGR.Instance.GetRandomValue(0, 3);
                 isAllDead = true;
-                for (int i = 0; i < searchArea.Count; i++)
+                for (int i = 3; i < 6; i++)
                 {
-                    if (searchArea[i] != null)
+                    if (searchArea[i].GetComponentInChildren<Card>().curHP >= 0)
                     {
                         isAllDead = false;
                         break;
@@ -784,47 +777,36 @@ public partial class Card : MonoBehaviourPun
                 }
                 else // 한명이라도 살아있다면
                 {
-                    for(int i = 0; i < cardInfo.GetMaxTarget(level); i++)
+                    random = GameMGR.Instance.GetRandomValue(0, 3);
+                    while (searchArea[random].GetComponentInChildren<Card>().curHP <= 0 && searchArea[random] == this) // 죽은 아군이 아닐 때까지 랜덤값을 돌려
                     {
-                        if (i >= searchArea.Count) break;
-                        random = GameMGR.Instance.GetRandomValue(0, searchArea.Count);
-                        while (searchArea[random] == null || searchArea[random] == this) // 죽은 아군이 아닐 때까지 랜덤값을 돌려
-                        {
-                            random = GameMGR.Instance.GetRandomValue(0, searchArea.Count);   
-                        }
-
-                        if(skillTarget.Count != 0 && skillTarget.Contains(searchArea[random].GetComponentInChildren<Card>()))
-                        {
-                            i--; continue;
-                        }
-                        skillTarget.Add(searchArea[random].GetComponentInChildren<Card>());
+                        random = GameMGR.Instance.GetRandomValue(0, 3);
                     }
-                    
+                    skillTarget.Add(searchArea[random].GetComponentInChildren<Card>());
                 }
                 break;
 
             case TargetType.front:  // 내 앞
-                for (int i = 0; i < myArea.Length; i++)
+                for (int i = 3; i < 6; i++)
                 {
-                    if (myArea[i].GetComponentInChildren<Card>() == this && i >= 3)
+                    if (searchArea[i].GetComponentInChildren<Card>() == this)
                     {
-                        
-                        if (myArea[i - 3].GetComponentInChildren<Card>() != null)
+                        if (searchArea[i - 3].GetComponentInChildren<Card>() != null)
                         {
-                            skillTarget.Add(myArea[i - 3].GetComponentInChildren<Card>());
+                            skillTarget.Add(searchArea[i - 3].GetComponentInChildren<Card>());
                         }
                     }
                 }
                 break;
 
             case TargetType.back:   // 내 뒤
-                for (int i = 0; i < myArea.Length; i++)
+                for (int i = 3; i < 6; i++)
                 {
-                    if (myArea[i].GetComponentInChildren<Card>() == this && i < 3)
+                    if (searchArea[i].GetComponentInChildren<Card>() == this)
                     {
-                        if (myArea[i + 3].GetComponentInChildren<Card>() != null)
+                        if (searchArea[i + 3].GetComponentInChildren<Card>() != null)
                         {
-                            skillTarget.Add(myArea[i + 3].GetComponentInChildren<Card>());
+                            skillTarget.Add(searchArea[i + 3].GetComponentInChildren<Card>());
                         }
                     }
                 }
@@ -838,30 +820,30 @@ public partial class Card : MonoBehaviourPun
                         switch (i)
                         {
                             case 0:
-                                skillTarget.Add(myArea[1].GetComponentInChildren<Card>());
-                                skillTarget.Add(myArea[3].GetComponentInChildren<Card>());
+                                skillTarget.Add(searchArea[1].GetComponentInChildren<Card>());
+                                skillTarget.Add(searchArea[3].GetComponentInChildren<Card>());
                                 break;
                             case 1:
-                                skillTarget.Add(myArea[0].GetComponentInChildren<Card>());
-                                skillTarget.Add(myArea[2].GetComponentInChildren<Card>());
-                                skillTarget.Add(myArea[4].GetComponentInChildren<Card>());
-                                break;         
-                            case 2:            
-                                skillTarget.Add(myArea[1].GetComponentInChildren<Card>());
-                                skillTarget.Add(myArea[5].GetComponentInChildren<Card>());
-                                break;          
-                            case 3:             
-                                skillTarget.Add(myArea[0].GetComponentInChildren<Card>());
-                                skillTarget.Add(myArea[4].GetComponentInChildren<Card>());
-                                break;          
-                            case 4:             
-                                skillTarget.Add(myArea[1].GetComponentInChildren<Card>());
-                                skillTarget.Add(myArea[3].GetComponentInChildren<Card>());
-                                skillTarget.Add(myArea[5].GetComponentInChildren<Card>());
-                                break;          
-                            case 5:             
-                                skillTarget.Add(myArea[2].GetComponentInChildren<Card>());
-                                skillTarget.Add(myArea[4].GetComponentInChildren<Card>());
+                                skillTarget.Add(searchArea[0].GetComponentInChildren<Card>());
+                                skillTarget.Add(searchArea[2].GetComponentInChildren<Card>());
+                                skillTarget.Add(searchArea[4].GetComponentInChildren<Card>());
+                                break;
+                            case 2:
+                                skillTarget.Add(searchArea[1].GetComponentInChildren<Card>());
+                                skillTarget.Add(searchArea[5].GetComponentInChildren<Card>());
+                                break;
+                            case 3:
+                                skillTarget.Add(searchArea[0].GetComponentInChildren<Card>());
+                                skillTarget.Add(searchArea[4].GetComponentInChildren<Card>());
+                                break;
+                            case 4:
+                                skillTarget.Add(searchArea[1].GetComponentInChildren<Card>());
+                                skillTarget.Add(searchArea[3].GetComponentInChildren<Card>());
+                                skillTarget.Add(searchArea[5].GetComponentInChildren<Card>());
+                                break;
+                            case 5:
+                                skillTarget.Add(searchArea[2].GetComponentInChildren<Card>());
+                                skillTarget.Add(searchArea[4].GetComponentInChildren<Card>());
                                 break;
                         }
                     }
@@ -883,7 +865,7 @@ public partial class Card : MonoBehaviourPun
                 int[] atkArray = new int[6];
                 int leastAtk = -1;
                 int validIndex = 0; // 유효값이 있을 때마다 올라가는 인덱스 카운트 변수
-                for (int i = 0; i < searchArea.Count; i++) // 가장 공격력이 낮은 유닛을 찾는 과정
+                for (int i = 0; i < 6; i++) // 가장 공격력이 낮은 유닛을 찾는 과정
                 {
                     if (searchArea[i].GetComponentInChildren<Card>().curHP <= 0) continue; // 죽은 녀석은 대상에서 제외한다.
                     if (leastAtk == -1) //아무것도 없을 때에는 최초로 들어온 녀석이 값을 받는다. 
@@ -907,7 +889,7 @@ public partial class Card : MonoBehaviourPun
                 atkArray = new int[6];
                 int mostAtk = -1;
                 validIndex = 0; // 유효값이 있을 때마다 올라가는 인덱스 카운트 변수
-                for (int i = 0; i < searchArea.Count; i++) // 가장 공격력이 낮은 유닛을 찾는 과정
+                for (int i = 0; i < 6; i++) // 가장 공격력이 낮은 유닛을 찾는 과정
                 {
                     if (searchArea[i].GetComponentInChildren<Card>().curHP <= 0) continue;
                     if (mostAtk == -1) //아무것도 없을 때에는 최초로 들어온 녀석이 값을 받는다. 
@@ -931,7 +913,7 @@ public partial class Card : MonoBehaviourPun
                 int[] hpArray = new int[6];
                 int leastHp = -1;
                 validIndex = 0; // 유효값이 있을 때마다 올라가는 인덱스 카운트 변수
-                for (int i = 0; i < searchArea.Count; i++) // 가장 공격력이 낮은 유닛을 찾는 과정
+                for (int i = 0; i < 6; i++) // 가장 공격력이 낮은 유닛을 찾는 과정
                 {
                     if (searchArea[i].GetComponentInChildren<Card>().curHP <= 0) continue;
                     if (leastHp == -1) //아무것도 없을 때에는 최초로 들어온 녀석이 값을 받는다. 
@@ -955,7 +937,7 @@ public partial class Card : MonoBehaviourPun
                 hpArray = new int[6];
                 int mostHp = -1;
                 validIndex = 0; // 유효값이 있을 때마다 올라가는 인덱스 카운트 변수
-                for (int i = 0; i < searchArea.Count; i++) // 가장 공격력이 낮은 유닛을 찾는 과정
+                for (int i = 0; i < 6; i++) // 가장 공격력이 낮은 유닛을 찾는 과정
                 {
                     if (searchArea[i].GetComponent<Card>().curHP <= 0) continue;
                     if (mostHp == -1) //아무것도 없을 때에는 최초로 들어온 녀석이 값을 받는다. 

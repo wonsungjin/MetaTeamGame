@@ -74,13 +74,14 @@ public partial class Card : MonoBehaviourPun
     {
         isBattle = set;
     }
-    public void ChangeCard(Card card)
+    public void ChangeCard(string[] unit)
     {
-        ChangeValue(CardStatus.Hp, card.curHP);
-        ChangeValue(CardStatus.Attack, card.curAttackValue);
-        if (level == 2) expSlider.value = card.curEXP * 0.5f;
-        else expSlider.value = card.curEXP * 0.33f;
-        levelText.text = card.level.ToString();
+        SetMyInfo(unit[0]);
+        ChangeValue(CardStatus.Hp, int.Parse(unit[1]));
+        ChangeValue(CardStatus.Attack, int.Parse(unit[2]));
+        if (level == 2) expSlider.value = int.Parse(unit[3]) * 0.5f;
+        else expSlider.value = int.Parse(unit[3]) * 0.33f;
+        levelText.text = unit[4];
     }
 
     public void SetAnim(string state)
