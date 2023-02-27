@@ -52988,7 +52988,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1913617364648195391, guid: e95ac517704a007428be4b89624d6238, type: 3}
       propertyPath: m_Name
-      value: Unit6
+      value: Unit3
       objectReference: {fileID: 0}
     - target: {fileID: 2818785172745407122, guid: e95ac517704a007428be4b89624d6238, type: 3}
       propertyPath: m_Sprite
@@ -53709,7 +53709,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1913617364648195391, guid: e95ac517704a007428be4b89624d6238, type: 3}
       propertyPath: m_Name
-      value: Unit5
+      value: Unit6
       objectReference: {fileID: 0}
     - target: {fileID: 2818785172745407122, guid: e95ac517704a007428be4b89624d6238, type: 3}
       propertyPath: m_Sprite
@@ -53835,7 +53835,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1913617364648195391, guid: e95ac517704a007428be4b89624d6238, type: 3}
       propertyPath: m_Name
-      value: Unit4
+      value: Unit2
       objectReference: {fileID: 0}
     - target: {fileID: 2818785172745407122, guid: e95ac517704a007428be4b89624d6238, type: 3}
       propertyPath: m_Sprite
@@ -54457,7 +54457,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1913617364648195391, guid: e95ac517704a007428be4b89624d6238, type: 3}
       propertyPath: m_Name
-      value: Unit3
+      value: Unit5
       objectReference: {fileID: 0}
     - target: {fileID: 2818785172745407122, guid: e95ac517704a007428be4b89624d6238, type: 3}
       propertyPath: m_Sprite
@@ -54749,7 +54749,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1913617364648195391, guid: e95ac517704a007428be4b89624d6238, type: 3}
       propertyPath: m_Name
-      value: Unit2
+      value: Unit4
       objectReference: {fileID: 0}
     - target: {fileID: 2818785172745407122, guid: e95ac517704a007428be4b89624d6238, type: 3}
       propertyPath: m_Sprite
@@ -56124,7 +56124,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 100}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &7148799513174738146
