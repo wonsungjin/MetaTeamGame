@@ -78,7 +78,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 6078286073453404346}
   m_HandleRect: {fileID: 0}
@@ -231,6 +231,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pos: {fileID: 0}
   isFreezen: 0
+  isClickBattleMonster: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   outlineSize: 5
 --- !u!61 &989870966826497404
@@ -315,7 +316,7 @@ MonoBehaviour:
   curHP: 1
   curEXP: 0
   expSlider: {fileID: 7086704749162298161}
-  isSkillTiming: 1
+  isBattle: 0
   skillTarget: []
   batchPos: {x: 0, y: 0}
   targetPos: {x: 0, y: 0}
