@@ -141,6 +141,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pos: {fileID: 0}
   isFreezen: 0
+  isClickBattleMonster: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   outlineSize: 5
 --- !u!50 &8519155295352829698
@@ -211,14 +212,16 @@ MonoBehaviour:
   curHP: 0
   curEXP: 0
   expSlider: {fileID: 0}
+  isBattle: 0
   skillTarget: []
   batchPos: {x: 0, y: 0}
   targetPos: {x: 0, y: 0}
   curPos: {fileID: 0}
   giveDamage: 0
   takeDamage: 0
-  isMine: 0
   shopBatchEmptyIndex: 0
+  isMine: 0
+  triggerOnCount: 0
   searchArea: []
 --- !u!114 &562380564274115704
 MonoBehaviour:
@@ -233,6 +236,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillType: 
+  isArrive: 0
 --- !u!82 &6453094247545726063
 AudioSource:
   m_ObjectHideFlags: 0
@@ -380,6 +384,10 @@ PrefabInstance:
     - target: {fileID: 1670660031074491714, guid: 306e3f38cec157842b453c50aac32a45, type: 3}
       propertyPath: m_Name
       value: InfoText
+      objectReference: {fileID: 0}
+    - target: {fileID: 4137109519686450963, guid: 306e3f38cec157842b453c50aac32a45, type: 3}
+      propertyPath: m_Interactable
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8359877118856600461, guid: 306e3f38cec157842b453c50aac32a45, type: 3}
       propertyPath: m_RootOrder
