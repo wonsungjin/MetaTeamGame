@@ -1,7 +1,6 @@
 using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public partial class Batch : MonoBehaviourPun
@@ -40,16 +39,13 @@ public partial class Batch : MonoBehaviourPun
         GameMGR.Instance.uiManager.playerBatchUI.SetActive(true);
         GameMGR.Instance.uiManager.playerName.text = PlayerNameList[num];
         GameMGR.Instance.uiManager.userProfile.sprite = Resources.Load<Sprite>($"Sprites/Profile/{PlayerProfileList[num]}");
-        for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
-        {
-            if ((int)PhotonNetwork.PlayerList[i].CustomProperties["Number"] == CustomNumberList[num])
-            {
-                GameMGR.Instance.uiManager.PlayerLifeTXT.text = PhotonNetwork.PlayerList[i].CustomProperties["Life"].ToString();
-            }
-        }
-        
-        
-        
+
+        GameMGR.Instance.uiManager.PlayerLifeTXT.text = GameMGR.Instance.userLife[num].ToString();
+
+
+
+
+
         for (int j = 0; j < cardList.Count; j++)
         {
             CardUI get = GameMGR.Instance.uiManager.unitSprite[j].GetComponentInParent<CardUI>();
@@ -73,15 +69,15 @@ public partial class Batch : MonoBehaviourPun
         GameMGR.Instance.playerList.TryGetValue(GameMGR.Instance.matching[num], out cardList);
         if (cardList == null) return;
         GameMGR.Instance.uiManager.playerBatchUI.SetActive(true);
-        GameMGR.Instance.uiManager.playerName.text = PlayerNameList[num];
         GameMGR.Instance.uiManager.userProfile.sprite = Resources.Load<Sprite>($"Sprites/Profile/{PlayerProfileList[num]}");
         for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
         {
-            if ((int)PhotonNetwork.PlayerList[i].CustomProperties["Number"] == CustomNumberList[num])
+            if (GameMGR.Instance.matching[num] == CustomNumberList[i])
             {
-                GameMGR.Instance.uiManager.PlayerLifeTXT.text = PhotonNetwork.PlayerList[i].CustomProperties["Life"].ToString();
+                GameMGR.Instance.uiManager.playerName.text = PlayerNameList[i];
             }
         }
+        GameMGR.Instance.uiManager.PlayerLifeTXT.text = GameMGR.Instance.userLife[num].ToString();
 
 
 
@@ -103,7 +99,7 @@ public partial class Batch : MonoBehaviourPun
     public IEnumerator FinalCardUi()
     {
         PhotonNetwork.LeaveRoom();
-        
+
         Camera.main.gameObject.transform.position = new Vector3(60, 0, -10);
         GameMGR.Instance.uiManager.finalSceneUI.SetActive(true);
         for (int i = 0; i < CustomNumberList.Count; i++)
@@ -190,7 +186,7 @@ public partial class Batch : MonoBehaviourPun
         }
         if (cardName != "")
         {
-            cardList.Add(cardName+"."+hp + "." +attackValue + "." +exp + "." +level);
+            cardList.Add(cardName + "." + hp + "." + attackValue + "." + exp + "." + level);
         }
         else cardList.Add(null);
 

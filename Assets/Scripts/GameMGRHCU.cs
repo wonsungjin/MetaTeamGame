@@ -9,6 +9,8 @@ public partial class GameMGR : Singleton<GameMGR>
     // 서로가 동일한 랜덤값을 가지기 위한 것이다.
     public int[] randomValue;
 
+    public int[] userName;
+    public int[] userLife;
     public int i = 0;
     public int GetRandomValue(int minrange, int maxrange,bool set =false)
     {
