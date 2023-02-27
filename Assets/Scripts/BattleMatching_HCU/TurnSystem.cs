@@ -125,21 +125,20 @@ public class TurnSystem : MonoBehaviourPunCallbacks
     Player[] matchMan = new Player[8]; // 최대 8인이고 그 이상을 넘을 수는 없으니 일단 이 값으로 지정.
     int[] matchNum;
     int[] prevMatchNum = new int[8];
-    int[] userName;
-    int[] userLife;
+    
 
     [PunRPC]
     public void StartSetting() // 게임 시작시 '최초' 한번만 실행되는 함수
     {
-        userName = new int[PhotonNetwork.PlayerList.Length];
-        userLife = new int[PhotonNetwork.PlayerList.Length];
+        GameMGR.Instance.userName = new int[PhotonNetwork.PlayerList.Length];
+        GameMGR.Instance.userLife = new int[PhotonNetwork.PlayerList.Length];
         // 플레이어 고유번호 및 라이프 지정. 게임 시작하는 시점부터 각 플레이어리스트 배열의 인덱스에 고유번호 지정. 들락날락으로 인한 엑터넘버 불규칙 방지
         for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
         {
             PhotonNetwork.PlayerList[i].CustomProperties["Number"] = i;
             PhotonNetwork.PlayerList[i].CustomProperties["Life"] = startLife; // 서버 전체에서 동기화해줄 커스텀프로퍼티
-            userName[i] = i;
-            userLife[i] = startLife;
+            GameMGR.Instance.userName[i] = i;
+            GameMGR.Instance.userLife[i] = startLife;
         }
 
         for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
