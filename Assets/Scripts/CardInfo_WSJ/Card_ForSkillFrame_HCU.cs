@@ -845,7 +845,7 @@ public partial class Card : MonoBehaviourPun
             case TargetType.leastATK:
                 Debug.Log("대상은 최소공격");
                 // 가장 공격력이 낮은 대상을 찾아라아아아ㅏ아아아아아아아아아아아아ㅏ아아즈벡!야아아아ㅏ 발바리이 치와아아아아아아ㅏ
-                int[] atkArray = new int[6];
+                int[] atkList = new int[6];
                 int leastAtk = -1;
                 int validIndex = 0; // 유효값이 있을 때마다 올라가는 인덱스 카운트 변수
                 for (int i = 0; i < 6; i++) // 가장 공격력이 낮은 유닛을 찾는 과정
@@ -854,22 +854,22 @@ public partial class Card : MonoBehaviourPun
                     if (leastAtk == -1) //아무것도 없을 때에는 최초로 들어온 녀석이 값을 받는다. 
                     {
                         leastAtk = i;
-                        atkArray[validIndex] = transform.parent.transform.GetChild(i).gameObject.GetComponentInChildren<Card>().curAttackValue;
+                        atkList[validIndex] = transform.parent.transform.GetChild(i).gameObject.GetComponentInChildren<Card>().curAttackValue;
                         validIndex++;
                     }
                     else
                     {
-                        atkArray[validIndex] = transform.parent.transform.GetChild(validIndex).gameObject.GetComponentInChildren<Card>().curAttackValue;
+                        atkList[validIndex] = transform.parent.transform.GetChild(validIndex).gameObject.GetComponentInChildren<Card>().curAttackValue;
                         validIndex++;
                     }
-                    if (validIndex != 0) if (atkArray[validIndex] < atkArray[0]) leastAtk = i;
+                    if (validIndex != 0) if (atkList[validIndex] < atkList[0]) leastAtk = i;
                 }
                 skillTarget.Add(searchArea[leastAtk].gameObject.GetComponentInChildren<Card>());
                 break;
 
             case TargetType.mostATK:
                 Debug.Log("대상은 최대공격");
-                atkArray = new int[6];
+                atkList = new int[6];
                 int mostAtk = -1;
                 validIndex = 0; // 유효값이 있을 때마다 올라가는 인덱스 카운트 변수
                 for (int i = 0; i < 6; i++) // 가장 공격력이 낮은 유닛을 찾는 과정
@@ -878,15 +878,15 @@ public partial class Card : MonoBehaviourPun
                     if (mostAtk == -1) //아무것도 없을 때에는 최초로 들어온 녀석이 값을 받는다. 
                     {
                         mostAtk = i;
-                        atkArray[validIndex] = transform.parent.transform.GetChild(i).gameObject.GetComponentInChildren<Card>().curAttackValue;
+                        atkList[validIndex] = transform.parent.transform.GetChild(i).gameObject.GetComponentInChildren<Card>().curAttackValue;
                         validIndex++;
                     }
                     else
                     {
-                        atkArray[validIndex] = transform.parent.transform.GetChild(validIndex).gameObject.GetComponentInChildren<Card>().curAttackValue;
+                        atkList[validIndex] = transform.parent.transform.GetChild(validIndex).gameObject.GetComponentInChildren<Card>().curAttackValue;
                         validIndex++;
                     }
-                    if (validIndex != 0) if (atkArray[validIndex] > atkArray[0]) mostAtk = i;
+                    if (validIndex != 0) if (atkList[validIndex] > atkList[0]) mostAtk = i;
                 }
                 skillTarget.Add(searchArea[mostAtk].GetComponentInChildren<Card>());
                 break;
