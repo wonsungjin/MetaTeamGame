@@ -113,7 +113,7 @@ public partial class UIManager : MonoBehaviour
             {
                 GameMGR.Instance.timerSound.TimeSoundEnd();
                 isTimeOEnd = true;
-                GameMGR.Instance.spawner.OnCLick_ReadyButton();
+             //   GameMGR.Instance.spawner.OnCLick_ReadyButton();
             }
         }
     }
