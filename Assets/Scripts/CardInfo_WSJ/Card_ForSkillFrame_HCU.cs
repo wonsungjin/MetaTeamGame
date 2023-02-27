@@ -178,7 +178,6 @@ public partial class Card : MonoBehaviourPun
                                                                       //GameMGR.Instance.battleLogic.isWaitAttack = true;
         yield return new WaitForSeconds(2f);
 
-        SetAnim("Idle");
 
         GameMGR.Instance.objectPool.DestroyPrefab(gameObject.transform.parent.gameObject);
     }

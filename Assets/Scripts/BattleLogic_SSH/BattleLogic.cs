@@ -151,36 +151,36 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
         GameMGR.Instance.i = 0;
 
         bool eventExist = GameMGR.Instance.Event_BattleStart();
-        if(eventExist) yield return new WaitForSeconds(1f);
+        if (eventExist) yield return new WaitForSeconds(1f);
         // enemy backward unit attack possible
         if (first)
             while (PlayerUnit() != null && EnemyUnit() != null)
             {
-                if(playerAttackList.Count==0)
+                if (playerAttackList.Count == 0)
                 {
-                    for (int i = 0; i < playerForwardUnits.Length; i++) if (playerForwardUnits[i] != null) playerAttackList.Add(playerForwardUnits[i]); 
-                    for (int i = 0; i < playerBackwardUnits.Length; i++) if (playerBackwardUnits[i] != null) playerAttackList.Add(playerBackwardUnits[i]); 
+                    for (int i = 0; i < playerForwardUnits.Length; i++) if (playerForwardUnits[i] != null) playerAttackList.Add(playerForwardUnits[i]);
+                    for (int i = 0; i < playerBackwardUnits.Length; i++) if (playerBackwardUnits[i] != null) playerAttackList.Add(playerBackwardUnits[i]);
                 }
                 if (enemyAttackList.Count == 0)
                 {
                     for (int i = 0; i < enemyForwardUnits.Length; i++) if (enemyForwardUnits[i] != null) enemyAttackList.Add(enemyForwardUnits[i]);
-                    for (int i = 0; i < enemyBackwardUnits.Length; i++) if (enemyBackwardUnits[i] != null) enemyAttackList.Add(enemyBackwardUnits[i]); 
+                    for (int i = 0; i < enemyBackwardUnits.Length; i++) if (enemyBackwardUnits[i] != null) enemyAttackList.Add(enemyBackwardUnits[i]);
                 }
                 Debug.Log(PlayerUnit() + "??" + EnemyUnit());
                 if (PlayerAttackUnit() != null)
                 {
-                    PlayerAttackUnit().GetComponentInChildren<AttackLogic>().UnitAttack(EnemyUnit(),true);
+                    PlayerAttackUnit().GetComponentInChildren<AttackLogic>().UnitAttack(EnemyUnit(), true);
                     yield return new WaitUntil(() => isWaitAttack);
                     isWaitAttack = false;
-                    
+
                 }
                 yield return new WaitForSeconds(0.5f);
                 if (PlayerUnit() == null && EnemyUnit() == null) { PlayerBattleDraw(); yield break; }
 
- 
+
                 if (EnemyAttackUnit() != null)
                 {
-                    EnemyAttackUnit().GetComponentInChildren<AttackLogic>().UnitAttack(PlayerUnit(),false);
+                    EnemyAttackUnit().GetComponentInChildren<AttackLogic>().UnitAttack(PlayerUnit(), false);
                     yield return new WaitUntil(() => isWaitAttack);
                     isWaitAttack = false;
 
@@ -192,11 +192,11 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
         else
             while (PlayerUnit() != null && EnemyUnit() != null)
             {
-                
+
                 if (playerAttackList.Count == 0)
                 {
 
-                    for (int i = 0; i < playerForwardUnits.Length; i++) {  if (playerForwardUnits[i] != null) {  playerAttackList.Add(playerForwardUnits[i]); } }
+                    for (int i = 0; i < playerForwardUnits.Length; i++) { if (playerForwardUnits[i] != null) { playerAttackList.Add(playerForwardUnits[i]); } }
                     for (int i = 0; i < playerBackwardUnits.Length; i++) if (playerBackwardUnits[i] != null) playerAttackList.Add(playerBackwardUnits[i]);
                 }
                 if (enemyAttackList.Count == 0)
@@ -207,10 +207,10 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                 Debug.Log(PlayerUnit() + "??" + EnemyUnit());
                 if (EnemyAttackUnit() != null)
                 {
-                    EnemyAttackUnit().GetComponentInChildren<AttackLogic>().UnitAttack(PlayerUnit(),false);
+                    EnemyAttackUnit().GetComponentInChildren<AttackLogic>().UnitAttack(PlayerUnit(), false);
                     yield return new WaitUntil(() => isWaitAttack);
                     isWaitAttack = false;
-                   
+
                 }
                 yield return new WaitForSeconds(0.5f);
                 if (PlayerUnit() == null && EnemyUnit() == null) { PlayerBattleDraw(); yield break; }
@@ -219,10 +219,10 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
 
                 if (PlayerAttackUnit() != null)
                 {
-                    PlayerAttackUnit().GetComponentInChildren<AttackLogic>().UnitAttack(EnemyUnit(),true);
+                    PlayerAttackUnit().GetComponentInChildren<AttackLogic>().UnitAttack(EnemyUnit(), true);
                     yield return new WaitUntil(() => isWaitAttack);
                     isWaitAttack = false;
-                    
+
                 }
                 yield return new WaitForSeconds(0.5f);
 
@@ -248,6 +248,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
         GameMGR.Instance.Init(4);
 
         StartCoroutine(GameMGR.Instance.uiManager.COR_MoveToResultScene(true, false, false));
+
     }
 
     // �й� ��

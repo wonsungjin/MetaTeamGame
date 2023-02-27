@@ -5,7 +5,7 @@ public class SpecialZone : MonoBehaviour
     public bool isNotSpawn = false;
     int num;
     public SpriteRenderer mySprite = null;
-
+    public GameObject collisionObj;
     [SerializeField] GameObject[] stars = null;
     [SerializeField] GameObject[] iceStars = null;
     private void Start()
@@ -15,8 +15,9 @@ public class SpecialZone : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Monster"))
+        if (collisionObj == null &&collision.gameObject.CompareTag("Monster"))
         {
+            collisionObj = collision.gameObject;
             mySprite.sprite = Resources.Load<Sprite>("FrameSp");
             gameObject.tag = "FullZone";
 
@@ -102,8 +103,9 @@ public class SpecialZone : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Monster"))
+        if (collisionObj == collision.gameObject)
         {
+            collisionObj = null;
             gameObject.tag = "SpecialZone";
             mySprite.sprite = Resources.Load<Sprite>("FrameOff");
             stars[num].SetActive(false);

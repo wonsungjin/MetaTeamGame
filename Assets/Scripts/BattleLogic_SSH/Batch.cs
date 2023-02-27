@@ -65,8 +65,45 @@ public partial class Batch : MonoBehaviourPun
 
         //
     }
+    public void OnClick_Set_InGamePlayerBatch(int num)
+    {
+        Debug.Log(num);
+        Debug.Log(PlayerNameList.Count);
+        List<string> cardList = null;
+        GameMGR.Instance.playerList.TryGetValue(GameMGR.Instance.matching[num], out cardList);
+        if (cardList == null) return;
+        GameMGR.Instance.uiManager.playerBatchUI.SetActive(true);
+        GameMGR.Instance.uiManager.playerName.text = PlayerNameList[num];
+        GameMGR.Instance.uiManager.userProfile.sprite = Resources.Load<Sprite>($"Sprites/Profile/{PlayerProfileList[num]}");
+        for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
+        {
+            if ((int)PhotonNetwork.PlayerList[i].CustomProperties["Number"] == CustomNumberList[num])
+            {
+                GameMGR.Instance.uiManager.PlayerLifeTXT.text = PhotonNetwork.PlayerList[i].CustomProperties["Life"].ToString();
+            }
+        }
+
+
+
+        for (int j = 0; j < cardList.Count; j++)
+        {
+            CardUI get = GameMGR.Instance.uiManager.unitSprite[j].GetComponentInParent<CardUI>();
+            if (cardList[j] == null)
+            {
+                get.OffFrame();
+                get.SpriteNone();
+                continue;
+            }
+            get.ResetColor();
+            GameMGR.Instance.uiManager.unitSprite[j].sprite = Resources.Load<Sprite>($"Sprites/Nomal/{cardList[j].Split('.')[0]}");
+        }
+
+        //
+    }
     public IEnumerator FinalCardUi()
     {
+        PhotonNetwork.LeaveRoom();
+        
         Camera.main.gameObject.transform.position = new Vector3(60, 0, -10);
         GameMGR.Instance.uiManager.finalSceneUI.SetActive(true);
         for (int i = 0; i < CustomNumberList.Count; i++)
@@ -92,7 +129,6 @@ public partial class Batch : MonoBehaviourPun
             }
         }
 
-        PhotonNetwork.LeaveRoom();
         yield return new WaitForSeconds(5f);
 
 
@@ -214,9 +250,11 @@ public partial class Batch : MonoBehaviourPun
                 unitCard.transform.position = myCardPosition[i + 1].position;
                 if (i < 3) { GameMGR.Instance.battleLogic.playerForwardUnits[i] = unitCard.gameObject; }
                 else { GameMGR.Instance.battleLogic.playerBackwardUnits[i - 3] = unitCard.gameObject; }
+                unitCard.transform.localScale = Vector3.one * 2;
 
                 // add result unit
                 GameMGR.Instance.uiManager.playerArrangement[i] = GameObject.Instantiate<GameObject>(Resources.Load<GameObject>($"Prefabs/{unit[0]}"));
+                Destroy(GameMGR.Instance.uiManager.playerArrangement[i].transform.GetChild(1).gameObject);
             }
 
             // enemy Unit ��ġ ����
@@ -229,6 +267,7 @@ public partial class Batch : MonoBehaviourPun
                 card.SetFlip(true);
                 if (i < 3) { GameMGR.Instance.battleLogic.enemyForwardUnits[i] = unitCard.gameObject; }
                 else { GameMGR.Instance.battleLogic.enemyBackwardUnits[i - 3] = unitCard.gameObject; }
+                unitCard.transform.localScale = Vector3.one * 2;
             }
             else { Debug.Log("CreateBatch : myCard �� Ȯ���ʿ�"); }
         }
