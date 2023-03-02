@@ -123,6 +123,7 @@ public partial class Card : MonoBehaviourPun
                 if (plus == false) curHP = value;
                 else
                 {
+                    GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>("Skill_GetEffect"), transform.position, Quaternion.identity);
                     curHP += value;
                 }
 
@@ -133,6 +134,7 @@ public partial class Card : MonoBehaviourPun
                 if (plus == false) curAttackValue = value;
                 else
                 {
+                    GameMGR.Instance.objectPool.CreatePrefab(Resources.Load<GameObject>("Skill_GetEffect"), transform.position, Quaternion.identity);
                     curAttackValue += value;
                 }
 
