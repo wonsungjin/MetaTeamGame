@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class PhotonLauncher : MonoBehaviourPunCallbacks
 {
-    byte maxPlayer = 3;
+    byte maxPlayer = 2;
 
     [SerializeField] TextMeshProUGUI playerCount = null;
 
@@ -27,6 +27,7 @@ public class PhotonLauncher : MonoBehaviourPunCallbacks
         leaveRoomButton = GameObject.Find("LeaveButton").GetComponent<Button>();
         matchingPannel = GameObject.Find("MatchingPannel");
         matchingPannel.SetActive(false);
+
 
         // 룸 생성 옵션 : MaxPlayer
         roomOptions.MaxPlayers = maxPlayer;
