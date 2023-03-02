@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class PhotonLauncher : MonoBehaviourPunCallbacks
 {
-    byte maxPlayer = 3;
+    byte maxPlayer = 2;
 
     [SerializeField] TextMeshProUGUI playerCount = null;
 
