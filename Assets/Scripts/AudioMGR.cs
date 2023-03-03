@@ -170,22 +170,20 @@ public class AudioMGR : MonoBehaviour
     }
 
     // Win, Lose
-    public void BattleRoundResult(bool isResult)
+    public void BattleRoundResult(bool isWin)
     {
-        if (isResult)
+        BattleAudio.outputAudioMixerGroup = SFXAudioMixer;
+        if (isWin ==true)
         {
-            BattleAudio.outputAudioMixerGroup = SFXAudioMixer;
             BattleAudio.clip = ReturnAudioClip(Type.Effect, "GameWin");
-            BattleAudio.Play();
         }
-
-        else if (!isResult)
+        else 
         {
-            Debug.LogError("isResult : " + isResult);
-            BattleAudio.outputAudioMixerGroup = SFXAudioMixer;
-            BattleAudio.clip = ReturnAudioClip(Type.Effect, "GameLose");
-            BattleAudio.Play();
+            BattleAudio.clip = ReturnAudioClip(Type.Effect, "GameLose2");
         }
+        Debug.LogError(BattleAudio.clip.name.ToString());
+        BattleAudio.Play();
+
     }
 
     public void BattleAttackSound(int Damage)
