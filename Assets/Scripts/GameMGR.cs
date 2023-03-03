@@ -141,11 +141,11 @@ public partial class GameMGR : Singleton<GameMGR>
             uiManager.OnBattleUI();
             uiManager.curRound++;
 
+
             uiManager.ResultUnitPosition();
             uiManager.battleSceneUI.SetActive(true);
             audioMGR.StoreSceneBGM(false);
             audioMGR.BattleSceneBGM(true);
-
         }
 
         // RoundScene
@@ -156,6 +156,9 @@ public partial class GameMGR : Singleton<GameMGR>
             audioMGR.BattleSceneBGM(false);
             uiManager.battleSceneUI.SetActive(false);
             uiManager.OnResultUI();
+
+            timerSound.TimeSoundEnd();
+            uiManager.timer = 60f;
         }
 
         // RoundScene
