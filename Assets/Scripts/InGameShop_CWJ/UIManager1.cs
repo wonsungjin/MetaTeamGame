@@ -120,7 +120,7 @@ public partial class UIManager : MonoBehaviour
 
     void timerSound()
     {
-        GameMGR.Instance.timerSound.TimeSound();
+        // GameMGR.Instance.timerSound.TimeSound();
         isTimerFast = true;
     }
 
