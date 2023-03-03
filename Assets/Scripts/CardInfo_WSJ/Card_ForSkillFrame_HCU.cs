@@ -371,7 +371,9 @@ public partial class Card : MonoBehaviourPun
                 Debug.Log("경험치 부여 효과 발동");
                 for (int i = 0; i < skillTarget.Count; i++)
                 {
-                    skillTarget[i].curEXP += cardInfo.GetValue(1, level);
+                    skillTarget[i].ChangeValue(CardStatus.Exp, cardInfo.GetValue(1, level), true);
+                    skillTarget[i].ChangeValue(CardStatus.Attack,cardInfo.GetValue(1, level), true);
+                    skillTarget[i].ChangeValue(CardStatus.Hp, cardInfo.GetValue(1, level), true);
                 }
                 break;
             case EffectType.summon:
@@ -784,28 +786,36 @@ public partial class Card : MonoBehaviourPun
                 break;
 
             case TargetType.front:  // 내 앞
-                for (int i = 3; i < 6; i++)
+                for (int i = 0; i < myArea.Length; i++)
                 {
-                    if (myArea[i].GetComponentInChildren<Card>() == this)
+                    if (myArea[i] != null)
                     {
-                        if (myArea[i - 3].GetComponentInChildren<Card>() != null)
+                        if (myArea[i].GetComponentInChildren<Card>() == this)
                         {
-                            skillTarget.Add(myArea[i - 3].GetComponentInChildren<Card>());
+                            if (i > 2 && myArea[i - 3] != null)
+                            {
+                                skillTarget.Add(myArea[i - 3].GetComponentInChildren<Card>());
+                            }
                         }
                     }
+                    
                 }
                 break;
 
             case TargetType.back:   // 내 뒤
-                for (int i = 0; i < 3; i++)
+                for (int i = 0; i < myArea.Length; i++)
                 {
-                    if (myArea[i].GetComponentInChildren<Card>() == this)
+                    if (myArea[i] != null)
                     {
-                        if (myArea[i + 3].GetComponentInChildren<Card>() != null)
+                        if (myArea[i].GetComponentInChildren<Card>() == this)
                         {
-                            skillTarget.Add(myArea[i + 3].GetComponentInChildren<Card>());
+                            if (i < 3 && myArea[i + 3] != null)
+                            {
+                                skillTarget.Add(myArea[i + 3].GetComponentInChildren<Card>());
+                            }
                         }
                     }
+                    
                 }
                 break;
 
@@ -817,30 +827,44 @@ public partial class Card : MonoBehaviourPun
                         switch (i)
                         {
                             case 0:
-                                skillTarget.Add(searchArea[1].GetComponentInChildren<Card>());
-                                skillTarget.Add(searchArea[3].GetComponentInChildren<Card>());
+                                if (searchArea[1] != null)
+                                    skillTarget.Add(searchArea[1].GetComponentInChildren<Card>());
+                                if (searchArea[3] != null)
+                                    skillTarget.Add(searchArea[3].GetComponentInChildren<Card>());
                                 break;
                             case 1:
-                                skillTarget.Add(searchArea[0].GetComponentInChildren<Card>());
-                                skillTarget.Add(searchArea[2].GetComponentInChildren<Card>());
-                                skillTarget.Add(searchArea[4].GetComponentInChildren<Card>());
+                                if (searchArea[0] != null)
+                                    skillTarget.Add(searchArea[0].GetComponentInChildren<Card>());
+                                if (searchArea[2] != null)
+                                    skillTarget.Add(searchArea[2].GetComponentInChildren<Card>());
+                                if (searchArea[4] != null)
+                                    skillTarget.Add(searchArea[4].GetComponentInChildren<Card>());
                                 break;
                             case 2:
-                                skillTarget.Add(searchArea[1].GetComponentInChildren<Card>());
-                                skillTarget.Add(searchArea[5].GetComponentInChildren<Card>());
+                                if (searchArea[1] != null)
+                                    skillTarget.Add(searchArea[1].GetComponentInChildren<Card>());
+                                if (searchArea[5] != null)
+                                    skillTarget.Add(searchArea[5].GetComponentInChildren<Card>());
                                 break;
                             case 3:
-                                skillTarget.Add(searchArea[0].GetComponentInChildren<Card>());
-                                skillTarget.Add(searchArea[4].GetComponentInChildren<Card>());
+                                if (searchArea[0] != null)
+                                    skillTarget.Add(searchArea[0].GetComponentInChildren<Card>());
+                                if (searchArea[4] != null)
+                                    skillTarget.Add(searchArea[4].GetComponentInChildren<Card>());
                                 break;
                             case 4:
-                                skillTarget.Add(searchArea[1].GetComponentInChildren<Card>());
-                                skillTarget.Add(searchArea[3].GetComponentInChildren<Card>());
-                                skillTarget.Add(searchArea[5].GetComponentInChildren<Card>());
+                                if (searchArea[1] != null)
+                                    skillTarget.Add(searchArea[1].GetComponentInChildren<Card>());
+                                if (searchArea[3] != null)
+                                    skillTarget.Add(searchArea[3].GetComponentInChildren<Card>());
+                                if (searchArea[5] != null)
+                                    skillTarget.Add(searchArea[5].GetComponentInChildren<Card>());
                                 break;
                             case 5:
-                                skillTarget.Add(searchArea[2].GetComponentInChildren<Card>());
-                                skillTarget.Add(searchArea[4].GetComponentInChildren<Card>());
+                                if (searchArea[2] != null)
+                                    skillTarget.Add(searchArea[2].GetComponentInChildren<Card>());
+                                if (searchArea[4] != null)
+                                    skillTarget.Add(searchArea[4].GetComponentInChildren<Card>());
                                 break;
                         }
                     }
@@ -850,7 +874,7 @@ public partial class Card : MonoBehaviourPun
             case TargetType.otherSide:
                 Debug.Log("대상은 내 반대편");
                 int myPosNum = System.Array.IndexOf(GameMGR.Instance.battleLogic.playerUnits, this);
-                if (GameMGR.Instance.battleLogic.enemyUnits[myPosNum] != null)
+                if (enemyArea[myPosNum] != null)
                 {
                     skillTarget.Add(searchArea[myPosNum].GetComponentInChildren<Card>());
                 }
@@ -864,21 +888,22 @@ public partial class Card : MonoBehaviourPun
                 int validIndex = 0; // 유효값이 있을 때마다 올라가는 인덱스 카운트 변수
                 for (int i = 0; i < searchArea.Count; i++) // 가장 공격력이 낮은 유닛을 찾는 과정
                 {
-                    if (searchArea[i].GetComponentInChildren<Card>() == null) continue; // 죽은 녀석은 대상에서 제외한다.
+                    if (searchArea[i] == null) continue; // 죽은 녀석은 대상에서 제외한다.
                     if (leastAtk == -1) //아무것도 없을 때에는 최초로 들어온 녀석이 값을 받는다. 
                     {
                         leastAtk = i;
-                        atkList[validIndex] = transform.parent.transform.GetChild(i).gameObject.GetComponentInChildren<Card>().curAttackValue;
+                        atkList[validIndex] = searchArea[i].GetComponentInChildren<Card>().curAttackValue;
                         validIndex++;
                     }
                     else
                     {
-                        atkList[validIndex] = transform.parent.transform.GetChild(validIndex).gameObject.GetComponentInChildren<Card>().curAttackValue;
+                        atkList[validIndex] = searchArea[i].GetComponentInChildren<Card>().curAttackValue;
                         validIndex++;
                     }
                     if (validIndex != 0) if (atkList[validIndex] < atkList[0]) leastAtk = i;
+                    if (searchArea[leastAtk] == null) { i = 0; continue; }
                 }
-                skillTarget.Add(searchArea[leastAtk].gameObject.GetComponentInChildren<Card>());
+                skillTarget.Add(searchArea[leastAtk].GetComponentInChildren<Card>());
                 break;
 
             case TargetType.mostATK:
@@ -886,21 +911,22 @@ public partial class Card : MonoBehaviourPun
                 atkList = new int[6];
                 int mostAtk = -1;
                 validIndex = 0; // 유효값이 있을 때마다 올라가는 인덱스 카운트 변수
-                for (int i = 0; i < 6; i++) // 가장 공격력이 낮은 유닛을 찾는 과정
+                for (int i = 0; i < searchArea.Count; i++) // 가장 공격력이 낮은 유닛을 찾는 과정
                 {
-                    if (searchArea[i].GetComponentInChildren<Card>().curHP <= 0) continue;
+                    if (searchArea[i] == null) continue;
                     if (mostAtk == -1) //아무것도 없을 때에는 최초로 들어온 녀석이 값을 받는다. 
                     {
                         mostAtk = i;
-                        atkList[validIndex] = transform.parent.transform.GetChild(i).gameObject.GetComponentInChildren<Card>().curAttackValue;
-                        validIndex++;
+                        atkList[validIndex] = searchArea[i].GetComponentInChildren<Card>().curAttackValue;
+                        validIndex ++;
                     }
                     else
                     {
-                        atkList[validIndex] = transform.parent.transform.GetChild(validIndex).gameObject.GetComponentInChildren<Card>().curAttackValue;
+                        atkList[validIndex] = searchArea[i].GetComponentInChildren<Card>().curAttackValue;
                         validIndex++;
                     }
                     if (validIndex != 0) if (atkList[validIndex] > atkList[0]) mostAtk = i;
+                    if (searchArea[mostAtk] == null) { i = 0; continue; }
                 }
                 skillTarget.Add(searchArea[mostAtk].GetComponentInChildren<Card>());
                 break;
@@ -912,19 +938,20 @@ public partial class Card : MonoBehaviourPun
                 validIndex = 0; // 유효값이 있을 때마다 올라가는 인덱스 카운트 변수
                 for (int i = 0; i < 6; i++) // 가장 공격력이 낮은 유닛을 찾는 과정
                 {
-                    if (searchArea[i].GetComponentInChildren<Card>().curHP <= 0) continue;
+                    if (searchArea[i] == null) continue;
                     if (leastHp == -1) //아무것도 없을 때에는 최초로 들어온 녀석이 값을 받는다. 
                     {
                         leastHp = i;
-                        hpArray[validIndex] = transform.parent.transform.GetChild(i).gameObject.GetComponentInChildren<Card>().curHP;
+                        hpArray[validIndex] = searchArea[i].gameObject.GetComponentInChildren<Card>().curHP;
                         validIndex++;
                     }
                     else
                     {
-                        hpArray[validIndex] = transform.parent.transform.GetChild(validIndex).gameObject.GetComponentInChildren<Card>().curHP;
+                        hpArray[validIndex] = searchArea[i].gameObject.GetComponentInChildren<Card>().curHP;
                         validIndex++;
                     }
                     if (validIndex != 0) if (hpArray[validIndex] < hpArray[0]) leastHp = i;
+                    if (searchArea[leastHp] == null) { i = 0; continue; }
                 }
                 skillTarget.Add(searchArea[leastHp].gameObject. GetComponentInChildren<Card>());
                 break;
@@ -936,19 +963,20 @@ public partial class Card : MonoBehaviourPun
                 validIndex = 0; // 유효값이 있을 때마다 올라가는 인덱스 카운트 변수
                 for (int i = 0; i < 6; i++) // 가장 공격력이 낮은 유닛을 찾는 과정
                 {
-                    if (searchArea[i].GetComponent<Card>().curHP <= 0) continue;
+                    if (searchArea[i] == null) continue;
                     if (mostHp == -1) //아무것도 없을 때에는 최초로 들어온 녀석이 값을 받는다. 
                     {
                         mostHp = i;
-                        hpArray[validIndex] = transform.parent.transform.GetChild(i).gameObject.GetComponent<Card>().curHP;
+                        hpArray[validIndex] = searchArea[i].gameObject.GetComponent<Card>().curHP;
                         validIndex++;
                     }
                     else
                     {
-                        hpArray[validIndex] = transform.parent.transform.GetChild(validIndex).gameObject.GetComponent<Card>().curHP;
+                        hpArray[validIndex] = searchArea[i].gameObject.GetComponent<Card>().curHP;
                         validIndex++;
                     }
                     if (validIndex != 0) if (hpArray[validIndex] > hpArray[0]) mostHp = i;
+                    if (searchArea[mostHp] == null) { i = 0; continue; }
                 }
                 skillTarget.Add(searchArea[mostHp].GetComponentInChildren<Card>());
                 break;

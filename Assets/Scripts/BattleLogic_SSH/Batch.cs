@@ -2,6 +2,7 @@ using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public partial class Batch : MonoBehaviourPun
 {
@@ -40,7 +41,9 @@ public partial class Batch : MonoBehaviourPun
         GameMGR.Instance.uiManager.playerName.text = PlayerNameList[num];
         GameMGR.Instance.uiManager.userProfile.sprite = Resources.Load<Sprite>($"Sprites/Profile/{PlayerProfileList[num]}");
 
-        GameMGR.Instance.uiManager.PlayerLifeTXT.text = GameMGR.Instance.userLife[CustomNumberList[num]].ToString();
+        int life = 0;
+        GameMGR.Instance.userLife.TryGetValue(CustomNumberList[num],out life);
+        GameMGR.Instance.uiManager.PlayerLifeTXT.text = life.ToString();
 
 
 
@@ -69,15 +72,17 @@ public partial class Batch : MonoBehaviourPun
         GameMGR.Instance.playerList.TryGetValue(GameMGR.Instance.matching[num], out cardList);
         if (cardList == null) return;
         GameMGR.Instance.uiManager.playerBatchUI.SetActive(true);
-        GameMGR.Instance.uiManager.userProfile.sprite = Resources.Load<Sprite>($"Sprites/Profile/{PlayerProfileList[num]}");
-        for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
+        for (int i = 0; i < CustomNumberList.Count; i++)
         {
             if (GameMGR.Instance.matching[num] == CustomNumberList[i])
             {
                 GameMGR.Instance.uiManager.playerName.text = PlayerNameList[i];
+        GameMGR.Instance.uiManager.userProfile.sprite = Resources.Load<Sprite>($"Sprites/Profile/{PlayerProfileList[i]}");
             }
         }
-        GameMGR.Instance.uiManager.PlayerLifeTXT.text = GameMGR.Instance.userLife[GameMGR.Instance.matching[num]].ToString();
+        int life = 0;
+        GameMGR.Instance.userLife.TryGetValue(GameMGR.Instance.matching[num], out life);
+        GameMGR.Instance.uiManager.PlayerLifeTXT.text = life.ToString();
 
 
 
@@ -160,6 +165,12 @@ public partial class Batch : MonoBehaviourPun
         }
         Debug.Log(PlayerNameList.Count);
         Debug.Log(CustomNumberList.Count);
+    
+    }
+    [PunRPC]
+    public void LifeSave(int num,int value)
+    {
+        GameMGR.Instance.userLife.TryAdd(num, value);
     }
 
     [PunRPC]
@@ -225,6 +236,19 @@ public partial class Batch : MonoBehaviourPun
     {
         List<string> cardList = null;
         GameMGR.Instance.playerList.TryGetValue(playerNum, out cardList);
+        for (int i = 0; i < CustomNumberList.Count; i++)
+        {
+            if (GameMGR.Instance.matching[0] == CustomNumberList[i])
+            {
+
+                GameMGR.Instance.uiManager.PlayerProfileImage.sprite = Resources.Load<Sprite>($"Sprites/Profile/{PlayerProfileList[i]}");
+            }
+            else if (GameMGR.Instance.matching[1] == CustomNumberList[i])
+            {
+                
+                GameMGR.Instance.uiManager.EnemyProfileImage.sprite = Resources.Load<Sprite>($"Sprites/Profile/{PlayerProfileList[i]}");
+            }
+        }
 
         for (int i = 0; i < cardList.Count; i++)
         {

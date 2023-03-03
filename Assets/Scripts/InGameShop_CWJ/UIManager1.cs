@@ -20,6 +20,8 @@ public partial class UIManager : MonoBehaviour
     public Image userProfile = null;
     public Image[] userProfileImage = null;
     public Image[] unitSprite = null;
+    public Image PlayerProfileImage = null;
+    public Image EnemyProfileImage = null;
     public GameObject playerBatchUI = null;
     public TextMeshProUGUI playerName = null;
 
@@ -66,6 +68,8 @@ public partial class UIManager : MonoBehaviour
         playerName = GameObject.Find("PlayerName").GetComponent<TextMeshProUGUI>();
         sell = GameObject.Find("Sell");
         playerBatchUI = GameObject.Find("PlayerBatchUI");
+        PlayerProfileImage = GameObject.Find("PlayerProfileImage").GetComponent<Image>();
+        EnemyProfileImage = GameObject.Find("EnemyProfileImage").GetComponent<Image>();
         unitSprite[0] = GameObject.Find("Unit1").GetComponent<Image>();
         unitSprite[1] = GameObject.Find("Unit2").GetComponent<Image>();
         unitSprite[2] = GameObject.Find("Unit3").GetComponent<Image>();
