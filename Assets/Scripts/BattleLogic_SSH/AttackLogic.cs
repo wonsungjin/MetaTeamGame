@@ -98,7 +98,12 @@ public partial class AttackLogic : Skill
         {
             if (GameMGR.Instance.battleLogic.enemyAttackList.Count != 0) GameMGR.Instance.battleLogic.enemyAttackList.RemoveAt(0);
         }
-        StartCoroutine(COR_Delay(targetUnit.transform.gameObject));
+        if (targetUnit.transform.gameObject.activeSelf)
+        {
+            if (gameObject.activeSelf) StartCoroutine(COR_Delay(targetUnit.transform.gameObject));
+            else GameMGR.Instance.battleLogic.isWaitAttack = true;
+        }
+        else GameMGR.Instance.battleLogic.isWaitAttack = true;
     }
 
     IEnumerator COR_AttackEFF(Vector3 targetUint)
