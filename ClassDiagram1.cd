@@ -1,0 +1,494 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="AudioMGR" Collapsed="true">
+    <Position X="10.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>kRgAEAFAAAQAAAAkAAmQAAwAMAQAhCgIhAACAAIADEA=</HashCode>
+      <FileName>Assets\Scripts\AudioMGR.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AttackLogic" Collapsed="true">
+    <Position X="5.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAARAAAAAABAQAQAAAAIAAAgCAAAAQAAAAigEA=</HashCode>
+      <FileName>Assets\Scripts\BattleLogic_SSH\AttackLogic.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Batch" Collapsed="true">
+    <Position X="12.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAgAABMAAAEAQIBAAAAAAASQgEgQCAKCAAAAQAQ=</HashCode>
+      <FileName>Assets\Scripts\BattleLogic_SSH\Batch.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BattleLogic" Collapsed="true">
+    <Position X="14" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAKgQAAERCAABggAhBBAgEAIAAAAAAIAAAGiAIgAAAE=</HashCode>
+      <FileName>Assets\Scripts\BattleLogic_SSH\BattleLogic.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TestScript" Collapsed="true">
+    <Position X="10.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQAAAABAAAAAAAAAAAAAAAAACAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\BattleLogic_SSH\TestScript.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CardAI" Collapsed="true">
+    <Position X="21" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\BattleMatching_HCU\CardAI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TurnSystem" Collapsed="true">
+    <Position X="17.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAMAQYhEQAQCAAAhG0ggNByAACAhEICAKBAGEAoAGgA=</HashCode>
+      <FileName>Assets\Scripts\BattleMatching_HCU\TurnSystem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UIManager" Collapsed="true">
+    <Position X="19.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>kA/wgALRD0ZXUYVmMgVIDbGFCSWEoqj8Rbm3hIVUgZU=</HashCode>
+      <FileName>Assets\Scripts\BattleSceneUI_SSH\UIManagerSSH.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Card" Collapsed="true">
+    <Position X="19.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CIACAACAhgcAQGAQACqJFAAAEJkxEDSKAACRBAhoCGA=</HashCode>
+      <FileName>Assets\Scripts\CardInfo_WSJ\Card.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CardUI" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="12.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABgAEAAAAAAABAAACEAggAAAgQAAABwABAAI=</HashCode>
+      <FileName>Assets\Scripts\CardInfo_WSJ\CardUI.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="ShopCards" Collapsed="true">
+    <Position X="10.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAABAAAgEAAAAAAAAABAAAIAACAAIAAAA=</HashCode>
+      <FileName>Assets\Scripts\CardInfo_WSJ\ShopCards.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CustomDeckShop" Collapsed="true">
+    <Position X="17.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAQAAAgAAAACAIgAAkAAAAAAAAAAAAAAAAAAAICAoA=</HashCode>
+      <FileName>Assets\Scripts\CustomDeck_WSJ\CustomDeckShop.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyDeck" Collapsed="true">
+    <Position X="19.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAQAAAAAAAAAAAAQAgAAABAABEAAAIAAgAAAA=</HashCode>
+      <FileName>Assets\Scripts\CustomDeck_WSJ\MyDeck.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Res_UserProfile" Collapsed="true">
+    <Position X="15.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAAAAAEAAAAAAAAAAAAAAAEIAAAIAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\DataSystem_WSJ\APISystem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Res_DummyPool" Collapsed="true">
+    <Position X="12.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAQAAAAACA=</HashCode>
+      <FileName>Assets\Scripts\DataSystem_WSJ\APISystem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Records" Collapsed="true">
+    <Position X="12.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAIAAEEAhgACAAAAAAhAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\DataSystem_WSJ\APISystem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Res_UserSessionID" Collapsed="true">
+    <Position X="17.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAAAAAEAAgAAAAAAAAAAAAAIAAAIAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\DataSystem_WSJ\APISystem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Res_ZeraBalance" Collapsed="true">
+    <Position X="19.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAQAAAAACA=</HashCode>
+      <FileName>Assets\Scripts\DataSystem_WSJ\APISystem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Res_BettingSetting" Collapsed="true">
+    <Position X="22.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAQAAAAACA=</HashCode>
+      <FileName>Assets\Scripts\DataSystem_WSJ\APISystem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Req_Initialize" Collapsed="true">
+    <Position X="17.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAIAAQAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\DataSystem_WSJ\APISystem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Res_Initialize" Collapsed="true">
+    <Position X="14" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAACA=</HashCode>
+      <FileName>Assets\Scripts\DataSystem_WSJ\APISystem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Res_balance" Collapsed="true">
+    <Position X="19.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACA=</HashCode>
+      <FileName>Assets\Scripts\DataSystem_WSJ\APISystem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Req_BettingWinner" Collapsed="true">
+    <Position X="15.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAQAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\DataSystem_WSJ\APISystem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Res_BettingWinner" Collapsed="true">
+    <Position X="10.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAACA=</HashCode>
+      <FileName>Assets\Scripts\DataSystem_WSJ\APISystem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Req_BettingDisconnect" Collapsed="true">
+    <Position X="14" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\DataSystem_WSJ\APISystem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Res_BettingDisconnect" Collapsed="true">
+    <Position X="21" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAACA=</HashCode>
+      <FileName>Assets\Scripts\DataSystem_WSJ\APISystem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DataBase" Collapsed="true">
+    <Position X="19.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQEAABAACQAAADAAEAQAAAEAAAAEAAEAIAQBAEAQAA=</HashCode>
+      <FileName>Assets\Scripts\DataSystem_WSJ\DataBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InventoryData" Collapsed="true">
+    <Position X="15.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAgAAAAAAQAAQAgIAAAAAAAAAACAAABQQAAABgAAA=</HashCode>
+      <FileName>Assets\Scripts\DataSystem_WSJ\DataBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CustomDeck" Collapsed="true">
+    <Position X="15.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAEA=</HashCode>
+      <FileName>Assets\Scripts\DataSystem_WSJ\DataBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UnitData" Collapsed="true">
+    <Position X="21" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\DataSystem_WSJ\DataBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MetaTrendAPI" Collapsed="true">
+    <Position X="17.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQIAwElDaAQSAAKUABQBQoOwkgAAwoNoKcAAEAMIYQ=</HashCode>
+      <FileName>Assets\Scripts\DataSystem_WSJ\MetaTrendAPI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameMGR" Collapsed="true">
+    <Position X="8" Y="2" Width="1.5" />
+    <NestedTypes>
+      <Delegate Name="GameMGR._callback_SkillTiming" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\Scripts\GameMGRHCU.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="GameMGR._callback_SkillTiming2" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\Scripts\GameMGRHCU.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAKCBEAAImBUAAAgIw1AhhAiIEQSACSAMSgSCwGAQEA=</HashCode>
+      <FileName>Assets\Scripts\GameMGR.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BattleZone" Collapsed="true">
+    <Position X="15.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAEIACAACAAAAAAAAAAAAAAAEAAAAAAAAgAAAAAAAE=</HashCode>
+      <FileName>Assets\Scripts\InGameShop_CWJ\BattleZone.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ButtonEFF" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="17.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAABAACAIAAAAAAAAAMAAAAAABAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\InGameShop_CWJ\ButtonEFF.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="ChainBroken" Collapsed="true">
+    <Position X="14" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAAAAAAgAAAAIAAAAAAAAAEAAAAAAQAQAA=</HashCode>
+      <FileName>Assets\Scripts\InGameShop_CWJ\ChainBroken.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Drag2D" Collapsed="true">
+    <Position X="22.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQQAAUgKQACAADAAAQBIAIAAEMAAAMSEIEwEABBKCAE=</HashCode>
+      <FileName>Assets\Scripts\InGameShop_CWJ\Drag2D.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EffOFF" Collapsed="true">
+    <Position X="10.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
+      <FileName>Assets\Scripts\InGameShop_CWJ\EffOFF.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FreezeCard" Collapsed="true">
+    <Position X="12.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAEAAEAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\InGameShop_CWJ\FreezeCard.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FullScreenSize" Collapsed="true">
+    <Position X="14" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\InGameShop_CWJ\FullScreenSize.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Node" Collapsed="true">
+    <Position X="21" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAACDABCgAABAAAAAAAAAAAEAIAQQAQAAAAQAAAAA=</HashCode>
+      <FileName>Assets\Scripts\InGameShop_CWJ\Node.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NodeCollider" Collapsed="true">
+    <Position X="22.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAACAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\InGameShop_CWJ\NodeCollider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sell" Collapsed="true">
+    <Position X="21" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQCAAAAAAAAAEAAAACEAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\InGameShop_CWJ\Sell.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SellInCollider" Collapsed="true">
+    <Position X="22.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAQAACBgEAAAAAAAAAAAAAAAAAgAAAAAAAACAAQ=</HashCode>
+      <FileName>Assets\Scripts\InGameShop_CWJ\SellInCollider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Spawner" Collapsed="true">
+    <Position X="17.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AKAAAACgSGAIAAAAACAAIAACAgAACKgAEACEAEAQQIg=</HashCode>
+      <FileName>Assets\Scripts\InGameShop_CWJ\Spawner.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SpecialZone" Collapsed="true">
+    <Position X="19.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAACDABCAAABAAAAAAAAAAAEAIAQQAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\InGameShop_CWJ\SpecialZone.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TimerSound" Collapsed="true">
+    <Position X="14" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAACAAAAAAAAAAAAAAAAAAAEAACAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\InGameShop_CWJ\TimerSound.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TimerTick" Collapsed="true">
+    <Position X="15.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQABABAADAAABAAAAAAAAAACAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\InGameShop_CWJ\TimerTick.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ObjectPool" Collapsed="true">
+    <Position X="5.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAIAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\ObjectPool.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DatabaseAccess" Collapsed="true">
+    <Position X="21" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAACAAAABAAEAAAAAAAAAAAAAAAAAABAAAAEA=</HashCode>
+      <FileName>Assets\Scripts\PhotonServer_SSH\DatabaseAccess.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PhotonLauncher" Collapsed="true">
+    <Position X="10.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IhSAAACAACAEAAEIAEAAAIJAAAAABkBEEAACAAAAAMA=</HashCode>
+      <FileName>Assets\Scripts\PhotonServer_SSH\PhotonLauncher.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SignUp" Collapsed="true">
+    <Position X="12.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAgIACEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEA=</HashCode>
+      <FileName>Assets\Scripts\PhotonServer_SSH\SignUp.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TestInputStr" Collapsed="true">
+    <Position X="22.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAAACAAAAABAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\PhotonServer_SSH\TestInputStr.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Singleton&lt;T&gt;" Collapsed="true">
+    <Position X="7" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Singleton.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Skill" Collapsed="true">
+    <Position X="5.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QUAIECAAQAAAgAIIADAAACCIAOBAAAAAAAABAQAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Skill.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Skill_DestroySelf" Collapsed="true">
+    <Position X="14" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
+      <FileName>Assets\Scripts\Skill_DestroySelf.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SoundSlider" Collapsed="true">
+    <Position X="15.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAAAAAAAIAAAiCAIAgAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>Assets\Scripts\SoundSlider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TestAudio" Collapsed="true">
+    <Position X="21" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAhAAAAAAAAAAAAAAAAMAAAAAAAAAAAAEA=</HashCode>
+      <FileName>Assets\Scripts\TestAudio.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TESTSpine" Collapsed="true">
+    <Position X="12.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAABACA=</HashCode>
+      <FileName>Assets\Scripts\TESTSpine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CardInfo" Collapsed="true">
+    <Position X="22.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAACAKKIIACgAgAIAAAAAAEAAEAACAIiABIBAAAAIA=</HashCode>
+      <FileName>Assets\Scripts\Tools\CardInfo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CardList" Collapsed="true">
+    <Position X="10.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Tools\CardList.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="CardStatus" Collapsed="true">
+    <Position X="10.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAIAAAAABAAAAAAAAQAA=</HashCode>
+      <FileName>Assets\Scripts\CardInfo_WSJ\Card.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="When" Collapsed="true">
+    <Position X="22.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EgIAAAAAQEAAAABAQBIAAEAgAIAgAAAgAAAAAAAAAEA=</HashCode>
+      <FileName>Assets\Scripts\Skill.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="SkillTiming" Collapsed="true">
+    <Position X="17.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAABAEkBAAgAAAAAAAABAIAAAAAAAIBAQAIA=</HashCode>
+      <FileName>Assets\Scripts\Tools\CardInfo.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="EffectTarget" Collapsed="true">
+    <Position X="12.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAIAAAAAAABAAAKCACAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Assets\Scripts\Tools\CardInfo.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TargetType" Collapsed="true">
+    <Position X="19.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AUAAAgEAABQQgIEAAAAEAAACgCAAAAAAAAQAAICAAAA=</HashCode>
+      <FileName>Assets\Scripts\Tools\CardInfo.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TriggerCondition" Collapsed="true">
+    <Position X="21" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAgAAAEAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Tools\CardInfo.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="EffectType" Collapsed="true">
+    <Position X="14" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAICAAIAAAAgEAAAAIAAAIQAAAAAIAAAUAAAAQAAAA=</HashCode>
+      <FileName>Assets\Scripts\Tools\CardInfo.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="faidType" Collapsed="true">
+    <Position X="15.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACA=</HashCode>
+      <FileName>Assets\Scripts\UIManagerWSJ.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="맑은 고딕" Size="9" />
+</ClassDiagram>
