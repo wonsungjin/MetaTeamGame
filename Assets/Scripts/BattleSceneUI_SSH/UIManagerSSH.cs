@@ -194,8 +194,9 @@ public partial class UIManager : MonoBehaviour
         // draw case
         else if (Draw) { GameMGR.Instance.audioMGR.BattleRoundResult(Draw); }
 
+        GameMGR.Instance.batch.gameObject.GetPhotonView().RPC("LifeSave", RpcTarget.All, (int)PhotonNetwork.LocalPlayer.CustomProperties["Number"], (int)PhotonNetwork.LocalPlayer.CustomProperties["Life"]);
+
         yield return new WaitForSeconds(5f);
-        GameMGR.Instance.batch.gameObject.GetPhotonView().RPC("LifeSave", RpcTarget.All, GameMGR.Instance.matching[0], GameMGR.Instance.battleLogic.curLife);
 
         if (PhotonNetwork.PlayerList.Length == 1)
         {

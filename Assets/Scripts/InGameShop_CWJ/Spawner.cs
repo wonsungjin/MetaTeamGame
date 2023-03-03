@@ -113,6 +113,7 @@ public class Spawner : MonoBehaviourPun
             if (cardBatch[i] != null)
             {
                 card = cardBatch[i].GetComponent<Card>();
+                GameMGR.Instance.batch.gameObject.GetPhotonView().RPC("LifeSave", RpcTarget.All, (int)PhotonNetwork.LocalPlayer.CustomProperties["Number"], (int)PhotonNetwork.LocalPlayer.CustomProperties["Life"]);
                 GameMGR.Instance.batch.gameObject.GetPhotonView().RPC("SetBatch", RpcTarget.All,
                     (int)PhotonNetwork.LocalPlayer.CustomProperties["Number"], card.name.Replace("(Clone)", ""), card.curHP, card.curAttackValue, card.curEXP, card.level);
             }

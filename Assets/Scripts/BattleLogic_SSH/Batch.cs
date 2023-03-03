@@ -43,6 +43,7 @@ public partial class Batch : MonoBehaviourPun
 
         int life = 0;
         GameMGR.Instance.userLife.TryGetValue(CustomNumberList[num],out life);
+        Debug.LogError(CustomNumberList[num] + "입니다" + life);
         GameMGR.Instance.uiManager.PlayerLifeTXT.text = life.ToString();
 
 
@@ -82,6 +83,7 @@ public partial class Batch : MonoBehaviourPun
         }
         int life = 0;
         GameMGR.Instance.userLife.TryGetValue(GameMGR.Instance.matching[num], out life);
+        Debug.LogError(GameMGR.Instance.matching[num] + "입니다" + life);
         GameMGR.Instance.uiManager.PlayerLifeTXT.text = life.ToString();
 
 
@@ -171,6 +173,7 @@ public partial class Batch : MonoBehaviourPun
     public void LifeSave(int num,int value)
     {
         GameMGR.Instance.userLife.TryAdd(num, value);
+        Debug.LogError(num+" "+value);
     }
 
     [PunRPC]
