@@ -25,11 +25,22 @@ public class MetaTrendAPI : MonoBehaviour
     DateTime ServerTime;
     TimeSpan spanTime;
 
+    string APIProfilePort = "http://localhost:8546/api/getuserprofile";
+    string APIIdPort = "http://localhost:8546/api/getsessionid";
+
     WaitForSeconds waitTime = new WaitForSeconds(1f);
 
     string timeDI;
     string totalGold;
-
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.U))
+        {
+            Debug.LogError("포트번호 변경");
+            APIProfilePort = "http://localhost:8544/api/getuserprofile";
+            APIIdPort = "http://localhost:8544/api/getsessionid";
+        }
+    }
 
     // 버튼 누를시 URL 연결
     public void ButtonGetURL()
@@ -77,7 +88,7 @@ public class MetaTrendAPI : MonoBehaviour
     IEnumerator requestGetUserInfo(resCallback_GetUserInfo callback)
     {
         // get user profile
-        UnityWebRequest www = UnityWebRequest.Get("http://localhost:8544/api/getuserprofile");
+        UnityWebRequest www = UnityWebRequest.Get(APIProfilePort);
         yield return www.SendWebRequest();
         Debug.Log(www.downloadHandler.text);
         //txtInputField.text = www.downloadHandler.text;
@@ -163,7 +174,7 @@ public class MetaTrendAPI : MonoBehaviour
     IEnumerator requestGetSessionID(resCallback_GetSessionID callback)
     {
         // get session id
-        UnityWebRequest www = UnityWebRequest.Get("http://localhost:8544/api/getsessionid");
+        UnityWebRequest www = UnityWebRequest.Get(APIIdPort);
         yield return www.SendWebRequest();
         Debug.Log(www.downloadHandler.text);
         //txtInputField.text = www.downloadHandler.text;

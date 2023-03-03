@@ -9,6 +9,8 @@ public partial class GameMGR : Singleton<GameMGR>
     // 서로가 동일한 랜덤값을 가지기 위한 것이다.
     public int[] randomValue;
 
+    public int[] userName;
+    public int[] userLife;
     public int i = 0;
     public int GetRandomValue(int minrange, int maxrange,bool set =false)
     {
@@ -37,7 +39,7 @@ public partial class GameMGR : Singleton<GameMGR>
         }
     }
 
-    public Dictionary<int, List<Card>> playerList = new Dictionary<int, List<Card>>();
+    public Dictionary<int, List<string>> playerList = new Dictionary<int, List<string>>();
 
     public bool isBattleNow = false; // 현재 전투씬인지 비전투씬인지를 구분하는 불값.
 
@@ -93,7 +95,6 @@ public partial class GameMGR : Singleton<GameMGR>
             return true;
         }
         else return false;
-            Debug.Log("아니 지금 전투시작시가 비었다는 말인가");
     }
     public void Event_Summon()
     {
