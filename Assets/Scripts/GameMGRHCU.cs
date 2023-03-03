@@ -10,7 +10,7 @@ public partial class GameMGR : Singleton<GameMGR>
     public int[] randomValue;
 
     public int[] userName;
-    public int[] userLife;
+    public Dictionary<int, int> userLife = new Dictionary<int, int>();
     public int i = 0;
     public int GetRandomValue(int minrange, int maxrange,bool set =false)
     {

@@ -100,16 +100,20 @@ public class Spawner : MonoBehaviourPun
     // 레디 버튼 누르면 이루어짐 몬스터 삭제 , 시간 초기화 , 머니 초기화
     Card card;
     public bool isClick;
+    GameObject readyButton;
     public void OnCLick_ReadyButton()
     {
         if (isClick) return;
         isClick = true;
+        if(readyButton==null) readyButton = GameObject.Find("ReadyButton");
+        readyButton.SetActive(false);
         GameMGR.Instance.batch.gameObject.GetPhotonView().RPC("ClearBatch", RpcTarget.All, (int)PhotonNetwork.LocalPlayer.CustomProperties["Number"]);
         for (int i = 0; i < cardBatch.Length; i++)
         {
             if (cardBatch[i] != null)
             {
                 card = cardBatch[i].GetComponent<Card>();
+                GameMGR.Instance.batch.gameObject.GetPhotonView().RPC("LifeSave", RpcTarget.All, (int)PhotonNetwork.LocalPlayer.CustomProperties["Number"], (int)PhotonNetwork.LocalPlayer.CustomProperties["Life"]);
                 GameMGR.Instance.batch.gameObject.GetPhotonView().RPC("SetBatch", RpcTarget.All,
                     (int)PhotonNetwork.LocalPlayer.CustomProperties["Number"], card.name.Replace("(Clone)", ""), card.curHP, card.curAttackValue, card.curEXP, card.level);
             }
@@ -121,6 +125,7 @@ public class Spawner : MonoBehaviourPun
 
     public void TestButton()
     {
+        readyButton.SetActive(true);
         ChooseRandomCard();
         if (GameMGR.Instance.uiManager.shopLevel < 6 && GameMGR.Instance.uiManager.shopMoney > 0)
             GameMGR.Instance.uiManager.shopMoney--;

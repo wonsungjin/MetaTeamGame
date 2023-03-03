@@ -185,14 +185,18 @@ public partial class UIManager : MonoBehaviour
         GameMGR.Instance.uiManager.PlayerBattleLose(Lose);
         GameMGR.Instance.uiManager.PlayerBattleDraw(Draw);
 
+        Debug.LogError("isResult : " + Win);
+
         // win case
-        if (Win) { GameMGR.Instance.audioMGR.BattleRoundResult(Win); }
+        if (Win == true) { GameMGR.Instance.audioMGR.BattleRoundResult(true); }
 
         // lose case
-        else if (Lose) { GameMGR.Instance.audioMGR.BattleRoundResult(Lose); }
+        else if (Win == false) { GameMGR.Instance.audioMGR.BattleRoundResult(false); }
 
         // draw case
         else if (Draw) { GameMGR.Instance.audioMGR.BattleRoundResult(Draw); }
+
+        GameMGR.Instance.batch.gameObject.GetPhotonView().RPC("LifeSave", RpcTarget.All, (int)PhotonNetwork.LocalPlayer.CustomProperties["Number"], (int)PhotonNetwork.LocalPlayer.CustomProperties["Life"]);
 
         yield return new WaitForSeconds(5f);
 

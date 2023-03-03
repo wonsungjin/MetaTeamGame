@@ -273,10 +273,9 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
 
         else if (curLife >= 1)
         {
-            StartCoroutine(GameMGR.Instance.uiManager.COR_MoveToResultScene(false, true, false));
-
             GameMGR.Instance.uiManager.PlayerSetArrangement();
             GameMGR.Instance.Init(4);
+            StartCoroutine(GameMGR.Instance.uiManager.COR_MoveToResultScene(false, true, false));
         }
     }
 
