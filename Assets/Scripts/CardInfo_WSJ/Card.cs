@@ -256,7 +256,8 @@ public partial class Card : MonoBehaviourPun
                     {
                         level++;
                         levelText.text = level.ToString();
-                        GameMGR.Instance.spawner.SpecialMonster();
+                        if(!GameMGR.Instance.isBattleNow)
+                            GameMGR.Instance.spawner.SpecialMonster();
                     }
 
                     GameMGR.Instance.sellInCollider.CollOn();
