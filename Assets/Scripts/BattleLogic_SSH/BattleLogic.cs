@@ -260,7 +260,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
         Debug.LogError("Player Lose");
 
 
-        curLife -= 10;
+        curLife -= 1;
         GameMGR.Instance.uiManager.ChangeLife(curLife);
 
         PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "Life", curLife } });
