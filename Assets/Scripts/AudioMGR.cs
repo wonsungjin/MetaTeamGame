@@ -181,6 +181,7 @@ public class AudioMGR : MonoBehaviour
 
         else if (!isResult)
         {
+            Debug.LogError("isResult : " + isResult);
             BattleAudio.outputAudioMixerGroup = SFXAudioMixer;
             BattleAudio.clip = ReturnAudioClip(Type.Effect, "GameLose");
             BattleAudio.Play();
