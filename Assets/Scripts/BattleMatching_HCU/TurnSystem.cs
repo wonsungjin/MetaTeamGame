@@ -379,6 +379,7 @@ public class TurnSystem : MonoBehaviourPunCallbacks
             }
             matchingListReal.RemoveAt(matchingList.Count - 1);
             cloneOpponent = matchingList[matchingList.Count - 1];
+            if(matchingListReal.Count>0)
             matchingList.Add(matchingListReal[UnityEngine.Random.Range(0, matchingListReal.Count)]);
 
             matchingListInput(true);
