@@ -38,7 +38,7 @@ public class TurnSystem : MonoBehaviourPunCallbacks
     // 핵심
     public int myLife = 20;
 
-    public int startLife = 20;
+    int startLife = 20;
 
     // 전투 승패 관련
     public bool isWin = false;
@@ -131,7 +131,6 @@ public class TurnSystem : MonoBehaviourPunCallbacks
     public void StartSetting() // 게임 시작시 '최초' 한번만 실행되는 함수
     {
         GameMGR.Instance.userName = new int[PhotonNetwork.PlayerList.Length];
-        GameMGR.Instance.userLife = new int[PhotonNetwork.PlayerList.Length];
         // 플레이어 고유번호 및 라이프 지정. 게임 시작하는 시점부터 각 플레이어리스트 배열의 인덱스에 고유번호 지정. 들락날락으로 인한 엑터넘버 불규칙 방지
         for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
         {

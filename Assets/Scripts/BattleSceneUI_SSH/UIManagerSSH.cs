@@ -195,6 +195,7 @@ public partial class UIManager : MonoBehaviour
         else if (Draw) { GameMGR.Instance.audioMGR.BattleRoundResult(Draw); }
 
         yield return new WaitForSeconds(5f);
+        GameMGR.Instance.batch.gameObject.GetPhotonView().RPC("LifeSave", RpcTarget.All, GameMGR.Instance.matching[0], GameMGR.Instance.battleLogic.curLife);
 
         if (PhotonNetwork.PlayerList.Length == 1)
         {
