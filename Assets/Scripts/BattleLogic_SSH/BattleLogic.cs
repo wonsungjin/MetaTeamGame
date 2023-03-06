@@ -175,7 +175,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                 if (PlayerUnit() == null && EnemyUnit() == null) { PlayerBattleDraw(); yield break; }
             }
         else
-            while (PlayerUnit() != null && EnemyUnit() != null)
+            while (EnemyUnit() != null&&PlayerUnit() != null)
             {
 
                 if (playerAttackList.Count == 0)
@@ -197,7 +197,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
 
                 }
                 yield return new WaitForSeconds(0.5f);
-                if (PlayerUnit() == null && EnemyUnit() == null) { PlayerBattleDraw(); yield break; }
+                if (EnemyUnit() == null&& PlayerUnit() == null) { PlayerBattleDraw(); yield break; }
 
 
 
@@ -210,7 +210,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                 }
                 yield return new WaitForSeconds(0.5f);
 
-                if (PlayerUnit() == null && EnemyUnit() == null) { PlayerBattleDraw(); yield break; }
+                if (EnemyUnit() == null&& PlayerUnit() == null) { PlayerBattleDraw(); yield break; }
 
             }
 
