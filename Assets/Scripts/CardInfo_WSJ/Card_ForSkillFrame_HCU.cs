@@ -56,7 +56,8 @@ public partial class Card : MonoBehaviourPun
         if (cardInfo.skillTiming == SkillTiming.attackBefore) SkillActive(); // 공격 전 효과 발동
         //GameMGR.Instance.audioMGR.BattleAttackSound(damage);
         Target.Hit(damage, this, isDirect, isFirst); // 지금부터 내가 너를 때리겠다는 말이야
-        if (cardInfo.skillTiming == SkillTiming.attackAfter) SkillActive(); // 공격 후 효과 발동
+
+        if (cardInfo.skillTiming == SkillTiming.attackAfter && curHP > 0) SkillActive(); // 공격 후 효과 발동
     }
 
     public void Hit(int damage, Card Attacker, bool isDirect, bool isFirst) // 자신이 피격시 호출되는 함수 // 받은 데미지, 날 때린 사람
@@ -89,7 +90,7 @@ public partial class Card : MonoBehaviourPun
 
         GameMGR.Instance.Event_HitEnemy(this);
 
-        if (cardInfo.skillTiming == SkillTiming.hit) // 피격시 효과 발동. 죽으면 피격시 효과가 발동하지 않는다.
+        if (this.curHP > 0 && cardInfo.skillTiming == SkillTiming.hit) // 피격시 효과 발동. 죽으면 피격시 효과가 발동하지 않는다.
         {
             SkillActive();
         }
@@ -182,10 +183,11 @@ public partial class Card : MonoBehaviourPun
         if (Attacker.cardInfo.skillTiming == SkillTiming.kill) Attacker.SkillActive(); // 내가 죽었는데 적이 처치시 효과가 있다면 적 효과 먼저 발동시켜준다.
         if (cardInfo.skillTiming == SkillTiming.death) SkillActive(); // 사망시 효과 발동
                                                                       //GameMGR.Instance.battleLogic.isWaitAttack = true;
+        Debug.Log("처치시 효과 및 사망시 효과 발동 지점");
         yield return new WaitForSeconds(2f);
 
-
         GameMGR.Instance.objectPool.DestroyPrefab(gameObject.transform.parent.gameObject);
+        Debug.Log("유닛 비활성화 지점");
     }
 
     public void SetSkillTiming() // 스킬을 언제 발동시키느냐에 따라서 각 델리게이트 이벤트에 추가시켜준다. 이벤트는 보따리의 개념으로써 이벤트를 실행하면 안에 추가한 모든 함수들이 실행되기 때문에 공통적으로 사용되는 부분에서만 사용하는 것이 응당 정당 타당 합당 마땅하다고 보는 부분적인 부분이라고 할 수 있는 부분이다.
@@ -640,7 +642,7 @@ public partial class Card : MonoBehaviourPun
                         {
                             if (GameMGR.Instance.battleLogic.playerBackwardUnits[i] == null)
                             {
-                                targetPos = GameMGR.Instance.battleLogic.playerForwardUnits[i].transform.position;
+                                targetPos = GameMGR.Instance.battleLogic.playerBackwardUnits[i].transform.position;
                                 isFind = true;
                                 break;
                             }
@@ -744,7 +746,7 @@ public partial class Card : MonoBehaviourPun
 
             case TargetType.forward:      // 전열ㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇ
             case TargetType.backward:       // 후열 ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇ
-                Debug.Log("대상은 후열");
+                Debug.Log("대상은 전열 or 후열");
                 random = GameMGR.Instance.GetRandomValue(0, searchArea.Count);
                 bool isAllDead = true;
                 for (int i = 0; i < searchArea.Count; i++)
@@ -758,7 +760,7 @@ public partial class Card : MonoBehaviourPun
                 if (isAllDead)
                 {
                     //대상이 없으므로 스킬 무효 
-                    skillTarget.Clear();
+                    break;
                 }
                 else // 한명이라도 살아있다면
                 {
@@ -882,10 +884,24 @@ public partial class Card : MonoBehaviourPun
 
             case TargetType.leastATK:
                 Debug.Log("대상은 최소공격");
+                int leastAtk = 99;
                 // 가장 공격력이 낮은 대상을 찾아라아아아ㅏ아아아아아아아아아아아아ㅏ아아즈벡!야아아아ㅏ 발바리이 치와아아아아아아ㅏ
                 int[] atkList = new int[6];
-                int leastAtk = -1;
-                int validIndex = 0; // 유효값이 있을 때마다 올라가는 인덱스 카운트 변수
+                List<Card> validNum = new List<Card>();
+                for (int i = 0; i < searchArea.Count; i++)
+                {
+                    if (searchArea[i] != null) validNum.Add(searchArea[i].GetComponentInChildren<Card>());
+                }
+                for (int i = 0; i < validNum.Count; i++)
+                {
+                    if (validNum[i].curAttackValue < leastAtk) leastAtk = i;
+                }
+                if (leastAtk < 99)
+                {
+                    skillTarget.Add(validNum[leastAtk]);
+                }
+                
+           /*     int validIndex = 0; // 유효값이 있을 때마다 올라가는 인덱스 카운트 변수
                 for (int i = 0; i < searchArea.Count; i++) // 가장 공격력이 낮은 유닛을 찾는 과정
                 {
                     if (searchArea[i] == null) continue; // 죽은 녀석은 대상에서 제외한다.
@@ -903,15 +919,28 @@ public partial class Card : MonoBehaviourPun
                     if (validIndex != 0) if (atkList[validIndex] < atkList[0]) leastAtk = i;
                     if (searchArea[leastAtk] == null) { i = 0; continue; }
                 }
-                skillTarget.Add(searchArea[leastAtk].GetComponentInChildren<Card>());
+                skillTarget.Add(searchArea[leastAtk].GetComponentInChildren<Card>());*/
                 break;
 
             case TargetType.mostATK:
                 Debug.Log("대상은 최대공격");
-                atkList = new int[6];
                 int mostAtk = -1;
-                validIndex = 0; // 유효값이 있을 때마다 올라가는 인덱스 카운트 변수
-                for (int i = 0; i < searchArea.Count; i++) // 가장 공격력이 낮은 유닛을 찾는 과정
+
+                validNum = new List<Card>();
+                for(int i = 0; i < searchArea.Count; i++)
+                {
+                    if (searchArea[i] != null) validNum.Add(searchArea[i].GetComponentInChildren<Card>());
+                }
+                for(int i = 0; i < validNum.Count; i++)
+                {
+                    if (validNum[i].curAttackValue > mostAtk) mostAtk = i;
+                }
+                if(mostAtk > 0)
+                {
+                    skillTarget.Add(validNum[mostAtk]);
+                }
+
+/*                for (int i = 0; i < searchArea.Count; i++) // 가장 공격력이 낮은 유닛을 찾는 과정
                 {
                     if (searchArea[i] == null) continue;
                     if (mostAtk == -1) //아무것도 없을 때에는 최초로 들어온 녀석이 값을 받는다. 
@@ -925,17 +954,34 @@ public partial class Card : MonoBehaviourPun
                         atkList[validIndex] = searchArea[i].GetComponentInChildren<Card>().curAttackValue;
                         validIndex++;
                     }
-                    if (validIndex != 0) if (atkList[validIndex] > atkList[0]) mostAtk = i;
-                    if (searchArea[mostAtk] == null) { i = 0; continue; }
+                    if (validIndex != 0)
+                    { if (atkList[validIndex] > atkList[0]) mostAtk = i; }
+                    if (searchArea[mostAtk] == null) { i = 0;  validIndex = 0; mostAtk = -1; continue; }
                 }
-                skillTarget.Add(searchArea[mostAtk].GetComponentInChildren<Card>());
+                if (mostAtk > 0)
+                skillTarget.Add(searchArea[mostAtk].GetComponentInChildren<Card>());*/
                 break;
 
             case TargetType.leastHP:
                 Debug.Log("대상은 최소체력");
                 int[] hpArray = new int[6];
-                int leastHp = -1;
-                validIndex = 0; // 유효값이 있을 때마다 올라가는 인덱스 카운트 변수
+                int leastHp = 99;
+
+                validNum = new List<Card>();
+                for (int i = 0; i < searchArea.Count; i++)
+                {
+                    if (searchArea[i] != null) validNum.Add(searchArea[i].GetComponentInChildren<Card>());
+                }
+                for (int i = 0; i < validNum.Count; i++)
+                {
+                    if (validNum[i].curAttackValue < leastHp) leastHp = i;
+                }
+                if (leastHp < 99)
+                {
+                    skillTarget.Add(validNum[leastHp]);
+                }
+
+                /*validIndex = 0; // 유효값이 있을 때마다 올라가는 인덱스 카운트 변수
                 for (int i = 0; i < 6; i++) // 가장 공격력이 낮은 유닛을 찾는 과정
                 {
                     if (searchArea[i] == null) continue;
@@ -953,14 +999,29 @@ public partial class Card : MonoBehaviourPun
                     if (validIndex != 0) if (hpArray[validIndex] < hpArray[0]) leastHp = i;
                     if (searchArea[leastHp] == null) { i = 0; continue; }
                 }
-                skillTarget.Add(searchArea[leastHp].gameObject. GetComponentInChildren<Card>());
+                skillTarget.Add(searchArea[leastHp].gameObject. GetComponentInChildren<Card>()); */
                 break;
 
             case TargetType.mostHP:
                 Debug.Log("대상은 최대체력");
                 hpArray = new int[6];
                 int mostHp = -1;
-                validIndex = 0; // 유효값이 있을 때마다 올라가는 인덱스 카운트 변수
+
+                validNum = new List<Card>();
+                for (int i = 0; i < searchArea.Count; i++)
+                {
+                    if (searchArea[i] != null) validNum.Add(searchArea[i].GetComponentInChildren<Card>());
+                }
+                for (int i = 0; i < validNum.Count; i++)
+                {
+                    if (validNum[i].curAttackValue > mostHp) mostHp = i;
+                }
+                if (mostHp > 0)
+                {
+                    skillTarget.Add(validNum[mostHp]);
+                }
+
+                /*validIndex = 0; // 유효값이 있을 때마다 올라가는 인덱스 카운트 변수
                 for (int i = 0; i < 6; i++) // 가장 공격력이 낮은 유닛을 찾는 과정
                 {
                     if (searchArea[i] == null) continue;
@@ -978,7 +1039,7 @@ public partial class Card : MonoBehaviourPun
                     if (validIndex != 0) if (hpArray[validIndex] > hpArray[0]) mostHp = i;
                     if (searchArea[mostHp] == null) { i = 0; continue; }
                 }
-                skillTarget.Add(searchArea[mostHp].GetComponentInChildren<Card>());
+                skillTarget.Add(searchArea[mostHp].GetComponentInChildren<Card>());*/
                 break;
 
 

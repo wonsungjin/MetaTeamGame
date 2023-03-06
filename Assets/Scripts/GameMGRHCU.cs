@@ -14,6 +14,8 @@ public partial class GameMGR : Singleton<GameMGR>
     public int i = 0;
     public int GetRandomValue(int minrange, int maxrange,bool set =false)
     {
+        if(!isBattleNow) return Random.Range(minrange,maxrange);
+
         i++;
         if (randomValue.Length <= i) i = 0;
         if (set == true)

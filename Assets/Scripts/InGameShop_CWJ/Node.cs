@@ -56,26 +56,32 @@ public class Node : MonoBehaviour
         switch (colTire)
         {
             case 1:
+                for (int i = 0; i < 6; i++) stars[i].SetActive(false);
                 stars[0].SetActive(true);
                 num = 0;
                 break;
             case 2:
+                for (int i = 0; i < 6; i++) stars[i].SetActive(false);
                 stars[1].SetActive(true);
                 num = 1;
                 break;
             case 3:
+                for (int i = 0; i < 6; i++) stars[i].SetActive(false);
                 stars[2].SetActive(true);
                 num = 2;
                 break;
             case 4:
+                for (int i = 0; i < 6; i++) stars[i].SetActive(false);
                 stars[3].SetActive(true);
                 num = 3;
                 break;
             case 5:
+                for (int i = 0; i < 6; i++) stars[i].SetActive(false);
                 stars[4].SetActive(true);
                 num = 4;
                 break;
             case 6:
+                for (int i = 0; i < 6; i++) stars[i].SetActive(false);
                 stars[5].SetActive(true);
                 num = 5;
                 break;
