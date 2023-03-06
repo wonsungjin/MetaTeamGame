@@ -71,6 +71,7 @@ public partial class AttackLogic : Skill
         else
         {
             yield return new WaitForSecondsRealtime(1f);
+            card.SetAnim("Idle");
         }
 
 
