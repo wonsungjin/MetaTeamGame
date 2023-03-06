@@ -91,16 +91,12 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
 
         return enemyAttackList[0];
     }
-    int count;
     public GameObject PlayerUnit()
     {
         int ran = GameMGR.Instance.GetRandomValue(0, 0, true);
         GameObject retunrUnit = null;
         while (playerForwardUnits[ran] == null)
         {
-            Debug.Log(ran);
-            count++;
-            if (count > 1000) { Debug.Log("무한반복~"); count = 0; break; }
             if (playerForwardUnits[0] == null && playerForwardUnits[1] == null && playerForwardUnits[2] == null) break;
             ran = GameMGR.Instance.GetRandomValue(0, 0, true);
         }
@@ -108,9 +104,7 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
         if (retunrUnit != null) return retunrUnit;
         while (playerBackwardUnits[ran] == null)
         {
-            Debug.Log(ran);
-            count++;
-            if (count > 1000) { Debug.Log("무한반복~"); count = 0; break; }
+
             if (playerBackwardUnits[0] == null && playerBackwardUnits[1] == null && playerBackwardUnits[2] == null) break;
             ran = GameMGR.Instance.GetRandomValue(0, 0, true);
         }
@@ -123,10 +117,6 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
         GameObject retunrUnit = null;
         while (enemyForwardUnits[ran] == null)
         {
-            Debug.Log(ran);
-
-            count++;
-            if (count > 1000) { Debug.Log("무한반복~"); count = 0; break; }
             if (enemyForwardUnits[0] == null && enemyForwardUnits[1] == null && enemyForwardUnits[2] == null) break;
             ran = GameMGR.Instance.GetRandomValue(0, 0, true);
         }
@@ -134,10 +124,6 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
         if (retunrUnit != null) return retunrUnit;
         while (enemyBackwardUnits[ran] == null)
         {
-            Debug.Log(ran);
-
-            count++;
-            if (count > 1000) { Debug.Log("무한반복~"); count = 0; break; }
             if (enemyBackwardUnits[0] == null && enemyBackwardUnits[1] == null && enemyBackwardUnits[2] == null) break;
             ran = GameMGR.Instance.GetRandomValue(0, 0, true);
         }
@@ -166,7 +152,6 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                     for (int i = 0; i < enemyForwardUnits.Length; i++) if (enemyForwardUnits[i] != null) enemyAttackList.Add(enemyForwardUnits[i]);
                     for (int i = 0; i < enemyBackwardUnits.Length; i++) if (enemyBackwardUnits[i] != null) enemyAttackList.Add(enemyBackwardUnits[i]);
                 }
-                Debug.Log(PlayerUnit() + "??" + EnemyUnit());
                 if (PlayerAttackUnit() != null)
                 {
                     PlayerAttackUnit().GetComponentInChildren<AttackLogic>().UnitAttack(EnemyUnit(), true);
@@ -204,7 +189,6 @@ public partial class BattleLogic : MonoBehaviourPunCallbacks
                     for (int i = 0; i < enemyForwardUnits.Length; i++) if (enemyForwardUnits[i] != null) enemyAttackList.Add(enemyForwardUnits[i]);
                     for (int i = 0; i < enemyBackwardUnits.Length; i++) if (enemyBackwardUnits[i] != null) enemyAttackList.Add(enemyBackwardUnits[i]);
                 }
-                Debug.Log(PlayerUnit() + "??" + EnemyUnit());
                 if (EnemyAttackUnit() != null)
                 {
                     EnemyAttackUnit().GetComponentInChildren<AttackLogic>().UnitAttack(PlayerUnit(), false);
