@@ -219,12 +219,17 @@ public partial class Batch : MonoBehaviourPun
         // ���� ��ġ ����
         // ���� �İ� ����
 
-        GameMGR.Instance.batch.CreateBatch(GameMGR.Instance.matching[0], GameMGR.Instance.matching[0] == (int)PhotonNetwork.LocalPlayer.CustomProperties["Number"]);
+        if (GameMGR.Instance.battleLogic.isFirstAttack)
+        {
+            GameMGR.Instance.batch.CreateBatch(GameMGR.Instance.matching[0], GameMGR.Instance.matching[0] == (int)PhotonNetwork.LocalPlayer.CustomProperties["Number"]);
+            GameMGR.Instance.batch.CreateBatch(GameMGR.Instance.matching[1], GameMGR.Instance.matching[1] == (int)PhotonNetwork.LocalPlayer.CustomProperties["Number"]);
+        }
+        else
+        {
+            GameMGR.Instance.batch.CreateBatch(GameMGR.Instance.matching[1], GameMGR.Instance.matching[1] == (int)PhotonNetwork.LocalPlayer.CustomProperties["Number"]);
+            GameMGR.Instance.batch.CreateBatch(GameMGR.Instance.matching[0], GameMGR.Instance.matching[0] == (int)PhotonNetwork.LocalPlayer.CustomProperties["Number"]);
+        }
 
-
-        // ��Ī�� ������ �������� �޾ƿ� ���� ��ġ ����
-
-        GameMGR.Instance.batch.CreateBatch(GameMGR.Instance.matching[1], GameMGR.Instance.matching[1] == (int)PhotonNetwork.LocalPlayer.CustomProperties["Number"]);
 
     }
 
@@ -270,6 +275,7 @@ public partial class Batch : MonoBehaviourPun
                 Card card = unitCard.GetComponentInChildren<Card>();
                 card.isMine = true;
                 card.SetIsBattle(true);
+                card.SetSkillTiming();
                 unitCard.transform.position = myCardPosition[i + 1].position;
                 if (i < 3) { GameMGR.Instance.battleLogic.playerForwardUnits[i] = unitCard.gameObject; }
                 else { GameMGR.Instance.battleLogic.playerBackwardUnits[i - 3] = unitCard.gameObject; }
@@ -286,6 +292,7 @@ public partial class Batch : MonoBehaviourPun
                 Card card = unitCard.GetComponentInChildren<Card>();
                 card.isMine = false;
                 card.SetIsBattle(true);
+                card.SetSkillTiming();
                 unitCard.transform.position = enemyCardPosition[i + 1].position;
                 card.SetFlip(true);
                 if (i < 3) { GameMGR.Instance.battleLogic.enemyForwardUnits[i] = unitCard.gameObject; }

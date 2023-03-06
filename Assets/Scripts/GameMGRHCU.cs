@@ -20,15 +20,15 @@ public partial class GameMGR : Singleton<GameMGR>
         if (randomValue.Length <= i) i = 0;
         if (set == true)
         {
-            if (randomValue[i] >= 3) { Debug.LogError(randomValue[i]); return randomValue[i] - 3; }
+            if (randomValue[i] >= 3) { Debug.LogError("i:" + i + "ran:" + (randomValue[i]-3)); return randomValue[i] - 3; }
             else
             {
-                Debug.LogError(randomValue[i]); return randomValue[i];
+                Debug.LogError("i:" + i + "ran:" + randomValue[i]); return randomValue[i];
             }
         }
         else if (randomValue[i] >= minrange && randomValue[i] < maxrange)
         {
-            Debug.LogError(randomValue[i]); return randomValue[i];
+            Debug.LogError("i:" + i + "ran:" + randomValue[i]); return randomValue[i];
         }
         else
         {
@@ -37,7 +37,7 @@ public partial class GameMGR : Singleton<GameMGR>
                 i++;
                 if (randomValue.Length <= i) i = 0;
             }
-            Debug.LogError(randomValue[i]); return randomValue[i];
+            Debug.LogError("i:"+i+ "ran:"+randomValue[i]); return randomValue[i];
         }
     }
 

@@ -190,9 +190,37 @@ public partial class Card : MonoBehaviourPun
         Debug.Log("유닛 비활성화 지점");
     }
 
-    public void SetSkillTiming() // 스킬을 언제 발동시키느냐에 따라서 각 델리게이트 이벤트에 추가시켜준다. 이벤트는 보따리의 개념으로써 이벤트를 실행하면 안에 추가한 모든 함수들이 실행되기 때문에 공통적으로 사용되는 부분에서만 사용하는 것이 응당 정당 타당 합당 마땅하다고 보는 부분적인 부분이라고 할 수 있는 부분이다.
+    public void SetSkillTiming(bool reset=false) // 스킬을 언제 발동시키느냐에 따라서 각 델리게이트 이벤트에 추가시켜준다. 이벤트는 보따리의 개념으로써 이벤트를 실행하면 안에 추가한 모든 함수들이 실행되기 때문에 공통적으로 사용되는 부분에서만 사용하는 것이 응당 정당 타당 합당 마땅하다고 보는 부분적인 부분이라고 할 수 있는 부분이다.
     {
          
+        if(reset)
+        {
+            switch (cardInfo.skillTiming)
+            {
+                case SkillTiming.turnStart:
+                    GameMGR.Instance.callbackEvent_TurnStart -= SkillActive;
+                    Debug.Log("턴시작시 효과니까 이벤트에 추가");
+                    break;
+                case SkillTiming.turnEnd:
+                    GameMGR.Instance.callbackEvent_TurnEnd -= SkillActive;
+                    Debug.Log("턴종료시효과니까 이벤트에 추가");
+                    break;
+                case SkillTiming.reroll:
+                    GameMGR.Instance.callbackEvent_Reroll -= SkillActive;
+                    Debug.Log("리롤시효과니까 이벤트에 추가");
+                    break;
+                case SkillTiming.hitEnemy:
+                    GameMGR.Instance.callbackEvent_HitEnemy -= SkillActive2;
+                    break;
+                case SkillTiming.battleStart:
+                    GameMGR.Instance.callbackEvent_BattleStart -= SkillActive;
+                    Debug.Log("전투시작시효과니까 이벤트에 추가" + gameObject.name);
+                    break;
+                    /*case SkillTiming.summon:
+                        GameMGR.Instance.callbackEvent_Summon += SkillActive;
+                        break;*/
+            }
+        }
         Debug.Log("SetSkillTiming 설정하는 함수로 들어왔다");
         switch (cardInfo.skillTiming)
         {
