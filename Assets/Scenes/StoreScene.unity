@@ -761,6 +761,8 @@ MonoBehaviour:
   userProfile: {fileID: 0}
   userProfileImage: []
   unitSprite: []
+  PlayerProfileImage: {fileID: 0}
+  EnemyProfileImage: {fileID: 0}
   playerBatchUI: {fileID: 0}
   playerName: {fileID: 0}
   timerTXT: {fileID: 0}
@@ -3314,8 +3316,7 @@ MonoBehaviour:
   matchingDone: 0
   userID: 0
   life: 
-  myLife: 10
-  startLife: 10
+  myLife: 20
   isWin: 0
   isLose: 0
   firstCount: 0
