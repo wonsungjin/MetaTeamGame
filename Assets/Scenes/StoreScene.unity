@@ -761,6 +761,8 @@ MonoBehaviour:
   userProfile: {fileID: 0}
   userProfileImage: []
   unitSprite: []
+  PlayerProfileImage: {fileID: 0}
+  EnemyProfileImage: {fileID: 0}
   playerBatchUI: {fileID: 0}
   playerName: {fileID: 0}
   timerTXT: {fileID: 0}
@@ -3314,8 +3316,7 @@ MonoBehaviour:
   matchingDone: 0
   userID: 0
   life: 
-  myLife: 10
-  startLife: 10
+  myLife: 20
   isWin: 0
   isLose: 0
   firstCount: 0
@@ -51544,16 +51545,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1584252721107660569, guid: b77b6985b73999449995258d853f85ba, type: 3}
-      propertyPath: playerRanking
-      value: 
-      objectReference: {fileID: 1679714929164551376, guid: 2b2d6d483eb1d4b4db2562e63368908e, type: 3}
     - target: {fileID: 1584252721107660570, guid: b77b6985b73999449995258d853f85ba, type: 3}
       propertyPath: sceneViewId
       value: 2
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 1584252721107660569, guid: b77b6985b73999449995258d853f85ba, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b77b6985b73999449995258d853f85ba, type: 3}
 --- !u!4 &1165689853970850936 stripped
 Transform:

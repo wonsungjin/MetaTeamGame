@@ -23,6 +23,7 @@ public partial class Batch : MonoBehaviourPun
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.A)) StartCoroutine(FinalCardUi());
+        if (Input.GetKeyDown(KeyCode.S)) for(int i = 0; i<PhotonNetwork.PlayerList.Length;i++) Debug.LogError((int)PhotonNetwork.PlayerList[i].CustomProperties["Life"]);
     }
     public void OnClick_Exit_UI()
     {
@@ -173,7 +174,10 @@ public partial class Batch : MonoBehaviourPun
     public void LifeSave(int num,int value)
     {
         GameMGR.Instance.userLife.TryAdd(num, value);
-        Debug.LogError(num+" "+value);
+        int life = 0;
+        GameMGR.Instance.userLife.TryGetValue(num, out life);
+        Debug.LogError(CustomNumberList[num] + " " + life);
+        
     }
 
     [PunRPC]
