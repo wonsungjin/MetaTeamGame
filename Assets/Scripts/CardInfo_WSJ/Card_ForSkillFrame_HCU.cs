@@ -56,7 +56,8 @@ public partial class Card : MonoBehaviourPun
         if (cardInfo.skillTiming == SkillTiming.attackBefore) SkillActive(); // 공격 전 효과 발동
         //GameMGR.Instance.audioMGR.BattleAttackSound(damage);
         Target.Hit(damage, this, isDirect, isFirst); // 지금부터 내가 너를 때리겠다는 말이야
-        if (cardInfo.skillTiming == SkillTiming.attackAfter) SkillActive(); // 공격 후 효과 발동
+
+        if (cardInfo.skillTiming == SkillTiming.attackAfter && curHP > 0) SkillActive(); // 공격 후 효과 발동
     }
 
     public void Hit(int damage, Card Attacker, bool isDirect, bool isFirst) // 자신이 피격시 호출되는 함수 // 받은 데미지, 날 때린 사람
@@ -89,7 +90,7 @@ public partial class Card : MonoBehaviourPun
 
         GameMGR.Instance.Event_HitEnemy(this);
 
-        if (cardInfo.skillTiming == SkillTiming.hit) // 피격시 효과 발동. 죽으면 피격시 효과가 발동하지 않는다.
+        if (this.curHP > 0 && cardInfo.skillTiming == SkillTiming.hit) // 피격시 효과 발동. 죽으면 피격시 효과가 발동하지 않는다.
         {
             SkillActive();
         }
@@ -182,10 +183,11 @@ public partial class Card : MonoBehaviourPun
         if (Attacker.cardInfo.skillTiming == SkillTiming.kill) Attacker.SkillActive(); // 내가 죽었는데 적이 처치시 효과가 있다면 적 효과 먼저 발동시켜준다.
         if (cardInfo.skillTiming == SkillTiming.death) SkillActive(); // 사망시 효과 발동
                                                                       //GameMGR.Instance.battleLogic.isWaitAttack = true;
+        Debug.Log("처치시 효과 및 사망시 효과 발동 지점");
         yield return new WaitForSeconds(2f);
 
-
         GameMGR.Instance.objectPool.DestroyPrefab(gameObject.transform.parent.gameObject);
+        Debug.Log("유닛 비활성화 지점");
     }
 
     public void SetSkillTiming() // 스킬을 언제 발동시키느냐에 따라서 각 델리게이트 이벤트에 추가시켜준다. 이벤트는 보따리의 개념으로써 이벤트를 실행하면 안에 추가한 모든 함수들이 실행되기 때문에 공통적으로 사용되는 부분에서만 사용하는 것이 응당 정당 타당 합당 마땅하다고 보는 부분적인 부분이라고 할 수 있는 부분이다.
@@ -640,7 +642,7 @@ public partial class Card : MonoBehaviourPun
                         {
                             if (GameMGR.Instance.battleLogic.playerBackwardUnits[i] == null)
                             {
-                                targetPos = GameMGR.Instance.battleLogic.playerForwardUnits[i].transform.position;
+                                targetPos = GameMGR.Instance.battleLogic.playerBackwardUnits[i].transform.position;
                                 isFind = true;
                                 break;
                             }
@@ -744,7 +746,7 @@ public partial class Card : MonoBehaviourPun
 
             case TargetType.forward:      // 전열ㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈㅇ
             case TargetType.backward:       // 후열 ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇ
-                Debug.Log("대상은 후열");
+                Debug.Log("대상은 전열 or 후열");
                 random = GameMGR.Instance.GetRandomValue(0, searchArea.Count);
                 bool isAllDead = true;
                 for (int i = 0; i < searchArea.Count; i++)
@@ -758,7 +760,7 @@ public partial class Card : MonoBehaviourPun
                 if (isAllDead)
                 {
                     //대상이 없으므로 스킬 무효 
-                    skillTarget.Clear();
+                    break;
                 }
                 else // 한명이라도 살아있다면
                 {
