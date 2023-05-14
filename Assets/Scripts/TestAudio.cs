@@ -11,13 +11,12 @@ public class TestAudio : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
     }
 
-
     public void OnclickBackgound()
     {
         audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.Background, "Back1");
         audioSource.Play();
     }
-
+    
     public void OnclickUnit()
     {
         audioSource.clip = GameMGR.Instance.audioMGR.ReturnAudioClip(AudioMGR.Type.Unit, "UISFX1");
